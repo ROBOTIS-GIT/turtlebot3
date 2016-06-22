@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<package>
+
+  <name>turtlebot3_slam</name>
+  <version>0.0.1</version>
+  <description>The turtlebot3_slam package</description>
+
+  <maintainer email="passionvirus@gmail.com">Yoonseok Pyo</maintainer>
+
+  <url type="website">http://oroca.org/</url>
+  <url type="git">https://github.com/oroca/oroca-ros-pkg</url>
+
+  <license>BSD</license>
+
+  <author email="passionvirus@gmail.com">Yoonseok Pyo</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>roscpp</build_depend>
+  <build_depend>urg_node</build_depend>
+
+  <run_depend>roscpp</run_depend>
+  <run_depend>urg_node</run_depend>
+
+  <export>
+  </export>
+
+</package>
