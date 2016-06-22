@@ -1,5 +1,4 @@
 #include <turtlebot3_node/turtlebot3_node.h>
-#include <tf/transform_datatypes.h>
 
 using namespace turtlebot3;
 
@@ -7,6 +6,8 @@ Turtlebot3::Turtlebot3()
 : nh_priv_("~"),
   wheel_diameter(0.066),
   wheel_separation(0.15),
+  encoder_min_(-2147483648),
+  encoder_max_(2147483648),
   is_debug_(false)
 {
   //Init parameter
@@ -14,6 +15,9 @@ Turtlebot3::Turtlebot3()
 
   this->wheel_speed_cmd[LEFT] = 0.0;
   this->wheel_speed_cmd[RIGHT] = 0.0;
+
+  encoder_low_  = ((encoder_max_ - encoder_min_) * 0.3) + encoder_min_;
+  encoder_high_ = ((encoder_max_ - encoder_min_) * 0.7) + encoder_min_;
 
   // using the same values as in kobuki_node
   double pcov[36] = { 0.1,   0,   0,   0,   0, 0,
@@ -28,7 +32,7 @@ Turtlebot3::Turtlebot3()
   // joint states
   nh_.param("wheel_left_joint_name",this->wheel_joint_name[LEFT], std::string("wheel_left_joint"));
   nh_.param("wheel_right_joint_name",this->wheel_joint_name[RIGHT], std::string("wheel_right_joint"));
-  nh_.param("cmd_vel_timeout",this->cmd_vel_timeout, 0.6);
+  nh_.param("cmd_vel_timeout",this->cmd_vel_timeout, 1.0);
   this->cmd_vel_timeout = 1.0;
 
 //  this->motor_enabled = true;
@@ -59,7 +63,7 @@ Turtlebot3::~Turtlebot3()
   ROS_ASSERT(shutdownTurtlebot3());
 }
 
-bool Turtlebot3::shutdownTurtlebot3()
+bool Turtlebot3::shutdownTurtlebot3(void)
 {
   return true;
 }
@@ -95,6 +99,8 @@ void Turtlebot3::advertiseTopics(ros::NodeHandle& nh)
 void Turtlebot3::subscribeTopics(ros::NodeHandle& nh)
 {
   this->subscriber["velocity"] = nh.subscribe("cmd_vel", 10, &Turtlebot3::subscribeVelocityCommand, this);
+  this->subscriber["left_encoder"] = nh.subscribe("left_wheel_position", 10, &Turtlebot3::subscribeLeftEncoder, this);
+  this->subscriber["right_encoder"] = nh.subscribe("right_wheel_position", 10, &Turtlebot3::subscribeRightEncoder, this);
 }
 
 void Turtlebot3::subscribeVelocityCommand(const geometry_msgs::TwistConstPtr msg)
@@ -111,6 +117,50 @@ void Turtlebot3::updateJoint(unsigned int index,double& w,ros::Duration step_tim
   w = v / (this->wheel_diameter / 2);
   this->joint_states.velocity[index] = w;
   this->joint_states.position[index]= this->joint_states.position[index] + w * step_time.toSec();
+}
+
+void Turtlebot3::subscribeLeftEncoder(const std_msgs::Int32ConstPtr left_encoder)
+{
+  double encoder = left_encoder->data;
+
+  if((encoder < encoder_low_) && (prev_left_encoder_ > encoder_high_))
+  {
+    left_multiplication_ += 1;
+  }
+
+  if((encoder > encoder_high_) && (prev_left_encoder_ < encoder_low_))
+  {
+    left_multiplication_ -= 1;
+  }
+
+  left_ = 1.0 * (encoder + left_multiplication_ * (encoder_max_ - encoder_min_));
+
+  prev_left_encoder_ = encoder;
+
+  ROS_INFO_STREAM("Left : " << left_);
+}
+
+void Turtlebot3::subscribeRightEncoder(const std_msgs::Int32ConstPtr right_encoder)
+{
+  double encoder = right_encoder->data;
+
+  if((encoder < encoder_low_) && (prev_right_encoder_ > encoder_high_))
+  {
+    right_multiplication_ += 1;
+  }
+
+
+  if((encoder > encoder_high_) && (prev_right_encoder_ < encoder_low_))
+  {
+
+    right_multiplication_ -= 1;
+  }
+
+  right_ = 1.0 * (encoder + right_multiplication_ * (encoder_max_ - encoder_min_));
+
+  prev_right_encoder_ = encoder;
+
+  ROS_INFO_STREAM("Right : " << right_);
 }
 
 void Turtlebot3::updateOdometry(double w_left,double w_right,ros::Duration step_time)
@@ -166,7 +216,7 @@ void Turtlebot3::updateTF(geometry_msgs::TransformStamped& odom_tf)
 }
 
 
-bool Turtlebot3::update()
+void Turtlebot3::update(void)
 {
   ros::Time time_now = ros::Time::now();
   ros::Duration step_time = time_now - this->prev_update_time;
@@ -175,10 +225,11 @@ bool Turtlebot3::update()
   // zero-ing after timeout
   if(((time_now - this->last_cmd_vel_time).toSec() > this->cmd_vel_timeout))
   {
-    this->wheel_speed_cmd[LEFT] = 0.0;
+    this->wheel_speed_cmd[LEFT]  = 0.0;
     this->wheel_speed_cmd[RIGHT] = 0.0;
   }
 
+  // publish speed cmd
   this->wheel_speed[LEFT].linear.x  = this->wheel_speed_cmd[LEFT];
   this->wheel_speed[RIGHT].linear.x = this->wheel_speed_cmd[RIGHT];
   this->publisher["left_wheel_speed"].publish(this->wheel_speed[LEFT]);
@@ -200,8 +251,6 @@ bool Turtlebot3::update()
   geometry_msgs::TransformStamped odom_tf;
   updateTF(odom_tf);
   this->tf_broadcaster.sendTransform(odom_tf);
-
-  return true;
 }
 
 
