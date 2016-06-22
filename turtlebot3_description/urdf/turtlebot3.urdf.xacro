@@ -102,10 +102,10 @@
     <origin xyz="0 0 0.097" rpy="0 0 0"/>
     <axis xyz="0 0 0"/>
     <parent link="base_link"/>
-    <child link="scan_link"/>
+    <child link="base_scan"/>
   </joint>
 
-  <link name="scan_link">
+  <link name="base_scan">
     <visual>
       <origin xyz="0 0 -0.02" rpy="0 0 0"/>
       <geometry>
