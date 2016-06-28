@@ -4,10 +4,15 @@ using namespace turtlebot3;
 
 Turtlebot3::Turtlebot3()
 : nh_priv_("~"),
-  wheel_diameter(0.066),
+  wheel_radius_(0.033),
   wheel_separation(0.15),
   encoder_min_(-2147483648),
   encoder_max_(2147483648),
+  tick_to_rad_(0.00153589f),
+  init_left_encoder_(true),
+  init_right_encoder_(false),
+  left_encoder_(0),
+  right_encoder_(0),
   is_debug_(false)
 {
   //Init parameter
@@ -110,80 +115,62 @@ void Turtlebot3::subscribeVelocityCommand(const geometry_msgs::TwistConstPtr msg
   this->wheel_speed_cmd[RIGHT] = msg->linear.x + (msg->angular.z * this->wheel_separation / 2);
 }
 
-void Turtlebot3::updateJoint(unsigned int index,double& w,ros::Duration step_time)
-{
-  double v;
-  v = this->wheel_speed_cmd[index];
-  w = v / (this->wheel_diameter / 2);
-  this->joint_states.velocity[index] = w;
-  this->joint_states.position[index]= this->joint_states.position[index] + w * step_time.toSec();
-}
-
 void Turtlebot3::subscribeLeftEncoder(const std_msgs::Int32ConstPtr left_encoder)
 {
-  double encoder = left_encoder->data;
+  int32_t current_tick = left_encoder->data;
 
-  if((encoder < encoder_low_) && (prev_left_encoder_ > encoder_high_))
+  if (!init_left_encoder_)
   {
-    left_multiplication_ += 1;
+    last_tick_left_    = current_tick;
+    init_left_encoder_ = true;
   }
 
-  if((encoder > encoder_high_) && (prev_left_encoder_ < encoder_low_))
-  {
-    left_multiplication_ -= 1;
-  }
+  last_diff_tick_left_ = current_tick - last_tick_left_;
+  last_tick_left_ = current_tick;
+  last_rad_left_ += tick_to_rad_ * last_diff_tick_left_;
 
-  left_ = 1.0 * (encoder + left_multiplication_ * (encoder_max_ - encoder_min_));
-
-  prev_left_encoder_ = encoder;
-
-  ROS_INFO_STREAM("Left : " << left_);
+  ROS_INFO_STREAM("Left : " << last_tick_left_);
 }
 
 void Turtlebot3::subscribeRightEncoder(const std_msgs::Int32ConstPtr right_encoder)
 {
-  double encoder = right_encoder->data;
+  int32_t current_tick = right_encoder->data;
 
-  if((encoder < encoder_low_) && (prev_right_encoder_ > encoder_high_))
+  if (!init_right_encoder_)
   {
-    right_multiplication_ += 1;
+    last_tick_right_   = current_tick;
+    init_right_encoder_ = true;
   }
 
+  last_diff_tick_right_ = current_tick - last_tick_right_;
+  last_tick_right_ = current_tick;
+  last_rad_right_ += tick_to_rad_ * last_diff_tick_right_;
 
-  if((encoder > encoder_high_) && (prev_right_encoder_ < encoder_low_))
-  {
-
-    right_multiplication_ -= 1;
-  }
-
-  right_ = 1.0 * (encoder + right_multiplication_ * (encoder_max_ - encoder_min_));
-
-  prev_right_encoder_ = encoder;
-
-  ROS_INFO_STREAM("Right : " << right_);
+  ROS_INFO_STREAM("Right : " << last_tick_right_);
 }
 
-void Turtlebot3::updateOdometry(double w_left,double w_right,ros::Duration step_time)
+void Turtlebot3::updateOdometry(ros::Duration step_time)
 {
-  double d1,d2;
+  double dleft,dright;
   double dr,da;
-  d1 = d2 = 0;
+  dleft = dright = 0;
   dr = da = 0;
 
-  d1 = step_time.toSec() * (this->wheel_diameter / 2) * w_left;
-  d2 = step_time.toSec() * (this->wheel_diameter / 2) * w_right;
+  dleft  = tick_to_rad_ * last_diff_tick_left_;
+  dright = tick_to_rad_ * last_diff_tick_right_;
 
-  if(isnan(d1))
+  if(isnan(dleft))
   {
-    d1 = 0;
-  }
-  if(isnan(d2))
-  {
-    d2 = 0;
+    dleft = 0;
   }
 
-  dr = (d1 + d2) / 2;
-  da = (d2 - d1) / this->wheel_separation;
+  if(isnan(dright))
+  {
+    dright = 0;
+  }
+
+  dr = this->wheel_radius_ * (dleft + dright) / 2;
+  da = this->wheel_radius_ * (dright - dleft) / this->wheel_separation;
 
   // compute odometric pose
   this->odom_pose[0] += dr * cos(this->odom_pose[2]);
@@ -201,8 +188,17 @@ void Turtlebot3::updateOdometry(double w_left,double w_right,ros::Duration step_
   this->odom.pose.pose.orientation = tf::createQuaternionMsgFromYaw(this->odom_pose[2]);
 
   // We should update the twist of the odometry
-  this->odom.twist.twist.linear.x = this->odom_vel[0];
+  this->odom.twist.twist.linear.x  = this->odom_vel[0];
   this->odom.twist.twist.angular.z = this->odom_vel[2];
+}
+
+void Turtlebot3::updateJoint(unsigned int index,double& w,ros::Duration step_time)
+{
+  double v;
+  v = this->wheel_speed_cmd[index];
+  w = v / this->wheel_radius_;
+  this->joint_states.velocity[index] = w;
+  this->joint_states.position[index]= this->joint_states.position[index] + w * step_time.toSec();
 }
 
 void Turtlebot3::updateTF(geometry_msgs::TransformStamped& odom_tf)
@@ -235,17 +231,17 @@ void Turtlebot3::update(void)
   this->publisher["left_wheel_speed"].publish(this->wheel_speed[LEFT]);
   this->publisher["right_wheel_speed"].publish(this->wheel_speed[RIGHT]);
 
+  // odom
+  updateOdometry(step_time);
+  this->odom.header.stamp = time_now;
+  this->publisher["odom"].publish(this->odom);
+
   // joint_states
   double w_left, w_right;
   updateJoint(LEFT, w_left, step_time);
   updateJoint(RIGHT, w_right, step_time);
   this->joint_states.header.stamp = time_now;
   this->publisher["joint_states"].publish(this->joint_states);
-
-  // odom
-  updateOdometry(w_left, w_right, step_time);
-  this->odom.header.stamp = time_now;
-  this->publisher["odom"].publish(this->odom);
 
   // tf
   geometry_msgs::TransformStamped odom_tf;

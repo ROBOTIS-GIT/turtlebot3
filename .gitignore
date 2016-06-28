@@ -34,7 +34,7 @@
 .tags
 .tags_sorted_by_file
 *.cfgc
-*.txt.user
+*.txt.user*
 *-build/
 cpp/
 bin/
