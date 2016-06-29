@@ -56,10 +56,10 @@ class Turtlebot3
   int32_t last_diff_tick_right_;
   int32_t last_tick_left_;
   int32_t last_tick_right_;
-  int32_t last_rad_left_;
-  int32_t last_rad_right_;
-  int32_t last_velocity_left_;
-  int32_t last_velocity_right_;
+  double last_rad_left_;
+  double last_rad_right_;
+  double last_velocity_left_;
+  double last_velocity_right_;
 
  private:
   bool shutdownTurtlebot3(void);
@@ -69,7 +69,7 @@ class Turtlebot3
   void subscribeLeftEncoder(const std_msgs::Int32ConstPtr left_encoder);
   void subscribeRightEncoder(const std_msgs::Int32ConstPtr right_encoder);
   void updateOdometry(ros::Duration step_time);
-  void updateJoint(unsigned int index,double& w, ros::Duration step_time);
+  void updateJoint(void);
   void updateTF(geometry_msgs::TransformStamped& odom_tf);
 
   // ROS NodeHandle
