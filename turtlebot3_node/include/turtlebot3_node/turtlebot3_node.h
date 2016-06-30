@@ -34,9 +34,9 @@ class Turtlebot3
   float odom_vel[3];
   double pose_cov[36];
   std::string wheel_joint_name[2];
-  float wheel_speed_cmd[2];
-  float wheel_separation;
-  float wheel_radius_;
+  double wheel_speed_cmd[2];
+  double wheel_separation;
+  double wheel_radius_;
   bool motor_enabled;
   double cmd_vel_timeout;
   int32_t encoder_min_;
@@ -69,7 +69,7 @@ class Turtlebot3
   void subscribeLeftEncoder(const std_msgs::Int32ConstPtr left_encoder);
   void subscribeRightEncoder(const std_msgs::Int32ConstPtr right_encoder);
   void updateOdometry(ros::Duration step_time);
-  void updateJoint(void);
+  void updateJoint(ros::Duration step_time);
   void updateTF(geometry_msgs::TransformStamped& odom_tf);
 
   // ROS NodeHandle
