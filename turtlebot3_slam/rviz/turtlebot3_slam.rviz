@@ -6,6 +6,8 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
+        - /Grid1
+        - /TF1
         - /TF1/Frames1
         - /Map1
       Splitter Ratio: 0.594406009
@@ -33,7 +35,7 @@ Visualization Manager:
   Class: ""
   Displays:
     - Alpha: 0.5
-      Cell Size: 1
+      Cell Size: 0.449999988
       Class: rviz/Grid
       Color: 160; 160; 164
       Enabled: true
@@ -61,8 +63,6 @@ Visualization Manager:
           Value: true
         base_scan:
           Value: true
-        map:
-          Value: true
         odom:
           Value: true
         wheel_left_link:
@@ -75,16 +75,15 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        map:
-          odom:
-            base_footprint:
-              base_link:
-                base_scan:
-                  {}
-                wheel_left_link:
-                  {}
-                wheel_right_link:
-                  {}
+        odom:
+          base_footprint:
+            base_link:
+              base_scan:
+                {}
+              wheel_left_link:
+                {}
+              wheel_right_link:
+                {}
       Update Interval: 0
       Value: true
     - Alpha: 1

@@ -8,6 +8,7 @@ Panels:
         - /Grid1
         - /TF1/Frames1
         - /TF1/Tree1
+        - /LaserScan1
         - /Map1
         - /Global Map1/Costmap1
         - /Global Map1/Planner1
@@ -131,7 +132,7 @@ Visualization Manager:
       Queue Size: 10
       Selectable: true
       Size (Pixels): 3
-      Size (m): 0.00999999978
+      Size (m): 0.0299999993
       Style: Squares
       Topic: /scan
       Unreliable: false
@@ -239,7 +240,7 @@ Visualization Manager:
         Value: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Scale: 67.3821793
+      Scale: 213.695129
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz)
       X: 0.689140856

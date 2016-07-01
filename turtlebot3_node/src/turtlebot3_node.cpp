@@ -132,7 +132,7 @@ void Turtlebot3::subscribeLeftEncoder(const std_msgs::Int32ConstPtr left_encoder
   last_tick_left_ = current_tick;
   last_rad_left_ += tick_to_rad_ * (double)last_diff_tick_left_;
 
-  //ROS_INFO_STREAM("Left : " << last_tick_left_ << "," << last_diff_tick_left_ << "," << last_rad_left_);
+  ROS_INFO_STREAM("Left : " << last_tick_left_ << "," << last_diff_tick_left_ << "," << last_rad_left_);
 }
 
 void Turtlebot3::subscribeRightEncoder(const std_msgs::Int32ConstPtr right_encoder)
@@ -149,7 +149,7 @@ void Turtlebot3::subscribeRightEncoder(const std_msgs::Int32ConstPtr right_encod
   last_tick_right_ = current_tick;
   last_rad_right_ += tick_to_rad_ * (double)last_diff_tick_right_;
 
-  //ROS_INFO_STREAM("Right : " << last_tick_right_ << "," << last_diff_tick_right_ << "," << last_rad_right_);
+  ROS_INFO_STREAM("Right : " << last_tick_right_ << "," << last_diff_tick_right_ << "," << last_rad_right_);
 }
 
 void Turtlebot3::updateOdometry(ros::Duration step_time)
@@ -159,8 +159,8 @@ void Turtlebot3::updateOdometry(ros::Duration step_time)
   wheel_l = wheel_r = 0.0;
   v = w = 0.0;
 
-  wheel_l = tick_to_rad_ * (double)last_diff_tick_left_;
-  wheel_r = tick_to_rad_ * (double)last_diff_tick_right_;
+  wheel_l = tick_to_rad_ * (double)last_diff_tick_left_ / 3;
+  wheel_r = tick_to_rad_ * (double)last_diff_tick_right_ / 3;
 
   ROS_INFO_STREAM("wheel_l = " << wheel_l);
   ROS_INFO_STREAM("wheel_r = " << wheel_r);
