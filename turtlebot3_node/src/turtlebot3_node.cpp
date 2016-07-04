@@ -58,9 +58,9 @@ Turtlebot3::Turtlebot3()
   nh_.param("odom_frame",this->odom.header.frame_id,std::string("odom"));
   nh_.param("base_frame",this->odom.child_frame_id,std::string("base_footprint"));
 
-  this->odom_pose[0] = 0;
-  this->odom_pose[1] = 0;
-  this->odom_pose[2] = 0;
+  this->odom_pose[0] = 0.0;
+  this->odom_pose[1] = 0.0;
+  this->odom_pose[2] = 0.0;
 
   this->prev_update_time = ros::Time::now();
 
@@ -118,13 +118,15 @@ void Turtlebot3::subscribeVelocityCommand(const geometry_msgs::TwistConstPtr msg
   this->wheel_speed_cmd[RIGHT] = msg->linear.x + (msg->angular.z * this->wheel_separation / 2);
 }
 
-void Turtlebot3::subscribeLeftEncoder(const std_msgs::Int32ConstPtr left_encoder)
+void Turtlebot3::subscribeLeftEncoder(const dynamixel_msgs::DynamixelFeedbackConstPtr left_encoder)
 {
-  int32_t current_tick = left_encoder->data;
+  int32_t current_tick = left_encoder->position;
+  int32_t current_realtime_tick = left_encoder->realtime_tick;
 
   if (!init_left_encoder_)
   {
-    last_tick_left_    = current_tick;
+    last_tick_left_ = current_tick;
+    last_realtime_tick_left_ = current_realtime_tick;
     init_left_encoder_ = true;
   }
 
@@ -132,16 +134,25 @@ void Turtlebot3::subscribeLeftEncoder(const std_msgs::Int32ConstPtr left_encoder
   last_tick_left_ = current_tick;
   last_rad_left_ += tick_to_rad_ * (double)last_diff_tick_left_;
 
-  ROS_INFO_STREAM("Left : " << last_tick_left_ << "," << last_diff_tick_left_ << "," << last_rad_left_);
+  last_diff_realtime_tick_left_ = current_realtime_tick - last_realtime_tick_left_;
+  if(last_diff_realtime_tick_left_< 0)
+  {
+    last_diff_realtime_tick_left_ += 32768;
+  }
+  last_realtime_tick_left_ = current_realtime_tick;
+
+  ROS_INFO_STREAM("Left : " << last_tick_left_ << "," << last_diff_tick_left_ << "," << last_rad_left_ << "," << last_diff_realtime_tick_left_);
 }
 
-void Turtlebot3::subscribeRightEncoder(const std_msgs::Int32ConstPtr right_encoder)
+void Turtlebot3::subscribeRightEncoder(const dynamixel_msgs::DynamixelFeedbackConstPtr right_encoder)
 {
-  int32_t current_tick = right_encoder->data;
+  int32_t current_tick = right_encoder->position;
+  int32_t current_realtime_tick = right_encoder->realtime_tick;
 
   if (!init_right_encoder_)
   {
-    last_tick_right_    = current_tick;
+    last_tick_right_ = current_tick;
+    last_realtime_tick_right_ = current_realtime_tick;
     init_right_encoder_ = true;
   }
 
@@ -149,18 +160,27 @@ void Turtlebot3::subscribeRightEncoder(const std_msgs::Int32ConstPtr right_encod
   last_tick_right_ = current_tick;
   last_rad_right_ += tick_to_rad_ * (double)last_diff_tick_right_;
 
-  ROS_INFO_STREAM("Right : " << last_tick_right_ << "," << last_diff_tick_right_ << "," << last_rad_right_);
+  last_diff_realtime_tick_right_ = current_realtime_tick - last_realtime_tick_right_;
+  if(last_diff_realtime_tick_right_< 0)
+  {
+    last_diff_realtime_tick_right_ += 32768;
+  }
+  last_realtime_tick_right_ = current_realtime_tick;
+
+  ROS_INFO_STREAM("Right : " << last_tick_right_ << "," << last_diff_tick_right_ << "," << last_rad_right_ << "," << last_diff_realtime_tick_right_);
 }
 
-void Turtlebot3::updateOdometry(ros::Duration step_time)
+bool Turtlebot3::updateOdometry(void)
 {
   double wheel_l, wheel_r; // rotation value of wheel [rad]
   double v, w;             // v = translational velocity [m/s], w = rotational velocity [rad/s]
+  double step_time;
   wheel_l = wheel_r = 0.0;
   v = w = 0.0;
+  step_time = 0.0;
 
-  wheel_l = tick_to_rad_ * (double)last_diff_tick_left_ / 3;
-  wheel_r = tick_to_rad_ * (double)last_diff_tick_right_ / 3;
+  wheel_l = tick_to_rad_ * (double)last_diff_tick_left_;
+  wheel_r = tick_to_rad_ * (double)last_diff_tick_right_;
 
   ROS_INFO_STREAM("wheel_l = " << wheel_l);
   ROS_INFO_STREAM("wheel_r = " << wheel_r);
@@ -175,23 +195,30 @@ void Turtlebot3::updateOdometry(ros::Duration step_time)
     wheel_r = 0.0;
   }
 
-  v = this->wheel_radius_ * (wheel_r + wheel_l) / 2 / step_time.toSec();
-  w = this->wheel_radius_ * (wheel_r - wheel_l) / this->wheel_separation / step_time.toSec();
+  step_time = ((double)last_diff_realtime_tick_left_ + (double)last_diff_realtime_tick_right_) / 2.0 / 1000.0;
 
-  ROS_INFO_STREAM("step_time = " << step_time.toSec());
+  if(step_time == 0)
+    return false;
+
+  v = this->wheel_radius_ * (wheel_r + wheel_l) / 2 / step_time;
+  w = this->wheel_radius_ * (wheel_r - wheel_l) / this->wheel_separation / step_time;
+
+  ROS_INFO_STREAM("step_time = " << step_time);
   ROS_INFO_STREAM("v = " << v);
   ROS_INFO_STREAM("w = " << w);
 
-  if (step_time.toSec() != this->prev_update_time.toSec())
-  {
-    last_velocity_left_  = wheel_l / step_time.toSec();
-    last_velocity_right_ = wheel_r / step_time.toSec();
-  }
+  last_velocity_left_  = wheel_l / step_time;
+  last_velocity_right_ = wheel_r / step_time;
+
+  ROS_INFO_STREAM("last_velocity_left_ = " << last_velocity_left_);
+  ROS_INFO_STREAM("last_velocity_right_ = " << last_velocity_right_);
 
   // compute odometric pose
-  this->odom_pose[0] += v * step_time.toSec() * cos(this->odom_pose[2] + (w * step_time.toSec() / 2));
-  this->odom_pose[1] += v * step_time.toSec() * sin(this->odom_pose[2] + (w * step_time.toSec() / 2));
-  this->odom_pose[2] += w * step_time.toSec();
+  this->odom_pose[0] += v * step_time * cos(this->odom_pose[2] + (w * step_time / 2));
+  this->odom_pose[1] += v * step_time * sin(this->odom_pose[2] + (w * step_time / 2));
+  this->odom_pose[2] += w * step_time;
+
+  ROS_INFO_STREAM(" x = " << this->odom_pose[0] << " y = " << this->odom_pose[1] << " r = " << this->odom_pose[2]);
 
   // compute odometric instantaneouse velocity
   this->odom_vel[0] = v;
@@ -206,25 +233,17 @@ void Turtlebot3::updateOdometry(ros::Duration step_time)
   // We should update the twist of the odometry
   this->odom.twist.twist.linear.x  = this->odom_vel[0];
   this->odom.twist.twist.angular.z = this->odom_vel[2];
+
+  return true;
 }
 
-void Turtlebot3::updateJoint(ros::Duration step_time)
+void Turtlebot3::updateJoint(void)
 {
   this->joint_states.position[LEFT]  = last_rad_left_;
   this->joint_states.position[RIGHT] = last_rad_right_;
 
   this->joint_states.velocity[LEFT]  = last_velocity_left_;
   this->joint_states.velocity[RIGHT] = last_velocity_right_;
-//  double v,w;
-//  v = this->wheel_speed_cmd[LEFT];
-//  w = v / this->wheel_radius_;
-//  this->joint_states.velocity[LEFT] = w;
-//  this->joint_states.position[LEFT]= this->joint_states.position[LEFT] + w * step_time.toSec();
-
-//  v = this->wheel_speed_cmd[RIGHT];
-//  w = v / this->wheel_radius_;
-//  this->joint_states.velocity[RIGHT] = w;
-//  this->joint_states.position[RIGHT]= this->joint_states.position[RIGHT] + w * step_time.toSec();
 }
 
 void Turtlebot3::updateTF(geometry_msgs::TransformStamped& odom_tf)
@@ -257,19 +276,21 @@ void Turtlebot3::update(void)
   this->publisher["right_wheel_speed"].publish(this->wheel_speed[RIGHT]);
 
   // odom
-  updateOdometry(step_time);
-  this->odom.header.stamp = time_now;
-  this->publisher["odom"].publish(this->odom);
+  if (updateOdometry())
+  {
+    this->odom.header.stamp = time_now;
+    this->publisher["odom"].publish(this->odom);
 
-  // joint_states
-  updateJoint(step_time);
-  this->joint_states.header.stamp = time_now;
-  this->publisher["joint_states"].publish(this->joint_states);
+    // joint_states
+    updateJoint();
+    this->joint_states.header.stamp = time_now;
+    this->publisher["joint_states"].publish(this->joint_states);
 
-  // tf
-  geometry_msgs::TransformStamped odom_tf;
-  updateTF(odom_tf);
-  this->tf_broadcaster.sendTransform(odom_tf);
+    // tf
+    geometry_msgs::TransformStamped odom_tf;
+    updateTF(odom_tf);
+    this->tf_broadcaster.sendTransform(odom_tf);
+  }
 }
 
 
@@ -278,7 +299,7 @@ int main(int argc, char **argv)
   //Init ROS node
   ros::init(argc, argv, "turtlebot3_node");
   turtlebot3::Turtlebot3 tb3;
-  ros::Rate loop_rate(30);
+  ros::Rate loop_rate(100); // 10msec
 
   while(ros::ok())
   {

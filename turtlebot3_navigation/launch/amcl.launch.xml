@@ -23,7 +23,7 @@
     <param name="use_map_topic"             value="$(arg use_map_topic)"/>
 
     <remap from="scan"                      to="$(arg scan_topic)"/>
-    <param name="laser_max_range"           value="8.0"/>
+    <param name="laser_max_range"           value="5.0"/>
     <param name="laser_max_beams"           value="60"/>
     <param name="laser_z_hit"               value="0.5"/>
     <param name="laser_z_short"             value="0.05"/>

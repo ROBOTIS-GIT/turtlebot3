@@ -9,6 +9,7 @@
 #include <sensor_msgs/Imu.h>
 #include <tf/transform_broadcaster.h>
 #include <tf/transform_datatypes.h>
+#include <dynamixel_msgs/DynamixelFeedback.h>
 
 namespace turtlebot3
 {
@@ -56,6 +57,10 @@ class Turtlebot3
   int32_t last_diff_tick_right_;
   int32_t last_tick_left_;
   int32_t last_tick_right_;
+  int32_t last_realtime_tick_left_;
+  int32_t last_realtime_tick_right_;
+  int32_t last_diff_realtime_tick_left_;
+  int32_t last_diff_realtime_tick_right_;
   double last_rad_left_;
   double last_rad_right_;
   double last_velocity_left_;
@@ -66,10 +71,10 @@ class Turtlebot3
   void advertiseTopics(ros::NodeHandle& nh);
   void subscribeTopics(ros::NodeHandle& nh);
   void subscribeVelocityCommand(const geometry_msgs::TwistConstPtr msg);
-  void subscribeLeftEncoder(const std_msgs::Int32ConstPtr left_encoder);
-  void subscribeRightEncoder(const std_msgs::Int32ConstPtr right_encoder);
-  void updateOdometry(ros::Duration step_time);
-  void updateJoint(ros::Duration step_time);
+  void subscribeLeftEncoder(const dynamixel_msgs::DynamixelFeedbackConstPtr left_encoder);
+  void subscribeRightEncoder(const dynamixel_msgs::DynamixelFeedbackConstPtr right_encoder);
+  bool updateOdometry(void);
+  void updateJoint(void);
   void updateTF(geometry_msgs::TransformStamped& odom_tf);
 
   // ROS NodeHandle

@@ -10,6 +10,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   sensor_msgs
   std_msgs
+  dynamixel_msgs
   nodelet
   tf
 )
@@ -106,7 +107,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
   INCLUDE_DIRS include
 #  LIBRARIES turtlebot3_node
-  CATKIN_DEPENDS geometry_msgs nav_msgs roscpp sensor_msgs std_msgs nodelet tf
+  CATKIN_DEPENDS geometry_msgs nav_msgs roscpp sensor_msgs std_msgs dynamixel_msgs nodelet tf
 #  DEPENDS system_lib
 )
 
