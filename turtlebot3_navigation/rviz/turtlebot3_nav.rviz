@@ -9,9 +9,9 @@ Panels:
         - /TF1/Frames1
         - /TF1/Tree1
         - /LaserScan1
-        - /Map1
-        - /Global Map1/Costmap1
         - /Global Map1/Planner1
+        - /Local Map1
+        - /Local Map1/Polygon1
         - /Local Map1/Costmap1
         - /Local Map1/Planner1
       Splitter Ratio: 0.5
@@ -118,7 +118,7 @@ Visualization Manager:
       Axis: Z
       Channel Name: intensity
       Class: rviz/LaserScan
-      Color: 255; 0; 0
+      Color: 0; 223; 0
       Color Transformer: FlatColor
       Decay Time: 0
       Enabled: true
@@ -148,6 +148,21 @@ Visualization Manager:
       Topic: /map
       Unreliable: false
       Value: true
+    - Alpha: 1
+      Buffer Length: 1
+      Class: rviz/Path
+      Color: 0; 0; 0
+      Enabled: true
+      Line Style: Lines
+      Line Width: 0.0299999993
+      Name: Planner Plan
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Topic: /move_base/NavfnROS/plan
+      Unreliable: false
+      Value: true
     - Class: rviz/Group
       Displays:
         - Alpha: 0.699999988
@@ -171,13 +186,21 @@ Visualization Manager:
             X: 0
             Y: 0
             Z: 0
-          Topic: /move_base/TrajectoryPlannerROS/global_plan
+          Topic: /move_base/DWAPlannerROS/global_plan
           Unreliable: false
           Value: true
       Enabled: true
       Name: Global Map
     - Class: rviz/Group
       Displays:
+        - Alpha: 1
+          Class: rviz/Polygon
+          Color: 0; 0; 0
+          Enabled: true
+          Name: Polygon
+          Topic: /move_base/local_costmap/footprint
+          Unreliable: false
+          Value: true
         - Alpha: 0.699999988
           Class: rviz/Map
           Color Scheme: costmap
@@ -199,7 +222,7 @@ Visualization Manager:
             X: 0
             Y: 0
             Z: 0
-          Topic: /move_base/TrajectoryPlannerROS/local_plan
+          Topic: /move_base/DWAPlannerROS/local_plan
           Unreliable: false
           Value: true
       Enabled: true
@@ -210,6 +233,21 @@ Visualization Manager:
       Enabled: true
       Name: Amcl Particles
       Topic: /particlecloud
+      Unreliable: false
+      Value: true
+    - Alpha: 1
+      Axes Length: 1
+      Axes Radius: 0.100000001
+      Class: rviz/Pose
+      Color: 255; 25; 0
+      Enabled: true
+      Head Length: 0.300000012
+      Head Radius: 0.100000001
+      Name: Goal
+      Shaft Length: 0.5
+      Shaft Radius: 0.0500000007
+      Shape: Arrow
+      Topic: /move_base_simple/goal
       Unreliable: false
       Value: true
   Enabled: true
@@ -240,11 +278,11 @@ Visualization Manager:
         Value: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Scale: 213.695129
+      Scale: 211.022934
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz)
-      X: 0.689140856
-      Y: -0.340278149
+      X: 1.17432654
+      Y: -0.523193181
     Saved: ~
 Window Geometry:
   Displays:

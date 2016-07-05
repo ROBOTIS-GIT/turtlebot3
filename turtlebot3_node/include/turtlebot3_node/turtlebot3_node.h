@@ -73,7 +73,7 @@ class Turtlebot3
   void subscribeVelocityCommand(const geometry_msgs::TwistConstPtr msg);
   void subscribeLeftEncoder(const dynamixel_msgs::DynamixelFeedbackConstPtr left_encoder);
   void subscribeRightEncoder(const dynamixel_msgs::DynamixelFeedbackConstPtr right_encoder);
-  bool updateOdometry(void);
+  bool updateOdometry(double diff_time);
   void updateJoint(void);
   void updateTF(geometry_msgs::TransformStamped& odom_tf);
 
