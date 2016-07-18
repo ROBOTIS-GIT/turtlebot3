@@ -9,6 +9,7 @@
 #include <sensor_msgs/Imu.h>
 #include <tf/transform_broadcaster.h>
 #include <tf/transform_datatypes.h>
+#include <dynamixel_msgs/DynamixelFeedback.h>
 
 namespace turtlebot3
 {
@@ -34,9 +35,9 @@ class Turtlebot3
   float odom_vel[3];
   double pose_cov[36];
   std::string wheel_joint_name[2];
-  float wheel_speed_cmd[2];
-  float wheel_separation;
-  float wheel_diameter;
+  double wheel_speed_cmd[2];
+  double wheel_separation;
+  double wheel_radius_;
   bool motor_enabled;
   double cmd_vel_timeout;
   int32_t encoder_min_;
@@ -47,18 +48,33 @@ class Turtlebot3
   int32_t prev_right_encoder_;
   int32_t left_multiplication_;
   int32_t right_multiplication_;
-  int32_t left_;
-  int32_t right_;
+  int32_t left_encoder_;
+  int32_t right_encoder_;
+  const double tick_to_rad_;
+  bool init_left_encoder_;
+  bool init_right_encoder_;
+  int32_t last_diff_tick_left_;
+  int32_t last_diff_tick_right_;
+  int32_t last_tick_left_;
+  int32_t last_tick_right_;
+  int32_t last_realtime_tick_left_;
+  int32_t last_realtime_tick_right_;
+  int32_t last_diff_realtime_tick_left_;
+  int32_t last_diff_realtime_tick_right_;
+  double last_rad_left_;
+  double last_rad_right_;
+  double last_velocity_left_;
+  double last_velocity_right_;
 
  private:
   bool shutdownTurtlebot3(void);
   void advertiseTopics(ros::NodeHandle& nh);
   void subscribeTopics(ros::NodeHandle& nh);
   void subscribeVelocityCommand(const geometry_msgs::TwistConstPtr msg);
-  void subscribeLeftEncoder(const std_msgs::Int32ConstPtr left_encoder);
-  void subscribeRightEncoder(const std_msgs::Int32ConstPtr right_encoder);
-  void updateJoint(unsigned int index,double& w, ros::Duration step_time);
-  void updateOdometry(double w_left,double w_right, ros::Duration step_time);
+  void subscribeLeftEncoder(const dynamixel_msgs::DynamixelFeedbackConstPtr left_encoder);
+  void subscribeRightEncoder(const dynamixel_msgs::DynamixelFeedbackConstPtr right_encoder);
+  bool updateOdometry(double diff_time);
+  void updateJoint(void);
   void updateTF(geometry_msgs::TransformStamped& odom_tf);
 
   // ROS NodeHandle

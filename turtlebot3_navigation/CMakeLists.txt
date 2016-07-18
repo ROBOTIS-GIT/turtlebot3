@@ -1,18 +1,14 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(turtlebot3_node)
+project(turtlebot3_navigation)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  geometry_msgs
-  nav_msgs
-  roscpp
-  sensor_msgs
-  std_msgs
-  dynamixel_msgs
-  nodelet
-  tf
+  amcl
+  turtlebot3_node
+  map_server
+  move_base
 )
 
 ## System dependencies are found with CMake's conventions
@@ -33,10 +29,10 @@ find_package(catkin REQUIRED COMPONENTS
 ## * Let MSG_DEP_SET be the set of packages whose message types you use in
 ##   your messages/services/actions (e.g. std_msgs, actionlib_msgs, ...).
 ## * In the file package.xml:
-##   * add a build_depend tag for "message_generation"
 ##   * add a build_depend and a run_depend tag for each package in MSG_DEP_SET
-##   * If MSG_DEP_SET isn't empty the following dependency has been pulled in
-##     but can be declared for certainty nonetheless:
+##   * If MSG_DEP_SET isn't empty the following dependencies might have been
+##     pulled in transitively but can be declared for certainty nonetheless:
+##     * add a build_depend tag for "message_generation"
 ##     * add a run_depend tag for "message_runtime"
 ## * In this file (CMakeLists.txt):
 ##   * add "message_generation" and every package in MSG_DEP_SET to
@@ -72,27 +68,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate added messages and services with any dependencies listed here
 # generate_messages(
 #   DEPENDENCIES
-#   geometry_msgs#   nav_msgs#   sensor_msgs#   std_msgs
-# )
-
-################################################
-## Declare ROS dynamic reconfigure parameters ##
-################################################
-
-## To declare and build dynamic reconfigure parameters within this
-## package, follow these steps:
-## * In the file package.xml:
-##   * add a build_depend and a run_depend tag for "dynamic_reconfigure"
-## * In this file (CMakeLists.txt):
-##   * add "dynamic_reconfigure" to
-##     find_package(catkin REQUIRED COMPONENTS ...)
-##   * uncomment the "generate_dynamic_reconfigure_options" section below
-##     and list every .cfg file to be processed
-
-## Generate dynamic reconfigure parameters in the 'cfg' folder
-# generate_dynamic_reconfigure_options(
-#   cfg/DynReconf1.cfg
-#   cfg/DynReconf2.cfg
+#   std_msgs  # Or other packages containing msgs
 # )
 
 ###################################
@@ -105,9 +81,9 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-  INCLUDE_DIRS include
-#  LIBRARIES turtlebot3_node
-  CATKIN_DEPENDS geometry_msgs nav_msgs roscpp sensor_msgs std_msgs dynamixel_msgs nodelet tf
+#  INCLUDE_DIRS include
+#  LIBRARIES kobuki_navigation
+#  CATKIN_DEPENDS amcl kobuki_node kobuki_tf map_server move_base urg_node
 #  DEPENDS system_lib
 )
 
@@ -118,27 +94,26 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 # include_directories(include)
-include_directories(include ${catkin_INCLUDE_DIRS})
+include_directories(
+  ${catkin_INCLUDE_DIRS}
+)
 
-## Declare a C++ library
-# add_library(turtlebot3_node
-#   src/${PROJECT_NAME}/turtlebot3_node.cpp
+## Declare a cpp library
+# add_library(kobuki_navigation
+#   src/${PROJECT_NAME}/kobuki_navigation.cpp
 # )
 
-## Add cmake target dependencies of the library
-## as an example, code may need to be generated before libraries
-## either from message generation or dynamic reconfigure
-# add_dependencies(turtlebot3_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+## Declare a cpp executable
+# add_executable(kobuki_navigation_node src/kobuki_navigation_node.cpp)
 
-## Declare a C++ executable
-add_executable(turtlebot3_node src/turtlebot3_node.cpp)
-
-## Add cmake target dependencies of the executable
-## same as for the library above
-add_dependencies(turtlebot3_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+## Add cmake target dependencies of the executable/library
+## as an example, message headers may need to be generated before nodes
+# add_dependencies(kobuki_navigation_node kobuki_navigation_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(turtlebot3_node ${catkin_LIBRARIES})
+# target_link_libraries(kobuki_navigation_node
+#   ${catkin_LIBRARIES}
+# )
 
 #############
 ## Install ##
@@ -155,7 +130,7 @@ target_link_libraries(turtlebot3_node ${catkin_LIBRARIES})
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS turtlebot3_node turtlebot3_node_node
+# install(TARGETS kobuki_navigation kobuki_navigation_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -180,7 +155,7 @@ target_link_libraries(turtlebot3_node ${catkin_LIBRARIES})
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_turtlebot3_node.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_kobuki_navigation.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()

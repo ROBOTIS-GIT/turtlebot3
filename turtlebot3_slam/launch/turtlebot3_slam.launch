@@ -1,5 +1,5 @@
 <launch>
-  <node pkg="gmapping" type="slam_gmapping" name="kobuki_slam_gmapping" output="screen">
+  <node pkg="gmapping" type="slam_gmapping" name="turtlebot3_slam_gmapping" output="screen">
     <param name="base_frame" value="base_footprint"/>
     <param name="odom_frame" value="odom"/>
     <param name="map_update_interval" value="1.0"/>
