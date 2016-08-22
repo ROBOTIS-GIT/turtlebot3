@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package>
+  <name>turtlebot3_msgs</name>
+  <version>0.0.1</version>
+  <description>The turtlebot3_msgs package</description>
+  <maintainer email="pyo@robotis.com">Yoonseok Pyo</maintainer>
+
+  <license>BSD</license>
+
+  <author email="pyo@robotis.com">Yoonseok Pyo</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>message_generation</build_depend>
+  <build_depend>std_msgs</build_depend>
+
+  <run_depend>message_generation</run_depend>
+  <run_depend>std_msgs</run_depend>
+
+  <export></export>
+</package>
