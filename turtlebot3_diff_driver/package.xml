@@ -14,11 +14,11 @@
   <build_depend>std_msgs</build_depend>
   <build_depend>turtlebot3_msgs</build_depend>
   <build_depend>geometry_msgs</build_depend>
-
+  <build_depend>dynamixel_sdk</build_depend>
   <run_depend>roscpp</run_depend>
   <run_depend>std_msgs</run_depend>
   <run_depend>turtlebot3_msgs</run_depend>
   <run_depend>geometry_msgs</run_depend>
-
+  <run_depend>dynamixel_sdk</run_depend>
   <export></export>
 </package>

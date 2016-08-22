@@ -12,7 +12,7 @@
 #include <geometry_msgs/Twist.h>
 #include <turtlebot3_msgs/DynamixelFeedback.h>
 
-#include "dynamixel_sdk.h"                                   // Uses Dynamixel SDK library
+#include "dynamixel_sdk/dynamixel_sdk.h"                                   // Uses Dynamixel SDK library
 
 // Control table address (Dynamixel XM series)
 #define ADDR_XM_OPERATING_MODE           11

@@ -9,6 +9,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   geometry_msgs
   turtlebot3_msgs
+  dynamixel_sdk
 )
 
 ## System dependencies are found with CMake's conventions
@@ -141,18 +142,8 @@ add_executable(turtlebot3_diff_driver_node src/turtlebot3_diff_driver_node.cpp)
 add_dependencies(turtlebot3_diff_driver_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-  if (CMAKE_SIZEOF_VOID_P EQUAL 4)
-    message(": 32bit linux system")
-    target_link_libraries(turtlebot3_diff_driver_node ${catkin_LIBRARIES} /usr/local/lib/libdxl_x86_cpp.so)
-  elseif (CMAKE_SIZEOF_VOID_P EQUAL 8)
-    message(": 64bit linux system")
-    target_link_libraries(turtlebot3_diff_driver_node ${catkin_LIBRARIES} /usr/local/lib/libdxl_x64_cpp.so)
-  endif ()
-else()
-  message(": Non-linux system")
-endif ()
 
+target_link_libraries(turtlebot3_diff_driver_node ${catkin_LIBRARIES})
 #############
 ## Install ##
 #############
