@@ -118,7 +118,7 @@ void Turtlebot3::subscribeVelocityCommand(const geometry_msgs::TwistConstPtr msg
   this->wheel_speed_cmd[RIGHT] = msg->linear.x + (msg->angular.z * this->wheel_separation / 2);
 }
 
-void Turtlebot3::subscribeLeftEncoder(const dynamixel_msgs::DynamixelFeedbackConstPtr left_encoder)
+void Turtlebot3::subscribeLeftEncoder(const turtlebot3_msgs::DynamixelFeedbackConstPtr left_encoder)
 {
   int32_t current_tick = left_encoder->position;
   int32_t current_realtime_tick = left_encoder->realtime_tick;
@@ -144,7 +144,7 @@ void Turtlebot3::subscribeLeftEncoder(const dynamixel_msgs::DynamixelFeedbackCon
   //ROS_INFO_STREAM("Left : [diff_tick]" << last_tick_left_ << "," << last_diff_tick_left_ << "," << last_rad_left_ << "," << last_diff_realtime_tick_left_);
 }
 
-void Turtlebot3::subscribeRightEncoder(const dynamixel_msgs::DynamixelFeedbackConstPtr right_encoder)
+void Turtlebot3::subscribeRightEncoder(const turtlebot3_msgs::DynamixelFeedbackConstPtr right_encoder)
 {
   int32_t current_tick = right_encoder->position;
   int32_t current_realtime_tick = right_encoder->realtime_tick;
