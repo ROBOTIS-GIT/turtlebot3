@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package>
+  <name>turtlebot3</name>
+  <version>0.0.1</version>
+  <description>ROS packages for the Turtlebot3 (meta package)</description>
+  <license>BSD</license>
+  <author email="pyo@robotis.com">pyo</author>
+  <maintainer email="pyo@robotis.com">pyo</maintainer>
+  <url type="bugtracker">https://github.com/ROBOTIS-GIT/turtlebot3/issues</url>
+  <url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3</url>
+  <url type="website">http://wiki.ros.org/turtlebot3</url>
+  <buildtool_depend>catkin</buildtool_depend>
+  <run_depend>turtlebot3_description</run_depend>
+  <run_depend>turtlebot3_diff_driver</run_depend>
+  <run_depend>turtlebot3_msgs</run_depend>
+  <run_depend>turtlebot3_navigation</run_depend>
+  <run_depend>turtlebot3_slam</run_depend>
+  <run_depend>turtlebot3_node</run_depend>
+  <export><metapackage/></export>
+</package>

@@ -3,13 +3,13 @@
   <name>turtlebot3_diff_driver</name>
   <version>0.0.1</version>
   <description>The turtlebot3_diff_driver package</description>
-  <maintainer email="pyo@robotis.com">Yoonseok Pyo</maintainer>
   <license>BSD</license>
-  <url type="website">http://wiki.ros.org/dynamixel_manager</url>
-  <author email="pyo@robotis.com">Yoonseok Pyo</author>
-
+  <author email="pyo@robotis.com">pyo</author>
+  <maintainer email="pyo@robotis.com">pyo</maintainer>
+  <url type="bugtracker">https://github.com/ROBOTIS-GIT/turtlebot3/issues</url>
+  <url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3</url>
+  <url type="website">http://wiki.ros.org/turtlebot3_diff_driver</url>
   <buildtool_depend>catkin</buildtool_depend>
-
   <build_depend>roscpp</build_depend>
   <build_depend>std_msgs</build_depend>
   <build_depend>turtlebot3_msgs</build_depend>
@@ -20,5 +20,4 @@
   <run_depend>turtlebot3_msgs</run_depend>
   <run_depend>geometry_msgs</run_depend>
   <run_depend>dynamixel_sdk</run_depend>
-  <export></export>
 </package>

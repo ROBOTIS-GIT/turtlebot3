@@ -3,10 +3,12 @@
   <name>turtlebot3_node</name>
   <version>0.0.1</version>
   <description>The turtlebot3_node package</description>
-  <maintainer email="pyo@robotis.com">Yoonseok Pyo</maintainer>
   <license>BSD</license>
+  <author email="pyo@robotis.com">pyo</author>
+  <maintainer email="pyo@robotis.com">pyo</maintainer>
+  <url type="bugtracker">https://github.com/ROBOTIS-GIT/turtlebot3/issues</url>
+  <url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3</url>
   <url type="website">http://wiki.ros.org/turtlebot3_node</url>
-  <author email="pyo@robotis.com">Yoonseok Pyo</author>
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>geometry_msgs</build_depend>
   <build_depend>nav_msgs</build_depend>
