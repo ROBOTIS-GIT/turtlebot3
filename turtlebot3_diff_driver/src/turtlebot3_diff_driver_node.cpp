@@ -227,6 +227,7 @@ void Turtlebot3DiffDriver::readDynamixelRegister(uint8_t id, uint16_t addr, uint
 void Turtlebot3DiffDriver::checkLoop(void)
 {
   turtlebot3_msgs::DynamixelFeedback feedback;
+  bool dxl_comm_result = false;
 
   writeDynamixelRegister(dxl_left_id_, ADDR_XM_GOAL_VELOCITY, 4, (int32_t)lin_vel1_);
   ROS_INFO("[ID] %u, [Goal Value] %d", dxl_left_id_, (int32_t)lin_vel1_);
@@ -236,11 +237,13 @@ void Turtlebot3DiffDriver::checkLoop(void)
   readDynamixelRegister(dxl_left_id_, ADDR_XM_PRESENT_VELOCITY, 4);
   readDynamixelRegister(dxl_right_id_, ADDR_XM_PRESENT_VELOCITY, 4);
 
-  readPosition(dxl_left_id_, feedback.position, feedback.realtime_tick);
-  position_pub1_.publish(feedback);
+  dxl_comm_result = false;
+  dxl_comm_result = readPosition(dxl_left_id_, feedback.position, feedback.realtime_tick);
+  if (dxl_comm_result == true) position_pub1_.publish(feedback);
 
-  readPosition(dxl_right_id_, feedback.position, feedback.realtime_tick);
-  position_pub2_.publish(feedback);
+  dxl_comm_result = false;
+  dxl_comm_result = readPosition(dxl_right_id_, feedback.position, feedback.realtime_tick);
+  if (dxl_comm_result == true) position_pub2_.publish(feedback);
 
 }
 
