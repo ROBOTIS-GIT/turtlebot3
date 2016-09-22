@@ -1,3 +1,5 @@
+<?xml version="1.0" ?>
+
 <launch>
   <arg name="model" default="$(find xacro)/xacro.py '$(find turtlebot3_description)/urdf/turtlebot3.urdf.xacro'" />
 

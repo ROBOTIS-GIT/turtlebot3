@@ -71,8 +71,7 @@ class Turtlebot3
   void advertiseTopics(ros::NodeHandle& nh);
   void subscribeTopics(ros::NodeHandle& nh);
   void subscribeVelocityCommand(const geometry_msgs::TwistConstPtr msg);
-  void subscribeLeftEncoder(const turtlebot3_msgs::DynamixelFeedbackConstPtr left_encoder);
-  void subscribeRightEncoder(const turtlebot3_msgs::DynamixelFeedbackConstPtr right_encoder);
+  void subscribeEncoder(const turtlebot3_msgs::DynamixelFeedbackConstPtr encoder);
   bool updateOdometry(double diff_time);
   void updateJoint(void);
   void updateTF(geometry_msgs::TransformStamped& odom_tf);
