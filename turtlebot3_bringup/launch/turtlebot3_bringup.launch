@@ -2,6 +2,8 @@
 
 <launch>
   <node pkg="turtlebot3_diff_driver" type="turtlebot3_diff_driver_node" name="turtlebot3_diff_driver_node" />
-  <node pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" name="depthimage_to_laserscan" />
+  <node pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" name="depthimage_to_laserscan">
+    <remap from="image" to="/camera/depth/image_raw"/>
+  </node>
   <include file="$(find astra_launch)/launch/astra.launch" />
 </launch>
