@@ -17,7 +17,9 @@ find_package(catkin REQUIRED COMPONENTS
 ################################################################################
 add_message_files(
   FILES
-  DynamixelFeedback.msg
+  SensorState.msg
+  MotorPower.msg
+  VersionInfo.msg
 )
 
 generate_messages(
