@@ -64,7 +64,7 @@ tf::TransformBroadcaster tfbroadcaster;
 HardwareTimer timer_sensors_state(TIMER_CH1);
 HardwareTimer timer_imu(TIMER_CH2);
 // HardwareTimer timer_cmd_velocity(TIMER_CH3);
-// HardwareTimer timer_control_speed(TIMER_CH4);
+// HardwareTimer timer_control_motor_speed(TIMER_CH4);
 
 /*******************************************************************************
 * SoftwareTimer for * of Turtlebot3
@@ -119,8 +119,9 @@ float joint_states_eff[2] = {0.0, 0.0};
 *******************************************************************************/
 void setup()
 {
+  // Initialize ROS node handle, advertise and subscribe the topics
   nh.initNode();
-  nh.getHardware()->setBaud(1000000);
+  nh.getHardware()->setBaud(1000000); // TODO: Testing
   nh.subscribe(cmd_vel_sub);
   nh.advertise(sensor_state_pub);
   nh.advertise(imu_pub);
@@ -131,7 +132,7 @@ void setup()
 
   nh.loginfo("Connected to OpenCR...");
 
-  // for Dynamixel
+  // Setting for Dynamixel motors
   motor_driver.init();
 
   timer_sensors_state.pause();
@@ -140,7 +141,7 @@ void setup()
   timer_sensors_state.refresh();
   timer_sensors_state.resume();
 
-  // for IMU
+  // Setting for IMU
   imu.begin();
 
   timer_imu.pause();
@@ -149,27 +150,13 @@ void setup()
   timer_imu.refresh();
   timer_imu.resume();
 
-  // for cmd_vel
-  remote_controller.begin(1);  //57600bps for RC100b
-
-  // timer_cmd_velocity.pause();
-  // timer_cmd_velocity.setPeriod(CMD_VELOCITY_PUBLISH_PERIOD * 1000000); // usec
-  // timer_cmd_velocity.attachInterrupt(interrupt_cmd_vel_rc100_pub);
-  // timer_cmd_velocity.refresh();
-  // timer_cmd_velocity.resume();
+  // Setting for remocon(ROBOTIS RC100) and cmd_vel
+  remote_controller.begin(1);  //57600bps for RC100
 
   cmd_vel_rc100_msg.linear.x  = 0.0;
   cmd_vel_rc100_msg.angular.z = 0.0;
 
-  float pcov[36] = { 0.1,   0,   0,   0,   0, 0,
-                       0, 0.1,   0,   0,   0, 0,
-                       0,   0, 1e6,   0,   0, 0,
-                       0,   0,   0, 1e6,   0, 0,
-                       0,   0,   0,   0, 1e6, 0,
-                       0,   0,   0,   0,   0, 0.2};
-  // memcpy(&(this->odom.pose.covariance),pcov,sizeof(double)*36);
-  // memcpy(&(this->odom.twist.covariance),pcov,sizeof(double)*36);
-
+  // Setting for SLAM and navigation (odometry, joint states, TF)
   odom_pose[0] = 0.0;
   odom_pose[1] = 0.0;
   odom_pose[2] = 0.0;
@@ -187,13 +174,6 @@ void setup()
   joint_states.effort   = joint_states_eff;
 
   prev_update_time = millis();
-
-  // for speed controller
-  // timer_control_speed.pause();
-  // timer_control_speed.setPeriod(SPEED_CONTROL_PERIOD * 1000000); // usec
-  // timer_control_speed.attachInterrupt(control_speed);
-  // timer_control_speed.refresh();
-  // timer_control_speed.resume();
 }
 
 /*******************************************************************************
@@ -203,24 +183,25 @@ void loop()
 {
   receive_remocon_data();
 
-  if( (millis()-tTime[1]) >= (1000 / SPEEDCONTROL_RATE) )
+  if ((millis()-tTime[0]) >= (1000 / CONTROL_MOTOR_SPEED_PERIOD))
   {
-    control_speed();
-    tTime[1] = millis();
-  }
-
-  if( (millis()-tTime[2]) >= (1000 / CMD_VEL_PUB_RATE) )
-  {
-    cmd_vel_rc100_pub.publish(&cmd_vel_rc100_msg);
-    tTime[2] = millis();
-  }
-
-  if( (millis()-tTime[0]) >= (1000 / CMD_VEL_PUB_RATE) )
-  {
-    publish_drive_information();
+    control_motor_speed();
     tTime[0] = millis();
   }
 
+  if ((millis()-tTime[1]) >= (1000 / CMD_VEL_PUBLISH_PERIOD))
+  {
+    cmd_vel_rc100_pub.publish(&cmd_vel_rc100_msg);
+    tTime[1] = millis();
+  }
+
+  if ((millis()-tTime[2]) >= (1000 / DRIVE_INFORMATION_PUBLISH_PERIOD))
+  {
+    publish_drive_information();
+    tTime[2] = millis();
+  }
+
+  // Call all the callbacks waiting to be called at that point in time.
   nh.spinOnce();
 }
 
@@ -515,9 +496,9 @@ void receive_remocon_data(void)
 }
 
 /*******************************************************************************
-* Control motors
+* Control motor speed
 *******************************************************************************/
-void control_speed(void)
+void control_motor_speed(void)
 {
   double lin_vel1;
   double lin_vel2;

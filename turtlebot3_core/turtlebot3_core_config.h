@@ -40,26 +40,23 @@
 
 #include "turtlebot3_motor_driver.h"
 
-#define IMU_PUBLISH_PERIOD              10 //hz
-#define SENSOR_STATE_PUBLISH_PERIOD     10 //hz
-// #define CMD_VELOCITY_PUBLISH_PERIOD   0.01  // sec
-// #define SPEED_CONTROL_PERIOD          0.01  // sec
+#define CONTROL_MOTOR_SPEED_PERIOD       10 //hz
+#define IMU_PUBLISH_PERIOD               10 //hz
+#define SENSOR_STATE_PUBLISH_PERIOD      10 //hz
+#define CMD_VEL_PUBLISH_PERIOD           10 //hz
+#define DRIVE_INFORMATION_PUBLISH_PERIOD 10 //hz
 
-#define FEEDBACK_PUB_RATE               10  //hz
-#define SPEEDCONTROL_RATE               10  //hz
-#define CMD_VEL_PUB_RATE                10  //hz
-
-#define WHEEL_RADIUS                    0.033       // radian
-#define WHEEL_SEPARATION                0.16        // meter
-#define ENCODER_MIN                     -2147483648 // raw
-#define ENCODER_MAX                      2147483648 // raw
+#define WHEEL_RADIUS                    0.033 // radian
+#define WHEEL_SEPARATION                0.16  // meter
+#define ENCODER_MIN           -2147483648     // raw
+#define ENCODER_MAX            2147483648     // raw
 
 #define LEFT                            0
 #define RIGHT                           1
 
-#define VELOCITY_CONSTANT_VAULE         1263.632956882  // V = r * w = r * RPM * 0.10472
-                                                        //   = 0.033 * 0.229 * Goal RPM * 0.10472
-                                                        // Goal RPM = V * 1263.632956882
+#define VELOCITY_CONSTANT_VAULE      1263.632956882  // V = r * w = r * RPM * 0.10472
+                                                     //   = 0.033 * 0.229 * Goal RPM * 0.10472
+                                                     // Goal RPM = V * 1263.632956882
 
 #define VELOCITY                        10.0
 #define VELOCITY_STEP                   0.02
@@ -78,7 +75,10 @@ typedef struct
   uint8_t init_data;
 } test;
 
+// Callback function prototypes
 void cmd_vel_callback(const geometry_msgs::Twist& cmd_vel_msg);
+
+// Function prototypes
 void publish_imu_msg(void);
 void publish_sensor_state_msg(void);
 void publish_drive_information(void);
@@ -86,6 +86,6 @@ bool updateOdometry(double diff_time);
 void updateJoint(void);
 void updateTF(geometry_msgs::TransformStamped& odom_tf);
 void receive_remocon_data(void);
-void control_speed(void);
+void control_motor_speed(void);
 
 #endif // TURTLEBOT3_CORE_CONFIG_H_
