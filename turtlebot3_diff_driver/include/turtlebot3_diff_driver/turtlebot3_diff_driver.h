@@ -63,8 +63,9 @@ class Turtlebot3DiffDriver
   ros::Subscriber velocity_sub1_;
   ros::Subscriber velocity_sub2_;
   // ROS Topic Publisher
-  ros::Publisher position_pub1_;
-  ros::Publisher position_pub2_;
+  ros::Publisher position_pub_;
+//  ros::Publisher position_pub1_;
+//  ros::Publisher position_pub2_;
   //parameters
   double lin_vel1_;
   double lin_vel2_;
@@ -88,6 +89,8 @@ class Turtlebot3DiffDriver
   bool readPosition(uint8_t id, int32_t &position, int32_t &realtime_tick);
   void writeDynamixelRegister(uint8_t id, uint16_t addr, uint16_t length, int32_t value);
   void readDynamixelRegister(uint8_t id, uint16_t addr, uint16_t length);
+  bool syncWriteDynamixelRegister(uint16_t addr, uint16_t length, int64_t left_wheel_value, int64_t right_wheel_value);
+  bool syncReadDynamixelRegister(uint16_t addr, uint16_t length, int32_t &left_value, int32_t &right_value);
 };
 }
 

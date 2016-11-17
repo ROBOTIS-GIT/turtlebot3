@@ -1,5 +1,13 @@
 <?xml version="1.0" ?>
-<robot name="turtlebot3">
+<robot name="turtlebot3" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:property name="astra_cam_px" value="0.13"/>
+  <xacro:property name="astra_cam_py" value="0.008"/>
+  <xacro:property name="astra_cam_pz" value="0.06"/>
+  <xacro:property name="astra_depth_rel_rgb_py" value="0.0250" />
+  <xacro:property name="astra_cam_rel_rgb_py"   value="-0.0125" />
+  <xacro:property name="astra_dae_display_scale"   value="0.5" />
+  <xacro:property name="M_PI" value="3.1415926535897931" />
 
   <material name="black">
     <color rgba="0.0 0.0 0.0 1.0"/>
@@ -20,7 +28,7 @@
     <visual>
       <origin xyz="0.06 0 0.007" rpy="0 0 0"/>
       <geometry>
-        <box size="0.18 0.12 0.08"/>
+        <box size="0.18 0.12 0.04"/>
       </geometry>
     </visual>
     <collision>
@@ -98,34 +106,61 @@
     </inertial>
   </link>
 
-  <joint name="scan_joint" type="fixed">
-    <origin xyz="0 0 0.097" rpy="0 0 0"/>
-    <axis xyz="0 0 0"/>
+  <joint name="camera_rgb_joint" type="fixed">
+    <origin xyz="${astra_cam_px} ${astra_cam_py} ${astra_cam_pz}"
+            rpy="0 0 0"/>
     <parent link="base_link"/>
-    <child link="base_scan"/>
+    <child link="camera_rgb_frame" />
   </joint>
+  <link name="camera_rgb_frame"/>
 
-  <link name="base_scan">
+  <joint name="camera_rgb_optical_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
+    <parent link="camera_rgb_frame" />
+    <child link="camera_rgb_optical_frame" />
+  </joint>
+  <link name="camera_rgb_optical_frame"/>
+
+  <joint name="camera_joint" type="fixed">
+    <origin xyz="0 ${astra_cam_rel_rgb_py} 0"
+            rpy="0 0 0"/>
+    <parent link="camera_rgb_frame"/>
+    <child link="camera_link"/>
+  </joint>
+  <link name="camera_link">
     <visual>
-      <origin xyz="0 0 -0.02" rpy="0 0 0"/>
+      <origin xyz="0 0 0" rpy="${M_PI/2} 0 ${M_PI/2}"/>
       <geometry>
-        <cylinder length="0.06" radius="0.035"/>
+        <mesh filename="package://turtlebot3_description/meshes/sensors/astra.dae" scale="${astra_dae_display_scale} ${astra_dae_display_scale} ${astra_dae_display_scale}"/>
       </geometry>
-      <material name="black"/>
     </visual>
     <collision>
-      <origin rpy="0 0 -0.02" xyz="0 0 0"/>
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
       <geometry>
-        <cylinder length="0.06" radius="0.035"/>
-      </geometry>
+      <box size="0.0400 0.1650 0.0300"/>
+    </geometry>
     </collision>
     <inertial>
-      <mass value="0.01" />
+      <mass value="0.564" />
       <origin xyz="0 0 0" />
-      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
-               iyy="0.001" iyz="0.0"
-               izz="0.001" />
+      <inertia ixx="0.003881243" ixy="0.0" ixz="0.0"
+               iyy="0.000498940" iyz="0.0"
+               izz="0.003879257" />
     </inertial>
   </link>
+
+  <joint name="camera_depth_joint" type="fixed">
+    <origin xyz="0 ${astra_depth_rel_rgb_py} 0" rpy="0 0 0" />
+    <parent link="camera_rgb_frame" />
+    <child link="camera_depth_frame" />
+  </joint>
+  <link name="camera_depth_frame"/>
+
+  <joint name="camera_depth_optical_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
+    <parent link="camera_depth_frame" />
+    <child link="camera_depth_optical_frame" />
+  </joint>
+  <link name="camera_depth_optical_frame"/>
 
 </robot>

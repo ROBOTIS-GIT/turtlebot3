@@ -107,8 +107,7 @@ void Turtlebot3::advertiseTopics(ros::NodeHandle& nh)
 void Turtlebot3::subscribeTopics(ros::NodeHandle& nh)
 {
   this->subscriber["velocity"] = nh.subscribe("cmd_vel", 10, &Turtlebot3::subscribeVelocityCommand, this);
-  this->subscriber["left_encoder"]  = nh.subscribe("left_wheel_position", 10, &Turtlebot3::subscribeLeftEncoder, this);
-  this->subscriber["right_encoder"] = nh.subscribe("right_wheel_position", 10, &Turtlebot3::subscribeRightEncoder, this);
+  this->subscriber["encoder"]  = nh.subscribe("wheel_position", 10, &Turtlebot3::subscribeEncoder, this);
 }
 
 void Turtlebot3::subscribeVelocityCommand(const geometry_msgs::TwistConstPtr msg)
@@ -118,10 +117,11 @@ void Turtlebot3::subscribeVelocityCommand(const geometry_msgs::TwistConstPtr msg
   this->wheel_speed_cmd[RIGHT] = msg->linear.x + (msg->angular.z * this->wheel_separation / 2);
 }
 
-void Turtlebot3::subscribeLeftEncoder(const turtlebot3_msgs::DynamixelFeedbackConstPtr left_encoder)
+
+void Turtlebot3::subscribeEncoder(const turtlebot3_msgs::DynamixelFeedbackConstPtr encoder)
 {
-  int32_t current_tick = left_encoder->position;
-  int32_t current_realtime_tick = left_encoder->realtime_tick;
+  int32_t current_tick = encoder->position1;
+  int32_t current_realtime_tick = encoder->realtime_tick1;
 
   if (!init_left_encoder_)
   {
@@ -142,12 +142,9 @@ void Turtlebot3::subscribeLeftEncoder(const turtlebot3_msgs::DynamixelFeedbackCo
   last_realtime_tick_left_ = current_realtime_tick;
 
   //ROS_INFO_STREAM("Left : [diff_tick]" << last_tick_left_ << "," << last_diff_tick_left_ << "," << last_rad_left_ << "," << last_diff_realtime_tick_left_);
-}
 
-void Turtlebot3::subscribeRightEncoder(const turtlebot3_msgs::DynamixelFeedbackConstPtr right_encoder)
-{
-  int32_t current_tick = right_encoder->position;
-  int32_t current_realtime_tick = right_encoder->realtime_tick;
+  current_tick = encoder->position2;
+  current_realtime_tick = encoder->realtime_tick2;
 
   if (!init_right_encoder_)
   {

@@ -49,10 +49,11 @@ Turtlebot3DiffDriver::Turtlebot3DiffDriver()
 
   //Init target name
   ROS_ASSERT(initTurtlebot3DiffDriver());
+  position_pub_ = nh_.advertise<turtlebot3_msgs::DynamixelFeedback>("/wheel_position", 10);
   velocity_sub1_ = nh_.subscribe("/left_wheel_speed", 1, &Turtlebot3DiffDriver::velocityCallback1, this);
   velocity_sub2_ = nh_.subscribe("/right_wheel_speed", 1, &Turtlebot3DiffDriver::velocityCallback2, this);
-  position_pub1_ = nh_.advertise<turtlebot3_msgs::DynamixelFeedback>("/left_wheel_position", 10);
-  position_pub2_ = nh_.advertise<turtlebot3_msgs::DynamixelFeedback>("/right_wheel_position", 10);
+//  position_pub1_ = nh_.advertise<turtlebot3_msgs::DynamixelFeedback>("/left_wheel_position", 10);
+//  position_pub2_ = nh_.advertise<turtlebot3_msgs::DynamixelFeedback>("/right_wheel_position", 10);
 
   // Initialize PortHandler instance
   // Set the port path
@@ -227,22 +228,123 @@ void Turtlebot3DiffDriver::readDynamixelRegister(uint8_t id, uint16_t addr, uint
 void Turtlebot3DiffDriver::checkLoop(void)
 {
   turtlebot3_msgs::DynamixelFeedback feedback;
+  bool dxl_comm_result1, dxl_comm_result2;
 
-  writeDynamixelRegister(dxl_left_id_, ADDR_XM_GOAL_VELOCITY, 4, (int32_t)lin_vel1_);
-  ROS_INFO("[ID] %u, [Goal Value] %d", dxl_left_id_, (int32_t)lin_vel1_);
-  writeDynamixelRegister(dxl_right_id_, ADDR_XM_GOAL_VELOCITY, 4, -(int32_t)lin_vel2_);
-  ROS_INFO("[ID] %u, [Goal Value] %d", dxl_right_id_, -(int32_t)lin_vel2_);
+  dxl_comm_result1 = false;
+  dxl_comm_result1 = syncWriteDynamixelRegister(ADDR_XM_GOAL_VELOCITY, 4, (int64_t)lin_vel1_, -(int64_t)lin_vel2_);
+  if (dxl_comm_result1 == false)
+  {
+    ROS_ERROR("syncWriteDynamixelRegister failed");
+  }
 
-  readDynamixelRegister(dxl_left_id_, ADDR_XM_PRESENT_VELOCITY, 4);
-  readDynamixelRegister(dxl_right_id_, ADDR_XM_PRESENT_VELOCITY, 4);
+  dxl_comm_result1 = dxl_comm_result2 = false;
+  dxl_comm_result1 = syncReadDynamixelRegister(ADDR_XM_PRESENT_POSITION, 4, feedback.position1, feedback.position2);
+  dxl_comm_result2 = syncReadDynamixelRegister(ADDR_XM_REALTIME_TICK, 4, feedback.realtime_tick1, feedback.realtime_tick2);
+  if ((dxl_comm_result2 == true) && (dxl_comm_result2 == true))
+  {
+    position_pub_.publish(feedback);
+  }
+  else
+  {
+    ROS_ERROR("syncReadDynamixelRegister failed");
+  }
 
-  readPosition(dxl_left_id_, feedback.position, feedback.realtime_tick);
-  position_pub1_.publish(feedback);
+//  readDynamixelRegister(dxl_left_id_, ADDR_XM_PRESENT_VELOCITY, 4);
+//  readDynamixelRegister(dxl_right_id_, ADDR_XM_PRESENT_VELOCITY, 4);
 
-  readPosition(dxl_right_id_, feedback.position, feedback.realtime_tick);
-  position_pub2_.publish(feedback);
+//  dxl_comm_result = false;
+//  dxl_comm_result = readPosition(dxl_left_id_, feedback.position, feedback.realtime_tick);
+//  if (dxl_comm_result == true) position_pub1_.publish(feedback);
 
+//  dxl_comm_result = false;
+//  dxl_comm_result = readPosition(dxl_right_id_, feedback.position, feedback.realtime_tick);
+//  if (dxl_comm_result == true) position_pub2_.publish(feedback);
 }
+
+
+bool Turtlebot3DiffDriver::syncWriteDynamixelRegister(uint16_t addr, uint16_t length, int64_t left_wheel_value, int64_t right_wheel_value)
+{
+  bool dxl_addparam_result_;
+  int8_t dxl_comm_result_;
+
+  dynamixel::GroupSyncWrite groupSyncWrite(portHandler_, packetHandler_, addr, length);
+
+  dxl_addparam_result_ = groupSyncWrite.addParam(dxl_left_id_, (uint8_t*)&left_wheel_value);
+  if (dxl_addparam_result_ != true)
+  {
+    ROS_ERROR("[ID:%03d] groupSyncWrite addparam failed", dxl_left_id_);
+    return false;
+  }
+
+  dxl_addparam_result_ = groupSyncWrite.addParam(dxl_right_id_, (uint8_t*)&right_wheel_value);
+  if (dxl_addparam_result_ != true)
+  {
+    ROS_ERROR("[ID:%03d] groupSyncWrite addparam failed", dxl_right_id_);
+    return false;
+  }
+
+  dxl_comm_result_ = groupSyncWrite.txPacket();
+
+  if (dxl_comm_result_ != COMM_SUCCESS)
+  {
+    packetHandler_->printTxRxResult(dxl_comm_result_);
+    return false;
+  }
+
+  groupSyncWrite.clearParam();
+  return true;
+}
+
+
+bool Turtlebot3DiffDriver::syncReadDynamixelRegister(uint16_t addr, uint16_t length, int32_t &left_value, int32_t &right_value)
+{
+  int dxl_comm_result = COMM_TX_FAIL;              // Communication result
+  bool dxl_addparam_result = false;                // addParam result
+  bool dxl_getdata_result = false;                 // GetParam result
+
+  dynamixel::GroupSyncRead groupSyncRead(portHandler_, packetHandler_, addr, length);
+
+  // Set parameter
+  dxl_addparam_result = groupSyncRead.addParam(dxl_left_id_);
+  if (dxl_addparam_result != true)
+  {
+    fprintf(stderr, "[ID:%03d] groupSyncRead addparam failed", dxl_left_id_);
+    return false;
+  }
+
+  dxl_addparam_result = groupSyncRead.addParam(dxl_right_id_);
+  if (dxl_addparam_result != true)
+  {
+    fprintf(stderr, "[ID:%03d] groupSyncRead addparam failed", dxl_right_id_);
+    return false;
+  }
+
+  // Syncread present position
+  dxl_comm_result = groupSyncRead.txRxPacket();
+  if (dxl_comm_result != COMM_SUCCESS) packetHandler_->printTxRxResult(dxl_comm_result);
+
+  // Check if groupsyncread data of Dynamixels are available
+  dxl_getdata_result = groupSyncRead.isAvailable(dxl_left_id_, addr, length);
+  if (dxl_getdata_result != true)
+  {
+    fprintf(stderr, "[ID:%03d] groupSyncRead getdata failed", dxl_left_id_);
+    return false;
+  }
+
+  dxl_getdata_result = groupSyncRead.isAvailable(dxl_right_id_, addr, length);
+  if (dxl_getdata_result != true)
+  {
+    fprintf(stderr, "[ID:%03d] groupSyncRead getdata failed", dxl_right_id_);
+    return false;
+  }
+
+  // Get data
+  left_value  = groupSyncRead.getData(dxl_left_id_,  addr, length);
+  right_value = groupSyncRead.getData(dxl_right_id_, addr, length);
+
+  return true;
+}
+
 
 void Turtlebot3DiffDriver::closeDynamixel(void)
 {
