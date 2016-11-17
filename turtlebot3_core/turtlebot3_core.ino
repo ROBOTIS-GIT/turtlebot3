@@ -237,29 +237,57 @@ void publish_imu_msg(void)
   imu_msg.angular_velocity.x = imu.SEN.gyroRAW[0];
   imu_msg.angular_velocity.y = imu.SEN.gyroRAW[1];
   imu_msg.angular_velocity.z = imu.SEN.gyroRAW[2];
+  imu_msg.angular_velocity_covariance[0] = 0.02;
+  imu_msg.angular_velocity_covariance[1] = 0;
+  imu_msg.angular_velocity_covariance[2] = 0;
+  imu_msg.angular_velocity_covariance[3] = 0;
+  imu_msg.angular_velocity_covariance[4] = 0.02;
+  imu_msg.angular_velocity_covariance[5] = 0;
+  imu_msg.angular_velocity_covariance[6] = 0;
+  imu_msg.angular_velocity_covariance[7] = 0;
+  imu_msg.angular_velocity_covariance[8] = 0.02;
 
   imu_msg.linear_acceleration.x = imu.SEN.accRAW[0];
   imu_msg.linear_acceleration.y = imu.SEN.accRAW[1];
   imu_msg.linear_acceleration.z = imu.SEN.accRAW[2];
+  imu_msg.linear_acceleration_covariance[0] = 0.04;
+  imu_msg.linear_acceleration_covariance[1] = 0;
+  imu_msg.linear_acceleration_covariance[2] = 0;
+  imu_msg.linear_acceleration_covariance[3] = 0;
+  imu_msg.linear_acceleration_covariance[4] = 0.04;
+  imu_msg.linear_acceleration_covariance[5] = 0;
+  imu_msg.linear_acceleration_covariance[6] = 0;
+  imu_msg.linear_acceleration_covariance[7] = 0;
+  imu_msg.linear_acceleration_covariance[8] = 0.04;
 
-  float cr2 = cos(imu.angle[0]/20);
-  float cp2 = cos(imu.angle[1]/20);
-  float cy2 = cos(imu.angle[2]/20);
-  float sr2 = sin(imu.angle[0]/20);
-  float sp2 = sin(imu.angle[1]/20);
-  float sy2 = sin(imu.angle[2]/20);
+  float c1 = cos(DEG2RAD(imu.angle[0]/10)/2);
+  float s1 = sin(DEG2RAD(imu.angle[0]/10)/2);
+  float c2 = cos(DEG2RAD(imu.angle[1]/10)/2);
+  float s2 = sin(DEG2RAD(imu.angle[1]/10)/2);
+  float c3 = cos(DEG2RAD(imu.angle[2])/2);
+  float s3 = sin(DEG2RAD(imu.angle[2])/2);
 
-  float q1, q2, q3, q4;
+  float c1c2 = c1 * c2;
+  float s1s2 = s1 * s2;
 
-  q1 = cr2*cp2*cy2 + sr2*sp2*sy2;
-  q2 = sr2*cp2*cy2 - cr2*sp2*sy2;
-  q3 = cr2*sp2*cy2 + sr2*cp2*sy2;
-  q4 = cr2*cp2*sy2 - sr2*sp2*cy2;
+  float q1 = c1c2 * s3  + s1s2 * c3;
+  float q2 = s1 * c2 * c3 + c1 * s2 * s3;
+  float q3 = c1 * s2 * c3 - s1 * c2 * s3;
+  float q4 = c1c2 * c3  - s1s2 * s3;
 
   imu_msg.orientation.x = q1;
   imu_msg.orientation.y = q2;
   imu_msg.orientation.z = q3;
   imu_msg.orientation.w = q4;
+  imu_msg.orientation_covariance[0] = 0.0025;
+  imu_msg.orientation_covariance[1] = 0;
+  imu_msg.orientation_covariance[2] = 0;
+  imu_msg.orientation_covariance[3] = 0;
+  imu_msg.orientation_covariance[4] = 0.0025;
+  imu_msg.orientation_covariance[5] = 0;
+  imu_msg.orientation_covariance[6] = 0;
+  imu_msg.orientation_covariance[7] = 0;
+  imu_msg.orientation_covariance[8] = 0.0025;
 
   imu_pub.publish(&imu_msg);
 
