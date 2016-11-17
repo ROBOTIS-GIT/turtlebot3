@@ -67,6 +67,9 @@
 
 #define TICK2RAD                        0.00153589f  // 0.088[deg] * 3.14159265359 / 180 = 0.00153589
 
+#define DEG2RAD(x) (x * 0.01745329252)  // *PI/180
+#define RAD2DEG(x) (x * 57.2957795131)  // *180/PI
+
 typedef struct
 {
   uint8_t addr;
