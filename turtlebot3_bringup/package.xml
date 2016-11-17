@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package>
+  <name>turtlebot3_bringup</name>
+  <version>0.1.0</version>
+  <description>The turtlebot3_bringup package</description>
+  <license>BSD</license>
+  <author email="pyo@robotis.com">pyo</author>
+  <maintainer email="pyo@robotis.com">pyo</maintainer>
+  <url type="bugtracker">https://github.com/ROBOTIS-GIT/turtlebot3/issues</url>
+  <url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3</url>
+  <url type="website">http://wiki.ros.org/turtlebot3</url>
+  <buildtool_depend>catkin</buildtool_depend>
+  <export></export>
+</package>

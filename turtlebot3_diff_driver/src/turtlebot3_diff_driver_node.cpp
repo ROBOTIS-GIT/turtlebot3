@@ -1,0 +1,416 @@
+/*******************************************************************************
+* Copyright (c) 2016, ROBOTIS CO., LTD.
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are met:
+*
+* * Redistributions of source code must retain the above copyright notice, this
+*   list of conditions and the following disclaimer.
+*
+* * Redistributions in binary form must reproduce the above copyright notice,
+*   this list of conditions and the following disclaimer in the documentation
+*   and/or other materials provided with the distribution.
+*
+* * Neither the name of ROBOTIS nor the names of its
+*   contributors may be used to endorse or promote products derived from
+*   this software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+* AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+* IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+* FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+* DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+* SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+* CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+* OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*******************************************************************************/
+
+/* Author: Yoonseok Pyo, leon */
+
+#include "turtlebot3_diff_driver/turtlebot3_diff_driver.h"
+
+using namespace turtlebot3_diff_driver;
+
+Turtlebot3DiffDriver::Turtlebot3DiffDriver()
+: nh_priv_("~"),
+  lin_vel1_(0),
+  lin_vel2_(0),
+  dxl_left_id_(1),
+  dxl_right_id_(2),
+  device_name_(DEVICENAME),
+  is_debug_(false)
+{
+  //Init parameter
+  nh_priv_.param("is_debug", is_debug_, is_debug_);
+  nh_priv_.param("device_name", device_name_, device_name_);
+
+  //Init target name
+  ROS_ASSERT(initTurtlebot3DiffDriver());
+  position_pub_ = nh_.advertise<turtlebot3_msgs::DynamixelFeedback>("/wheel_position", 10);
+  velocity_sub1_ = nh_.subscribe("/left_wheel_speed", 1, &Turtlebot3DiffDriver::velocityCallback1, this);
+  velocity_sub2_ = nh_.subscribe("/right_wheel_speed", 1, &Turtlebot3DiffDriver::velocityCallback2, this);
+//  position_pub1_ = nh_.advertise<turtlebot3_msgs::DynamixelFeedback>("/left_wheel_position", 10);
+//  position_pub2_ = nh_.advertise<turtlebot3_msgs::DynamixelFeedback>("/right_wheel_position", 10);
+
+  // Initialize PortHandler instance
+  // Set the port path
+  // Get methods and members of PortHandlerLinux
+  portHandler_   = dynamixel::PortHandler::getPortHandler(DEVICENAME);
+
+  // Initialize Packethandler instance
+  // Set the protocol version
+  // Get methods and members of Protocol1PacketHandler or Protocol2PacketHandler
+  packetHandler_ = dynamixel::PacketHandler::getPacketHandler(PROTOCOL_VERSION);
+
+  // Open port
+  if( portHandler_->openPort() )
+  {
+      ROS_INFO("Succeeded to open the port!");
+  }
+  else
+  {
+      ROS_ERROR("Failed to open the port!");
+      shutdownTurtlebot3DiffDriver();
+  }
+
+  // Set port baudrate
+  if( portHandler_->setBaudRate(BAUDRATE) )
+  {
+      ROS_INFO("Succeeded to change the baudrate!");
+  }
+  else
+  {
+      ROS_ERROR("Failed to change the baudrate!");
+      shutdownTurtlebot3DiffDriver();
+  }
+
+  // Enable Dynamixel Torque
+  setTorque(dxl_left_id_, true);
+  setTorque(dxl_right_id_, true);
+}
+
+Turtlebot3DiffDriver::~Turtlebot3DiffDriver()
+{
+  ROS_ASSERT(shutdownTurtlebot3DiffDriver());
+}
+
+bool Turtlebot3DiffDriver::setTorque(uint8_t id, bool onoff)
+{
+  uint8_t dxl_error = 0;
+  int dxl_comm_result = COMM_TX_FAIL;
+
+  dxl_comm_result = packetHandler_->write1ByteTxRx(portHandler_, id, ADDR_XM_TORQUE_ENABLE, onoff, &dxl_error);
+  if(dxl_comm_result != COMM_SUCCESS)
+      packetHandler_->printTxRxResult(dxl_comm_result);
+  else if(dxl_error != 0)
+      packetHandler_->printRxPacketError(dxl_error);
+}
+
+bool Turtlebot3DiffDriver::readPosition(uint8_t id, int32_t &position, int32_t &realtime_tick)
+{
+  uint8_t dxl_error = 0;
+  int dxl_comm_result = COMM_TX_FAIL;
+  int32_t dxl_present_position = 0;
+  int32_t dxl_realtime_tick = 0;
+
+  dxl_comm_result = packetHandler_->read4ByteTxRx(portHandler_, id, ADDR_XM_PRESENT_POSITION, (uint32_t*)&dxl_present_position, &dxl_error);
+
+  if(dxl_comm_result != COMM_SUCCESS)
+  {
+      packetHandler_->printTxRxResult(dxl_comm_result);
+      return false;
+  }
+  else if(dxl_error != 0)
+  {
+      packetHandler_->printRxPacketError(dxl_error);
+      return false;
+  }
+
+  dxl_comm_result = packetHandler_->read2ByteTxRx(portHandler_, id, ADDR_XM_REALTIME_TICK, (uint16_t*)&dxl_realtime_tick, &dxl_error);
+
+  if(dxl_comm_result != COMM_SUCCESS)
+  {
+      packetHandler_->printTxRxResult(dxl_comm_result);
+      return false;
+  }
+  else if(dxl_error != 0)
+  {
+      packetHandler_->printRxPacketError(dxl_error);
+      return false;
+  }
+
+  position = dxl_present_position;
+  realtime_tick = dxl_realtime_tick;
+
+  return true;
+}
+
+void Turtlebot3DiffDriver::writeDynamixelRegister(uint8_t id, uint16_t addr, uint16_t length, int32_t value)
+{
+  uint8_t dxl_error = 0;
+  int dxl_comm_result = COMM_TX_FAIL;
+
+  if (length == 1)
+  {
+    dxl_comm_result = packetHandler_->write1ByteTxRx(portHandler_, id, addr, (int8_t)value, &dxl_error);
+  }
+  else if (length == 2)
+  {
+    dxl_comm_result = packetHandler_->write2ByteTxRx(portHandler_, id, addr, (int16_t)value, &dxl_error);
+  }
+  else if (length == 4)
+  {
+    dxl_comm_result = packetHandler_->write4ByteTxRx(portHandler_, id, addr, (int32_t)value, &dxl_error);
+  }
+
+  if (dxl_comm_result == COMM_SUCCESS)
+  {
+    if (dxl_error != 0)
+      packetHandler_->printRxPacketError(dxl_error);
+  }
+  else
+  {
+    packetHandler_->printTxRxResult(dxl_comm_result);
+    ROS_ERROR("[ID] %u, Fail to write!",id);
+  }
+}
+
+void Turtlebot3DiffDriver::readDynamixelRegister(uint8_t id, uint16_t addr, uint16_t length)
+{
+  uint8_t dxl_error = 0;
+  int     dxl_comm_result = COMM_TX_FAIL;
+
+  int8_t  value8    = 0;
+  int16_t value16   = 0;
+  int32_t value32   = 0;
+
+
+  if (length == 1)
+  {
+    dxl_comm_result = packetHandler_->read1ByteTxRx(portHandler_, id, addr, (uint8_t*)&value8, &dxl_error);
+  }
+  else if (length == 2)
+  {
+    dxl_comm_result = packetHandler_->read2ByteTxRx(portHandler_, id, addr, (uint16_t*)&value16, &dxl_error);
+  }
+  else if (length == 4)
+  {
+    dxl_comm_result = packetHandler_->read4ByteTxRx(portHandler_, id, addr, (uint32_t*)&value32, &dxl_error);
+  }
+
+  if (dxl_comm_result == COMM_SUCCESS)
+  {
+    if (dxl_error != 0) packetHandler_->printRxPacketError(dxl_error);
+
+    if (length == 1)
+    {
+      ROS_INFO("[ID] %u, [Present Value] %d", id, value8);
+    }
+    else if (length == 2)
+    {
+      ROS_INFO("[ID] %u, [Present Value] %d", id, value16);
+    }
+    else if (length == 4)
+    {
+      ROS_INFO("[ID] %u, [Present Value] %d", id, value32);
+    }
+  }
+  else
+  {
+    packetHandler_->printTxRxResult(dxl_comm_result);
+    ROS_ERROR("[ID] %u, Fail to read!", id);
+  }
+}
+
+void Turtlebot3DiffDriver::checkLoop(void)
+{
+  turtlebot3_msgs::DynamixelFeedback feedback;
+  bool dxl_comm_result1, dxl_comm_result2;
+
+  dxl_comm_result1 = false;
+  dxl_comm_result1 = syncWriteDynamixelRegister(ADDR_XM_GOAL_VELOCITY, 4, (int64_t)lin_vel1_, -(int64_t)lin_vel2_);
+  if (dxl_comm_result1 == false)
+  {
+    ROS_ERROR("syncWriteDynamixelRegister failed");
+  }
+
+  dxl_comm_result1 = dxl_comm_result2 = false;
+  dxl_comm_result1 = syncReadDynamixelRegister(ADDR_XM_PRESENT_POSITION, 4, feedback.position1, feedback.position2);
+  dxl_comm_result2 = syncReadDynamixelRegister(ADDR_XM_REALTIME_TICK, 4, feedback.realtime_tick1, feedback.realtime_tick2);
+  if ((dxl_comm_result2 == true) && (dxl_comm_result2 == true))
+  {
+    position_pub_.publish(feedback);
+  }
+  else
+  {
+    ROS_ERROR("syncReadDynamixelRegister failed");
+  }
+
+//  readDynamixelRegister(dxl_left_id_, ADDR_XM_PRESENT_VELOCITY, 4);
+//  readDynamixelRegister(dxl_right_id_, ADDR_XM_PRESENT_VELOCITY, 4);
+
+//  dxl_comm_result = false;
+//  dxl_comm_result = readPosition(dxl_left_id_, feedback.position, feedback.realtime_tick);
+//  if (dxl_comm_result == true) position_pub1_.publish(feedback);
+
+//  dxl_comm_result = false;
+//  dxl_comm_result = readPosition(dxl_right_id_, feedback.position, feedback.realtime_tick);
+//  if (dxl_comm_result == true) position_pub2_.publish(feedback);
+}
+
+
+bool Turtlebot3DiffDriver::syncWriteDynamixelRegister(uint16_t addr, uint16_t length, int64_t left_wheel_value, int64_t right_wheel_value)
+{
+  bool dxl_addparam_result_;
+  int8_t dxl_comm_result_;
+
+  dynamixel::GroupSyncWrite groupSyncWrite(portHandler_, packetHandler_, addr, length);
+
+  dxl_addparam_result_ = groupSyncWrite.addParam(dxl_left_id_, (uint8_t*)&left_wheel_value);
+  if (dxl_addparam_result_ != true)
+  {
+    ROS_ERROR("[ID:%03d] groupSyncWrite addparam failed", dxl_left_id_);
+    return false;
+  }
+
+  dxl_addparam_result_ = groupSyncWrite.addParam(dxl_right_id_, (uint8_t*)&right_wheel_value);
+  if (dxl_addparam_result_ != true)
+  {
+    ROS_ERROR("[ID:%03d] groupSyncWrite addparam failed", dxl_right_id_);
+    return false;
+  }
+
+  dxl_comm_result_ = groupSyncWrite.txPacket();
+
+  if (dxl_comm_result_ != COMM_SUCCESS)
+  {
+    packetHandler_->printTxRxResult(dxl_comm_result_);
+    return false;
+  }
+
+  groupSyncWrite.clearParam();
+  return true;
+}
+
+
+bool Turtlebot3DiffDriver::syncReadDynamixelRegister(uint16_t addr, uint16_t length, int32_t &left_value, int32_t &right_value)
+{
+  int dxl_comm_result = COMM_TX_FAIL;              // Communication result
+  bool dxl_addparam_result = false;                // addParam result
+  bool dxl_getdata_result = false;                 // GetParam result
+
+  dynamixel::GroupSyncRead groupSyncRead(portHandler_, packetHandler_, addr, length);
+
+  // Set parameter
+  dxl_addparam_result = groupSyncRead.addParam(dxl_left_id_);
+  if (dxl_addparam_result != true)
+  {
+    fprintf(stderr, "[ID:%03d] groupSyncRead addparam failed", dxl_left_id_);
+    return false;
+  }
+
+  dxl_addparam_result = groupSyncRead.addParam(dxl_right_id_);
+  if (dxl_addparam_result != true)
+  {
+    fprintf(stderr, "[ID:%03d] groupSyncRead addparam failed", dxl_right_id_);
+    return false;
+  }
+
+  // Syncread present position
+  dxl_comm_result = groupSyncRead.txRxPacket();
+  if (dxl_comm_result != COMM_SUCCESS) packetHandler_->printTxRxResult(dxl_comm_result);
+
+  // Check if groupsyncread data of Dynamixels are available
+  dxl_getdata_result = groupSyncRead.isAvailable(dxl_left_id_, addr, length);
+  if (dxl_getdata_result != true)
+  {
+    fprintf(stderr, "[ID:%03d] groupSyncRead getdata failed", dxl_left_id_);
+    return false;
+  }
+
+  dxl_getdata_result = groupSyncRead.isAvailable(dxl_right_id_, addr, length);
+  if (dxl_getdata_result != true)
+  {
+    fprintf(stderr, "[ID:%03d] groupSyncRead getdata failed", dxl_right_id_);
+    return false;
+  }
+
+  // Get data
+  left_value  = groupSyncRead.getData(dxl_left_id_,  addr, length);
+  right_value = groupSyncRead.getData(dxl_right_id_, addr, length);
+
+  return true;
+}
+
+
+void Turtlebot3DiffDriver::closeDynamixel(void)
+{
+  // Disable Dynamixel Torque
+  setTorque(dxl_left_id_, false);
+  setTorque(dxl_right_id_, false);
+
+  // Close port
+  portHandler_->closePort();
+}
+
+bool Turtlebot3DiffDriver::initTurtlebot3DiffDriver()
+{
+  ROS_INFO("turtlebot3_diff_driver_node : Init OK!");
+  return true;
+}
+
+bool Turtlebot3DiffDriver::shutdownTurtlebot3DiffDriver()
+{
+  return true;
+}
+
+void Turtlebot3DiffDriver::velocityCallback1(const geometry_msgs::Twist::ConstPtr& vel)
+{
+  lin_vel1_ = vel->linear.x * 1263.632956882;
+
+  if (lin_vel1_ > 450)
+  {
+    lin_vel1_ = 450;
+  }
+  else if (lin_vel1_ < -450)
+  {
+    lin_vel1_ = -450;
+  }
+}
+
+void Turtlebot3DiffDriver::velocityCallback2(const geometry_msgs::Twist::ConstPtr& vel)
+{
+  lin_vel2_ = vel->linear.x * 1263.632956882;
+
+  if (lin_vel2_ > 450)
+  {
+    lin_vel2_ = 450;
+  }
+  else if (lin_vel2_ < -450)
+  {
+    lin_vel2_ = -450;
+  }
+}
+
+int main(int argc, char **argv)
+{
+  //Init ROS node
+  ros::init(argc, argv, "turtlebot3_diff_driver_node");
+  Turtlebot3DiffDriver dc;
+  ros::Rate loop_rate(50);
+
+  while(ros::ok())
+  {
+    dc.checkLoop();
+
+    ros::spinOnce();
+    loop_rate.sleep();
+  }
+
+  dc.closeDynamixel();
+
+  return 0;
+}
