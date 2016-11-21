@@ -63,8 +63,6 @@ tf::TransformBroadcaster tfbroadcaster;
 *******************************************************************************/
 HardwareTimer timer_sensors_state(TIMER_CH1);
 HardwareTimer timer_imu(TIMER_CH2);
-// HardwareTimer timer_cmd_velocity(TIMER_CH3);
-// HardwareTimer timer_control_motor_speed(TIMER_CH4);
 
 /*******************************************************************************
 * SoftwareTimer for * of Turtlebot3
@@ -75,7 +73,6 @@ static uint32_t tTime[3];
 * Declaration for motor
 *******************************************************************************/
 Turtlebot3MotorDriver motor_driver;
-double wheel_speed_cmd[2];
 bool init_encoder_[2]  = {false, false};
 int32_t last_diff_tick_[2];
 int32_t last_tick_[2];
@@ -93,26 +90,14 @@ cIMU imu;
 * Declaration for Remocon (RC100)
 *******************************************************************************/
 RC100 remote_controller;
-int received_data = 0;
-int vel[4] = {DXL_LEFT_ID, 0, DXL_RIGHT_ID, 0};
-int const_vel = 150;
-double const_cmd_vel = 0.2;
-bool rc100_remocon_mode      = false;
+double const_cmd_vel    = 0.2;
 
 /*******************************************************************************
 * Declaration for SLAM and navigation
 *******************************************************************************/
-float odom_pose[3];
-float odom_vel[3];
-double pose_cov[36];
-
 unsigned long prev_update_time;
-double cmd_vel_timeout = 1.0; //sec
-
+float odom_pose[3];
 char *joint_states_name[] = {"wheel_left_joint", "wheel_right_joint"};
-float joint_states_pos[2] = {0.0, 0.0};
-float joint_states_vel[2] = {0.0, 0.0};
-float joint_states_eff[2] = {0.0, 0.0};
 
 /*******************************************************************************
 * Setup function
@@ -130,7 +115,7 @@ void setup()
   nh.advertise(joint_states_pub);
   tfbroadcaster.init(nh);
 
-  nh.loginfo("Connected to OpenCR...");
+  nh.loginfo("Connected to OpenCR board!");
 
   // Setting for Dynamixel motors
   motor_driver.init();
@@ -169,9 +154,6 @@ void setup()
   joint_states.effort_length   = 2;
 
   joint_states.name     = joint_states_name;
-  joint_states.position = joint_states_pos;
-  joint_states.velocity = joint_states_vel;
-  joint_states.effort   = joint_states_eff;
 
   prev_update_time = millis();
 }
@@ -210,7 +192,6 @@ void loop()
 *******************************************************************************/
 void cmd_vel_callback(const geometry_msgs::Twist& cmd_vel_msg)
 {
-  rc100_remocon_mode = false;
   goal_linear_velocity  = cmd_vel_msg.linear.x;
   goal_angular_velocity = cmd_vel_msg.angular.z;
 }
@@ -374,6 +355,8 @@ void publish_drive_information(void)
 *******************************************************************************/
 bool updateOdometry(double diff_time)
 {
+  float odom_vel[3];
+
   double wheel_l, wheel_r; // rotation value of wheel [rad]
   double v, w;             // v = translational velocity [m/s], w = rotational velocity [rad/s]
   double step_time;
@@ -445,6 +428,10 @@ bool updateOdometry(double diff_time)
 *******************************************************************************/
 void updateJoint(void)
 {
+  float joint_states_pos[2] = {0.0, 0.0};
+  float joint_states_vel[2] = {0.0, 0.0};
+  float joint_states_eff[2] = {0.0, 0.0};
+
   joint_states_pos[LEFT]  = last_rad_[LEFT];
   joint_states_pos[RIGHT] = last_rad_[RIGHT];
 
@@ -474,52 +461,49 @@ void updateTF(geometry_msgs::TransformStamped& odom_tf)
 *******************************************************************************/
 void receive_remocon_data(void)
 {
+  int received_data = 0;
+
   if (remote_controller.available())
   {
     received_data = remote_controller.readData();
 
     if(received_data & RC100_BTN_U)
     {
-      rc100_remocon_mode = true;
       cmd_vel_rc100_msg.linear.x  += VELOCITY_LINEAR_X * SCALE_VELOCITY_LINEAR_X;
     }
     else if(received_data & RC100_BTN_D)
     {
-      rc100_remocon_mode = true;
       cmd_vel_rc100_msg.linear.x  -= VELOCITY_LINEAR_X * SCALE_VELOCITY_LINEAR_X;
     }
     else if(received_data & RC100_BTN_L)
     {
-      rc100_remocon_mode = true;
       cmd_vel_rc100_msg.angular.z += VELOCITY_ANGULAR_Z * SCALE_VELOCITY_ANGULAR_Z;
     }
     else if(received_data & RC100_BTN_R)
     {
-      rc100_remocon_mode = true;
       cmd_vel_rc100_msg.angular.z -= VELOCITY_ANGULAR_Z * SCALE_VELOCITY_ANGULAR_Z;
     }
     else if(received_data & RC100_BTN_1)
     {
-      rc100_remocon_mode = true;
       const_cmd_vel += VELOCITY_STEP;
     }
     else if(received_data & RC100_BTN_3)
     {
-      rc100_remocon_mode = true;
       const_cmd_vel -= VELOCITY_STEP;
     }
     else if(received_data & RC100_BTN_6)
     {
-      rc100_remocon_mode = true;
       cmd_vel_rc100_msg.linear.x  = const_cmd_vel;
       cmd_vel_rc100_msg.angular.z = 0.0;
     }
     else if(received_data & RC100_BTN_5)
     {
-      rc100_remocon_mode = true;
       cmd_vel_rc100_msg.linear.x  = 0.0;
       cmd_vel_rc100_msg.angular.z = 0.0;
     }
+
+    goal_linear_velocity  = cmd_vel_rc100_msg.linear.x;
+    goal_angular_velocity = cmd_vel_rc100_msg.angular.z;
   }
 }
 
@@ -528,19 +512,12 @@ void receive_remocon_data(void)
 *******************************************************************************/
 void control_motor_speed(void)
 {
+  double wheel_speed_cmd[2];
   double lin_vel1;
   double lin_vel2;
 
-  if (rc100_remocon_mode)
-  {
-    wheel_speed_cmd[LEFT]  = cmd_vel_rc100_msg.linear.x - (cmd_vel_rc100_msg.angular.z * WHEEL_SEPARATION / 2);
-    wheel_speed_cmd[RIGHT] = cmd_vel_rc100_msg.linear.x + (cmd_vel_rc100_msg.angular.z * WHEEL_SEPARATION / 2);
-  }
-  else
-  {
-    wheel_speed_cmd[LEFT]  = goal_linear_velocity - (goal_angular_velocity * WHEEL_SEPARATION / 2);
-    wheel_speed_cmd[RIGHT] = goal_linear_velocity + (goal_angular_velocity * WHEEL_SEPARATION / 2);
-  }
+  wheel_speed_cmd[LEFT]  = goal_linear_velocity - (goal_angular_velocity * WHEEL_SEPARATION / 2);
+  wheel_speed_cmd[RIGHT] = goal_linear_velocity + (goal_angular_velocity * WHEEL_SEPARATION / 2);
 
   lin_vel1 = wheel_speed_cmd[LEFT] * VELOCITY_CONSTANT_VAULE;
 
@@ -551,6 +528,14 @@ void control_motor_speed(void)
 
   if (lin_vel2 > LIMIT_XM_MAX_VELOCITY)       lin_vel2 =  LIMIT_XM_MAX_VELOCITY;
   else if (lin_vel2 < -LIMIT_XM_MAX_VELOCITY) lin_vel2 = -LIMIT_XM_MAX_VELOCITY;
+
+  #ifdef DEBUG_MODE
+    char log_msg[30];
+    sprintf(log_msg, "linear_velocity L = %d", (int)lin_vel1);
+    nh.loginfo(log_msg);
+    sprintf(log_msg, "linear_velocity R = %d", (int)lin_vel2);
+    nh.loginfo(log_msg);
+  #endif
 
   bool dxl_comm_result = false;
 
