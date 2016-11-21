@@ -70,6 +70,8 @@
 #define DEG2RAD(x) (x * 0.01745329252)  // *PI/180
 #define RAD2DEG(x) (x * 57.2957795131)  // *180/PI
 
+// #define DEBUG_MODE
+
 typedef struct
 {
   uint8_t addr;
