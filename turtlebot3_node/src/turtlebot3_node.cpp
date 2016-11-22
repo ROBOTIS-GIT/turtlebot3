@@ -118,53 +118,9 @@ void Turtlebot3::subscribeVelocityCommand(const geometry_msgs::TwistConstPtr msg
 }
 
 
-void Turtlebot3::subscribeEncoder(const turtlebot3_msgs::DynamixelFeedbackConstPtr encoder)
+void Turtlebot3::subscribeEncoder(const turtlebot3_msgs::SensorStateConstPtr sensor_state)
 {
-  int32_t current_tick = encoder->position1;
-  int32_t current_realtime_tick = encoder->realtime_tick1;
 
-  if (!init_left_encoder_)
-  {
-    last_tick_left_ = current_tick;
-    last_realtime_tick_left_ = current_realtime_tick;
-    init_left_encoder_ = true;
-  }
-
-  last_diff_tick_left_ = current_tick - last_tick_left_;
-  last_tick_left_ = current_tick;
-  last_rad_left_ += tick_to_rad_ * (double)last_diff_tick_left_;
-
-  last_diff_realtime_tick_left_ = current_realtime_tick - last_realtime_tick_left_;
-  if(last_diff_realtime_tick_left_< 0)
-  {
-    last_diff_realtime_tick_left_ += 32768;
-  }
-  last_realtime_tick_left_ = current_realtime_tick;
-
-  //ROS_INFO_STREAM("Left : [diff_tick]" << last_tick_left_ << "," << last_diff_tick_left_ << "," << last_rad_left_ << "," << last_diff_realtime_tick_left_);
-
-  current_tick = encoder->position2;
-  current_realtime_tick = encoder->realtime_tick2;
-
-  if (!init_right_encoder_)
-  {
-    last_tick_right_ = current_tick;
-    last_realtime_tick_right_ = current_realtime_tick;
-    init_right_encoder_ = true;
-  }
-
-  last_diff_tick_right_ = last_tick_right_ - current_tick;
-  last_tick_right_ = current_tick;
-  last_rad_right_ += tick_to_rad_ * (double)last_diff_tick_right_;
-
-  last_diff_realtime_tick_right_ = current_realtime_tick - last_realtime_tick_right_;
-  if(last_diff_realtime_tick_right_< 0)
-  {
-    last_diff_realtime_tick_right_ += 32768;
-  }
-  last_realtime_tick_right_ = current_realtime_tick;
-
-  //ROS_INFO_STREAM("Right : [diff_tick]" << last_diff_tick_right_ << ", [diff_realtime]" << last_diff_realtime_tick_right_);
 }
 
 bool Turtlebot3::updateOdometry(double diff_time)

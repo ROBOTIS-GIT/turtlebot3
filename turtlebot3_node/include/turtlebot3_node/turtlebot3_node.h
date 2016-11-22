@@ -9,7 +9,8 @@
 #include <sensor_msgs/Imu.h>
 #include <tf/transform_broadcaster.h>
 #include <tf/transform_datatypes.h>
-#include <turtlebot3_msgs/DynamixelFeedback.h>
+
+#include <turtlebot3_msgs/SensorState.h>
 
 namespace turtlebot3
 {
@@ -71,7 +72,7 @@ class Turtlebot3
   void advertiseTopics(ros::NodeHandle& nh);
   void subscribeTopics(ros::NodeHandle& nh);
   void subscribeVelocityCommand(const geometry_msgs::TwistConstPtr msg);
-  void subscribeEncoder(const turtlebot3_msgs::DynamixelFeedbackConstPtr encoder);
+  void subscribeEncoder(const turtlebot3_msgs::SensorStateConstPtr sensor_state);
   bool updateOdometry(double diff_time);
   void updateJoint(void);
   void updateTF(geometry_msgs::TransformStamped& odom_tf);
