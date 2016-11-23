@@ -9,7 +9,6 @@ project(turtlebot3_navigation)
 ################################################################################
 find_package(catkin REQUIRED COMPONENTS
   amcl
-  turtlebot3_node
   map_server
   move_base
 )
