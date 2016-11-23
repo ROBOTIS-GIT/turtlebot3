@@ -241,12 +241,12 @@ void publish_imu_msg(void)
   imu_msg.linear_acceleration_covariance[7] = 0;
   imu_msg.linear_acceleration_covariance[8] = 0.04;
 
-  float c1 = cos(DEG2RAD(imu.angle[0]/10)/2);
-  float s1 = sin(DEG2RAD(imu.angle[0]/10)/2);
-  float c2 = cos(DEG2RAD(imu.angle[1]/10)/2);
-  float s2 = sin(DEG2RAD(imu.angle[1]/10)/2);
-  float c3 = cos(DEG2RAD(imu.angle[2])/2);
-  float s3 = sin(DEG2RAD(imu.angle[2])/2);
+  float c1 = cos(DEG2RAD(imu.angle[1]/10)/2);
+  float s1 = sin(DEG2RAD(imu.angle[1]/10)/2);
+  float c2 = cos(DEG2RAD(imu.angle[2])/2);
+  float s2 = sin(DEG2RAD(imu.angle[2])/2);
+  float c3 = cos(DEG2RAD(imu.angle[0]/10)/2);
+  float s3 = sin(DEG2RAD(imu.angle[0]/10)/2);
 
   float c1c2 = c1 * c2;
   float s1s2 = s1 * s2;

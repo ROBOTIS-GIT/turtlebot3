@@ -59,8 +59,8 @@
 
 #define VELOCITY                        10.0
 #define VELOCITY_STEP                   0.02
-#define VELOCITY_LINEAR_X               0.01
-#define VELOCITY_ANGULAR_Z              0.01
+#define VELOCITY_LINEAR_X               0.05
+#define VELOCITY_ANGULAR_Z              0.05
 #define SCALE_VELOCITY_LINEAR_X         1
 #define SCALE_VELOCITY_ANGULAR_Z        1
 
