@@ -98,6 +98,9 @@ double const_cmd_vel    = 0.2;
 unsigned long prev_update_time;
 float odom_pose[3];
 char *joint_states_name[] = {"wheel_left_joint", "wheel_right_joint"};
+float joint_states_pos[2] = {0.0, 0.0};
+float joint_states_vel[2] = {0.0, 0.0};
+float joint_states_eff[2] = {0.0, 0.0};
 
 /*******************************************************************************
 * Setup function
@@ -428,10 +431,6 @@ bool updateOdometry(double diff_time)
 *******************************************************************************/
 void updateJoint(void)
 {
-  float joint_states_pos[2] = {0.0, 0.0};
-  float joint_states_vel[2] = {0.0, 0.0};
-  float joint_states_eff[2] = {0.0, 0.0};
-
   joint_states_pos[LEFT]  = last_rad_[LEFT];
   joint_states_pos[RIGHT] = last_rad_[RIGHT];
 
