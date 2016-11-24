@@ -10,11 +10,11 @@
   <url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3</url>
   <url type="website">http://wiki.ros.org/turtlebot3</url>
   <buildtool_depend>catkin</buildtool_depend>
+  <run_depend>turtlebot3_core</run_depend>
   <run_depend>turtlebot3_description</run_depend>
-  <run_depend>turtlebot3_diff_driver</run_depend>
+  <run_depend>turtlebot3_bringup</run_depend>
   <run_depend>turtlebot3_msgs</run_depend>
   <run_depend>turtlebot3_navigation</run_depend>
   <run_depend>turtlebot3_slam</run_depend>
-  <run_depend>turtlebot3_node</run_depend>
   <export><metapackage/></export>
 </package>

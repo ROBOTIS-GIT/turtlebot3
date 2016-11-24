@@ -57,3 +57,4 @@ build-*/
 *.pyc
 *.dat
 *.txt.user
+*.gch
