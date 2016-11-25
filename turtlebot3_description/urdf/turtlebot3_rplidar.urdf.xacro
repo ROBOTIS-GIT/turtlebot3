@@ -100,7 +100,7 @@
   </link>
 
   <joint name="scan_joint" type="fixed">
-    <origin xyz="0 0 0.13025" rpy="0 0 0"/>
+    <origin xyz="0 0 0.13925" rpy="0 0 0"/>
     <axis xyz="0 0 0"/>
     <parent link="base_link"/>
     <child link="base_scan"/>
@@ -109,7 +109,7 @@
   <link name="base_scan">
     <visual>
       <origin xyz="0 0 0.0204" rpy="0 0 0"/>
-      <geometry>125.86
+      <geometry>
         <cylinder length="0.0408" radius="0.03785"/>
       </geometry>
     </visual>
