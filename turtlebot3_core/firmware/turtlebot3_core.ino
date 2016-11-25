@@ -98,6 +98,9 @@ double const_cmd_vel    = 0.2;
 unsigned long prev_update_time;
 float odom_pose[3];
 char *joint_states_name[] = {"wheel_left_joint", "wheel_right_joint"};
+float joint_states_pos[2] = {0.0, 0.0};
+float joint_states_vel[2] = {0.0, 0.0};
+float joint_states_eff[2] = {0.0, 0.0};
 
 /*******************************************************************************
 * Setup function
@@ -241,12 +244,12 @@ void publish_imu_msg(void)
   imu_msg.linear_acceleration_covariance[7] = 0;
   imu_msg.linear_acceleration_covariance[8] = 0.04;
 
-  float c1 = cos(DEG2RAD(imu.angle[0]/10)/2);
-  float s1 = sin(DEG2RAD(imu.angle[0]/10)/2);
-  float c2 = cos(DEG2RAD(imu.angle[1]/10)/2);
-  float s2 = sin(DEG2RAD(imu.angle[1]/10)/2);
-  float c3 = cos(DEG2RAD(imu.angle[2])/2);
-  float s3 = sin(DEG2RAD(imu.angle[2])/2);
+  float c1 = cos(DEG2RAD(imu.angle[1]/10)/2);
+  float s1 = sin(DEG2RAD(imu.angle[1]/10)/2);
+  float c2 = cos(DEG2RAD(imu.angle[2])/2);
+  float s2 = sin(DEG2RAD(imu.angle[2])/2);
+  float c3 = cos(DEG2RAD(imu.angle[0]/10)/2);
+  float s3 = sin(DEG2RAD(imu.angle[0]/10)/2);
 
   float c1c2 = c1 * c2;
   float s1s2 = s1 * s2;
@@ -428,10 +431,6 @@ bool updateOdometry(double diff_time)
 *******************************************************************************/
 void updateJoint(void)
 {
-  float joint_states_pos[2] = {0.0, 0.0};
-  float joint_states_vel[2] = {0.0, 0.0};
-  float joint_states_eff[2] = {0.0, 0.0};
-
   joint_states_pos[LEFT]  = last_rad_[LEFT];
   joint_states_pos[RIGHT] = last_rad_[RIGHT];
 
