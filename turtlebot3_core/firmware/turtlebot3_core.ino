@@ -109,7 +109,7 @@ void setup()
 {
   // Initialize ROS node handle, advertise and subscribe the topics
   nh.initNode();
-  nh.getHardware()->setBaud(1000000); // TODO: Testing
+  nh.getHardware()->setBaud(115200); // TODO: Testing
   nh.subscribe(cmd_vel_sub);
   nh.advertise(sensor_state_pub);
   nh.advertise(imu_pub);

@@ -1,11 +1,12 @@
 <launch>
 
   <!-- turtlebot3 model -->
-  <arg name="urdf_file" default="$(find xacro)/xacro.py '$(find turtlebot3_description)/urdf/turtlebot3.urdf.xacro'" />
-  <param name="robot_description" command="$(arg urdf_file)" />
+  <arg name="robot_model" default="$(find xacro)/xacro.py '$(find turtlebot3_description)/urdf/turtlebot3_rplidar.urdf.xacro'" />
+
+  <param name="robot_description" command="$(arg robot_model)" />
 
   <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
-    <param name="publish_frequency" type="double" value="5.0" />
+    <param name="publish_frequency" type="double" value="30.0" />
   </node>
 
   <!-- Map server -->
