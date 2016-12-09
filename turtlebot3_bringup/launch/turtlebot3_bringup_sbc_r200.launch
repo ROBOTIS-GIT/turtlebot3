@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+
+<launch>
+  <node pkg="rosserial_python" type="serial_node.py" name="turtlebot3_core" output="screen">
+    <param name="port" value="/dev/ttyACM0"/>
+    <param name="baud" value="115200"/>
+  </node>
+
+  <include file="$(find realsense_camera)/launch/r200_nodelet_default.launch"/>
+
+  <node pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" name="depthimage_to_laserscan" output="screen">
+    <param name="output_frame_id" value="base_scan"/>
+    <remap from="image" to="/camera/depth/image_raw" />
+  </node>
+</launch>
