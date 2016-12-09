@@ -46,7 +46,7 @@
 #define DRIVE_INFORMATION_PUBLISH_PERIOD 10 //hz
 
 #define WHEEL_RADIUS                    0.033 // radian
-#define WHEEL_SEPARATION                0.16  // meter
+#define WHEEL_SEPARATION                0.287  // meter (0.16 / 0.287)
 #define ENCODER_MIN           -2147483648     // raw
 #define ENCODER_MAX            2147483648     // raw
 
