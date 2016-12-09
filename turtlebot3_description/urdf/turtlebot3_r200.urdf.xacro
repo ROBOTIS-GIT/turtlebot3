@@ -113,9 +113,9 @@
   <joint name="camera_joint" type="fixed">
     <origin xyz="${r200_cam_offset_px} ${r200_cam_offset_py} ${r200_cam_offset_pz}" rpy="0 0 0"/>
     <parent link="base_link"/>
-    <child link="camera" />
+    <child link="camera_link" />
   </joint>
-  <link name="camera">
+  <link name="camera_link">
     <visual>
      <origin xyz="0 0 0" rpy="${M_PI/2} 0 ${M_PI/2}"/>
       <geometry>
@@ -144,7 +144,7 @@
 
   <joint name="camera_rgb_joint" type="fixed">
     <origin xyz="${r200_cam_rgb_px} ${r200_cam_rgb_py} ${r200_cam_rgb_pz}" rpy="0 0 0"/>
-    <parent link="camera"/>
+    <parent link="camera_link"/>
     <child link="camera_rgb_frame" />
   </joint>
   <link name="camera_rgb_frame"/>
