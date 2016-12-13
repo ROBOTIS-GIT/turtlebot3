@@ -49,7 +49,7 @@ namespace ros
   typedef NodeHandle_<ArduinoHardware, 25, 25, 280, 280> NodeHandle;
 
 #else
-
+  /* Publishers, Subscribers, Buffer Sizes for OpenCR*/
   typedef NodeHandle_<ArduinoHardware, 25, 25, 1024, 1024> NodeHandle;
 
 #endif
