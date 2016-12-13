@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "ros/msg.h"
+#include "ros/time.h"
 
 namespace turtlebot3_msgs
 {
@@ -12,13 +13,13 @@ namespace turtlebot3_msgs
   class SensorState : public ros::Msg
   {
     public:
-      uint16_t time_stamp;
+      ros::Time stamp;
       uint8_t bumper;
       uint8_t cliff;
       uint8_t button;
       int32_t left_encoder;
       int32_t right_encoder;
-      uint8_t battery;
+      float battery;
       enum { BUMPER_RIGHT =  1 };
       enum { BUMPER_CENTER =  2 };
       enum { BUMPER_LEFT =  4 };
@@ -32,7 +33,7 @@ namespace turtlebot3_msgs
       enum { ERROR_RIGHT_MOTOR =  2 };
 
     SensorState():
-      time_stamp(0),
+      stamp(),
       bumper(0),
       cliff(0),
       button(0),
@@ -45,9 +46,16 @@ namespace turtlebot3_msgs
     virtual int serialize(unsigned char *outbuffer) const
     {
       int offset = 0;
-      *(outbuffer + offset + 0) = (this->time_stamp >> (8 * 0)) & 0xFF;
-      *(outbuffer + offset + 1) = (this->time_stamp >> (8 * 1)) & 0xFF;
-      offset += sizeof(this->time_stamp);
+      *(outbuffer + offset + 0) = (this->stamp.sec >> (8 * 0)) & 0xFF;
+      *(outbuffer + offset + 1) = (this->stamp.sec >> (8 * 1)) & 0xFF;
+      *(outbuffer + offset + 2) = (this->stamp.sec >> (8 * 2)) & 0xFF;
+      *(outbuffer + offset + 3) = (this->stamp.sec >> (8 * 3)) & 0xFF;
+      offset += sizeof(this->stamp.sec);
+      *(outbuffer + offset + 0) = (this->stamp.nsec >> (8 * 0)) & 0xFF;
+      *(outbuffer + offset + 1) = (this->stamp.nsec >> (8 * 1)) & 0xFF;
+      *(outbuffer + offset + 2) = (this->stamp.nsec >> (8 * 2)) & 0xFF;
+      *(outbuffer + offset + 3) = (this->stamp.nsec >> (8 * 3)) & 0xFF;
+      offset += sizeof(this->stamp.nsec);
       *(outbuffer + offset + 0) = (this->bumper >> (8 * 0)) & 0xFF;
       offset += sizeof(this->bumper);
       *(outbuffer + offset + 0) = (this->cliff >> (8 * 0)) & 0xFF;
@@ -74,7 +82,15 @@ namespace turtlebot3_msgs
       *(outbuffer + offset + 2) = (u_right_encoder.base >> (8 * 2)) & 0xFF;
       *(outbuffer + offset + 3) = (u_right_encoder.base >> (8 * 3)) & 0xFF;
       offset += sizeof(this->right_encoder);
-      *(outbuffer + offset + 0) = (this->battery >> (8 * 0)) & 0xFF;
+      union {
+        float real;
+        uint32_t base;
+      } u_battery;
+      u_battery.real = this->battery;
+      *(outbuffer + offset + 0) = (u_battery.base >> (8 * 0)) & 0xFF;
+      *(outbuffer + offset + 1) = (u_battery.base >> (8 * 1)) & 0xFF;
+      *(outbuffer + offset + 2) = (u_battery.base >> (8 * 2)) & 0xFF;
+      *(outbuffer + offset + 3) = (u_battery.base >> (8 * 3)) & 0xFF;
       offset += sizeof(this->battery);
       return offset;
     }
@@ -82,9 +98,16 @@ namespace turtlebot3_msgs
     virtual int deserialize(unsigned char *inbuffer)
     {
       int offset = 0;
-      this->time_stamp =  ((uint16_t) (*(inbuffer + offset)));
-      this->time_stamp |= ((uint16_t) (*(inbuffer + offset + 1))) << (8 * 1);
-      offset += sizeof(this->time_stamp);
+      this->stamp.sec =  ((uint32_t) (*(inbuffer + offset)));
+      this->stamp.sec |= ((uint32_t) (*(inbuffer + offset + 1))) << (8 * 1);
+      this->stamp.sec |= ((uint32_t) (*(inbuffer + offset + 2))) << (8 * 2);
+      this->stamp.sec |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3);
+      offset += sizeof(this->stamp.sec);
+      this->stamp.nsec =  ((uint32_t) (*(inbuffer + offset)));
+      this->stamp.nsec |= ((uint32_t) (*(inbuffer + offset + 1))) << (8 * 1);
+      this->stamp.nsec |= ((uint32_t) (*(inbuffer + offset + 2))) << (8 * 2);
+      this->stamp.nsec |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3);
+      offset += sizeof(this->stamp.nsec);
       this->bumper =  ((uint8_t) (*(inbuffer + offset)));
       offset += sizeof(this->bumper);
       this->cliff =  ((uint8_t) (*(inbuffer + offset)));
@@ -113,13 +136,22 @@ namespace turtlebot3_msgs
       u_right_encoder.base |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3);
       this->right_encoder = u_right_encoder.real;
       offset += sizeof(this->right_encoder);
-      this->battery =  ((uint8_t) (*(inbuffer + offset)));
+      union {
+        float real;
+        uint32_t base;
+      } u_battery;
+      u_battery.base = 0;
+      u_battery.base |= ((uint32_t) (*(inbuffer + offset + 0))) << (8 * 0);
+      u_battery.base |= ((uint32_t) (*(inbuffer + offset + 1))) << (8 * 1);
+      u_battery.base |= ((uint32_t) (*(inbuffer + offset + 2))) << (8 * 2);
+      u_battery.base |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3);
+      this->battery = u_battery.real;
       offset += sizeof(this->battery);
      return offset;
     }
 
     const char * getType(){ return "turtlebot3_msgs/SensorState"; };
-    const char * getMD5(){ return "ed3b0a4d8120279d32e68ec3399b1f9e"; };
+    const char * getMD5(){ return "427f77f85da38bc1aa3f65ffb673c94c"; };
 
   };
 

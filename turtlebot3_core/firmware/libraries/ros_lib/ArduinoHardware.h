@@ -56,7 +56,7 @@
   #define SERIAL_CLASS Serial_
 #else
   #include <HardwareSerial.h>  // Arduino AVR
-  #define SERIAL_CLASS USBSerial // UARTClass (Bluetooth Device)
+  #define SERIAL_CLASS USBSerial // USBSerial / UARTClass (Bluetooth Device) on OpenCR
 #endif
 
 class ArduinoHardware {
