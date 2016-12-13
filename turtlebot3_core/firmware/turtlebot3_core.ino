@@ -290,6 +290,9 @@ void publish_imu_msg(void)
 *******************************************************************************/
 void publish_sensor_state_msg(void)
 {
+  sensor_state_msg.stamp = nh.now();
+  sensor_state_msg.battery = check_voltage();
+
   bool dxl_comm_result = false;
 
   dxl_comm_result = motor_driver.readEncoder(ADDR_XM_PRESENT_POSITION, 4, sensor_state_msg.left_encoder, sensor_state_msg.right_encoder);
@@ -544,6 +547,21 @@ void control_motor_speed(void)
   {
     // ROS_ERROR("syncWriteDynamixelRegister failed");
   }
+}
+
+/*******************************************************************************
+* Check voltage
+*******************************************************************************/
+float check_voltage(void)
+{
+  int adc_value;
+  float vol_value;
+
+  adc_value = analogRead(BDPIN_BAT_PWR_ADC);
+  vol_value = map(adc_value, 0, 1023, 0, 330*57/10);
+  vol_value = vol_value/100;
+
+  return vol_value;
 }
 
 // EOF
