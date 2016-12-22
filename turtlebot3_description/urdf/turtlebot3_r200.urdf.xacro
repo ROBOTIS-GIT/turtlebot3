@@ -29,17 +29,18 @@
 
   <link name="base_link">
     <visual>
-      <origin xyz="0 0 0.061" rpy="0 0 0"/>
+      <origin xyz="0 0 0.0" rpy="0 0 0"/>
       <geometry>
-        <box size="0.266 0.266 0.1"/>
+        <mesh filename="package://turtlebot3_description/meshes/turtlebot3_premium.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="orange"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0 0 0.0" rpy="0 0 0"/>
       <geometry>
-        <box size="0.18 0.12 0.04"/>
+        <box size="0.266 0.266 0.1"/>
       </geometry>
+      <material name="orange"/>
     </collision>
     <inertial>
       <origin xyz="0 0 0" rpy="0 0 0"/>
