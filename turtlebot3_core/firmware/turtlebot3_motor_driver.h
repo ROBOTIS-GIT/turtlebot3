@@ -21,24 +21,24 @@
 
 #include <DynamixelSDK.h>
 
-// Control table address (XM430-W350-T)
-#define ADDR_XM_TORQUE_ENABLE            64
-#define ADDR_XM_GOAL_VELOCITY           104
-#define ADDR_XM_GOAL_POSITION           116
-#define ADDR_XM_REALTIME_TICK           120
-#define ADDR_XM_PRESENT_VELOCITY        128
-#define ADDR_XM_PRESENT_POSITION        132
+// Control table address (Dynamixel X-series)
+#define ADDR_X_TORQUE_ENABLE            64
+#define ADDR_X_GOAL_VELOCITY           104
+#define ADDR_X_GOAL_POSITION           116
+#define ADDR_X_REALTIME_TICK           120
+#define ADDR_X_PRESENT_VELOCITY        128
+#define ADDR_X_PRESENT_POSITION        132
 
 // Limit values (XM430-W350-T)
-#define LIMIT_XM_MAX_VELOCITY           350 //480(XM430-W210-T)
+#define LIMIT_X_MAX_VELOCITY           415 // 2000(XL430-W?-T), 415(XL430-W350-T), 480(XM430-W210-T), 350(XM430-W350-T)
 
 // Data Byte Length
-#define LEN_XM_TORQUE_ENABLE            1
-#define LEN_XM_GOAL_VELOCITY            4
-#define LEN_XM_GOAL_POSITION            4
-#define LEN_XM_REALTIME_TICK            2
-#define LEN_XM_PRESENT_VELOCITY         4
-#define LEN_XM_PRESENT_POSITION         4
+#define LEN_X_TORQUE_ENABLE            1
+#define LEN_X_GOAL_VELOCITY            4
+#define LEN_X_GOAL_POSITION            4
+#define LEN_X_REALTIME_TICK            2
+#define LEN_X_PRESENT_VELOCITY         4
+#define LEN_X_PRESENT_POSITION         4
 
 #define PROTOCOL_VERSION                2.0     // Dynamixel protocol version 2.0
 

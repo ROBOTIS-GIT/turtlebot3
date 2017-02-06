@@ -33,8 +33,8 @@ Turtlebot3MotorDriver::Turtlebot3MotorDriver()
   // int32_t dxl2_present_position = 0;              // Present position
 
 
-  // dynamixel::GroupSyncWrite groupSyncWrite(portHandler, packetHandler, ADDR_XM_GOAL_VELOCITY, LEN_XM_GOAL_VELOCITY);
-  // dynamixel::GroupSyncRead groupSyncRead(portHandler, packetHandler, ADDR_XM_PRESENT_POSITION, LEN_XM_PRESENT_POSITION);
+  // dynamixel::GroupSyncWrite groupSyncWrite(portHandler, packetHandler, ADDR_X_GOAL_VELOCITY, LEN_X_GOAL_VELOCITY);
+  // dynamixel::GroupSyncRead groupSyncRead(portHandler, packetHandler, ADDR_X_PRESENT_POSITION, LEN_X_PRESENT_POSITION);
 }
 
 Turtlebot3MotorDriver::~Turtlebot3MotorDriver()
@@ -81,7 +81,7 @@ bool Turtlebot3MotorDriver::setTorque(uint8_t id, bool onoff)
   uint8_t dxl_error = 0;
   int dxl_comm_result = COMM_TX_FAIL;
 
-  dxl_comm_result = packetHandler_->write1ByteTxRx(portHandler_, id, ADDR_XM_TORQUE_ENABLE, onoff, &dxl_error);
+  dxl_comm_result = packetHandler_->write1ByteTxRx(portHandler_, id, ADDR_X_TORQUE_ENABLE, onoff, &dxl_error);
 
   if(dxl_comm_result != COMM_SUCCESS)
       packetHandler_->printTxRxResult(dxl_comm_result);

@@ -295,7 +295,7 @@ void publish_sensor_state_msg(void)
 
   bool dxl_comm_result = false;
 
-  dxl_comm_result = motor_driver.readEncoder(ADDR_XM_PRESENT_POSITION, 4, sensor_state_msg.left_encoder, sensor_state_msg.right_encoder);
+  dxl_comm_result = motor_driver.readEncoder(ADDR_X_PRESENT_POSITION, 4, sensor_state_msg.left_encoder, sensor_state_msg.right_encoder);
 
   if (dxl_comm_result == true)
   {
@@ -523,13 +523,13 @@ void control_motor_speed(void)
 
   lin_vel1 = wheel_speed_cmd[LEFT] * VELOCITY_CONSTANT_VAULE;
 
-  if (lin_vel1 > LIMIT_XM_MAX_VELOCITY)       lin_vel1 =  LIMIT_XM_MAX_VELOCITY;
-  else if (lin_vel1 < -LIMIT_XM_MAX_VELOCITY) lin_vel1 = -LIMIT_XM_MAX_VELOCITY;
+  if (lin_vel1 > LIMIT_X_MAX_VELOCITY)       lin_vel1 =  LIMIT_X_MAX_VELOCITY;
+  else if (lin_vel1 < -LIMIT_X_MAX_VELOCITY) lin_vel1 = -LIMIT_X_MAX_VELOCITY;
 
   lin_vel2 = wheel_speed_cmd[RIGHT] * VELOCITY_CONSTANT_VAULE;
 
-  if (lin_vel2 > LIMIT_XM_MAX_VELOCITY)       lin_vel2 =  LIMIT_XM_MAX_VELOCITY;
-  else if (lin_vel2 < -LIMIT_XM_MAX_VELOCITY) lin_vel2 = -LIMIT_XM_MAX_VELOCITY;
+  if (lin_vel2 > LIMIT_X_MAX_VELOCITY)       lin_vel2 =  LIMIT_X_MAX_VELOCITY;
+  else if (lin_vel2 < -LIMIT_X_MAX_VELOCITY) lin_vel2 = -LIMIT_X_MAX_VELOCITY;
 
   #ifdef DEBUG_MODE
     char log_msg[30];
@@ -541,7 +541,7 @@ void control_motor_speed(void)
 
   bool dxl_comm_result = false;
 
-  dxl_comm_result = motor_driver.speedControl(ADDR_XM_GOAL_VELOCITY, 4, (int64_t)lin_vel1, (int64_t)lin_vel2);
+  dxl_comm_result = motor_driver.speedControl(ADDR_X_GOAL_VELOCITY, 4, (int64_t)lin_vel1, (int64_t)lin_vel2);
 
   if (dxl_comm_result == false)
   {
