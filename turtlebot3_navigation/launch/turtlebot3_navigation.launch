@@ -1,13 +1,6 @@
 <launch>
-
-  <!-- turtlebot3 model -->
-  <arg name="robot_model" default="$(find xacro)/xacro.py '$(find turtlebot3_description)/urdf/turtlebot3_lds.urdf.xacro'" />
-
-  <param name="robot_description" command="$(arg robot_model)" />
-
-  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
-    <param name="publish_frequency" type="double" value="30.0" />
-  </node>
+  <!-- Turtlebot3 -->
+  <include file="$(find turtlebot3_bringup)/launch/turtlebot3_bringup.launch" />
 
   <!-- Map server -->
   <arg name="map_file" default="$(find turtlebot3_navigation)/maps/map.yaml"/>
