@@ -1,7 +1,7 @@
 <launch>
 
   <!-- turtlebot3 model -->
-  <arg name="robot_model" default="$(find xacro)/xacro.py '$(find turtlebot3_description)/urdf/turtlebot3_rplidar.urdf.xacro'" />
+  <arg name="robot_model" default="$(find xacro)/xacro.py '$(find turtlebot3_description)/urdf/turtlebot3_lds.urdf.xacro'" />
 
   <param name="robot_description" command="$(arg robot_model)" />
 
