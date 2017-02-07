@@ -1,36 +1,13 @@
-<?xml version="1.0" ?>
-
 <launch>
-  <arg name="robot_model" default="$(find xacro)/xacro.py '$(find turtlebot3_description)/urdf/turtlebot3_rplidar.urdf.xacro'" />
+  <!-- Turtlebot -->
+  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [basic, premium]"/>
 
-  <param name="robot_description" command="$(arg robot_model)" />
+  <include file="$(find turtlebot3_bringup)/launch/includes/description.launch.xml">
+    <arg name="model" value="$(arg model)" />
+  </include>
 
   <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
     <param name="publish_frequency" type="double" value="30.0" />
   </node>
 
-  <node pkg="rosserial_python" type="serial_node.py" name="turtlebot3_core" output="screen">
-    <param name="port" value="/dev/ttyACM0"/>
-    <param name="baud" value="115200"/>
-  </node>
-
-  <node pkg="rplidar_ros" type="rplidarNode" name="rplidarNode" output="screen">
-    <param name="serial_port"         type="string" value="/dev/ttyUSB0"/>
-    <param name="serial_baudrate"     type="int"    value="115200"/>
-    <param name="frame_id"            type="string" value="base_scan"/>
-    <param name="inverted"            type="bool"   value="false"/>
-    <param name="angle_compensate"    type="bool"   value="true"/>
-  </node> -->
-
-  <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
-    <param name="output_frame" value="odom"/>
-    <param name="base_footprint_frame" value="base_footprint"/>
-    <param name="freq" value="30.0"/>
-    <param name="sensor_timeout" value="1.0"/>
-    <param name="odom_used" value="true"/>
-    <param name="imu_used" value="true"/>
-    <param name="vo_used" value="false"/>
-    <remap from="odom" to="odom_tb3" />
-    <remap from="imu_data" to="/imu/data" />
-  </node>
 </launch>
