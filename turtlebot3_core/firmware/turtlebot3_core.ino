@@ -218,9 +218,9 @@ void publish_imu_msg(void)
   imu_msg.header.stamp    = nh.now();
   imu_msg.header.frame_id = "imu_link";
 
-  imu_msg.angular_velocity.x = imu.SEN.gyroRAW[0];
-  imu_msg.angular_velocity.y = imu.SEN.gyroRAW[1];
-  imu_msg.angular_velocity.z = imu.SEN.gyroRAW[2];
+  imu_msg.angular_velocity.x = imu.SEN.gyroADC[0];
+  imu_msg.angular_velocity.y = imu.SEN.gyroADC[1];
+  imu_msg.angular_velocity.z = imu.SEN.gyroADC[2];
   imu_msg.angular_velocity_covariance[0] = 0.02;
   imu_msg.angular_velocity_covariance[1] = 0;
   imu_msg.angular_velocity_covariance[2] = 0;
@@ -231,9 +231,9 @@ void publish_imu_msg(void)
   imu_msg.angular_velocity_covariance[7] = 0;
   imu_msg.angular_velocity_covariance[8] = 0.02;
 
-  imu_msg.linear_acceleration.x = imu.SEN.accRAW[0];
-  imu_msg.linear_acceleration.y = imu.SEN.accRAW[1];
-  imu_msg.linear_acceleration.z = imu.SEN.accRAW[2];
+  imu_msg.linear_acceleration.x = imu.SEN.accADC[0];
+  imu_msg.linear_acceleration.y = imu.SEN.accADC[1];
+  imu_msg.linear_acceleration.z = imu.SEN.accADC[2];
   imu_msg.linear_acceleration_covariance[0] = 0.04;
   imu_msg.linear_acceleration_covariance[1] = 0;
   imu_msg.linear_acceleration_covariance[2] = 0;
@@ -244,25 +244,11 @@ void publish_imu_msg(void)
   imu_msg.linear_acceleration_covariance[7] = 0;
   imu_msg.linear_acceleration_covariance[8] = 0.04;
 
-  float c1 = cos(DEG2RAD(imu.angle[1]/10)/2);
-  float s1 = sin(DEG2RAD(imu.angle[1]/10)/2);
-  float c2 = cos(DEG2RAD(imu.angle[2])/2);
-  float s2 = sin(DEG2RAD(imu.angle[2])/2);
-  float c3 = cos(DEG2RAD(imu.angle[0]/10)/2);
-  float s3 = sin(DEG2RAD(imu.angle[0]/10)/2);
+  imu_msg.orientation.w = imu.quat[0];
+  imu_msg.orientation.x = imu.quat[1];
+  imu_msg.orientation.y = imu.quat[2];
+  imu_msg.orientation.z = imu.quat[3];
 
-  float c1c2 = c1 * c2;
-  float s1s2 = s1 * s2;
-
-  float q1 = c1c2 * s3  + s1s2 * c3;
-  float q2 = s1 * c2 * c3 + c1 * s2 * s3;
-  float q3 = c1 * s2 * c3 - s1 * c2 * s3;
-  float q4 = c1c2 * c3  - s1s2 * s3;
-
-  imu_msg.orientation.x = q1;
-  imu_msg.orientation.y = q2;
-  imu_msg.orientation.z = q3;
-  imu_msg.orientation.w = q4;
   imu_msg.orientation_covariance[0] = 0.0025;
   imu_msg.orientation_covariance[1] = 0;
   imu_msg.orientation_covariance[2] = 0;
@@ -278,10 +264,10 @@ void publish_imu_msg(void)
   tfs_msg.header.stamp    = nh.now();
   tfs_msg.header.frame_id = "base_footprint";
   tfs_msg.child_frame_id  = "imu_link";
-  tfs_msg.transform.rotation.x = q1;
-  tfs_msg.transform.rotation.y = q2;
-  tfs_msg.transform.rotation.z = q3;
-  tfs_msg.transform.rotation.w = q4;
+  tfs_msg.transform.rotation.w = imu.quat[0];
+  tfs_msg.transform.rotation.x = imu.quat[1];
+  tfs_msg.transform.rotation.y = imu.quat[2];
+  tfs_msg.transform.rotation.z = imu.quat[3];
   tfbroadcaster.sendTransform(tfs_msg);
 }
 
@@ -295,7 +281,7 @@ void publish_sensor_state_msg(void)
 
   bool dxl_comm_result = false;
 
-  dxl_comm_result = motor_driver.readEncoder(ADDR_XM_PRESENT_POSITION, 4, sensor_state_msg.left_encoder, sensor_state_msg.right_encoder);
+  dxl_comm_result = motor_driver.readEncoder(ADDR_X_PRESENT_POSITION, 4, sensor_state_msg.left_encoder, sensor_state_msg.right_encoder);
 
   if (dxl_comm_result == true)
   {
@@ -523,13 +509,13 @@ void control_motor_speed(void)
 
   lin_vel1 = wheel_speed_cmd[LEFT] * VELOCITY_CONSTANT_VAULE;
 
-  if (lin_vel1 > LIMIT_XM_MAX_VELOCITY)       lin_vel1 =  LIMIT_XM_MAX_VELOCITY;
-  else if (lin_vel1 < -LIMIT_XM_MAX_VELOCITY) lin_vel1 = -LIMIT_XM_MAX_VELOCITY;
+  if (lin_vel1 > LIMIT_X_MAX_VELOCITY)       lin_vel1 =  LIMIT_X_MAX_VELOCITY;
+  else if (lin_vel1 < -LIMIT_X_MAX_VELOCITY) lin_vel1 = -LIMIT_X_MAX_VELOCITY;
 
   lin_vel2 = wheel_speed_cmd[RIGHT] * VELOCITY_CONSTANT_VAULE;
 
-  if (lin_vel2 > LIMIT_XM_MAX_VELOCITY)       lin_vel2 =  LIMIT_XM_MAX_VELOCITY;
-  else if (lin_vel2 < -LIMIT_XM_MAX_VELOCITY) lin_vel2 = -LIMIT_XM_MAX_VELOCITY;
+  if (lin_vel2 > LIMIT_X_MAX_VELOCITY)       lin_vel2 =  LIMIT_X_MAX_VELOCITY;
+  else if (lin_vel2 < -LIMIT_X_MAX_VELOCITY) lin_vel2 = -LIMIT_X_MAX_VELOCITY;
 
   #ifdef DEBUG_MODE
     char log_msg[30];
@@ -541,7 +527,7 @@ void control_motor_speed(void)
 
   bool dxl_comm_result = false;
 
-  dxl_comm_result = motor_driver.speedControl(ADDR_XM_GOAL_VELOCITY, 4, (int64_t)lin_vel1, (int64_t)lin_vel2);
+  dxl_comm_result = motor_driver.speedControl(ADDR_X_GOAL_VELOCITY, 4, (int64_t)lin_vel1, (int64_t)lin_vel2);
 
   if (dxl_comm_result == false)
   {
