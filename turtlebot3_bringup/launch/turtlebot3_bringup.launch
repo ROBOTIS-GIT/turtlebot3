@@ -1,5 +1,5 @@
 <launch>
-  <!-- Turtlebot -->
+  <!-- Turtlebot3 -->
   <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [basic, premium]"/>
 
   <include file="$(find turtlebot3_bringup)/launch/includes/description.launch.xml">
