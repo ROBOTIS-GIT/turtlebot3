@@ -3,7 +3,7 @@
     <param name="base_frame" value="base_footprint"/>
     <param name="odom_frame" value="odom"/>
     <param name="map_update_interval" value="1.0"/>
-    <param name="maxUrange" value="6.0"/>
+    <param name="maxUrange" value="3.5"/>
     <param name="sigma" value="0.05"/>
     <param name="kernelSize" value="1"/>
     <param name="lstep" value="0.05"/>
