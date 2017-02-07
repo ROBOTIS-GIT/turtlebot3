@@ -1,4 +1,6 @@
 <launch>
+  <include file="$(find turtlebot3_bringup)/launch/turtlebot3_bringup_pc_basic.launch" />
+
   <node pkg="gmapping" type="slam_gmapping" name="turtlebot3_slam_gmapping" output="screen">
     <param name="base_frame" value="base_footprint"/>
     <param name="odom_frame" value="odom"/>
