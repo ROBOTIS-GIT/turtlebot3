@@ -159,6 +159,8 @@ void setup()
   joint_states.name     = joint_states_name;
 
   prev_update_time = millis();
+
+  SerialBT2.begin(57600);
 }
 
 /*******************************************************************************
@@ -328,7 +330,7 @@ void publish_drive_information(void)
   ros::Time stamp_now = nh.now();
 
   // odom
-  updateOdometry((double)(step_time * 1000));
+  updateOdometry((double)(step_time * 0.001));
   odom.header.stamp = stamp_now;
   odom_pub.publish(&odom);
 
