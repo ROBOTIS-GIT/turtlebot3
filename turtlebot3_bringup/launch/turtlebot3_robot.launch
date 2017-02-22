@@ -1,5 +1,3 @@
-<?xml version="1.0" ?>
-
 <launch>
   <node pkg="rosserial_python" type="serial_node.py" name="turtlebot3_core" output="screen">
     <param name="port" value="/dev/ttyACM0"/>
@@ -10,4 +8,6 @@
     <param name="port" value="/dev/ttyUSB0"/>
     <param name="frame_id" value="base_scan"/>
   </node>
+
+  <!-- include file="$(find realsense_camera)/launch/r200_nodelet_default.launch"/ -->
 </launch>

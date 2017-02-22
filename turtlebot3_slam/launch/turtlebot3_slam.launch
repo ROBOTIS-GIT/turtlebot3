@@ -1,6 +1,6 @@
 <launch>
   <!-- Turtlebot3 -->
-  <include file="$(find turtlebot3_bringup)/launch/turtlebot3_bringup.launch" />
+  <include file="$(find turtlebot3_bringup)/launch/turtlebot3_remote.launch" />
 
   <!-- Gmapping -->
   <node pkg="gmapping" type="slam_gmapping" name="turtlebot3_slam_gmapping" output="screen">

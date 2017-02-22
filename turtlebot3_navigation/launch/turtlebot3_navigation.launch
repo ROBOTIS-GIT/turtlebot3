@@ -1,6 +1,6 @@
 <launch>
   <!-- Turtlebot3 -->
-  <include file="$(find turtlebot3_bringup)/launch/turtlebot3_bringup.launch" />
+  <include file="$(find turtlebot3_bringup)/launch/turtlebot3_remote.launch" />
 
   <!-- Map server -->
   <arg name="map_file" default="$(find turtlebot3_navigation)/maps/map.yaml"/>
