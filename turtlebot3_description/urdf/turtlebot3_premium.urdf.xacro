@@ -33,7 +33,7 @@
     <visual>
       <origin xyz="0 0 0.0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://turtlebot3_description/meshes/pr30_tb3_premium.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://turtlebot3_description/meshes/premium_base.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="light_black"/>
     </visual>
@@ -65,7 +65,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="${M_PI*0.5} 0 0"/>
       <geometry>
-        <mesh filename="package://turtlebot3_description/meshes/pr30_isw_tire_l.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://turtlebot3_description/meshes/left_tire.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="light_black"/>
     </visual>
@@ -95,7 +95,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="${M_PI*0.5} 0 0"/>
       <geometry>
-        <mesh filename="package://turtlebot3_description/meshes/pr30_isw_tire_r.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://turtlebot3_description/meshes/right_tire.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="light_black"/>
     </visual>
