@@ -16,8 +16,11 @@
   <material name="black">
     <color rgba="0.0 0.0 0.0 1.0"/>
   </material>
+  <material name="dark">
+    <color rgba="0.3 0.3 0.3 1.0"/>
+  </material>
   <material name="light_black">
-    <color rgba="0.26 0.28 0.30 1.0"/>
+    <color rgba="0.4 0.4 0.4 1.0"/>
   </material>
 
   <!-- TurtleBot3 Base-->
@@ -33,7 +36,7 @@
     <visual>
       <origin xyz="0 0 0.0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://turtlebot3_description/meshes/premium_base.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://turtlebot3_description/meshes/bases/waffle_base.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="light_black"/>
     </visual>
@@ -65,9 +68,9 @@
     <visual>
       <origin xyz="0 0 0" rpy="${M_PI*0.5} 0 0"/>
       <geometry>
-        <mesh filename="package://turtlebot3_description/meshes/left_tire.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://turtlebot3_description/meshes/wheels/left_tire.stl" scale="0.001 0.001 0.001"/>
       </geometry>
-      <material name="light_black"/>
+      <material name="dark"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -95,9 +98,9 @@
     <visual>
       <origin xyz="0 0 0" rpy="${M_PI*0.5} 0 0"/>
       <geometry>
-        <mesh filename="package://turtlebot3_description/meshes/right_tire.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://turtlebot3_description/meshes/wheels/right_tire.stl" scale="0.001 0.001 0.001"/>
       </geometry>
-      <material name="light_black"/>
+      <material name="dark"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -189,7 +192,7 @@
       <geometry>
         <mesh filename="package://turtlebot3_description/meshes/sensors/lds.stl" scale="0.001 0.001 0.001"/>
       </geometry>
-      <material name="light_black"/>
+      <material name="dark"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>

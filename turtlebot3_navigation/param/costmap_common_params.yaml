@@ -1,6 +1,6 @@
 obstacle_range: 0.10
-raytrace_range: 0.10
-robot_radius: 0.05
+raytrace_range: 0.15
+robot_radius: 0.08
 inflation_radius: 0.01
 map_type: costmap
 transform_tolerance: 0.5
