@@ -56,6 +56,23 @@ bool Turtlebot3Fake::init()
   last_velocity_[LEFT]    = 0.0;
   last_velocity_[RIGHT]   = 0.0;
 
+  double pcov[36] = { 0.1,   0,   0,   0,   0, 0,
+                        0, 0.1,   0,   0,   0, 0,
+                        0,   0, 1e6,   0,   0, 0,
+                        0,   0,   0, 1e6,   0, 0,
+                        0,   0,   0,   0, 1e6, 0,
+                        0,   0,   0,   0,   0, 0.2};
+  memcpy(&(odom_.pose.covariance),pcov,sizeof(double)*36);
+  memcpy(&(odom_.twist.covariance),pcov,sizeof(double)*36);
+
+  odom_pose_[0] = 0.0;
+  odom_pose_[1] = 0.0;
+  odom_pose_[2] = 0.0;
+
+  odom_vel_[0] = 0.0;
+  odom_vel_[1] = 0.0;
+  odom_vel_[2] = 0.0;
+
   joint_states_.name.push_back(joint_states_name_[LEFT]);
   joint_states_.name.push_back(joint_states_name_[RIGHT]);
   joint_states_.position.resize(2,0.0);
@@ -93,9 +110,6 @@ void Turtlebot3Fake::commandVelocityCallback(const geometry_msgs::TwistConstPtr 
 *******************************************************************************/
 bool Turtlebot3Fake::updateOdometry(ros::Duration diff_time)
 {
-  double odom_vel[3];
-  double odom_pose[3];
-
   double wheel_l, wheel_r; // rotation value of wheel [rad]
   double delta_s, delta_theta;
   double v[2], w[2];
@@ -131,23 +145,23 @@ bool Turtlebot3Fake::updateOdometry(ros::Duration diff_time)
   delta_theta = WHEEL_RADIUS * (wheel_r - wheel_l) / WHEEL_SEPARATION;
 
   // compute odometric pose
-  odom_pose[0] += delta_s * cos(odom_pose[2] + (delta_theta / 2.0));
-  odom_pose[1] += delta_s * sin(odom_pose[2] + (delta_theta / 2.0));
-  odom_pose[2] += delta_theta;
+  odom_pose_[0] += delta_s * cos(odom_pose_[2] + (delta_theta / 2.0));
+  odom_pose_[1] += delta_s * sin(odom_pose_[2] + (delta_theta / 2.0));
+  odom_pose_[2] += delta_theta;
 
   // compute odometric instantaneouse velocity
-  odom_vel[0] = delta_s / diff_time.toSec();     // v
-  odom_vel[1] = 0.0;
-  odom_vel[2] = delta_theta / diff_time.toSec(); // w
+  odom_vel_[0] = delta_s / diff_time.toSec();     // v
+  odom_vel_[1] = 0.0;
+  odom_vel_[2] = delta_theta / diff_time.toSec(); // w
 
-  odom_.pose.pose.position.x = odom_pose[0];
-  odom_.pose.pose.position.y = odom_pose[1];
+  odom_.pose.pose.position.x = odom_pose_[0];
+  odom_.pose.pose.position.y = odom_pose_[1];
   odom_.pose.pose.position.z = 0;
-  odom_.pose.pose.orientation = tf::createQuaternionMsgFromYaw(odom_pose[2]);
+  odom_.pose.pose.orientation = tf::createQuaternionMsgFromYaw(odom_pose_[2]);
 
   // We should update the twist of the odometry
-  odom_.twist.twist.linear.x  = odom_vel[0];
-  odom_.twist.twist.angular.z = odom_vel[2];
+  odom_.twist.twist.linear.x  = odom_vel_[0];
+  odom_.twist.twist.angular.z = odom_vel_[2];
 
   return true;
 }
@@ -168,9 +182,8 @@ void Turtlebot3Fake::updateJoint(void)
 *******************************************************************************/
 void Turtlebot3Fake::updateTF(geometry_msgs::TransformStamped& odom_tf)
 {
-  odom_.header.frame_id = "odom";
   odom_tf.header = odom_.header;
-  odom_tf.child_frame_id = "base_footprint";
+  odom_tf.child_frame_id = odom_.child_frame_id;
   odom_tf.transform.translation.x = odom_.pose.pose.position.x;
   odom_tf.transform.translation.y = odom_.pose.pose.position.y;
   odom_tf.transform.translation.z = odom_.pose.pose.position.z;
@@ -204,9 +217,9 @@ bool Turtlebot3Fake::update()
   joint_states_pub_.publish(joint_states_);
 
   // tf
-  geometry_msgs::TransformStamped odom_tf_;
-  updateTF(odom_tf_);
-  tf_broadcaster_.sendTransform(odom_tf_);
+  geometry_msgs::TransformStamped odom_tf;
+  updateTF(odom_tf);
+  tf_broadcaster_.sendTransform(odom_tf);
 
   return true;
 }
@@ -216,10 +229,10 @@ bool Turtlebot3Fake::update()
 *******************************************************************************/
 int main(int argc, char* argv[])
 {
-  ros::init(argc, argv, "fake_turtlebot3");
+  ros::init(argc, argv, "turtlebot3_fake_node");
   Turtlebot3Fake tb3fake;
 
-  ros::Rate loop_rate(30);
+  ros::Rate loop_rate(10);
 
   while (ros::ok())
   {

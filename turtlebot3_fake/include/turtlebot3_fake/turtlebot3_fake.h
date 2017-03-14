@@ -121,6 +121,10 @@ class Turtlebot3Fake
   double goal_angular_velocity_;
   double cmd_vel_timeout_;
 
+  float  odom_pose_[3];
+  float  odom_vel_[3];
+  double pose_cov_[36];
+
   std::string joint_states_name_[2];
 
   double last_position_[2];
