@@ -1,0 +1,21 @@
+# mode for taking the pictures
+uint8 mode
+# rotate, stop, snapshot, rotate, stop, snapshot, ...
+uint8 SNAPANDROTATE=0
+# keep rotating while taking snapshots
+uint8 CONTINUOUS=1
+# stop an ongoing panorama creation
+uint8 STOP=2
+# total angle of panorama picture
+float32 pano_angle
+# angle interval when creating the panorama picture in snap&rotate mode, time interval otherwise 
+float32 snap_interval
+# rotating velocity
+float32 rot_vel
+
+---
+
+uint8 status
+uint8 STARTED=0
+uint8 IN_PROGRESS=1
+uint8 STOPPED=2
