@@ -21,12 +21,8 @@
 Turtlebot3Fake::Turtlebot3Fake()
 : nh_priv_("~")
 {
-  //Init parameter
-  // (TODO)
   //Init fake turtlebot node
   ROS_ASSERT(init());
-  //Init TimerEvent
-  // (TODO)
 }
 
 Turtlebot3Fake::~Turtlebot3Fake()
@@ -232,7 +228,7 @@ int main(int argc, char* argv[])
   ros::init(argc, argv, "turtlebot3_fake_node");
   Turtlebot3Fake tb3fake;
 
-  ros::Rate loop_rate(10);
+  ros::Rate loop_rate(30);
 
   while (ros::ok())
   {
