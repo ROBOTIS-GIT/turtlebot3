@@ -10,6 +10,8 @@ project(turtlebot3_msgs)
 find_package(catkin REQUIRED COMPONENTS
   message_generation
   std_msgs
+  sensor_msgs
+  std_srvs 
 )
 
 ################################################################################
@@ -20,11 +22,21 @@ add_message_files(
   SensorState.msg
   MotorPower.msg
   VersionInfo.msg
+  PanoramaImg.msg
 )
+
+add_service_files(
+  DIRECTORY srv
+  FILES 
+  TakePanorama.srv
+  SetFollowState.srv
+                 )
+
 
 generate_messages(
   DEPENDENCIES
   std_msgs
+  sensor_msgs
 )
 
 ################################################################################
@@ -35,7 +47,7 @@ generate_messages(
 # Catkin specific configuration
 ################################################################################
 catkin_package(
-  CATKIN_DEPENDS message_runtime std_msgs
+  CATKIN_DEPENDS std_msgs sensor_msgs std_srvs message_runtime
 )
 
 ################################################################################

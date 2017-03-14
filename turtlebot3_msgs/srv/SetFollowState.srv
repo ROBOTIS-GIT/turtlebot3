@@ -1,0 +1,12 @@
+uint8 STOPPED = 0
+uint8 FOLLOW  = 1
+
+# Following running/stopped
+uint8 state
+
+---
+
+uint8 OK    = 0
+uint8 ERROR = 1
+
+uint8 result
