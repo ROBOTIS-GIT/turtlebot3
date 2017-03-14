@@ -18,6 +18,7 @@
   <run_depend>turtlebot3_msgs</run_depend>
   <run_depend>turtlebot3_description</run_depend>
   <run_depend>turtlebot3_bringup</run_depend>
+  <run_depend>turtlebot3_fake</run_depend>
   <run_depend>turtlebot3_slam</run_depend>
   <run_depend>turtlebot3_navigation</run_depend>
   <export><metapackage/></export>

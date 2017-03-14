@@ -1,9 +1,8 @@
-obstacle_range: 0.10
-raytrace_range: 0.15
-robot_radius: 0.08
-inflation_radius: 0.01
+obstacle_range: 3.5
+raytrace_range: 4.0
+robot_radius: 0.10
+inflation_radius: 0.20
 map_type: costmap
 transform_tolerance: 0.5
 observation_sources: scan
 scan: {data_type: LaserScan, topic: scan, marking: true, clearing: true}
-
