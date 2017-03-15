@@ -4,7 +4,7 @@
   <node name="republish" type="republish" pkg="image_transport" output="screen" args="compressed in:=/raspicam_node/image raw out:=/camera/rgb/image_raw" />
 
   <!-- <node name="pano_server" pkg="pano_ros" type="capture_server.py"/> -->
-  
+
   <node name="turtlebot3_panorama" pkg="turtlebot3_panorama" type="panorama">
     <param name="default_mode" value="1"/>
     <param name="default_pano_angle" value="6.28318530718"/> <!-- 2 * Pi -->
@@ -12,7 +12,6 @@
     <param name="default_rotation_velocity" value="0.3"/>
     <param name="camera_name" value="camera/rgb"/>
     <param name="bag_location" value="/tmp/turtlebot3_panorama.bag"/>
-    <remap from="cmd_vel_rc100" to="/cmd_vel_mux/input/navi"/>
-    <remap from="odom" to="/odom"/>
+    
   </node>
 </launch>

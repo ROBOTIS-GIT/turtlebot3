@@ -110,7 +110,7 @@ void PanoApp::spin()
 
         pub_cmd_vel.publish(zero_cmd_vel);
 
-        ROS_INFO("Stiching %d images", images_.size());
+        ROS_INFO("Stiching %lu images", images_.size());
 
         cv::Mat pano;
         cv::Stitcher stitcher = cv::Stitcher::createDefault(false);
@@ -123,13 +123,24 @@ void PanoApp::spin()
         cv_img.header.stamp = ros::Time::now();
         pub_stitched.publish(cv_img.toImageMsg());
         log("Publishing Completed Panorama");
-        imwrite("pano.jpg", pano);
+        ROS_INFO("Angle: %f", angle); 
+        ROS_INFO("Last Angle: %f", last_angle); 
+	angle=0.0;
+        last_angle=0.0;
+	images_.clear();
+ //       imwrite("pano.jpg", pano);
         is_active = false;
       }
       else
       {
         if (continuous) // then snap_interval is a duration
         {
+	    log("Continuous Mode panorama");
+            rotate();
+            ros::Duration(snap_interval).sleep();
+            snap();
+            ROS_INFO("Angle Continuous: %f", angle); 
+            ROS_INFO("Angle Given: %f", given_angle); 
         }
         else
         {
@@ -137,6 +148,7 @@ void PanoApp::spin()
           {
             pub_cmd_vel.publish(zero_cmd_vel); // stop before taking a snapshot
             take_snapshot = true;
+
           }
           if (take_snapshot)
           {
