@@ -1,0 +1,22 @@
+# Created on: Dec 5, 2012
+#     Author: jorge
+# Configuration for subscribers to cmd_vel sources for Android teleoperation
+# with safety reactive controller.
+#
+# Individual subscriber configuration:
+#   name:           Source name
+#   topic:          The topic that provides cmd_vel messages
+#   timeout:        Time in seconds without incoming messages to consider this topic inactive
+#   priority:       Priority: an UNIQUE unsigned integer from 0 (lowest) to MAX_INT 
+#   short_desc:     Short description (optional)
+
+subscribers:
+  - name:        "Safe reactive controller"
+    topic:       "safety_controller"
+    timeout:     0.2
+    priority:    10
+  - name:        "Panorama controller"
+    topic:       "panorama_controller"
+    timeout:     0.4
+    priority:    7
+publisher: "/mobile_base/commands/velocity"
