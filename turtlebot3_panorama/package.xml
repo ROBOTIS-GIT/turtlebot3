@@ -1,0 +1,44 @@
+<package>
+  <name>turtlebot3_panorama</name>
+  <version>2.3.3</version>
+  <description>
+      This app utilises pano_ros for taking snapshots and stitching them together to create panorama pictures.
+  </description>
+  <maintainer email="jorge@yujinrobot.com">Jorge Santos</maintainer>
+  <license>BSD</license>
+  <url type="website">http://ros.org/wiki/turtlebot_panorama</url>
+  <url type="repository">https://github.com/turtlebot/turtlebot_apps</url>
+  <url type="bugtracker">https://github.com/turtlebot/turtlebot_apps/issues</url>
+  <author>Younghun Ju</author>
+  <author>Jihoon Lee</author>
+  <author>Marcus Liebhardt</author>
+  
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <build_depend>cmake_modules</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>actionlib</build_depend>
+  <build_depend>cmake_modules</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>std_srvs</build_depend>
+  <build_depend>nav_msgs</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>turtlebot3_msgs</build_depend>
+  <build_depend>image_transport</build_depend>
+  <build_depend>eigen</build_depend>
+  <!-- <build_depend>pano_ros</build_depend> -->
+
+  <run_depend>roscpp</run_depend>
+  <run_depend>actionlib</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>std_srvs</run_depend>
+  <run_depend>nav_msgs</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>turtlebot3_msgs</run_depend>
+  <run_depend>image_transport</run_depend>
+  <run_depend>eigen</run_depend>
+  <run_depend>turtlebot_bringup</run_depend>
+  <run_depend>yocs_velocity_smoother</run_depend>
+</package>
