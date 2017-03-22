@@ -1,9 +1,13 @@
-#include <ros/ros.h>
+<?xml version="1.0" ?>
+<sdf version="1.4">
+  <world name="default">
+    <include>
+      <uri>model://sun</uri>
+    </include>
 
-int main(int argc, char **argv)
-{
-  // Set up ROS.
-  ros::init(argc, argv, "empty");
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
 
-  ROS_INFO("Hello world!");
-}
+  </world>
+</sdf>
