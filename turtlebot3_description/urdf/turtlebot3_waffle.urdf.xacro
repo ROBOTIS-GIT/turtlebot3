@@ -1,5 +1,7 @@
 <?xml version="1.0" ?>
-<robot name="turtlebot3" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="turtlebot3_waffle" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find turtlebot3_description)/urdf/common_properties.xacro"/>
+  <xacro:include filename="$(find turtlebot3_description)/urdf/turtlebot3_waffle.gazebo"/>
 
   <xacro:property name="r200_cam_offset_px" value="0.1" />
   <xacro:property name="r200_cam_offset_py" value="-0.028" />
@@ -9,19 +11,6 @@
   <xacro:property name="r200_cam_rgb_py" value="0.018"/>
   <xacro:property name="r200_cam_rgb_pz" value="0.013"/>
   <xacro:property name="r200_cam_depth_offset" value="0.01"/>
-
-  <xacro:property name="M_PI" value="3.1415926535897931" />
-
-  <!-- Init colour -->
-  <material name="black">
-    <color rgba="0.0 0.0 0.0 1.0"/>
-  </material>
-  <material name="dark">
-    <color rgba="0.3 0.3 0.3 1.0"/>
-  </material>
-  <material name="light_black">
-    <color rgba="0.4 0.4 0.4 1.0"/>
-  </material>
 
   <!-- TurtleBot3 Base-->
   <link name="base_footprint"/>
@@ -41,9 +30,9 @@
       <material name="light_black"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0.0" rpy="0 0 0"/>
+      <origin xyz="0 0 0.048" rpy="0 0 0"/>
       <geometry>
-        <box size="0.266 0.266 0.1"/>
+        <box size="0.276 0.256 0.089"/>
       </geometry>
       <material name="light_black"/>
     </collision>
@@ -127,7 +116,7 @@
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <box size="0.030 0.018 0.010"/>
+        <box size="0.030 0.010 0.020"/>
       </geometry>
     </collision>
 
@@ -150,7 +139,7 @@
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <box size="0.030 0.018 0.010"/>
+        <box size="0.030 0.010 0.020"/>
       </geometry>
     </collision>
 
@@ -164,7 +153,7 @@
   </link>
 
   <!-- TurtleBot3 Sensors-->
-  <joint name="gyro_joint" type="fixed">
+<!--  <joint name="gyro_joint" type="fixed">
     <parent link="base_link"/>
     <child link="gyro_link"/>
     <origin xyz="0.064 0 0.057" rpy="0 0 0"/>
@@ -178,7 +167,7 @@
                iyy="0.001" iyz="0.0"
                izz="0.001" />
     </inertial>
-  </link>
+  </link>-->
 
   <joint name="scan_joint" type="fixed">
     <parent link="base_link"/>
@@ -197,7 +186,7 @@
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <cylinder length="0.0408" radius="0.03785"/>
+        <cylinder length="0.0408" radius="0.050"/>
       </geometry>
     </collision>
     <inertial>
@@ -223,11 +212,11 @@
       </geometry>
     </visual>
     <collision>
-      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+      <origin xyz="0.004 0.065 0.009" rpy="0 0 0"/>
       <geometry>
-        <box size="0.130 0.567 0.118"/>
+        <box size="0.008 0.130 0.019"/>
       </geometry>
-    </collision>-->
+    </collision>
 
     <!-- This inertial field needs doesn't contain reliable data!! -->
    <inertial>
