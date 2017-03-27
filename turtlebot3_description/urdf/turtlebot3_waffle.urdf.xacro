@@ -32,7 +32,7 @@
     <collision>
       <origin xyz="0 0 0.048" rpy="0 0 0"/>
       <geometry>
-        <box size="0.276 0.256 0.089"/>
+        <box size="0.265 0.265 0.089"/>
       </geometry>
       <material name="light_black"/>
     </collision>
@@ -49,7 +49,7 @@
   <joint name="wheel_left_joint" type="continuous">
     <parent link="base_link"/>
     <child link="wheel_left_link"/>
-    <origin xyz="0.064 0.144 0.021" rpy="${-M_PI*0.5} 0 0"/>
+    <origin xyz="0.064 0.144 0.023" rpy="${-M_PI*0.5} 0 0"/>
     <axis xyz="0 0 1"/>
   </joint>
 
@@ -79,7 +79,7 @@
   <joint name="wheel_right_joint" type="continuous">
     <parent link="base_link"/>
     <child link="wheel_right_link"/>
-    <origin xyz="0.064 -0.144 0.021" rpy="${-M_PI*0.5} 0 0"/>
+    <origin xyz="0.064 -0.144 0.023" rpy="${-M_PI*0.5} 0 0"/>
     <axis xyz="0 0 1"/>
   </joint>
 
@@ -186,7 +186,7 @@
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <cylinder length="0.0408" radius="0.050"/>
+        <cylinder length="0.0408" radius="0.070"/>
       </geometry>
     </collision>
     <inertial>
@@ -201,7 +201,7 @@
   <joint name="camera_joint" type="fixed">
     <origin xyz="0.140 -0.065 0.084" rpy="0 0 0"/>
     <parent link="base_link"/>
-    <child link="camera_link" />
+    <child link="camera_link"/>
   </joint>
 
   <link name="camera_link">
@@ -212,9 +212,9 @@
       </geometry>
     </visual>
     <collision>
-      <origin xyz="0.004 0.065 0.009" rpy="0 0 0"/>
+      <origin xyz="0.003 0.065 0.010" rpy="0 0 0"/>
       <geometry>
-        <box size="0.008 0.130 0.019"/>
+        <box size="0.008 0.130 0.022"/>
       </geometry>
     </collision>
 
@@ -228,37 +228,33 @@
     </inertial>
   </link>
 
-
   <!-- RGB joints & links -->
-
   <joint name="camera_rgb_joint" type="fixed">
     <origin xyz="${r200_cam_rgb_px} ${r200_cam_rgb_py} ${r200_cam_rgb_pz}" rpy="0 0 0"/>
     <parent link="camera_link"/>
-    <child link="camera_rgb_frame" />
+    <child link="camera_rgb_frame"/>
   </joint>
   <link name="camera_rgb_frame"/>
 
   <joint name="camera_rgb_optical_joint" type="fixed">
-    <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
-    <parent link="camera_rgb_frame" />
-    <child link="camera_rgb_optical_frame" />
+    <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}"/>
+    <parent link="camera_rgb_frame"/>
+    <child link="camera_rgb_optical_frame"/>
   </joint>
   <link name="camera_rgb_optical_frame"/>
 
-
   <!--Depth joints & links -->
-
   <joint name="camera_depth_joint" type="fixed">
-      <origin xyz="0 ${r200_cam_depth_offset} 0" rpy="0 0 0" />
-      <parent link="camera_rgb_frame" />
-      <child link="camera_depth_frame" />
+      <origin xyz="0 ${r200_cam_depth_offset} 0" rpy="0 0 0"/>
+      <parent link="camera_rgb_frame"/>
+      <child link="camera_depth_frame"/>
   </joint>
   <link name="camera_depth_frame"/>
 
   <joint name="camera_depth_optical_joint" type="fixed">
-      <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
-      <parent link="camera_depth_frame" />
-      <child link="camera_depth_optical_frame" />
+      <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}"/>
+      <parent link="camera_depth_frame"/>
+      <child link="camera_depth_optical_frame"/>
   </joint>
   <link name="camera_depth_optical_frame"/>
 

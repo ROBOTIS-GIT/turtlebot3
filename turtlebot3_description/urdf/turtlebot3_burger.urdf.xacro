@@ -24,7 +24,7 @@
     <collision>
       <origin xyz="0 0 0.070" rpy="0 0 0"/>
       <geometry>
-        <box size="0.130 0.130 0.145"/>
+        <box size="0.140 0.140 0.145"/>
       </geometry>
     </collision>
 
@@ -102,7 +102,7 @@
     </inertial>
   </link>
 
-  <joint name="caster_back_joint" type="continuous">
+  <joint name="caster_back_joint" type="fixed">
     <parent link="base_link"/>
     <child link="caster_back_link"/>
     <origin xyz="-0.049 0 -0.004" rpy="${-M_PI*0.5} 0 0"/>
@@ -160,7 +160,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <cylinder length="0.0408" radius="0.050"/>
+        <cylinder length="0.0408" radius="0.070"/>
       </geometry>
     </collision>
 
