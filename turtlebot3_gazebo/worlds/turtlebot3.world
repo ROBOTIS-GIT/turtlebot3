@@ -10,17 +10,18 @@
       <uri>model://ground_plane</uri>
     </include>
 
+<!--
     <physics type='ode'>
       <max_step_size>0.01</max_step_size>
       <real_time_factor>1</real_time_factor>
       <real_time_update_rate>100</real_time_update_rate>
       <gravity>0 0 -9.8</gravity>
     </physics>
-
+-->
     <scene>
       <ambient>0.4 0.4 0.4 1</ambient>
       <background>0.7 0.7 0.7 1</background>
-      <shadows>1</shadows>
+      <shadows>true</shadows>
     </scene>
 
     <model name='ros_symbol'>
