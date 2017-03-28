@@ -1,20 +1,8 @@
 <?xml version="1.0" ?>
-<robot name="turtlebot3" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="turtlebot3_burger" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find turtlebot3_description)/urdf/common_properties.xacro"/>
+  <xacro:include filename="$(find turtlebot3_description)/urdf/turtlebot3_burger.gazebo"/>
 
-  <xacro:property name="M_PI" value="3.1415926535897931" />
-
-  <!-- Init colour -->
-  <material name="black">
-    <color rgba="0.0 0.0 0.0 1.0"/>
-  </material>
-  <material name="dark">
-    <color rgba="0.3 0.3 0.3 1.0"/>
-  </material>
-  <material name="light_black">
-    <color rgba="0.4 0.4 0.4 1.0"/>
-  </material>
-
-  <!-- TurtleBot3 Base-->
   <link name="base_footprint"/>
 
   <joint name="base_joint" type="fixed">
@@ -33,9 +21,9 @@
     </visual>
 
     <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0 0 0.070" rpy="0 0 0"/>
       <geometry>
-        <box size="0.18 0.12 0.04"/>
+        <box size="0.140 0.140 0.145"/>
       </geometry>
     </collision>
 
@@ -48,7 +36,6 @@
     </inertial>
   </link>
 
-  <!-- TurtleBot3 Wheels-->
   <joint name="wheel_left_joint" type="continuous">
     <parent link="base_link"/>
     <child link="wheel_left_link"/>
@@ -66,7 +53,7 @@
     </visual>
 
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
         <cylinder length="0.018" radius="0.033"/>
       </geometry>
@@ -98,7 +85,7 @@
     </visual>
 
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
         <cylinder length="0.018" radius="0.033"/>
       </geometry>
@@ -121,9 +108,9 @@
 
   <link name="caster_back_link">
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="0.030 0.018 0.010"/>
+        <box size="0.030 0.010 0.020"/>
       </geometry>
     </collision>
 
@@ -167,12 +154,14 @@
       </geometry>
       <material name="dark"/>
     </visual>
+
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <cylinder length="0.0408" radius="0.03785"/>
+        <cylinder length="0.0408" radius="0.070"/>
       </geometry>
     </collision>
+
     <inertial>
       <mass value="0.01" />
       <origin xyz="0 0 0" />

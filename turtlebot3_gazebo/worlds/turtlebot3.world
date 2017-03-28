@@ -1,0 +1,640 @@
+<sdf version='1.4'>
+  <world name='default'>
+    <!-- A global light source -->
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <!-- A ground plane -->
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+<!--
+    <physics type='ode'>
+      <max_step_size>0.01</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>100</real_time_update_rate>
+      <gravity>0 0 -9.8</gravity>
+    </physics>
+-->
+    <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>true</shadows>
+    </scene>
+
+    <model name='ros_symbol'>
+      <static>1</static>
+      <link name='symbol'>
+        <collision name='one_one'>
+          <pose>-1.5 -1.5 0 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.4</radius>
+              <length>1.0</length>
+            </cylinder>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode/>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+
+        <visual name='one_one'>
+          <pose>-1.5 -1.5 0 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.4</radius>
+              <length>1.0</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/White</name>
+            </script>
+          </material>
+        </visual>
+
+        <collision name='one_two'>
+          <pose>-1.5 0 0 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.4</radius>
+              <length>1.0</length>
+            </cylinder>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode/>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+
+        <visual name='one_two'>
+          <pose>-1.5 0 0 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.4</radius>
+              <length>1.0</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/White</name>
+            </script>
+          </material>
+        </visual>
+
+        <collision name='one_three'>
+          <pose>-1.5 1.5 0 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.4</radius>
+              <length>1.0</length>
+            </cylinder>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode/>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+
+        <visual name='one_three'>
+          <pose>-1.5 1.5 0 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.4</radius>
+              <length>1.0</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/White</name>
+            </script>
+          </material>
+        </visual>
+
+        <collision name='two_one'>
+          <pose>0 -1.5 0 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.4</radius>
+              <length>1.0</length>
+            </cylinder>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode/>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+
+        <visual name='two_one'>
+          <pose>0 -1.5 0 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.4</radius>
+              <length>1.0</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/White</name>
+            </script>
+          </material>
+        </visual>
+
+        <collision name='two_two'>
+          <pose>0 0 0 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.4</radius>
+              <length>1.0</length>
+            </cylinder>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode/>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+
+        <visual name='two_two'>
+          <pose>0 0 0 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.4</radius>
+              <length>1.0</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/White</name>
+            </script>
+          </material>
+        </visual>
+
+        <collision name='two_three'>
+          <pose>0 1.5 0 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.4</radius>
+              <length>1.0</length>
+            </cylinder>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode/>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+
+        <visual name='two_three'>
+          <pose>0 1.5 0 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.4</radius>
+              <length>1.0</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/White</name>
+            </script>
+          </material>
+        </visual>
+
+        <collision name='three_one'>
+          <pose>1.5 -1.5 0 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.4</radius>
+              <length>1.0</length>
+            </cylinder>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode/>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+
+        <visual name='three_one'>
+          <pose>1.5 -1.5 0 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.4</radius>
+              <length>1.0</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/White</name>
+            </script>
+          </material>
+        </visual>
+
+        <collision name='three_two'>
+          <pose>1.5 0 0 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.4</radius>
+              <length>1.0</length>
+            </cylinder>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode/>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+
+        <visual name='three_two'>
+          <pose>1.5 0 0 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.4</radius>
+              <length>1.0</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/White</name>
+            </script>
+          </material>
+        </visual>
+
+        <collision name='three_three'>
+          <pose>1.5 1.5 0 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.4</radius>
+              <length>1.0</length>
+            </cylinder>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode/>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+
+        <visual name='three_three'>
+          <pose>1.5 1.5 0 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.4</radius>
+              <length>1.0</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/White</name>
+            </script>
+          </material>
+        </visual>
+        </link>
+      </model>
+
+      <model name='ros_wall'>
+        <static>1</static>
+        <link name='wall'>
+          <collision name='back_left'>
+            <pose>-1.5 -0.75 0 1.5708 0 1.5708</pose>
+            <geometry>
+              <box>
+                <size>1.3 0.7 0.3</size>
+              </box>
+            </geometry>
+            <max_contacts>10</max_contacts>
+            <surface>
+              <bounce/>
+              <friction>
+                <ode/>
+              </friction>
+              <contact>
+                <ode/>
+              </contact>
+            </surface>
+          </collision>
+
+          <visual name='back_left'>
+            <pose>-1.5 -0.75 0 1.5708 0 1.5708</pose>
+            <geometry>
+              <box>
+                <size>1.3 0.7 0.3</size>
+              </box>
+            </geometry>
+            <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/FlatBlack</name>
+              </script>
+            </material>
+          </visual>
+
+          <collision name='back_right'>
+            <pose>-1.5 0.75 0 1.5708 0 1.5708</pose>
+            <geometry>
+              <box>
+                <size>1.3 0.7 0.3</size>
+              </box>
+            </geometry>
+            <max_contacts>10</max_contacts>
+            <surface>
+              <bounce/>
+              <friction>
+                <ode/>
+              </friction>
+              <contact>
+                <ode/>
+              </contact>
+            </surface>
+          </collision>
+
+          <visual name='back_right'>
+            <pose>-1.5 0.75 0 1.5708 0 1.5708</pose>
+            <geometry>
+              <box>
+                <size>1.3 0.7 0.3</size>
+              </box>
+            </geometry>
+            <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/FlatBlack</name>
+              </script>
+            </material>
+          </visual>
+
+          <collision name='right_front'>
+            <pose>0.75 -1.5 0 1.5708 0 0</pose>
+            <geometry>
+              <box>
+                <size>1.3 0.7 0.3</size>
+              </box>
+            </geometry>
+            <max_contacts>10</max_contacts>
+            <surface>
+              <bounce/>
+              <friction>
+                <ode/>
+              </friction>
+              <contact>
+                <ode/>
+              </contact>
+            </surface>
+          </collision>
+
+          <visual name='right_front'>
+            <pose>0.75 -1.5 0 1.5708 0 0</pose>
+            <geometry>
+              <box>
+                <size>1.3 0.7 0.3</size>
+              </box>
+            </geometry>
+            <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/FlatBlack</name>
+              </script>
+            </material>
+          </visual>
+
+<collision name='right_back'>
+  <pose>-0.75 -1.5 0 1.5708 0 0</pose>
+  <geometry>
+    <box>
+      <size>1.3 0.7 0.3</size>
+    </box>
+  </geometry>
+  <max_contacts>10</max_contacts>
+  <surface>
+    <bounce/>
+    <friction>
+      <ode/>
+    </friction>
+    <contact>
+      <ode/>
+    </contact>
+  </surface>
+</collision>
+
+<visual name='right_back'>
+  <pose>-0.75 -1.5 0 1.5708 0 0</pose>
+  <geometry>
+    <box>
+      <size>1.3 0.7 0.3</size>
+    </box>
+  </geometry>
+  <material>
+    <script>
+      <uri>file://media/materials/scripts/gazebo.material</uri>
+      <name>Gazebo/FlatBlack</name>
+    </script>
+  </material>
+</visual>
+
+<collision name='left_front'>
+  <pose>0.75 1.5 0 1.5708 0 0</pose>
+  <geometry>
+    <box>
+      <size>1.3 0.7 0.3</size>
+    </box>
+  </geometry>
+  <max_contacts>10</max_contacts>
+  <surface>
+    <bounce/>
+    <friction>
+      <ode/>
+    </friction>
+    <contact>
+      <ode/>
+    </contact>
+  </surface>
+</collision>
+
+<visual name='left_front'>
+  <pose>0.75 1.5 0 1.5708 0 0</pose>
+  <geometry>
+    <box>
+      <size>1.3 0.7 0.3</size>
+    </box>
+  </geometry>
+  <material>
+    <script>
+      <uri>file://media/materials/scripts/gazebo.material</uri>
+      <name>Gazebo/FlatBlack</name>
+    </script>
+  </material>
+</visual>
+
+<collision name='left_back'>
+  <pose>-0.75 1.5 0 1.5708 0 0</pose>
+  <geometry>
+    <box>
+      <size>1.3 0.7 0.3</size>
+    </box>
+  </geometry>
+  <max_contacts>10</max_contacts>
+  <surface>
+    <bounce/>
+    <friction>
+      <ode/>
+    </friction>
+    <contact>
+      <ode/>
+    </contact>
+  </surface>
+</collision>
+
+<visual name='left_back'>
+  <pose>-0.75 1.5 0 1.5708 0 0</pose>
+  <geometry>
+    <box>
+      <size>1.3 0.7 0.3</size>
+    </box>
+  </geometry>
+  <material>
+    <script>
+      <uri>file://media/materials/scripts/gazebo.material</uri>
+      <name>Gazebo/FlatBlack</name>
+    </script>
+  </material>
+</visual>
+
+<collision name='front_left'>
+  <pose>1.5 0.75 0 1.5708 0 1.5708</pose>
+  <geometry>
+    <box>
+      <size>1.3 0.7 0.3</size>
+    </box>
+  </geometry>
+  <max_contacts>10</max_contacts>
+  <surface>
+    <bounce/>
+    <friction>
+      <ode/>
+    </friction>
+    <contact>
+      <ode/>
+    </contact>
+  </surface>
+</collision>
+
+<visual name='front_left'>
+  <pose>1.5 0.75 0 1.5708 0 1.5708</pose>
+  <geometry>
+    <box>
+      <size>1.3 0.7 0.3</size>
+    </box>
+  </geometry>
+  <material>
+    <script>
+      <uri>file://media/materials/scripts/gazebo.material</uri>
+      <name>Gazebo/FlatBlack</name>
+    </script>
+  </material>
+</visual>
+
+<collision name='front_right'>
+  <pose>1.5 -0.75 0 1.5708 0 1.5708</pose>
+  <geometry>
+    <box>
+      <size>1.3 0.7 0.3</size>
+    </box>
+  </geometry>
+  <max_contacts>10</max_contacts>
+  <surface>
+    <bounce/>
+    <friction>
+      <ode/>
+    </friction>
+    <contact>
+      <ode/>
+    </contact>
+  </surface>
+</collision>
+
+<visual name='front_right'>
+  <pose>1.5 -0.75 0 1.5708 0 1.5708</pose>
+  <geometry>
+    <box>
+      <size>1.3 0.7 0.3</size>
+    </box>
+  </geometry>
+  <material>
+    <script>
+      <uri>file://media/materials/scripts/gazebo.material</uri>
+      <name>Gazebo/FlatBlack</name>
+    </script>
+  </material>
+</visual>
+        </link>
+      </model>
+
+      <gui fullscreen='0'>
+        <camera name='user_camera'>
+          <pose>0.0 0.0 7.0 0 1.5708 0</pose>
+          <view_controller>orbit</view_controller>
+        </camera>
+      </gui>
+  </world>
+</sdf>
