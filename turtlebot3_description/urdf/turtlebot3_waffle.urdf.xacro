@@ -12,7 +12,6 @@
   <xacro:property name="r200_cam_rgb_pz" value="0.013"/>
   <xacro:property name="r200_cam_depth_offset" value="0.01"/>
 
-  <!-- TurtleBot3 Base-->
   <link name="base_footprint"/>
 
   <joint name="base_joint" type="fixed">
@@ -45,7 +44,6 @@
     </inertial>
   </link>
 
-  <!-- TurtleBot3 Wheels-->
   <joint name="wheel_left_joint" type="continuous">
     <parent link="base_link"/>
     <child link="wheel_left_link"/>
@@ -228,7 +226,6 @@
     </inertial>
   </link>
 
-  <!-- RGB joints & links -->
   <joint name="camera_rgb_joint" type="fixed">
     <origin xyz="${r200_cam_rgb_px} ${r200_cam_rgb_py} ${r200_cam_rgb_pz}" rpy="0 0 0"/>
     <parent link="camera_link"/>
@@ -243,7 +240,6 @@
   </joint>
   <link name="camera_rgb_optical_frame"/>
 
-  <!--Depth joints & links -->
   <joint name="camera_depth_joint" type="fixed">
       <origin xyz="0 ${r200_cam_depth_offset} 0" rpy="0 0 0"/>
       <parent link="camera_rgb_frame"/>

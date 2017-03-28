@@ -3,7 +3,6 @@
   <xacro:include filename="$(find turtlebot3_description)/urdf/common_properties.xacro"/>
   <xacro:include filename="$(find turtlebot3_description)/urdf/turtlebot3_burger.gazebo"/>
 
-  <!-- TurtleBot3 Base-->
   <link name="base_footprint"/>
 
   <joint name="base_joint" type="fixed">
@@ -37,7 +36,6 @@
     </inertial>
   </link>
 
-  <!-- TurtleBot3 Wheels-->
   <joint name="wheel_left_joint" type="continuous">
     <parent link="base_link"/>
     <child link="wheel_left_link"/>
