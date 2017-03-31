@@ -1,0 +1,4 @@
+<launch>
+  <node name="gazebo_ros_turtlebot3_tutorial" pkg="turtlebot3_gazebo" type="gazebo_ros_turtlebot3" required="true" output="screen">
+  </node>
+</launch>
