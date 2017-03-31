@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot name="turtlebot3_burger_sim" xmlns:xacro="http://ros.org/wiki/xacro">
   <arg name="laser_visual" default="false"/>
-  <arg name="imu_visual"   default="true"/>
+  <arg name="imu_visual"   default="false"/>
 
   <gazebo>
     <plugin name="turtlebot3_burger_controller" filename="libgazebo_ros_diff_drive.so">
@@ -76,8 +76,8 @@
           <horizontal>
             <samples>360</samples>
             <resolution>1</resolution>
-            <min_angle>-3.14</min_angle>
-            <max_angle>3.14</max_angle>
+            <min_angle>0.0</min_angle>
+            <max_angle>6.28</max_angle>
           </horizontal>
         </scan>
         <range>
