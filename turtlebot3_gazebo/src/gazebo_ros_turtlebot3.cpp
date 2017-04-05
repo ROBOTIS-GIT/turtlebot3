@@ -28,6 +28,8 @@ GazeboRosTurtleBot3::GazeboRosTurtleBot3()
 
 GazeboRosTurtleBot3::~GazeboRosTurtleBot3()
 {
+  updatecommandVelocity(0.0, 0.0);
+  ros::shutdown();
 }
 
 /*******************************************************************************
@@ -37,18 +39,41 @@ bool GazeboRosTurtleBot3::init()
 {
   // initialize ROS parameter
   nh_.param("is_debug", is_debug_, is_debug_);
+  std::string robot_model = nh_.param<std::string>("tb3_model", "");
+
+  if (!robot_model.compare("burger"))
+  {
+    rotation_radius_ = 0.08;
+    front_distance_limit_ = 0.7;
+    side_distance_limit_  = 0.4;
+  }
+  else if (!robot_model.compare("waffle"))
+  {
+    rotation_radius_ = 0.1435;
+    front_distance_limit_ = 0.7;
+    side_distance_limit_  = 0.7;
+  }
+  ROS_INFO("robot_model : %s", robot_model.c_str());
+  ROS_INFO("rotation_radius_ : %lf", rotation_radius_);
+  ROS_INFO("front_distance_limit_ = %lf", front_distance_limit_);
+  ROS_INFO("side_distance_limit_ = %lf", side_distance_limit_);
 
   // initialize variables
-  turtlebot3_direction_.data = "front";
-  turtlebot3_linear_velocity_ = 0.0;
-  turtlebot3_linear_velocity_ = 0.0;
-
+  right_joint_encoder_ = 0.0;
+  priv_right_joint_encoder_ = 0.0;
   // initialize publishers
   cmd_vel_pub_   = nh_.advertise<geometry_msgs::Twist>("/cmd_vel", 10);
 
   // initialize subscribers
   laser_scan_sub_  = nh_.subscribe("/scan", 10, &GazeboRosTurtleBot3::laserScanMsgCallBack, this);
+  joint_state_sub_ = nh_.subscribe("/joint_states", 10, &GazeboRosTurtleBot3::jointStateMsgCallBack, this);
+
   return true;
+}
+
+void GazeboRosTurtleBot3::jointStateMsgCallBack(const sensor_msgs::JointState::ConstPtr &msg)
+{
+  right_joint_encoder_ = msg->position.at(0);
 }
 
 void GazeboRosTurtleBot3::laserScanMsgCallBack(const sensor_msgs::LaserScan::ConstPtr &msg)
@@ -59,11 +84,11 @@ void GazeboRosTurtleBot3::laserScanMsgCallBack(const sensor_msgs::LaserScan::Con
   {
     if (std::isinf(msg->ranges.at(scan_angle[num])))
     {
-      direction_vector[num] = msg->range_max;
+      direction_vector_[num] = msg->range_max;
     }
     else
     {
-      direction_vector[num] = msg->ranges.at(scan_angle[num]);
+      direction_vector_[num] = msg->ranges.at(scan_angle[num]);
     }
   }
 }
@@ -83,18 +108,76 @@ void GazeboRosTurtleBot3::updatecommandVelocity(double linear, double angular)
 *******************************************************************************/
 bool GazeboRosTurtleBot3::controlLoop()
 {
-  if (direction_vector[CENTER] > 1.0)
-  {
-    updatecommandVelocity(0.15, 0.0);
-  }
+  static uint8_t turtlebot3_state_num = 0;
+  double wheel_radius = 0.033;
+  double turtlebot3_rotation = 0.0;
 
-  if (direction_vector[LEFT] < 0.5)
+  turtlebot3_rotation = ((100.0 * DEG2RAD) * (rotation_radius_ / 2) / wheel_radius);
+
+  switch(turtlebot3_state_num)
   {
-    updatecommandVelocity(0.0, 1.5);
-  }
-  else if (direction_vector[RIGHT] < 0.5)
-  {
-    updatecommandVelocity(0.0, -1.5);
+    case GET_TB3_DIRECTION:
+      if (direction_vector_[CENTER] > front_distance_limit_)
+      {
+        turtlebot3_state_num = TB3_DRIVE_FORWARD;
+      }
+
+      if (direction_vector_[CENTER] < front_distance_limit_ || direction_vector_[LEFT] < side_distance_limit_)
+      {
+        priv_right_joint_encoder_ = right_joint_encoder_ - turtlebot3_rotation;
+        turtlebot3_state_num = TB3_RIGHT_TURN;
+      }
+      else if (direction_vector_[RIGHT] < side_distance_limit_)
+      {
+        priv_right_joint_encoder_ = right_joint_encoder_ + turtlebot3_rotation;
+        turtlebot3_state_num = TB3_LEFT_TURN;
+      }
+      break;
+
+    case TB3_DRIVE_FORWARD:
+      updatecommandVelocity(LINEAR_VELOCITY, 0.0);
+      turtlebot3_state_num = GET_TB3_DIRECTION;
+      break;
+
+    case TB3_RIGHT_TURN:
+      if (priv_right_joint_encoder_ == 0.0)
+      {
+        turtlebot3_state_num = GET_TB3_DIRECTION;
+      }
+      else
+      {
+        if (fabs(priv_right_joint_encoder_ - right_joint_encoder_) < 0.1)
+        {
+          turtlebot3_state_num = GET_TB3_DIRECTION;
+        }
+        else
+        {
+          updatecommandVelocity(0.0, -1 * ANGULAR_VELOCITY);
+        }
+      }
+      break;
+
+    case TB3_LEFT_TURN:
+      if (priv_right_joint_encoder_ == 0.0)
+      {
+        turtlebot3_state_num = GET_TB3_DIRECTION;
+      }
+      else
+      {
+        if (fabs(priv_right_joint_encoder_ - right_joint_encoder_) < 0.1)
+        {
+          turtlebot3_state_num = GET_TB3_DIRECTION;
+        }
+        else
+        {
+          updatecommandVelocity(0.0, ANGULAR_VELOCITY);
+        }
+      }
+      break;
+
+    default:
+      turtlebot3_state_num = GET_TB3_DIRECTION;
+      break;
   }
 
   return true;

@@ -32,9 +32,20 @@
 #include <tf/tf.h>
 #include <nav_msgs/Odometry.h>
 
+#define DEG2RAD (M_PI / 180.0)
+#define RAD2DEG (180.0 / M_PI)
+
 #define CENTER 0
-#define RIGHT  1
-#define LEFT   2
+#define LEFT   1
+#define RIGHT  2
+
+#define LINEAR_VELOCITY  0.3
+#define ANGULAR_VELOCITY 1.5
+
+#define GET_TB3_DIRECTION 0
+#define TB3_DRIVE_FORWARD 1
+#define TB3_RIGHT_TURN    2
+#define TB3_LEFT_TURN     3
 
 class GazeboRosTurtleBot3
 {
@@ -51,6 +62,7 @@ class GazeboRosTurtleBot3
 
   // ROS Parameters
   bool is_debug_;
+
   // ROS Time
 
   // ROS Topic Publishers
@@ -58,17 +70,20 @@ class GazeboRosTurtleBot3
 
   // ROS Topic Subscribers
   ros::Subscriber laser_scan_sub_;
-  ros::Subscriber odom_sub_;
+  ros::Subscriber joint_state_sub_;
 
-  double direction_vector[3] = {0.0, 0.0, 0.0};
+  double rotation_radius_;
+  double front_distance_limit_;
+  double side_distance_limit_;
 
-  std_msgs::String turtlebot3_direction_;
+  double direction_vector_[3] = {0.0, 0.0, 0.0};
 
-  double turtlebot3_linear_velocity_;
-  double turtlebot3_angular_velocity_;
+  double right_joint_encoder_;
+  double priv_right_joint_encoder_;
 
   // Function prototypes
   void updatecommandVelocity(double linear, double angular);
   void laserScanMsgCallBack(const sensor_msgs::LaserScan::ConstPtr &msg);
+  void jointStateMsgCallBack(const sensor_msgs::JointState::ConstPtr &msg);
 };
 #endif // GAZEBO_ROS_TURTLEBOT3_H_

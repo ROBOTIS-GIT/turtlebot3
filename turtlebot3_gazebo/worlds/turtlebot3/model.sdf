@@ -7,7 +7,7 @@
           <pose>-1.1 -1.1 0.25 0 0 0</pose>
           <geometry>
             <cylinder>
-              <radius>0.2</radius>
+              <radius>0.15</radius>
               <length>0.5</length>
             </cylinder>
           </geometry>
@@ -27,7 +27,7 @@
           <pose>-1.1 -1.1 0.25 0 0 0</pose>
           <geometry>
             <cylinder>
-              <radius>0.2</radius>
+              <radius>0.15</radius>
               <length>0.5</length>
             </cylinder>
           </geometry>
@@ -43,7 +43,7 @@
           <pose>-1.1 0 0.25 0 0 0</pose>
           <geometry>
             <cylinder>
-              <radius>0.2</radius>
+              <radius>0.15</radius>
               <length>0.5</length>
             </cylinder>
           </geometry>
@@ -63,7 +63,7 @@
           <pose>-1.1 0 0.25 0 0 0</pose>
           <geometry>
             <cylinder>
-              <radius>0.2</radius>
+              <radius>0.15</radius>
               <length>0.5</length>
             </cylinder>
           </geometry>
@@ -79,7 +79,7 @@
           <pose>-1.1 1.1 0.25 0 0 0</pose>
           <geometry>
             <cylinder>
-              <radius>0.2</radius>
+              <radius>0.15</radius>
               <length>0.5</length>
             </cylinder>
           </geometry>
@@ -99,7 +99,7 @@
           <pose>-1.1 1.1 0.25 0 0 0</pose>
           <geometry>
             <cylinder>
-              <radius>0.2</radius>
+              <radius>0.15</radius>
               <length>0.5</length>
             </cylinder>
           </geometry>
@@ -115,7 +115,7 @@
           <pose>0 -1.1 0.25 0 0 0</pose>
           <geometry>
             <cylinder>
-              <radius>0.2</radius>
+              <radius>0.15</radius>
               <length>0.5</length>
             </cylinder>
           </geometry>
@@ -135,7 +135,7 @@
           <pose>0 -1.1 0.25 0 0 0</pose>
           <geometry>
             <cylinder>
-              <radius>0.2</radius>
+              <radius>0.15</radius>
               <length>0.5</length>
             </cylinder>
           </geometry>
@@ -151,7 +151,7 @@
           <pose>0 0 0.25 0 0 0</pose>
           <geometry>
             <cylinder>
-              <radius>0.2</radius>
+              <radius>0.15</radius>
               <length>0.5</length>
             </cylinder>
           </geometry>
@@ -171,7 +171,7 @@
           <pose>0 0 0.25 0 0 0</pose>
           <geometry>
             <cylinder>
-              <radius>0.2</radius>
+              <radius>0.15</radius>
               <length>0.5</length>
             </cylinder>
           </geometry>
@@ -187,7 +187,7 @@
           <pose>0 1.1 0.25 0 0 0</pose>
           <geometry>
             <cylinder>
-              <radius>0.2</radius>
+              <radius>0.15</radius>
               <length>0.5</length>
             </cylinder>
           </geometry>
@@ -207,7 +207,7 @@
           <pose>0 1.1 0.25 0 0 0</pose>
           <geometry>
             <cylinder>
-              <radius>0.2</radius>
+              <radius>0.15</radius>
               <length>0.5</length>
             </cylinder>
           </geometry>
@@ -223,7 +223,7 @@
           <pose>1.1 -1.1 0.25 0 0 0</pose>
           <geometry>
             <cylinder>
-              <radius>0.2</radius>
+              <radius>0.15</radius>
               <length>0.5</length>
             </cylinder>
           </geometry>
@@ -243,7 +243,7 @@
           <pose>1.1 -1.1 0.25 0 0 0</pose>
           <geometry>
             <cylinder>
-              <radius>0.2</radius>
+              <radius>0.15</radius>
               <length>0.5</length>
             </cylinder>
           </geometry>
@@ -259,7 +259,7 @@
           <pose>1.1 0 0.25 0 0 0</pose>
           <geometry>
             <cylinder>
-              <radius>0.2</radius>
+              <radius>0.15</radius>
               <length>0.5</length>
             </cylinder>
           </geometry>
@@ -279,7 +279,7 @@
           <pose>1.1 0 0.25 0 0 0</pose>
           <geometry>
             <cylinder>
-              <radius>0.2</radius>
+              <radius>0.15</radius>
               <length>0.5</length>
             </cylinder>
           </geometry>
@@ -295,7 +295,7 @@
           <pose>1.1 1.1 0.25 0 0 0</pose>
           <geometry>
             <cylinder>
-              <radius>0.2</radius>
+              <radius>0.15</radius>
               <length>0.5</length>
             </cylinder>
           </geometry>
@@ -315,7 +315,7 @@
           <pose>1.1 1.1 0.25 0 0 0</pose>
           <geometry>
             <cylinder>
-              <radius>0.2</radius>
+              <radius>0.15</radius>
               <length>0.5</length>
             </cylinder>
           </geometry>
