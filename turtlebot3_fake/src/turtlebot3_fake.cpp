@@ -35,6 +35,22 @@ Turtlebot3Fake::~Turtlebot3Fake()
 bool Turtlebot3Fake::init()
 {
   // initialize ROS parameter
+
+  std::string robot_model = nh_.param<std::string>("tb3_model", "");
+
+  if (!robot_model.compare("burger"))
+  {
+    wheel_seperation_ = 0.160;
+    turning_radius_   = 0.080;
+    robot_radius_     = 0.105;
+  }
+  else if (!robot_model.compare("waffle"))
+  {
+    wheel_seperation_ = 0.287;
+    turning_radius_   = 0.1435;
+    robot_radius_     = 0.220;
+  }
+
   nh_.param("wheel_left_joint_name", joint_states_name_[LEFT],  std::string("wheel_left_joint"));
   nh_.param("wheel_right_joint_name", joint_states_name_[RIGHT],  std::string("wheel_right_joint"));
   nh_.param("joint_states_frame", joint_states_.header.frame_id, std::string("base_footprint"));
@@ -97,8 +113,8 @@ void Turtlebot3Fake::commandVelocityCallback(const geometry_msgs::TwistConstPtr 
   goal_linear_velocity_  = cmd_vel_msg->linear.x;
   goal_angular_velocity_ = cmd_vel_msg->angular.z;
 
-  wheel_speed_cmd_[LEFT]  = goal_linear_velocity_ - (goal_angular_velocity_ * WHEEL_SEPARATION / 2);
-  wheel_speed_cmd_[RIGHT] = goal_linear_velocity_ + (goal_angular_velocity_ * WHEEL_SEPARATION / 2);
+  wheel_speed_cmd_[LEFT]  = goal_linear_velocity_ - (goal_angular_velocity_ * wheel_seperation_ / 2);
+  wheel_speed_cmd_[RIGHT] = goal_linear_velocity_ + (goal_angular_velocity_ * wheel_seperation_ / 2);
 }
 
 /*******************************************************************************
@@ -138,7 +154,7 @@ bool Turtlebot3Fake::updateOdometry(ros::Duration diff_time)
   last_position_[RIGHT] += wheel_r;
 
   delta_s     = WHEEL_RADIUS * (wheel_r + wheel_l) / 2.0;
-  delta_theta = WHEEL_RADIUS * (wheel_r - wheel_l) / WHEEL_SEPARATION;
+  delta_theta = WHEEL_RADIUS * (wheel_r - wheel_l) / wheel_seperation_;
 
   // compute odometric pose
   odom_pose_[0] += delta_s * cos(odom_pose_[2] + (delta_theta / 2.0));
