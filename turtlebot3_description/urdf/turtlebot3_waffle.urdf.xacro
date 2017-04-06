@@ -22,14 +22,14 @@
 
   <link name="base_link">
     <visual>
-      <origin xyz="0 0 0.0" rpy="0 0 0"/>
+      <origin xyz="-0.064 0 0.0" rpy="0 0 0"/>
       <geometry>
         <mesh filename="package://turtlebot3_description/meshes/bases/waffle_base.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="light_black"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0.048" rpy="0 0 0"/>
+      <origin xyz="-0.064 0 0.048" rpy="0 0 0"/>
       <geometry>
         <box size="0.265 0.265 0.089"/>
       </geometry>
@@ -47,7 +47,7 @@
   <joint name="wheel_left_joint" type="continuous">
     <parent link="base_link"/>
     <child link="wheel_left_link"/>
-    <origin xyz="0.064 0.144 0.023" rpy="${-M_PI*0.5} 0 0"/>
+    <origin xyz="0.0 0.144 0.023" rpy="${-M_PI*0.5} 0 0"/>
     <axis xyz="0 0 1"/>
   </joint>
 
@@ -77,7 +77,7 @@
   <joint name="wheel_right_joint" type="continuous">
     <parent link="base_link"/>
     <child link="wheel_right_link"/>
-    <origin xyz="0.064 -0.144 0.023" rpy="${-M_PI*0.5} 0 0"/>
+    <origin xyz="0.0 -0.144 0.023" rpy="${-M_PI*0.5} 0 0"/>
     <axis xyz="0 0 1"/>
   </joint>
 
@@ -107,7 +107,7 @@
   <joint name="caster_back_right_joint" type="fixed">
     <parent link="base_link"/>
     <child link="caster_back_right_link"/>
-    <origin xyz="-0.113 -0.064 -0.004" rpy="${-M_PI*0.5} 0 0"/>
+    <origin xyz="-0.177 -0.064 -0.004" rpy="${-M_PI*0.5} 0 0"/>
   </joint>
 
   <link name="caster_back_right_link">
@@ -130,7 +130,7 @@
   <joint name="caster_back_left_joint" type="fixed">
     <parent link="base_link"/>
     <child link="caster_back_left_link"/>
-    <origin xyz="-0.113 0.064 -0.004" rpy="${-M_PI*0.5} 0 0"/>
+    <origin xyz="-0.177 0.064 -0.004" rpy="${-M_PI*0.5} 0 0"/>
   </joint>
 
   <link name="caster_back_left_link">
@@ -156,7 +156,6 @@
     <child link="gyro_link"/>
     <origin xyz="0.064 0 0.057" rpy="0 0 0"/>
   </joint>
-
   <link name="gyro_link">
     <inertial>
       <origin xyz="0 0 0" />
@@ -170,7 +169,7 @@
   <joint name="scan_joint" type="fixed">
     <parent link="base_link"/>
     <child link="base_scan"/>
-    <origin xyz="0 0 0.121" rpy="0 0 0"/>
+    <origin xyz="-0.064 0 0.121" rpy="0 0 0"/>
   </joint>
 
   <link name="base_scan">
@@ -197,7 +196,7 @@
   </link>
 
   <joint name="camera_joint" type="fixed">
-    <origin xyz="0.140 -0.065 0.084" rpy="0 0 0"/>
+    <origin xyz="0.076 -0.065 0.084" rpy="0 0 0"/>
     <parent link="base_link"/>
     <child link="camera_link"/>
   </joint>
@@ -217,13 +216,13 @@
     </collision>
 
     <!-- This inertial field needs doesn't contain reliable data!! -->
-   <inertial>
+<!--   <inertial>
       <mass value="0.564" />
       <origin xyz="0 0 0" />
       <inertia ixx="0.003881243" ixy="0.0" ixz="0.0"
                iyy="0.000498940" iyz="0.0"
                izz="0.003879257" />
-    </inertial>
+    </inertial>-->
   </link>
 
   <joint name="camera_rgb_joint" type="fixed">

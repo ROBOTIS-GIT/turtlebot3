@@ -8,12 +8,12 @@
   <joint name="base_joint" type="fixed">
     <parent link="base_footprint"/>
     <child link="base_link"/>
-    <origin xyz="0 0 0.010" rpy="0 0 0"/>
+    <origin xyz="0.0 0.0 0.010" rpy="0 0 0"/>
   </joint>
 
   <link name="base_link">
     <visual>
-      <origin xyz="0 0 0.0" rpy="0 0 0"/>
+      <origin xyz="-0.032 0 0.0" rpy="0 0 0"/>
       <geometry>
         <mesh filename="package://turtlebot3_description/meshes/bases/burger_base.stl" scale="0.001 0.001 0.001"/>
       </geometry>
@@ -21,9 +21,9 @@
     </visual>
 
     <collision>
-      <origin xyz="0 0 0.070" rpy="0 0 0"/>
+      <origin xyz="-0.032 0 0.070" rpy="0 0 0"/>
       <geometry>
-        <box size="0.140 0.140 0.145"/>
+        <box size="0.140 0.140 0.140"/>
       </geometry>
     </collision>
 
@@ -39,7 +39,7 @@
   <joint name="wheel_left_joint" type="continuous">
     <parent link="base_link"/>
     <child link="wheel_left_link"/>
-    <origin xyz="0.032 0.08 0.023" rpy="${-M_PI*0.5} 0 0"/>
+    <origin xyz="0.0 0.08 0.023" rpy="${-M_PI*0.5} 0 0"/>
     <axis xyz="0 0 1"/>
   </joint>
 
@@ -71,7 +71,7 @@
   <joint name="wheel_right_joint" type="continuous">
     <parent link="base_link"/>
     <child link="wheel_right_link"/>
-    <origin xyz="0.032 -0.08 0.023" rpy="${-M_PI*0.5} 0 0"/>
+    <origin xyz="0.0 -0.08 0.023" rpy="${-M_PI*0.5} 0 0"/>
     <axis xyz="0 0 1"/>
   </joint>
 
@@ -103,7 +103,7 @@
   <joint name="caster_back_joint" type="fixed">
     <parent link="base_link"/>
     <child link="caster_back_link"/>
-    <origin xyz="-0.049 0 -0.004" rpy="${-M_PI*0.5} 0 0"/>
+    <origin xyz="-0.081 0 -0.004" rpy="${-M_PI*0.5} 0 0"/>
   </joint>
 
   <link name="caster_back_link">
@@ -143,7 +143,7 @@
   <joint name="scan_joint" type="fixed">
     <parent link="base_link"/>
     <child link="base_scan"/>
-    <origin xyz="0 0 0.171" rpy="0 0 0"/>
+    <origin xyz="-0.032 0 0.171" rpy="0 0 0"/>
   </joint>
 
   <link name="base_scan">
