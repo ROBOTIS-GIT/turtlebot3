@@ -72,7 +72,7 @@ class GazeboRosTurtleBot3
   ros::Subscriber laser_scan_sub_;
   ros::Subscriber joint_state_sub_;
 
-  double rotation_radius_;
+  double turning_radius_;
   double front_distance_limit_;
   double side_distance_limit_;
 

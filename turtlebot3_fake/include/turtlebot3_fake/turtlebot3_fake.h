@@ -37,8 +37,6 @@
 #include "turtlebot3_fake.h"
 
 #define WHEEL_RADIUS                    0.033     // meter
-#define WHEEL_SEPARATION                0.16      // meter (0.16 / 0.287)
-#define ROBOT_RADIUS                    0.078     // meter (0.078 / 0.294)
 
 #define LEFT                            0
 #define RIGHT                           1
@@ -101,6 +99,10 @@ class Turtlebot3Fake
 
   double last_position_[2];
   double last_velocity_[2];
+
+  double wheel_seperation_;
+  double turning_radius_;
+  double robot_radius_;
 
   // Function prototypes
   void commandVelocityCallback(const geometry_msgs::TwistConstPtr cmd_vel_msg);
