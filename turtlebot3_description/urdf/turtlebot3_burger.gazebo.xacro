@@ -9,7 +9,7 @@
       <odometryTopic>odom</odometryTopic>
       <odometryFrame>odom</odometryFrame>
       <robotBaseFrame>base_footprint</robotBaseFrame>
-      <publishWheelTF>true</publishWheelTF>
+      <publishWheelTF>false</publishWheelTF>
       <publishWheelJointState>true</publishWheelJointState>
       <legacyMode>false</legacyMode>
       <updateRate>50</updateRate>
@@ -44,7 +44,7 @@
     <minDepth>0.001</minDepth>
     <maxVel>0.20</maxVel>
     <material>Gazebo/DarkGrey</material>
-  </gazebo>  
+  </gazebo>
 
   <gazebo reference="caster_back_link">
     <mu1>0.0</mu1>
