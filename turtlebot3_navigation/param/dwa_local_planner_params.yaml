@@ -1,38 +1,38 @@
 DWAPlannerROS:
 
 # Robot Configuration Parameters
-  max_vel_x: 0.20
-  min_vel_x: 0.1
+  max_vel_x: 0.18
+  min_vel_x: 0.08
 
   max_vel_y: 0.0
   min_vel_y: 0.0
 
-  max_trans_vel:  0.22
-  min_trans_vel:  0.1
-  trans_stopped_vel: 0.1
+  max_trans_vel:  0.18
+  min_trans_vel:  0.08
+  trans_stopped_vel: 0.01
 
-  max_rot_vel: 5.0
-  min_rot_vel: 1.0
-  rot_stopped_vel: 0.5
+  max_rot_vel: 1.0
+  min_rot_vel: -1.0
+  rot_stopped_vel: 0.01
 
-  acc_lim_x: 0.4
-  acc_lim_theta: 3.0
+  acc_lim_x: 1.0
+  acc_lim_theta: 0.6
   acc_lim_y: 0.0
 
 # Goal Tolerance Parametes
-  yaw_goal_tolerance: 0.3
-  xy_goal_tolerance: 0.10
+  yaw_goal_tolerance: 0.10
+  xy_goal_tolerance: 0.05
 
 # Forward Simulation Parameters
-  sim_time: 1.0
-  vx_samples: 6
-  vy_samples: 1
-  vtheta_samples: 20
+  sim_time: 1.7
+  vx_samples: 3
+  vy_samples: 0
+  vtheta_samples: 10
 
 # Trajectory Scoring Parameters
-  path_distance_bias: 74.0
-  goal_distance_bias: 34.0
-  occdist_scale: 0.2
+  path_distance_bias: 32.0
+  goal_distance_bias: 24.0
+  occdist_scale: 0.01
   forward_point_distance: 0.325
   stop_time_buffer: 0.2
   scaling_speed: 0.25
@@ -42,6 +42,6 @@ DWAPlannerROS:
   oscillation_reset_dist: 0.05
 
 # Debugging
-  publish_traj_pc : true
-  publish_cost_grid_pc: true
-  global_frame_id: odom
+ # publish_traj_pc : true
+ # publish_cost_grid_pc: true
+ # global_frame_id: odom
