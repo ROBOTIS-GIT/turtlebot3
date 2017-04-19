@@ -13,11 +13,11 @@ DWAPlannerROS:
 #  trans_stopped_vel: 0.01
 
   max_rot_vel: 1.0
-  min_rot_vel: -1.0
+  min_rot_vel: 0.1
 #  rot_stopped_vel: 0.01
 
-  acc_lim_x: 0.5
-  acc_lim_theta: 0.2
+  acc_lim_x: 2.0
+  acc_lim_theta: 2.0
   acc_lim_y: 0.0
 
 # Goal Tolerance Parametes
