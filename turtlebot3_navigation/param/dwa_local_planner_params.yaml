@@ -12,8 +12,8 @@ DWAPlannerROS:
   min_trans_vel:  0.05
 #  trans_stopped_vel: 0.01
 
-  max_rot_vel: 1.0
-  min_rot_vel: 0.1
+  max_rot_vel: 1.8
+  min_rot_vel: 0.7
 #  rot_stopped_vel: 0.01
 
   acc_lim_x: 2.0
