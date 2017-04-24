@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>turtlebot3_fake</name>
-  <version>0.0.1</version>
+  <version>0.1.3</version>
   <description>
     Package for TurtleBot3 fake node. With this package, simple tests can be done without a robot. You can do simple tests using this package on rviz without real robots.
   </description>
@@ -11,7 +11,8 @@
   <url type="bugtracker">https://github.com/ROBOTIS-GIT/turtlebot3/issues</url>
   <url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3</url>
   <url type="website">http://wiki.ros.org/turtlebot3_fake</url>
-  <buildtool_depend>catkin</buildtool_depend>  <build_depend>geometry_msgs</build_depend>
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>geometry_msgs</build_depend>
   <build_depend>nav_msgs</build_depend>
   <build_depend>roscpp</build_depend>
   <build_depend>sensor_msgs</build_depend>
