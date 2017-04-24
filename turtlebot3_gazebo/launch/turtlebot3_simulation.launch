@@ -1,0 +1,8 @@
+<launch>
+  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle]"/>
+
+  <param name="tb3_model" value="$(arg model)"/>
+
+  <node name="gazebo_ros_turtlebot3_tutorial" pkg="turtlebot3_gazebo" type="gazebo_ros_turtlebot3" required="true" output="screen">
+  </node>
+</launch>
