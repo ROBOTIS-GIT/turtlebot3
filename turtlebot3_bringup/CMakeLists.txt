@@ -17,7 +17,7 @@ catkin_package()
 ################################################################################
 # Install
 ################################################################################
-install(DIRECTORY launch/
+install(DIRECTORY launch
         DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 

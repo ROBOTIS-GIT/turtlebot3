@@ -36,19 +36,19 @@ include_directories(
 ################################################################################
 # Install
 ################################################################################
-install(DIRECTORY launch/
+install(DIRECTORY launch
         DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
-install(DIRECTORY maps/
+install(DIRECTORY maps
         DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
-install(DIRECTORY param/
+install(DIRECTORY param
         DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
-install(DIRECTORY rviz/
+install(DIRECTORY rviz
         DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 

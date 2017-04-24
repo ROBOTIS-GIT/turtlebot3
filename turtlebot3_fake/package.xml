@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>turtlebot3_fake</name>
-  <version>0.0.1</version>
+  <version>0.1.3</version>
   <description>
     Package for TurtleBot3 fake node. With this package, simple tests can be done without a robot. You can do simple tests using this package on rviz without real robots.
   </description>
