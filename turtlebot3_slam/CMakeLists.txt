@@ -29,11 +29,11 @@ catkin_package()
 ################################################################################
 # Install
 ################################################################################
-install(DIRECTORY launch/
+install(DIRECTORY launch
         DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
-install(DIRECTORY rviz/
+install(DIRECTORY rviz
         DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
