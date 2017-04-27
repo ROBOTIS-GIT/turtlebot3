@@ -1,15 +1,6 @@
 <launch>
 
-  <node pkg="rosserial_python" type="serial_node.py" name="turtlebot3_core" output="screen">
-    <param name="port" value="/dev/ttyACM0"/>
-    <param name="baud" value="115200"/>
-  </node>
+  <include file="$(find turtlebot3_bringup)/launch/turtlebot3_core.launch"/>
+  <include file="$(find turtlebot3_bringup)/launch/turtlebot3_lidar.launch"/>
 
-
-  <node pkg="hls_lfcd_lds_driver" type="hlds_laser_publisher" name="hlds_laser_publisher" output="screen">
-    <param name="port" value="/dev/ttyUSB0"/>
-    <param name="frame_id" value="base_scan"/>
-  </node>
-
-  <!-- include file="$(find realsense_camera)/launch/r200_nodelet_default.launch"/ -->
 </launch>
