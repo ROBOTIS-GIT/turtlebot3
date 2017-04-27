@@ -9,7 +9,5 @@
     <param name="publish_frequency" type="double" value="50.0" />
   </node>
 
-  <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher" />
-
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find turtlebot3_description)/rviz/model.rviz"/>
 </launch>

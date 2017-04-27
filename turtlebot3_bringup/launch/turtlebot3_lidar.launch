@@ -5,5 +5,4 @@
     <param name="frame_id" value="base_scan"/>
   </node>
 
-  <!-- include file="$(find realsense_camera)/launch/r200_nodelet_default.launch"/ -->
 </launch>
