@@ -8,4 +8,4 @@ The goal of the TurtleBot3 is to drastically reduce the size and the price of th
 
 # Documents
 
-- http://turtlebot3.robotis.com/ (beta version)
+- http://turtlebot3.robotis.com/
