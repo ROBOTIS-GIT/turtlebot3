@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>turtlebot3_description</name>
-  <version>0.1.3</version>
+  <version>0.1.4</version>
   <description>
     3D model of the TurtleBot3 for simulation and visualization
   </description>
@@ -11,7 +11,7 @@
   <maintainer email="pyo@robotis.com">Pyo</maintainer>
   <url type="bugtracker">https://github.com/ROBOTIS-GIT/turtlebot3/issues</url>
   <url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3</url>
-  <url type="website">http://wiki.ros.org/turtlebot3_description</url>
+  <url type="website">http://turtlebot3.robotis.com</url>
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>urdf</build_depend>
   <build_depend>xacro</build_depend>
