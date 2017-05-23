@@ -15,11 +15,10 @@
   <url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3</url>
   <url type="website">http://turtlebot3.robotis.com</url>
   <buildtool_depend>catkin</buildtool_depend>
-  <run_depend>turtlebot3_description</run_depend>
   <run_depend>turtlebot3_bringup</run_depend>
-  <run_depend>turtlebot3_fake</run_depend>
-  <run_depend>turtlebot3_gazebo</run_depend>
+  <run_depend>turtlebot3_description</run_depend>
   <run_depend>turtlebot3_navigation</run_depend>
   <run_depend>turtlebot3_slam</run_depend>
+  <run_depend>turtlebot3_teleop</run_depend>
   <export><metapackage/></export>
 </package>
