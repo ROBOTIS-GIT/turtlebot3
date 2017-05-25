@@ -2,6 +2,11 @@
 Changelog for package turtlebot3_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.1.5 (2017-05-25)
+-----------
+* changed the node name from hlds_laser_publisher to turtlebot3_lds
+* Contributors: Pyo
+
 0.1.4 (2017-05-23)
 ------------------
 * modified launch file name
