@@ -33,7 +33,6 @@
       <geometry>
         <box size="0.265 0.265 0.089"/>
       </geometry>
-      <material name="light_black"/>
     </collision>
     <inertial>
       <origin xyz="-0.064 0 0" rpy="0 0 0"/>
@@ -196,7 +195,7 @@
   </link>
 
   <joint name="camera_joint" type="fixed">
-    <origin xyz="0.076 -0.065 0.084" rpy="0 0 0"/>
+    <origin xyz="0.064 -0.065 0.094" rpy="0 0 0"/>
     <parent link="base_link"/>
     <child link="camera_link"/>
   </joint>
