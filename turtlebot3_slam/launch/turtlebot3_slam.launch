@@ -6,32 +6,15 @@
   <node pkg="gmapping" type="slam_gmapping" name="turtlebot3_slam_gmapping" output="screen">
     <param name="base_frame" value="base_footprint"/>
     <param name="odom_frame" value="odom"/>
-
-<!--  How long (in seconds) between updates to the map.
-      Lowering this number updates the occupancy grid more often,
-      at the expense of greater computational load.-->
     <param name="map_update_interval" value="2.0"/>
-<!--  The maximum usable range of the laser. A beam is cropped to this value.-->
     <param name="maxUrange" value="4.0"/>
-<!--  Minimum score for considering the outcome of the scan matching good.
-      Can avoid jumping pose estimates in large open spaces when using laser scanners with limited range (e.g. 5m).
-      Scores go up to 600+, try 50 for example when experiencing jumping estimate issues.-->
     <param name="minimumScore" value="100"/>
-<!--  Process a scan each time the robot translates this far-->
     <param name="linearUpdate" value="0.2"/>
-<!--  Process a scan each time the robot rotates this far-->
     <param name="angularUpdate" value="0.2"/>
-<!--  Process a scan if the last scan processed is older than the update time in seconds.
-    A value less than zero will turn time based updates off.-->
     <param name="temporalUpdate" value="0.5"/>
-<!--  Resolution of the map-->
-    <param name="delta" value="0.025"/>
-<!--  Number of beams to skip in each scan.-->
+    <param name="delta" value="0.05"/>
     <param name="lskip" value="0"/>
-<!--Number of particles in the filter-->
     <param name="particles" value="120"/>
-
-<!--below paramameters are set by defalut-->
     <param name="sigma" value="0.05"/>
     <param name="kernelSize" value="1"/>
     <param name="lstep" value="0.05"/>
