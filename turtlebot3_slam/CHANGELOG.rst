@@ -2,6 +2,12 @@
 Changelog for package turtlebot3_slam
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.1.5 (2017-05-25)
+-----------
+* modified bag and map files
+* added SLAM bag files
+* Contributors: Darby Lim, Pyo
+
 0.1.4 (2017-05-23)
 ------------------
 * modified launch file name

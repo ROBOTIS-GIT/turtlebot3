@@ -2,6 +2,11 @@
 Changelog for package turtlebot3_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.1.5 (2017-05-25)
+-----------
+* updated turtlebot3 waffle URDF
+* Contributors: Darby Lim
+
 0.1.4 (2017-05-23)
 ------------------
 * modified launch file name
