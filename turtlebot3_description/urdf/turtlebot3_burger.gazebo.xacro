@@ -12,7 +12,7 @@
       <publishWheelTF>false</publishWheelTF>
       <publishWheelJointState>true</publishWheelJointState>
       <legacyMode>false</legacyMode>
-      <updateRate>1</updateRate>
+      <updateRate>100</updateRate>
       <leftJoint>wheel_left_joint</leftJoint>
       <rightJoint>wheel_right_joint</rightJoint>
       <wheelSeparation>0.160</wheelSeparation>
