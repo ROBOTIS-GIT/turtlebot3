@@ -149,21 +149,13 @@
     </inertial>
   </link>
 
-  <!-- TurtleBot3 Sensors-->
-<!--  <joint name="gyro_joint" type="fixed">
+  <joint name="imu_joint" type="fixed">
     <parent link="base_link"/>
-    <child link="gyro_link"/>
-    <origin xyz="0.064 0 0.057" rpy="0 0 0"/>
+    <child link="imu_link"/>
+    <origin xyz="0.0 0 0.068" rpy="0 0 0"/>
   </joint>
-  <link name="gyro_link">
-    <inertial>
-      <origin xyz="0 0 0" />
-      <mass value="0.01" />
-      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
-               iyy="0.001" iyz="0.0"
-               izz="0.001" />
-    </inertial>
-  </link>-->
+
+  <link name="imu_link"/>
 
   <joint name="scan_joint" type="fixed">
     <parent link="base_link"/>
