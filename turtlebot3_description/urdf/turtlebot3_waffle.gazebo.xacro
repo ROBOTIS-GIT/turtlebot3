@@ -74,13 +74,32 @@
     <material>Gazebo/Grey</material>
   </gazebo>
 
-  <gazebo reference="imu_link">
-    <sensor type="imu" name="imu">
-      <always_on>true</always_on>
-      <update_rate>30</update_rate>
-      <visualize>$(arg imu_visual)</visualize>
-    </sensor>
-    <material>Gazebo/Grey</material>
+  <gazebo>
+    <plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
+      <alwaysOn>true</alwaysOn>
+      <bodyName>imu_link</bodyName>
+      <topicName>/imu</topicName>
+      <serviceName>/imu_service</serviceName>
+      <gaussianNoise>0.0</gaussianNoise>
+      <updateRate>100.0</updateRate>
+      <imu>
+        <noise>
+          <type>gaussian</type>
+          <rate>
+            <mean>0.0</mean>
+            <stddev>2e-4</stddev>
+            <bias_mean>0.0000075</bias_mean>
+            <bias_stddev>0.0000008</bias_stddev>
+          </rate>
+          <accel>
+            <mean>0.0</mean>
+            <stddev>1.7e-2</stddev>
+            <bias_mean>0.1</bias_mean>
+            <bias_stddev>0.001</bias_stddev>
+          </accel>
+        </noise>
+      </imu>
+    </plugin>
   </gazebo>
 
   <gazebo reference="base_scan">
