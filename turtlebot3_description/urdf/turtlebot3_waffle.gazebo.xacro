@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <robot name="turtlebot3_waffle_sim" xmlns:xacro="http://ros.org/wiki/xacro">
-  <arg name="laser_visual"  default="false"/>
-  <arg name="camera_visual" default="false"/>
-  <arg name="imu_visual"    default="false"/>
+  <xacro:arg name="laser_visual"  default="false"/>
+  <xacro:arg name="camera_visual" default="false"/>
+  <xacro:arg name="imu_visual"    default="false"/>
 
-  <arg name="r200_cam_rgb_px" default="0.005"/>
-  <arg name="r200_cam_rgb_py" default="0.018"/>
-  <arg name="r200_cam_rgb_pz" default="0.013"/>
-  <arg name="r200_cam_depth_offset" default="0.01"/>
+  <xacro:arg name="r200_cam_rgb_px" default="0.005"/>
+  <xacro:arg name="r200_cam_rgb_py" default="0.018"/>
+  <xacro:arg name="r200_cam_rgb_pz" default="0.013"/>
+  <xacro:arg name="r200_cam_depth_offset" default="0.01"/>
 
   <gazebo>
     <plugin name="turtlebot3_waffle_controller" filename="libgazebo_ros_diff_drive.so">
