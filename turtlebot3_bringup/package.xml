@@ -13,7 +13,7 @@
   <url type="website">http://turtlebot3.robotis.com</url>
   <buildtool_depend>catkin</buildtool_depend>
   <run_depend>turtlebot3_description</run_depend>
-  <run_depend>turtlebot_teleop</run_depend>
+  <run_depend>turtlebot3_teleop</run_depend>
   <run_depend>robot_state_publisher</run_depend>
   <run_depend>rosserial_python</run_depend>
   <run_depend>hls_lfcd_lds_driver</run_depend>
