@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot name="turtlebot3_burger_sim" xmlns:xacro="http://ros.org/wiki/xacro">
-  <arg name="laser_visual" default="false"/>
+  <xacro:arg name="laser_visual" default="false"/>
 
   <gazebo>
     <plugin name="turtlebot3_burger_controller" filename="libgazebo_ros_diff_drive.so">
