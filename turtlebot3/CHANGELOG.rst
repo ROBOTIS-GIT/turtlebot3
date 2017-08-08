@@ -2,6 +2,20 @@
 Changelog for package turtlebot3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.1.5 (2017-05-25)
+-----------
+* updated turtlebot3 waffle URDF
+* changed the node name from hlds_laser_publisher to turtlebot3_lds
+* modified bag and map files
+* added SLAM bag file
+* Contributors: Darby Lim, Pyo
+
+0.1.4 (2017-05-23)
+------------------
+* modified launch file name
+* added teleop package
+* Contributors: Darby Lim
+
 0.1.3 (2017-04-24)
 -----------
 * Detached turtlebot3_msgs package from turtlebot3 package for uploading to rosdistro
