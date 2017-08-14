@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <robot name="turtlebot3_waffle_sim" xmlns:xacro="http://ros.org/wiki/xacro">
-  <arg name="laser_visual"  default="false"/>
-  <arg name="camera_visual" default="false"/>
-  <arg name="imu_visual"    default="false"/>
+  <xacro:arg name="laser_visual"  default="false"/>
+  <xacro:arg name="camera_visual" default="false"/>
+  <xacro:arg name="imu_visual"    default="false"/>
 
-  <arg name="r200_cam_rgb_px" default="0.005"/>
-  <arg name="r200_cam_rgb_py" default="0.018"/>
-  <arg name="r200_cam_rgb_pz" default="0.013"/>
-  <arg name="r200_cam_depth_offset" default="0.01"/>
+  <xacro:arg name="r200_cam_rgb_px" default="0.005"/>
+  <xacro:arg name="r200_cam_rgb_py" default="0.018"/>
+  <xacro:arg name="r200_cam_rgb_pz" default="0.013"/>
+  <xacro:arg name="r200_cam_depth_offset" default="0.01"/>
 
   <gazebo>
     <plugin name="turtlebot3_waffle_controller" filename="libgazebo_ros_diff_drive.so">
@@ -18,7 +18,7 @@
       <publishWheelTF>false</publishWheelTF>
       <publishWheelJointState>true</publishWheelJointState>
       <legacyMode>false</legacyMode>
-      <updateRate>50</updateRate>
+      <updateRate>100</updateRate>
       <leftJoint>wheel_left_joint</leftJoint>
       <rightJoint>wheel_right_joint</rightJoint>
       <wheelSeparation>0.287</wheelSeparation>
@@ -33,22 +33,24 @@
   </gazebo>
 
   <gazebo reference="wheel_left_link">
-    <mu1>1.0</mu1>
-    <mu2>1.0</mu2>
-    <kp>1000000.0</kp>
-    <kd>100.0</kd>
+    <mu1>10</mu1>
+    <mu2>10</mu2>
+    <kp>500000.0</kp>
+    <kd>10.0</kd>
     <minDepth>0.001</minDepth>
-    <maxVel>0.2</maxVel>
+    <maxVel>0.1</maxVel>
+    <fdir1>1 0 0</fdir1>
     <material>Gazebo/DarkGrey</material>
   </gazebo>
 
   <gazebo reference="wheel_right_link">
-    <mu1>1.0</mu1>
-    <mu2>1.0</mu2>
-    <kp>1000000.0</kp>
-    <kd>100.0</kd>
+    <mu1>10</mu1>
+    <mu2>10</mu2>
+    <kp>500000.0</kp>
+    <kd>10.0</kd>
     <minDepth>0.001</minDepth>
-    <maxVel>0.2</maxVel>
+    <maxVel>0.1</maxVel>
+    <fdir1>1 0 0</fdir1>
     <material>Gazebo/DarkGrey</material>
   </gazebo>
 
@@ -72,13 +74,32 @@
     <material>Gazebo/Grey</material>
   </gazebo>
 
-  <gazebo reference="imu_link">
-    <sensor type="imu" name="imu">
-      <always_on>true</always_on>
-      <update_rate>30</update_rate>
-      <visualize>$(arg imu_visual)</visualize>
-    </sensor>
-    <material>Gazebo/Grey</material>
+  <gazebo>
+    <plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
+      <alwaysOn>true</alwaysOn>
+      <bodyName>imu_link</bodyName>
+      <topicName>/imu</topicName>
+      <serviceName>/imu_service</serviceName>
+      <gaussianNoise>0.0</gaussianNoise>
+      <updateRate>100.0</updateRate>
+      <imu>
+        <noise>
+          <type>gaussian</type>
+          <rate>
+            <mean>0.0</mean>
+            <stddev>2e-4</stddev>
+            <bias_mean>0.0000075</bias_mean>
+            <bias_stddev>0.0000008</bias_stddev>
+          </rate>
+          <accel>
+            <mean>0.0</mean>
+            <stddev>1.7e-2</stddev>
+            <bias_mean>0.1</bias_mean>
+            <bias_stddev>0.001</bias_stddev>
+          </accel>
+        </noise>
+      </imu>
+    </plugin>
   </gazebo>
 
   <gazebo reference="base_scan">
