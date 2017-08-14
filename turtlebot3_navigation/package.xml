@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>turtlebot3_navigation</name>
-  <version>0.1.5</version>
+  <version>0.1.6</version>
   <description>The turtlebot3_navigation package</description>
   <license>Apache License 2.0</license>
   <author email="pyo@robotis.com">Pyo</author>

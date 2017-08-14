@@ -2,6 +2,18 @@
 Changelog for package turtlebot3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.1.6 (2017-08-14)
+-----------
+* fixed typo
+* fixed xacro.py deprecation
+* modified file location
+* updated nav param
+* updated SLAM param
+* updated model.launch
+* updated IMU link
+* updated gazebo config
+* Contributors: Darby Lim, Hunter L. Allen
+
 0.1.5 (2017-05-25)
 -----------
 * updated turtlebot3 waffle URDF
