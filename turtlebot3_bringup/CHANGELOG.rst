@@ -2,6 +2,14 @@
 Changelog for package turtlebot3_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.1.6 (2017-08-14)
+-----------
+* updated model.launch
+* fixed typo
+* fixed xacro.py deprecation
+* modified file location
+* Contributors: Darby Lim, Hunter L. Allen
+
 0.1.5 (2017-05-25)
 -----------
 * changed the node name from hlds_laser_publisher to turtlebot3_lds

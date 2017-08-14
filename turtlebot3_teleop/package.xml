@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>turtlebot3_teleop</name>
-  <version>0.1.5</version>
+  <version>0.1.6</version>
   <description>
     Provides teleoperation using keyboard for TurtleBot3.
   </description>
