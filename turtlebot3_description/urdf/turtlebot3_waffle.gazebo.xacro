@@ -102,6 +102,15 @@
     </plugin>
   </gazebo>
 
+  <gazebo reference="imu_link">
+    <sensor type="imu" name="imu">
+      <always_on>true</always_on>
+      <update_rate>50</update_rate>
+      <visualize>$(arg imu_visual)</visualize>
+    </sensor>
+    <material>Gazebo/Grey</material>
+  </gazebo>
+
   <gazebo reference="base_scan">
     <material>Gazebo/DarkGrey</material>
     <sensor type="ray" name="lds_lfcd_sensor">

@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <robot name="turtlebot3_burger_sim" xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:arg name="laser_visual" default="false"/>
+  <xacro:arg name="imu_visual"   default="false"/>
 
   <gazebo>
     <plugin name="turtlebot3_burger_controller" filename="libgazebo_ros_diff_drive.so">
@@ -83,6 +84,15 @@
         </noise>
       </imu>
     </plugin>
+  </gazebo>
+
+  <gazebo reference="imu_link">
+    <sensor type="imu" name="imu">
+      <always_on>true</always_on>
+      <update_rate>50</update_rate>
+      <visualize>$(arg imu_visual)</visualize>
+    </sensor>
+    <material>Gazebo/Grey</material>
   </gazebo>
 
   <gazebo reference="base_scan">
