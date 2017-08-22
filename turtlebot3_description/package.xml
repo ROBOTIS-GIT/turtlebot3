@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>turtlebot3_description</name>
-  <version>0.1.5</version>
+  <version>0.1.6</version>
   <description>
     3D model of the TurtleBot3 for simulation and visualization
   </description>
