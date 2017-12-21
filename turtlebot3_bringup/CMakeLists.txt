@@ -21,6 +21,13 @@ install(DIRECTORY launch
         DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
+install(PROGRAMS scripts/create_udev_rules
+        DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
+install(FILES 99-turtlebot3-cdc.rules
+        DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
 ################################################################################
 # Test
 ################################################################################
