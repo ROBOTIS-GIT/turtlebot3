@@ -8,8 +8,10 @@ project(turtlebot3_teleop)
 # Packages
 ################################################################################
 find_package(catkin REQUIRED COMPONENTS
+  roscpp
   rospy
   geometry_msgs
+  joy
 )
 
 ################################################################################
