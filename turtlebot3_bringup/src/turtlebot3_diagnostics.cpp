@@ -5,6 +5,11 @@
 #include <sensor_msgs/MagneticField.h>
 #include <sensor_msgs/LaserScan.h>
 #include <turtlebot3_msgs/SensorState.h>
+#include <turtlebot3_msgs/VersionInfo.h>
+
+#define SOFTWARE_VERSION "1.0.0"
+#define FIRMWARE_VERSION "1.0.15"
+#define HARDWARE_VERSION "1.0.0"
 
 ros::Publisher tb3_diagnostics_pub;
 diagnostic_msgs::DiagnosticArray tb3_diagnostics;
@@ -78,6 +83,17 @@ void sensorStateMsgCallback(const turtlebot3_msgs::SensorState::ConstPtr &msg)
     setMotorDiagnosis(diagnostic_msgs::DiagnosticStatus::WARN, "Torque OFF");
 }
 
+void versionMsgCallback(const turtlebot3_msgs::VersionInfo::ConstPtr &msg)
+{
+
+  if (std::string(msg->software) == std::string(SOFTWARE_VERSION))
+    ROS_WARN("Check turtlebot3 repository and Update your software!!");
+  else if (std::string(msg->hardware) == std::string(HARDWARE_VERSION))
+    ROS_WARN("Check turtlebot3 wiki page and Update your hardware!!");
+  else if (std::string(msg->firmware) == std::string(FIRMWARE_VERSION))
+    ROS_WARN("Check OpenCR update and change your firmware!!");
+}
+
 void msgPub()
 {
   tb3_diagnostics.header.stamp = ros::Time::now();
@@ -102,6 +118,7 @@ int main(int argc, char **argv)
   ros::Subscriber imu         = nh.subscribe("/imu", 10, imuMsgCallback);
   ros::Subscriber lds         = nh.subscribe("/scan", 10, LDSMsgCallback);
   ros::Subscriber tb3_sensor  = nh.subscribe("/sensor_state", 10, sensorStateMsgCallback);
+  ros::Subscriber version     = nh.subscribe("/version_info", 10, versionMsgCallback);
 
   ros::Rate loop_rate(1);
 
