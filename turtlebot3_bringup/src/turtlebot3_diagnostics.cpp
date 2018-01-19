@@ -104,11 +104,11 @@ void sensorStateMsgCallback(const turtlebot3_msgs::SensorState::ConstPtr &msg)
 void versionMsgCallback(const turtlebot3_msgs::VersionInfo::ConstPtr &msg)
 {
 
-  if (std::string(msg->software) == std::string(SOFTWARE_VERSION))
+  if (std::string(msg->software) != std::string(SOFTWARE_VERSION))
     ROS_WARN("Check turtlebot3 repository and Update your software!!");
-  else if (std::string(msg->hardware) == std::string(HARDWARE_VERSION))
+  else if (std::string(msg->hardware) != std::string(HARDWARE_VERSION))
     ROS_WARN("Check turtlebot3 wiki page and Update your hardware!!");
-  else if (std::string(msg->firmware) == std::string(FIRMWARE_VERSION))
+  else if (std::string(msg->firmware) != std::string(FIRMWARE_VERSION))
     ROS_WARN("Check OpenCR update and change your firmware!!");
 }
 
