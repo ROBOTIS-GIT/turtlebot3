@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package>
-  <name>turtlebot3_LDS</name>
+  <name>turtlebot3_lds</name>
   <version>0.0.0</version>
   <description>
 	Package for turtlebot3 automatic_parking. You need a reflective tape and real robots.

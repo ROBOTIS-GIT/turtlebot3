@@ -51,7 +51,7 @@ def turtlebot3_client():
 if __name__ == '__main__':
     try:
         print (msg)
-        while(1):
+        while not rospy.is_shutdown():
             rospy.init_node('turtlebot3_client')
             result = turtlebot3_client()
     except rospy.ROSInterruptException:

@@ -29,6 +29,16 @@ from math import radians, copysign, sqrt, pow, pi, atan2
 from tf.transformations import euler_from_quaternion
 import numpy as np
 
+msg = """
+control your Turtlebot3!
+-----------------------
+Insert xyz - coordinate.
+x : position x (m)
+y : position y (m)
+z : orientation z (degree: -180 ~ 180)
+If you want to close, insert 's'
+-----------------------
+"""
 
 
 class GotoPoint():
@@ -38,8 +48,7 @@ class GotoPoint():
         self.cmd_vel = rospy.Publisher('/cmd_vel', Twist, queue_size=5)
         position = Point()
         move_cmd = Twist()
-        rate = 10
-        r = rospy.Rate(rate)
+        r = rospy.Rate(10)
         self.tf_listener = tf.TransformListener()
         self.odom_frame = '/odom'
 
@@ -62,36 +71,28 @@ class GotoPoint():
         if goal_z > 180 or goal_z < -180:
             print("you input worng z range.")
             self.shutdown()
-
         goal_z = np.deg2rad(goal_z)
         goal_distance = sqrt(pow(goal_x - position.x, 2) + pow(goal_y - position.y, 2))
         path_angle = atan2(goal_y, goal_x)
         distance = goal_distance
-        while distance > 0.05:
 
+        while distance > 0.05:
             (position, rotation) = self.get_odom()
             x_start = position.x
             y_start = position.y
             path_angle = atan2(goal_y - y_start, goal_x- x_start)
-
 
             if path_angle < -pi/4 or path_angle > pi/4:
                 if goal_y < 0 and y_start < goal_y:
                     path_angle = -2*pi + path_angle
                 elif goal_y >= 0 and y_start > goal_y:
                     path_angle = 2*pi + path_angle
-
-
             if last_rotation > pi-0.1 and rotation <= 0:
                 rotation = 2*pi + rotation
             elif last_rotation < -pi+0.1 and rotation > 0:
                 rotation = -2*pi + rotation
-
-
-
             move_cmd.angular.z = angular_speed * path_angle-rotation
-            print (path_angle, rotation)
-            print("move_cmd.angular.z", move_cmd.angular.z)
+
             distance = sqrt(pow((goal_x - x_start), 2) + pow((goal_y - y_start), 2))
             move_cmd.linear.x = min(linear_speed * distance, 0.1)
 
@@ -110,7 +111,6 @@ class GotoPoint():
         while abs(rotation - goal_z) > 0.05:
             (position, rotation) = self.get_odom()
             if goal_z >= 0:
-                print("test11")
                 if rotation <= goal_z and rotation >= goal_z - pi:
                     move_cmd.linear.x = 0.00
                     move_cmd.angular.z = 0.5
@@ -132,11 +132,6 @@ class GotoPoint():
         self.cmd_vel.publish(Twist())
 
     def getkey(self):
-        print("Insert xyz - coordinate.")
-        print("x : position x (m)")
-        print("y : position y (m)")
-        print("z : orientation z (degree: -180 ~ 180)")
-        print("If you want to close, insert 's'.")
         x, y, z = raw_input("| x | y | z |\n").split()
         if x == 's':
             self.shutdown()
@@ -162,7 +157,9 @@ class GotoPoint():
 
 if __name__ == '__main__':
     try:
-        GotoPoint()
+        while not rospy.is_shutdown():
+            print(msg)
+            GotoPoint()
 
     except:
         rospy.loginfo("shutdown program.")

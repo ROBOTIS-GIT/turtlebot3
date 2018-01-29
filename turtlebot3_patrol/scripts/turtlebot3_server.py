@@ -35,7 +35,7 @@ class Turtlebot3Action(object):
             self.init_right_encoder = self.right_encoder
             self.init_stats = False
         diff_encoder = (np.deg2rad(angle) * 0.080) / (0.207 / 4096)
-        while (abs(self.init_right_encoder - self.right_encoder) <= abs(diff_encoder)):
+        while (abs(self.init_right_encoder - self.right_encoder) < abs(diff_encoder)):
             if diff_encoder >= 0:
                 self.twist.angular.z = -0.5
             else:
@@ -80,7 +80,8 @@ class Turtlebot3Action(object):
         position = Point()
         self.cmd_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=5)
         self.twist = Twist()
-        self.r = rospy.Rate(10)
+        self.r = rospy.Rate(15)
+        self.r1 = rospy.Rate(1)
         success = True
         mode = goal.goal.x
         patrol_count = int(goal.goal.z)
@@ -96,6 +97,7 @@ class Turtlebot3Action(object):
                 area[1] = goal.goal.y
                 for i in range(4):
                     self.go_front(area[i], i)
+                    self.r1.sleep()
                     self.turn(-90)
 
             elif mode == 2:
