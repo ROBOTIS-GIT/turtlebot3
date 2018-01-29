@@ -26,7 +26,7 @@
 #include <turtlebot3_msgs/VersionInfo.h>
 
 #define SOFTWARE_VERSION "1.0.0"
-#define FIRMWARE_VERSION "1.0.15"
+#define FIRMWARE_VERSION "1.0.16"
 #define HARDWARE_VERSION "1.0.0"
 
 ros::Publisher tb3_diagnostics_pub;
@@ -106,9 +106,11 @@ void versionMsgCallback(const turtlebot3_msgs::VersionInfo::ConstPtr &msg)
 
   if (std::string(msg->software) != std::string(SOFTWARE_VERSION))
     ROS_WARN("Check turtlebot3 repository and Update your software!!");
-  else if (std::string(msg->hardware) != std::string(HARDWARE_VERSION))
+  
+  if (std::string(msg->hardware) != std::string(HARDWARE_VERSION))
     ROS_WARN("Check turtlebot3 wiki page and Update your hardware!!");
-  else if (std::string(msg->firmware) != std::string(FIRMWARE_VERSION))
+    
+  if (std::string(msg->firmware) != std::string(FIRMWARE_VERSION))
     ROS_WARN("Check OpenCR update and change your firmware!!");
 }
 
