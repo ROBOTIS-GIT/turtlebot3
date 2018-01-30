@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package>
+  <name>turtlebot3_interactions</name>
+  <version>0.0.0</version>
+  <description>
+	This package is that turtlebot3 move to using interactive marker in rviz. You can 		control the turtlebot3 front and back side or rotate.      
+  </description>
+  <license>Apache License 2.0</license>
+  <author email="kkjong89@naver.com">Gilbert</author>
+  <maintainer email="pyo@robotis.com">Pyo</maintainer>
+  <url type="bugtracker">https://github.com/ROBOTIS-GIT/turtlebot3/issues</url>
+  <url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3</url>
+  <url type="website">http://turtlebot3.robotis.com</url>
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>visualization_msgs</build_depend>
+  <build_depend>interactive_markers</build_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>visualization_msgs</run_depend>
+  <run_depend>interactive_markers</run_depend>
+  <run_depend>turtlebot3_bringup</run_depend>
+</package>
