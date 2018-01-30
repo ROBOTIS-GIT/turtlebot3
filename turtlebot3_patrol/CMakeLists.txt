@@ -1,6 +1,12 @@
+################################################################################
+# CMake
+################################################################################
 cmake_minimum_required(VERSION 2.8.3)
 project(turtlebot3_patrol)
 
+################################################################################
+# Packages
+################################################################################
 find_package(catkin REQUIRED COMPONENTS
     rospy
     actionlib
@@ -9,11 +15,17 @@ find_package(catkin REQUIRED COMPONENTS
     geometry_msgs
 )
 
-find_package(Boost REQUIRED COMPONENTS system thread)
+find_package(Boost REQUIRED COMPONENTS
+    system
+    thread
+)
 
-
-
-add_action_files(FILES turtlebot3.action)
+################################################################################
+# Declare ROS messages, services and actions
+################################################################################
+add_action_files(FILES 
+    turtlebot3.action
+)
 
 generate_messages(DEPENDENCIES
     std_msgs
@@ -21,6 +33,9 @@ generate_messages(DEPENDENCIES
     geometry_msgs  
 )
 
+################################################################################
+# Catkin specific configuration
+################################################################################
 catkin_package(
   LIBRARIES turtlebot3_patrol
   CATKIN_DEPENDS
@@ -33,10 +48,20 @@ catkin_package(
   DEPENDS Boost
 )
 
-include_directories(include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
+################################################################################
+# Build
+################################################################################
+include_directories(
+  include
+  ${catkin_INCLUDE_DIRS}${Boost_INCLUDE_DIRS}
+)
 
+################################################################################
+# Install
+################################################################################
 install(PROGRAMS
   scripts/turtlebot3_client.py
   scripts/turtlebot3_server.py
-  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
 
