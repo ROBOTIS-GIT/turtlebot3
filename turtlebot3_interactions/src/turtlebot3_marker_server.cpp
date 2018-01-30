@@ -28,8 +28,7 @@
  * 
  * Author: David Gossow
  */
-
-
+ 
 #include <ros/ros.h>
 #include <interactive_markers/interactive_marker_server.h>
 #include <string.h>
