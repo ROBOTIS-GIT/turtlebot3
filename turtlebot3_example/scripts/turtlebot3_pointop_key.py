@@ -68,7 +68,6 @@ class GotoPoint():
             self.shutdown()
         goal_z = np.deg2rad(goal_z)
         goal_distance = sqrt(pow(goal_x - position.x, 2) + pow(goal_y - position.y, 2))
-        path_angle = atan2(goal_y, goal_x)
         distance = goal_distance
 
         while distance > 0.05:
@@ -97,8 +96,6 @@ class GotoPoint():
                 move_cmd.angular.z = max(move_cmd.angular.z, -1.5)
 
             last_rotation = rotation
-            last_x = x_start
-            last_y = y_start
             self.cmd_vel.publish(move_cmd)
             r.sleep()
         (position, rotation) = self.get_odom()
