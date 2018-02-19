@@ -21,24 +21,24 @@ import rospy
 import actionlib
 from geometry_msgs.msg import Twist, Point, Quaternion
 from nav_msgs.msg import Odometry
-import turtlebot3_patrol.msg
+import turtlebot3_example.msg
 from turtlebot3_msgs.msg import SensorState
 import numpy as np
 
 
 class Turtlebot3Action(object):
-    _feedback = turtlebot3_patrol.msg.turtlebot3ActionFeedback()
-    _result = turtlebot3_patrol.msg.turtlebot3ActionResult()
+    _feedback = turtlebot3_example.msg.turtlebot3ActionFeedback()
+    _result = turtlebot3_example.msg.turtlebot3ActionResult()
 
     def __init__(self, name):
         self._action_name = name
-        self._as = actionlib.SimpleActionServer(self._action_name, turtlebot3_patrol.msg.turtlebot3Action,
+        self._as = actionlib.SimpleActionServer(self._action_name, turtlebot3_example.msg.turtlebot3Action,
                                                 execute_cb=self.execute_cb, auto_start=False)
         self.stats_sub = rospy.Subscriber('/sensor_state', SensorState, self.get_state)
         self.odom_sub = rospy.Subscriber('/odom', Odometry, self.get_odom)
-
         self.init_stats = True
         self._as.start()
+        rospy.loginfo('Server On')
 
     def get_odom(self, odom):
         self.position = Point()
@@ -106,7 +106,6 @@ class Turtlebot3Action(object):
         half_patrol = False
         circle_count = 0
 
-        print("select mode : ", mode)
         for i in range(patrol_count):
             if mode == 1:
                 area = [0,0,0,0]
@@ -143,7 +142,6 @@ class Turtlebot3Action(object):
                             self.twist.angular.z = 0
                     self.cmd_pub.publish(self.twist)
                     self.r.sleep()
-
 
         if success:
             self._result = 0
