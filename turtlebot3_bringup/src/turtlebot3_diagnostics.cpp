@@ -26,7 +26,7 @@
 #include <turtlebot3_msgs/VersionInfo.h>
 
 #define SOFTWARE_VERSION "1.0.0"
-#define FIRMWARE_VERSION "1.0.18"
+#define FIRMWARE_VERSION "1.1.0"
 #define HARDWARE_VERSION "1.0.0"
 
 ros::Publisher tb3_diagnostics_pub;
