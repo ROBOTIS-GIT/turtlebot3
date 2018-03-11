@@ -19,7 +19,7 @@ notifications:
 env:
   matrix:
     - ROS_DISTRO=kinetic ROS_REPO=ros-shadow-fixed UPSTREAM_WORKSPACE=debian
-    - ROS_DISTRO=kinetic ROS_REPO=ros-shadow-fixed UPSTREAM_WORKSPACE=debian OS_NAME=debian OS_CODE_NAME=jessie
+#   - ROS_DISTRO=kinetic ROS_REPO=ros-shadow-fixed UPSTREAM_WORKSPACE=debian OS_NAME=debian OS_CODE_NAME=jessie
 branches:
   only:
     - master
