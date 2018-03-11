@@ -66,11 +66,8 @@ target_link_libraries(turtlebot3_marker_server ${catkin_LIBRARIES})
 # Install
 ################################################################################
 install(PROGRAMS 
-   scripts/turtlebot3_pointop_key.py
-   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
-
-install(DIRECTORY launch
-        DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+  scripts/turtlebot3_pointop_key.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
 install(PROGRAMS
@@ -84,13 +81,16 @@ install(PROGRAMS
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
-install(TARGETS turtlebot3_marker_server 
-	DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+install(TARGETS turtlebot3_marker_server
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
-install(DIRECTORY launch 
-	DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+install(DIRECTORY launch/
+	DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch
 )
+
 ################################################################################
 # Test
 ################################################################################
