@@ -78,8 +78,8 @@
     <plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
       <alwaysOn>true</alwaysOn>
       <bodyName>imu_link</bodyName>
-      <topicName>/imu</topicName>
-      <serviceName>/imu_service</serviceName>
+      <topicName>imu</topicName>
+      <serviceName>imu_service</serviceName>
       <gaussianNoise>0.0</gaussianNoise>
       <updateRate>100.0</updateRate>
       <imu>
@@ -100,6 +100,15 @@
         </noise>
       </imu>
     </plugin>
+  </gazebo>
+
+  <gazebo reference="imu_link">
+    <sensor type="imu" name="imu">
+      <always_on>true</always_on>
+      <update_rate>50</update_rate>
+      <visualize>$(arg imu_visual)</visualize>
+    </sensor>
+    <material>Gazebo/Grey</material>
   </gazebo>
 
   <gazebo reference="base_scan">
@@ -129,7 +138,7 @@
         </noise>
       </ray>
       <plugin name="gazebo_ros_lds_lfcd_controller" filename="libgazebo_ros_laser.so">
-        <topicName>/scan</topicName>
+        <topicName>scan</topicName>
         <frameName>base_scan</frameName>
       </plugin>
     </sensor>

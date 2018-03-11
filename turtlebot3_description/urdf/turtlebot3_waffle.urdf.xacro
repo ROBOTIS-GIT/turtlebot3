@@ -3,10 +3,6 @@
   <xacro:include filename="$(find turtlebot3_description)/urdf/common_properties.xacro"/>
   <xacro:include filename="$(find turtlebot3_description)/urdf/turtlebot3_waffle.gazebo.xacro"/>
 
-  <xacro:property name="r200_cam_offset_px" value="0.1" />
-  <xacro:property name="r200_cam_offset_py" value="-0.028" />
-  <xacro:property name="r200_cam_offset_pz" value="0.110" />
-
   <xacro:property name="r200_cam_rgb_px" value="0.005"/>
   <xacro:property name="r200_cam_rgb_py" value="0.018"/>
   <xacro:property name="r200_cam_rgb_pz" value="0.013"/>
@@ -231,16 +227,16 @@
   <link name="camera_rgb_optical_frame"/>
 
   <joint name="camera_depth_joint" type="fixed">
-      <origin xyz="0 ${r200_cam_depth_offset} 0" rpy="0 0 0"/>
-      <parent link="camera_rgb_frame"/>
-      <child link="camera_depth_frame"/>
+    <origin xyz="${r200_cam_rgb_px} ${r200_cam_rgb_py + r200_cam_depth_offset} ${r200_cam_rgb_pz}" rpy="0 0 0"/>
+    <parent link="camera_link"/>
+    <child link="camera_depth_frame"/>
   </joint>
   <link name="camera_depth_frame"/>
 
   <joint name="camera_depth_optical_joint" type="fixed">
-      <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}"/>
-      <parent link="camera_depth_frame"/>
-      <child link="camera_depth_optical_frame"/>
+    <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}"/>
+    <parent link="camera_depth_frame"/>
+    <child link="camera_depth_optical_frame"/>
   </joint>
   <link name="camera_depth_optical_frame"/>
 

@@ -3,4 +3,6 @@
   <include file="$(find turtlebot3_bringup)/launch/turtlebot3_core.launch"/>
   <include file="$(find turtlebot3_bringup)/launch/turtlebot3_lidar.launch"/>
 
+  <node pkg="turtlebot3_bringup" type="turtlebot3_diagnostics" name="turtlebot3_diagnostics" output="screen" />
+
 </launch>
