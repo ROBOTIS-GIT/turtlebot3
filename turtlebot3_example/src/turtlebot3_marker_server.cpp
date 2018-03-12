@@ -1,4 +1,4 @@
-/*
+/*******************************************************************************
  * Copyright (c) 2011, Willow Garage, Inc.
  * All rights reserved.
  *
@@ -27,8 +27,10 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * 
  * Author: David Gossow
- */
+*******************************************************************************/
  
+/* Authors: Gilbert */
+
 #include <ros/ros.h>
 #include <interactive_markers/interactive_marker_server.h>
 #include <string.h>
@@ -42,7 +44,8 @@ class Turtlebot3MarkerServer
 {
   public:
     Turtlebot3MarkerServer()
-      : nh("~"), server("turtlebot3_marker_server")
+      : nh("~"), 
+        server("turtlebot3_marker_server")
     {
       std::string cmd_vel_topic;
 
@@ -56,8 +59,7 @@ class Turtlebot3MarkerServer
       ROS_INFO("[turtlebot3_marker_server] Initialized.");
     }
 
-    void processFeedback(
-        const InteractiveMarkerFeedbackConstPtr &feedback );
+    void processFeedback(const InteractiveMarkerFeedbackConstPtr &feedback );
   
   private:
     void createInteractiveMarkers();
@@ -72,8 +74,7 @@ class Turtlebot3MarkerServer
     std::string link_name;
 };
 
-void Turtlebot3MarkerServer::processFeedback(
-    const InteractiveMarkerFeedbackConstPtr &feedback )
+void Turtlebot3MarkerServer::processFeedback(const InteractiveMarkerFeedbackConstPtr &feedback)
 {
   // Handle angular change (yaw is the only direction in which you can rotate)
   double yaw = tf::getYaw(feedback->pose.orientation);
@@ -132,7 +133,6 @@ void Turtlebot3MarkerServer::createInteractiveMarkers()
   
   server.applyChanges();
 }
-
 
 int main(int argc, char** argv)
 {

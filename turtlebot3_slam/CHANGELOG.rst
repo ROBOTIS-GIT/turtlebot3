@@ -2,6 +2,12 @@
 Changelog for package turtlebot3_slam
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.2.0 (2018-03-12)
+-----------
+* removed the large bag file and added download command from other site
+* refactoring for release
+* Contributors: Hunter L. Allen, Pyo
+
 0.1.6 (2017-08-14)
 -----------
 * updated SLAM param

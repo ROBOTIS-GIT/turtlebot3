@@ -1,9 +1,11 @@
 <?xml version="1.0"?>
-<package>
+<package format="2">
   <name>turtlebot3_navigation</name>
-  <version>0.1.6</version>
-  <description>The turtlebot3_navigation package</description>
-  <license>Apache License 2.0</license>
+  <version>0.2.0</version>
+  <description>
+    The turtlebot3_navigation package
+  </description>
+  <license>Apache 2.0</license>
   <author email="pyo@robotis.com">Pyo</author>
   <author email="rwjung@robotis.com">Leon Jung</author>
   <author email="thlim@robotis.com">Darby Lim</author>
@@ -12,10 +14,8 @@
   <url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3</url>
   <url type="website">http://turtlebot3.robotis.com</url>
   <buildtool_depend>catkin</buildtool_depend>
-  <build_depend>amcl</build_depend>
-  <build_depend>map_server</build_depend>
-  <build_depend>move_base</build_depend>
-  <run_depend>amcl</run_depend>
-  <run_depend>map_server</run_depend>
-  <run_depend>move_base</run_depend>
+  <exec_depend>amcl</exec_depend>
+  <exec_depend>map_server</exec_depend>
+  <exec_depend>move_base</exec_depend>
+  <exec_depend>turtlebot3_bringup</exec_depend>
 </package>

@@ -17,11 +17,11 @@
 /* Authors: Taehoon Lim (Darby) */
 
 #include <ros/ros.h>
-#include <diagnostic_msgs/DiagnosticArray.h>
 #include <sensor_msgs/BatteryState.h>
 #include <sensor_msgs/Imu.h>
 #include <sensor_msgs/MagneticField.h>
 #include <sensor_msgs/LaserScan.h>
+#include <diagnostic_msgs/DiagnosticArray.h>
 #include <turtlebot3_msgs/SensorState.h>
 #include <turtlebot3_msgs/VersionInfo.h>
 

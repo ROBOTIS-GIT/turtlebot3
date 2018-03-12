@@ -23,7 +23,9 @@ find_package(catkin REQUIRED COMPONENTS
 ################################################################################
 # Catkin specific configuration
 ################################################################################
-catkin_package()
+catkin_package(
+  CATKIN_DEPENDS urdf xacro
+)
 
 ################################################################################
 # Build
@@ -36,15 +38,15 @@ include_directories(
 # Install
 ################################################################################
 install(DIRECTORY meshes
-        DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
 install(DIRECTORY rviz
-        DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
 install(DIRECTORY urdf
-        DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
 ################################################################################
