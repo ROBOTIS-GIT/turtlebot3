@@ -35,7 +35,6 @@ If you want to close, insert 's'
 -----------------------
 """
 
-
 class GotoPoint():
     def __init__(self):
         rospy.init_node('turtlebot3_pointop_key', anonymous=False)
@@ -119,7 +118,6 @@ class GotoPoint():
             self.cmd_vel.publish(move_cmd)
             r.sleep()
 
-
         rospy.loginfo("Stopping the robot...")
         self.cmd_vel.publish(Twist())
 
@@ -141,11 +139,9 @@ class GotoPoint():
 
         return (Point(*trans), rotation[2])
 
-
     def shutdown(self):
         self.cmd_vel.publish(Twist())
         rospy.sleep(1)
-
 
 if __name__ == '__main__':
     try:
@@ -155,4 +151,3 @@ if __name__ == '__main__':
 
     except:
         rospy.loginfo("shutdown program.")
-
