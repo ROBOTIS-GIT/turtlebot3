@@ -1,5 +1,5 @@
 <launch>
-  <node type="raspicam_node" pkg="raspicam_node" name="raspicam_node" output="screen">
+  <node pkg="raspicam_node" type="raspicam_node" name="raspicam_node" output="screen">
     <param name="width" value="640"/>
     <param name="height" value="480"/>
     <param name="framerate" value="15"/>

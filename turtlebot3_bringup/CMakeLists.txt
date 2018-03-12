@@ -17,7 +17,6 @@ find_package(catkin REQUIRED COMPONENTS
   turtlebot3_msgs
 )
 
-
 ################################################################################
 # Catkin specific configuration
 ################################################################################
@@ -46,8 +45,8 @@ install(TARGETS turtlebot3_diagnostics
         RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
-install(DIRECTORY launch
-        DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+install(DIRECTORY launch/
+        DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch
 )
 
 install(PROGRAMS scripts/create_udev_rules
@@ -57,6 +56,7 @@ install(PROGRAMS scripts/create_udev_rules
 install(FILES 99-turtlebot3-cdc.rules
         DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
+
 ################################################################################
 # Test
 ################################################################################
