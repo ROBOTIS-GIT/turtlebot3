@@ -12,8 +12,8 @@ set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
-  diagnostic_msgs
   sensor_msgs
+  diagnostic_msgs
   turtlebot3_msgs
 )
 
@@ -21,8 +21,8 @@ find_package(catkin REQUIRED COMPONENTS
 # Catkin specific configuration
 ################################################################################
 catkin_package(
+  CATKIN_DEPENDS roscpp std_msgs sensor_msgs diagnostic_msgs turtlebot3_msgs
   LIBRARIES turtlebot3_bringup
-  CATKIN_DEPENDS roscpp std_msgs diagnostic_msgs sensor_msgs turtlebot3_msgs
 )
 
 ################################################################################
@@ -40,21 +40,19 @@ add_dependencies(turtlebot3_diagnostics ${${PROJECT_NAME}_EXPORTED_TARGETS} ${ca
 # Install
 ################################################################################
 install(TARGETS turtlebot3_diagnostics
-        ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-        LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-        RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
-install(DIRECTORY launch/
-        DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch
+install(DIRECTORY launch
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
 install(PROGRAMS scripts/create_udev_rules
-        DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
 install(FILES 99-turtlebot3-cdc.rules
-        DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
 ################################################################################
