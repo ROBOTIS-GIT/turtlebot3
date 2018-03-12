@@ -18,11 +18,8 @@ notifications:
       - pyo@robotis.com
 env:
   matrix:
-    - ROS_DISTRO="kinetic"   ROS_REPOSITORY_PATH=http://packages.ros.org/ros/ubuntu  USE_DEB=true
-    - ROS_DISTRO="kinetic"   PRERELEASE=true PRERELEASE_DOWNSTREAM_DEPTH=0
-matrix:
-  allow_failures:
-    - env: ROS_DISTRO="kinetic"   PRERELEASE=true PRERELEASE_DOWNSTREAM_DEPTH=0
+    - ROS_DISTRO=kinetic ROS_REPO=ros-shadow-fixed UPSTREAM_WORKSPACE=debian
+#   - ROS_DISTRO=kinetic ROS_REPO=ros-shadow-fixed UPSTREAM_WORKSPACE=debian OS_NAME=debian OS_CODE_NAME=jessie
 branches:
   only:
     - master

@@ -20,21 +20,23 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 find_package(Boost REQUIRED COMPONENTS
-    system
-    thread
+  system
+  thread
 )
 
 ################################################################################
 # Declare ROS messages, services and actions
 ################################################################################
-add_action_files(FILES 
-    turtlebot3.action
+add_action_files(
+  FILES
+  turtlebot3.action
 )
 
-generate_messages(DEPENDENCIES
-    std_msgs
-    actionlib_msgs
-    geometry_msgs  
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+  actionlib_msgs
+  geometry_msgs  
 )
 
 ################################################################################
@@ -42,55 +44,44 @@ generate_messages(DEPENDENCIES
 ################################################################################
 catkin_package(
   LIBRARIES turtlebot3_patrol
-  CATKIN_DEPENDS
-  std_msgs
-  message_runtime
-  rospy 
-  actionlib
-  actionlib_msgs
-  geometry_msgs
+  CATKIN_DEPENDS std_msgs message_runtime rospy actionlib actionlib_msgs geometry_msgs
   DEPENDS Boost
 )
+
 ################################################################################
 # Build
 ################################################################################
 include_directories(
   include
-  ${catkin_INCLUDE_DIRS}${Boost_INCLUDE_DIRS}
+  ${catkin_INCLUDE_DIRS}
+  ${Boost_INCLUDE_DIRS}
 )
 
 add_executable(turtlebot3_marker_server src/turtlebot3_marker_server.cpp)
+add_dependencies(turtlebot3_marker_server ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(turtlebot3_marker_server ${catkin_LIBRARIES})
 
 ################################################################################
 # Install
 ################################################################################
 install(PROGRAMS 
-   scripts/turtlebot3_pointop_key.py
-   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
-
-install(DIRECTORY launch
-        DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-)
-
-install(PROGRAMS
+  scripts/turtlebot3_pointop_key.py
   scripts/turtlebot3_client.py
   scripts/turtlebot3_server.py
-  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
-
-install(PROGRAMS
   scripts/turtlebot3_client.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
-install(TARGETS turtlebot3_marker_server 
-	DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+install(TARGETS turtlebot3_marker_server
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
-install(DIRECTORY launch 
-	DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+install(DIRECTORY launch/
+	DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch
 )
+
 ################################################################################
 # Test
 ################################################################################
