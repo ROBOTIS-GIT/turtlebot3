@@ -70,9 +70,9 @@ install(TARGETS turtlebot3_marker_server
 
 install(PROGRAMS
   scripts/turtlebot3_pointop_key.py
-  scripts/turtlebot3_client.py
   scripts/turtlebot3_server.py
   scripts/turtlebot3_client.py
+  scripts/turtlebot3_obstacle.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
