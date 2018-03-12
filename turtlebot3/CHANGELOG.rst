@@ -15,7 +15,7 @@ Changelog for package turtlebot3
 * modified topic of gazebo plugin
 * modified r200 tf tree
 * modified gazebo imu link
-* remove the large bag file and added download command from other site
+* removed the large bag file and added download command from other site
 * refactoring for release
 * Contributors: Darby Lim, Gilbert, Leon Jung, Pyo
 
