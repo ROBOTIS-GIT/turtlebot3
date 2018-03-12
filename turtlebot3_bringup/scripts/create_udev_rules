@@ -12,4 +12,3 @@ echo "Reload rules"
 echo ""
 sudo udevadm control --reload-rules
 sudo udevadm trigger
-

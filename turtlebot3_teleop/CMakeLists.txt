@@ -13,6 +13,11 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 ################################################################################
+# Python scripts and modules
+################################################################################
+catkin_python_setup()
+
+################################################################################
 # Declare ROS messages, services and actions
 ################################################################################
 
@@ -24,7 +29,6 @@ find_package(catkin REQUIRED COMPONENTS
 # Catkin specific configuration
 ################################################################################
 catkin_package(
-  INCLUDE_DIRS
   CATKIN_DEPENDS rospy geometry_msgs
 )
 
@@ -35,11 +39,14 @@ catkin_package(
 ################################################################################
 # Install
 ################################################################################
-catkin_install_python(PROGRAMS scripts/turtlebot3_teleop_key
-                      DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+catkin_install_python(PROGRAMS 
+  scripts/turtlebot3_teleop_key
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
 
 install(DIRECTORY launch
-        DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
 
 ################################################################################
 # Test

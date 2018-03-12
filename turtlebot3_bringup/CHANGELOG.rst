@@ -2,6 +2,18 @@
 Changelog for package turtlebot3_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.2.0 (2018-03-12)
+-----------
+* refactoring for release
+* updated firmware version
+* modified param config
+* added turtlebot3_rpicamera.launch for raspberry pi camera
+* added waffle pi model
+* added verion check function
+* added diagnostics node
+* added scripts for reload rules
+* Contributors: Darby Lim, Gilbert, Leon Jung, Pyo
+
 0.1.6 (2017-08-14)
 -----------
 * updated model.launch

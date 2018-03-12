@@ -2,6 +2,12 @@
 Changelog for package turtlebot3_navigation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.2.0 (2018-03-12)
+-----------
+* added waffle pi model (urdf and gazebo)
+* refactoring for release
+* Contributors: Darby Lim, Pyo
+
 0.1.6 (2017-08-14)
 -----------
 * updated nav param

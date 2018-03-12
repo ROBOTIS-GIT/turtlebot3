@@ -2,6 +2,11 @@
 Changelog for package turtlebot3_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.2.0 (2018-03-12)
+-----------
+* refactoring for release
+* Contributors: Pyo
+
 0.1.6 (2017-08-14)
 -----------
 * none

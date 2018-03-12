@@ -7,11 +7,7 @@ project(turtlebot3_navigation)
 ################################################################################
 # Packages
 ################################################################################
-find_package(catkin REQUIRED COMPONENTS
-  amcl
-  map_server
-  move_base
-)
+find_package(catkin REQUIRED)
 
 ################################################################################
 # Declare ROS messages, services and actions
@@ -36,20 +32,8 @@ include_directories(
 ################################################################################
 # Install
 ################################################################################
-install(DIRECTORY launch
-        DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-)
-
-install(DIRECTORY maps
-        DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-)
-
-install(DIRECTORY param
-        DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-)
-
-install(DIRECTORY rviz
-        DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+install(DIRECTORY launch maps param rviz
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
 ################################################################################

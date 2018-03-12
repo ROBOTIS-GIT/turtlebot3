@@ -2,6 +2,23 @@
 Changelog for package turtlebot3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.2.0 (2018-03-12)
+-----------
+* added turtlebot3_rpicamera.launch for raspberry pi camera
+* added waffle pi model (urdf and gazebo)
+* added verion check function
+* added diagnostics node
+* added scripts for reload rules
+* added example package
+* modified firmware version
+* modified param config
+* modified topic of gazebo plugin
+* modified r200 tf tree
+* modified gazebo imu link
+* removed the large bag file and added download command from other site
+* refactoring for release
+* Contributors: Darby Lim, Gilbert, Leon Jung, Pyo
+
 0.1.6 (2017-08-14)
 -----------
 * fixed typo
