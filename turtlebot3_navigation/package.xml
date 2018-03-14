@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>turtlebot3_navigation</name>
-  <version>0.2.0</version>
+  <version>0.2.1</version>
   <description>
-    The turtlebot3_navigation package
+    The turtlebot3_navigation provides roslaunch scripts for starting the navigation.
   </description>
   <license>Apache 2.0</license>
   <author email="pyo@robotis.com">Pyo</author>

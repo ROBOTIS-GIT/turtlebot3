@@ -2,6 +2,12 @@
 Changelog for package turtlebot3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.2.1 (2018-03-14)
+------------------
+* added install directory
+* refactoring for release
+* Contributors: Pyo
+
 0.2.0 (2018-03-12)
 ------------------
 * added turtlebot3_rpicamera.launch for raspberry pi camera
