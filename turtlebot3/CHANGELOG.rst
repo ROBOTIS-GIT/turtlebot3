@@ -3,7 +3,7 @@ Changelog for package turtlebot3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 0.2.0 (2018-03-12)
------------
+------------------
 * added turtlebot3_rpicamera.launch for raspberry pi camera
 * added waffle pi model (urdf and gazebo)
 * added verion check function
