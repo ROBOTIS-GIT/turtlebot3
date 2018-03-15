@@ -1,11 +1,12 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>turtlebot3</name>
-  <version>0.2.0</version>
+  <version>0.2.1</version>
   <description>
     ROS packages for the Turtlebot3 (meta package)
   </description>
   <license>Apache 2.0</license>
+  <license>BSD</license>
   <author email="pyo@robotis.com">Pyo</author>
   <author email="thlim@robotis.com">Darby Lim</author>
   <author email="rwjung@robotis.com">Leon Jung</author>

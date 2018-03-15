@@ -32,10 +32,10 @@
 /* Authors: Gilbert */
 
 #include <ros/ros.h>
-#include <interactive_markers/interactive_marker_server.h>
 #include <string.h>
 #include <geometry_msgs/Twist.h>
 #include <geometry_msgs/Pose.h>
+#include <interactive_markers/interactive_marker_server.h>
 #include <tf/tf.h>
 
 using namespace visualization_msgs;

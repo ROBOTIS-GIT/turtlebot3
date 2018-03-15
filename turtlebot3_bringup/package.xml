@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>turtlebot3_bringup</name>
-  <version>0.2.0</version>
+  <version>0.2.1</version>
   <description>
     roslaunch scripts for starting the TurtleBot3
   </description>
@@ -24,5 +24,6 @@
   <exec_depend>robot_state_publisher</exec_depend>
   <exec_depend>rosserial_python</exec_depend>
   <exec_depend>hls_lfcd_lds_driver</exec_depend>
+  <!-- <exec_depend>realsense_camera</exec_depend> for TurtleBot3 Waffle using Intel RealSense Camera -->
   <!-- <exec_depend>raspicam_node</exec_depend> for TurtleBot3 Waffle Pi using Raspberry Pi Camera -->
 </package>
