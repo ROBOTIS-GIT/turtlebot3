@@ -11,6 +11,7 @@
 
   <gazebo>
     <plugin name="turtlebot3_waffle_controller" filename="libgazebo_ros_diff_drive.so">
+      <alwaysOn>true</alwaysOn>
       <commandTopic>cmd_vel</commandTopic>
       <odometryTopic>odom</odometryTopic>
       <odometryFrame>odom</odometryFrame>
@@ -33,44 +34,30 @@
   </gazebo>
 
   <gazebo reference="wheel_left_link">
-    <mu1>10</mu1>
-    <mu2>10</mu2>
-    <kp>500000.0</kp>
-    <kd>10.0</kd>
-    <minDepth>0.001</minDepth>
-    <maxVel>0.1</maxVel>
+    <mu1>1.0</mu1>
+    <mu2>0.8</mu2>
     <fdir1>1 0 0</fdir1>
     <material>Gazebo/DarkGrey</material>
   </gazebo>
 
   <gazebo reference="wheel_right_link">
-    <mu1>10</mu1>
-    <mu2>10</mu2>
-    <kp>500000.0</kp>
-    <kd>10.0</kd>
-    <minDepth>0.001</minDepth>
-    <maxVel>0.1</maxVel>
+    <mu1>1.0</mu1>
+    <mu2>0.8</mu2>
     <fdir1>1 0 0</fdir1>
     <material>Gazebo/DarkGrey</material>
   </gazebo>
 
   <gazebo reference="caster_back_right_link">
-    <mu1>0.0</mu1>
-    <mu2>0.0</mu2>
-    <kp>1000000.0</kp>
-    <kd>100.0</kd>
-    <minDepth>0.001</minDepth>
-    <maxVel>1.0</maxVel>
+    <mu1>0.61</mu1>
+    <mu2>0.47</mu2>
+    <fdir1>1 0 0</fdir1>
     <material>Gazebo/Grey</material>
   </gazebo>
 
   <gazebo reference="caster_back_left_link">
-    <mu1>0.0</mu1>
-    <mu2>0.0</mu2>
-    <kp>1000000.0</kp>
-    <kd>100.0</kd>
-    <minDepth>0.001</minDepth>
-    <maxVel>1.0</maxVel>
+    <mu1>0.61</mu1>
+    <mu2>0.47</mu2>
+    <fdir1>1 0 0</fdir1>
     <material>Gazebo/Grey</material>
   </gazebo>
 
