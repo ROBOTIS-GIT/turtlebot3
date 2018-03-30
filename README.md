@@ -28,6 +28,7 @@
 - [hls_lfcd_lds_driver](https://github.com/ROBOTIS-GIT/hls_lfcd_lds_driver)
 - [open_manipulator](https://github.com/ROBOTIS-GIT/open_manipulator)
 - [dynamixel_sdk](https://github.com/ROBOTIS-GIT/DynamixelSDK)
+- [dynamixel_workbench](https://github.com/ROBOTIS-GIT/dynamixel-workbench)
 - [OpenCR-Hardware](https://github.com/ROBOTIS-GIT/OpenCR-Hardware)
 - [OpenCR](https://github.com/ROBOTIS-GIT/OpenCR)
 
@@ -35,6 +36,7 @@
 - [ROBOTIS e-Manual for TurtleBot3](http://turtlebot3.robotis.com/)
 - [ROBOTIS e-Manual for OpenManipulator](http://emanual.robotis.com/docs/en/platform/openmanipulator/)
 - [ROBOTIS e-Manual for Dynamixel SDK](http://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_sdk/overview/)
+- [ROBOTIS e-Manual for Dynamixel Workbench](http://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_workbench/)
 - [Website for TurtleBot Series](http://www.turtlebot.com/)
 - [e-Book for TurtleBot3](https://community.robotsource.org/t/download-the-ros-robot-programming-book-for-free/51/)
 - [Videos for TurtleBot3 ](https://www.youtube.com/playlist?list=PLRG6WP3c31_XI3wlvHlx2Mp8BYqgqDURU)
