@@ -23,6 +23,7 @@ import tf
 from math import radians, copysign, sqrt, pow, pi, atan2
 from tf.transformations import euler_from_quaternion
 import numpy as np
+import sys
 
 msg = """
 control your Turtlebot3!
@@ -36,19 +37,16 @@ If you want to close, insert 's'
 """
 
 arr_path_B = []
-
-with open("../data_path/path_B.txt", "r") as file_path_B:
+with open(sys.argv[1], "r") as file_path_B:
     for idx, line in enumerate(file_path_B):
         str = line.split()
         if not (len(str)==0):
             #print(str)
-            arr_path_B.append([str[0], str[1]])
+            arr_path_B.append([(float)(str[0]), (float)(str[1])])
         else:
             break
 
 # now we imported arr_path_B from file to arr_path_B
-
-#print(arr_path_B)
 
 class GotoPoint():
     def __init__(self):
@@ -81,66 +79,78 @@ class GotoPoint():
         last_rotation = 0
         linear_speed = 1
         angular_speed = 1
-        (goal_x, goal_y, goal_z) = self.getkey()
-        if goal_z > 180 or goal_z < -180:
-            print("you input worng z range.")
-            self.shutdown()
-        goal_z = np.deg2rad(goal_z)
-        goal_distance = sqrt(pow(goal_x - position.x, 2) + pow(goal_y - position.y, 2))
-        distance = goal_distance
+        # (goal_x, goal_y, goal_z) = self.getkey()
 
-        while distance > 0.05:
+        # go through path array
+        ind = 1
+        length = len(arr_path_B)
+        init_goal = arr_path_B[0]
+        while ind != length:
+            # if goal_z > 180 or goal_z < -180:
+            #     print("you input worng z range.")
+            #     self.shutdown()
+            # goal_z = np.deg2rad(goal_z)
+            goal_x = arr_path_B[ind][0]-init_goal[0]
+            goal_y = arr_path_B[ind][1]-init_goal[1]
+            goal_distance = sqrt(pow(goal_x - position.x, 2) + pow(goal_y - position.y, 2))
+            distance = goal_distance
+        
+            while distance > 0.05:
+                print ("distance = ", distance)
+                (position, rotation) = self.get_odom()
+                #print("x, y, rotation", position.x, position.y, rotation)
+                x_start = position.x
+                y_start = position.y
+                path_angle = atan2(goal_y - y_start, goal_x- x_start)
+
+                if path_angle < -pi/4 or path_angle > pi/4:
+                    if goal_y < 0 and y_start < goal_y:
+                        path_angle = -2*pi + path_angle
+                    elif goal_y >= 0 and y_start > goal_y:
+                        path_angle = 2*pi + path_angle
+                if last_rotation > pi-0.1 and rotation <= 0:
+                    rotation = 2*pi + rotation
+                elif last_rotation < -pi+0.1 and rotation > 0:
+                    rotation = -2*pi + rotation
+                move_cmd.angular.z = angular_speed * path_angle-rotation
+
+                distance = sqrt(pow((goal_x - x_start), 2) + pow((goal_y - y_start), 2))
+                move_cmd.linear.x = min(linear_speed * distance, 0.1)
+
+                if move_cmd.angular.z > 0:
+                    move_cmd.angular.z = min(move_cmd.angular.z, 1.5)
+                else:
+                    move_cmd.angular.z = max(move_cmd.angular.z, -1.5)
+
+                last_rotation = rotation
+                self.cmd_vel.publish(move_cmd)
+                r.sleep()
+
+            print("Now at Waypoint No.", ind)
+            ind = ind + 2
             (position, rotation) = self.get_odom()
-            print("x, y, rotation", position.x, position.y, rotation)
-            x_start = position.x
-            y_start = position.y
-            path_angle = atan2(goal_y - y_start, goal_x- x_start)
 
-            if path_angle < -pi/4 or path_angle > pi/4:
-                if goal_y < 0 and y_start < goal_y:
-                    path_angle = -2*pi + path_angle
-                elif goal_y >= 0 and y_start > goal_y:
-                    path_angle = 2*pi + path_angle
-            if last_rotation > pi-0.1 and rotation <= 0:
-                rotation = 2*pi + rotation
-            elif last_rotation < -pi+0.1 and rotation > 0:
-                rotation = -2*pi + rotation
-            move_cmd.angular.z = angular_speed * path_angle-rotation
+            # while abs(rotation - goal_z) > 0.05:
+            #     (position, rotation) = self.get_odom()
+            #     if goal_z >= 0:
+            #         if rotation <= goal_z and rotation >= goal_z - pi:
+            #             move_cmd.linear.x = 0.00
+            #             move_cmd.angular.z = 0.5
+            #         else:
+            #             move_cmd.linear.x = 0.00
+            #             move_cmd.angular.z = -0.5
+            #     else:
+            #         if rotation <= goal_z + pi and rotation > goal_z:
+            #             move_cmd.linear.x = 0.00
+            #             move_cmd.angular.z = -0.5
+            #         else:
+            #             move_cmd.linear.x = 0.00
+            #             move_cmd.angular.z = 0.5
+            #     self.cmd_vel.publish(move_cmd)
+            #     r.sleep()
 
-            distance = sqrt(pow((goal_x - x_start), 2) + pow((goal_y - y_start), 2))
-            move_cmd.linear.x = min(linear_speed * distance, 0.1)
-
-            if move_cmd.angular.z > 0:
-                move_cmd.angular.z = min(move_cmd.angular.z, 1.5)
-            else:
-                move_cmd.angular.z = max(move_cmd.angular.z, -1.5)
-
-            last_rotation = rotation
-            self.cmd_vel.publish(move_cmd)
-            r.sleep()
-        (position, rotation) = self.get_odom()
-
-        # while abs(rotation - goal_z) > 0.05:
-        #     (position, rotation) = self.get_odom()
-        #     if goal_z >= 0:
-        #         if rotation <= goal_z and rotation >= goal_z - pi:
-        #             move_cmd.linear.x = 0.00
-        #             move_cmd.angular.z = 0.5
-        #         else:
-        #             move_cmd.linear.x = 0.00
-        #             move_cmd.angular.z = -0.5
-        #     else:
-        #         if rotation <= goal_z + pi and rotation > goal_z:
-        #             move_cmd.linear.x = 0.00
-        #             move_cmd.angular.z = -0.5
-        #         else:
-        #             move_cmd.linear.x = 0.00
-        #             move_cmd.angular.z = 0.5
-        #     self.cmd_vel.publish(move_cmd)
-        #     r.sleep()
-
-        rospy.loginfo("Stopping the robot...")
-        self.cmd_vel.publish(Twist())
+        # rospy.loginfo("Stopping the robot...")
+        # self.cmd_vel.publish(Twist())
 
     def getkey(self):
         x, y, z = raw_input("| x | y | z |\n").split()
@@ -168,7 +178,7 @@ class GotoPoint():
 if __name__ == '__main__':
     try:
         while not rospy.is_shutdown():
-            print(msg)
+            #print(msg)
             GotoPoint()
 
     except:
