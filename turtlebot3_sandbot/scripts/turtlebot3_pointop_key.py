@@ -35,9 +35,24 @@ If you want to close, insert 's'
 -----------------------
 """
 
+arr_path_B = []
+
+with open("../data_path/path_B.txt", "r") as file_path_B:
+    for idx, line in enumerate(file_path_B):
+        str = line.split()
+        if not (len(str)==0):
+            #print(str)
+            arr_path_B.append([str[0], str[1]])
+        else:
+            break
+
+# now we imported arr_path_B from file to arr_path_B
+
+#print(arr_path_B)
+
 class GotoPoint():
     def __init__(self):
-        rospy.init_node('turtlebot3_pointop_key', anonymous=False)
+        rospy.init_node('turtlebot3_sandbot', anonymous=False)
         rospy.on_shutdown(self.shutdown)
         self.cmd_vel = rospy.Publisher('/cmd_vel', Twist, queue_size=5)
         position = Point()
@@ -45,23 +60,27 @@ class GotoPoint():
         r = rospy.Rate(10)
         self.tf_listener = tf.TransformListener()
         self.odom_frame = '/odom'
+        print("a")
 
         try:
             self.tf_listener.waitForTransform(self.odom_frame, '/base_footprint', rospy.Time(), rospy.Duration(1.0))
             self.base_frame = '/base_footprint'
         except (tf.Exception, tf.ConnectivityException, tf.LookupException):
             try:
+                print("c")
                 self.tf_listener.waitForTransform(self.odom_frame, '/base_link', rospy.Time(), rospy.Duration(1.0))
                 self.base_frame = '/base_link'
             except (tf.Exception, tf.ConnectivityException, tf.LookupException):
+                print("d")
                 rospy.loginfo("Cannot find transform between /odom and /base_link or /base_footprint")
                 rospy.signal_shutdown("tf Exception")
-
+        
         (position, rotation) = self.get_odom()
+        print("x, y, rotation", position.x, position.y, rotation)
+        
         last_rotation = 0
         linear_speed = 1
         angular_speed = 1
-
         (goal_x, goal_y, goal_z) = self.getkey()
         if goal_z > 180 or goal_z < -180:
             print("you input worng z range.")
@@ -72,6 +91,7 @@ class GotoPoint():
 
         while distance > 0.05:
             (position, rotation) = self.get_odom()
+            print("x, y, rotation", position.x, position.y, rotation)
             x_start = position.x
             y_start = position.y
             path_angle = atan2(goal_y - y_start, goal_x- x_start)
@@ -100,24 +120,24 @@ class GotoPoint():
             r.sleep()
         (position, rotation) = self.get_odom()
 
-        while abs(rotation - goal_z) > 0.05:
-            (position, rotation) = self.get_odom()
-            if goal_z >= 0:
-                if rotation <= goal_z and rotation >= goal_z - pi:
-                    move_cmd.linear.x = 0.00
-                    move_cmd.angular.z = 0.5
-                else:
-                    move_cmd.linear.x = 0.00
-                    move_cmd.angular.z = -0.5
-            else:
-                if rotation <= goal_z + pi and rotation > goal_z:
-                    move_cmd.linear.x = 0.00
-                    move_cmd.angular.z = -0.5
-                else:
-                    move_cmd.linear.x = 0.00
-                    move_cmd.angular.z = 0.5
-            self.cmd_vel.publish(move_cmd)
-            r.sleep()
+        # while abs(rotation - goal_z) > 0.05:
+        #     (position, rotation) = self.get_odom()
+        #     if goal_z >= 0:
+        #         if rotation <= goal_z and rotation >= goal_z - pi:
+        #             move_cmd.linear.x = 0.00
+        #             move_cmd.angular.z = 0.5
+        #         else:
+        #             move_cmd.linear.x = 0.00
+        #             move_cmd.angular.z = -0.5
+        #     else:
+        #         if rotation <= goal_z + pi and rotation > goal_z:
+        #             move_cmd.linear.x = 0.00
+        #             move_cmd.angular.z = -0.5
+        #         else:
+        #             move_cmd.linear.x = 0.00
+        #             move_cmd.angular.z = 0.5
+        #     self.cmd_vel.publish(move_cmd)
+        #     r.sleep()
 
         rospy.loginfo("Stopping the robot...")
         self.cmd_vel.publish(Twist())
@@ -139,6 +159,7 @@ class GotoPoint():
             return
 
         return (Point(*trans), rotation[2])
+        # return (Point(), rotation[2])
 
     def shutdown(self):
         self.cmd_vel.publish(Twist())
