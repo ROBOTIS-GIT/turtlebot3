@@ -140,7 +140,7 @@
               <format>R8G8B8</format>
           </image>
           <clip>
-              <near>0.3</near>
+              <near>0.03</near>
               <far>100</far>
           </clip>
       </camera>
