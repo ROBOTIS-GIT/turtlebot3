@@ -4,11 +4,6 @@
   <xacro:arg name="camera_visual" default="false"/>
   <xacro:arg name="imu_visual"    default="false"/>
 
-  <xacro:arg name="r200_cam_rgb_px" default="0.005"/>
-  <xacro:arg name="r200_cam_rgb_py" default="0.018"/>
-  <xacro:arg name="r200_cam_rgb_pz" default="0.013"/>
-  <xacro:arg name="r200_cam_depth_offset" default="0.01"/>
-
   <gazebo>
     <plugin name="turtlebot3_waffle_controller" filename="libgazebo_ros_diff_drive.so">
       <alwaysOn>true</alwaysOn>
@@ -133,11 +128,11 @@
 
   <gazebo reference="camera_link">
     <sensor type="depth" name="realsense_R200">
-      <pose>$(arg r200_cam_rgb_px) $(arg r200_cam_rgb_py) $(arg r200_cam_rgb_pz) 0 0 0</pose>
       <always_on>true</always_on>
+      <updateRate>30.0</updateRate>
       <visualize>$(arg camera_visual)</visualize>
       <camera>
-          <horizontal_fov>1.02974</horizontal_fov>
+          <horizontal_fov>1.3439</horizontal_fov>
           <image>
               <width>1920</width>
               <height>1080</height>
@@ -145,16 +140,15 @@
           </image>
           <depth_camera></depth_camera>
           <clip>
-              <near>0.02</near>
-              <far>300</far>
+              <near>0.3</near>
+              <far>100</far>
           </clip>
       </camera>
       <plugin name="camera_controller" filename="libgazebo_ros_openni_kinect.so">
-        <pose>$(arg r200_cam_depth_offset) 0 0 0 0 0</pose>
         <alwaysOn>true</alwaysOn>
-            <updateRate>30.0</updateRate>
-            <cameraName>camera</cameraName>
-            <frameName>camera_link</frameName>
+        <updateRate>60.0</updateRate>
+        <cameraName>camera</cameraName>
+        <frameName>camera_rgb_optical_frame</frameName>
         <imageTopicName>rgb/image_raw</imageTopicName>
         <depthImageTopicName>depth/image_raw</depthImageTopicName>
         <pointCloudTopicName>depth/points</pointCloudTopicName>
@@ -170,7 +164,6 @@
         <CxPrime>0.0</CxPrime>
         <Cx>0.0</Cx>
         <Cy>0.0</Cy>
-        <focalLength>0.0</focalLength>
       </plugin>
     </sensor>
   </gazebo>

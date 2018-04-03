@@ -129,8 +129,8 @@
 <!--link : https://www.raspberrypi.org/documentation/hardware/camera/-->
   <gazebo reference="camera_link">
     <sensor type="camera" name="Pi Camera">
-      <pose>0.003 0.011 0.008 0 0 0</pose>
       <always_on>true</always_on>
+      <updateRate>30.0</updateRate>
       <visualize>$(arg camera_visual)</visualize>
       <camera>
           <horizontal_fov>1.085595</horizontal_fov>
@@ -140,15 +140,15 @@
               <format>R8G8B8</format>
           </image>
           <clip>
-              <near>0.02</near>
-              <far>300</far>
+              <near>0.3</near>
+              <far>100</far>
           </clip>
       </camera>
       <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
         <alwaysOn>true</alwaysOn>
         <updateRate>30.0</updateRate>
         <cameraName>camera</cameraName>
-        <frameName>camera_link</frameName>
+        <frameName>camera_rgb_optical_frame</frameName>
         <imageTopicName>rgb/image_raw</imageTopicName>
         <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
         <hackBaseline>0.07</hackBaseline>
