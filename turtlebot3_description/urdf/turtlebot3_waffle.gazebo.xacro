@@ -29,14 +29,14 @@
   </gazebo>
 
   <gazebo reference="wheel_left_link">
-    <mu1>1.0</mu1>
+    <mu1>100.0</mu1>
     <mu2>0.8</mu2>
     <fdir1>1 0 0</fdir1>
     <material>Gazebo/DarkGrey</material>
   </gazebo>
 
   <gazebo reference="wheel_right_link">
-    <mu1>1.0</mu1>
+    <mu1>100.0</mu1>
     <mu2>0.8</mu2>
     <fdir1>1 0 0</fdir1>
     <material>Gazebo/DarkGrey</material>
