@@ -45,7 +45,6 @@ with open(sys.argv[1], "r") as file_path_B:
             arr_path_B.append([(float)(str[0]), (float)(str[1])])
         else:
             break
-
 # now we imported arr_path_B from file to arr_path_B
 
 class GotoPoint():
@@ -58,22 +57,26 @@ class GotoPoint():
         r = rospy.Rate(10)
         self.tf_listener = tf.TransformListener()
         self.odom_frame = '/odom'
-        print("a")
+        self.isFirst = True
+        self.offset_x=0
+        self.offset_y=0
 
         try:
             self.tf_listener.waitForTransform(self.odom_frame, '/base_footprint', rospy.Time(), rospy.Duration(1.0))
             self.base_frame = '/base_footprint'
         except (tf.Exception, tf.ConnectivityException, tf.LookupException):
             try:
-                print("c")
                 self.tf_listener.waitForTransform(self.odom_frame, '/base_link', rospy.Time(), rospy.Duration(1.0))
                 self.base_frame = '/base_link'
             except (tf.Exception, tf.ConnectivityException, tf.LookupException):
-                print("d")
                 rospy.loginfo("Cannot find transform between /odom and /base_link or /base_footprint")
                 rospy.signal_shutdown("tf Exception")
         
         (position, rotation) = self.get_odom()
+        if self.isFirst:
+            self.offset_x=position.x
+            self.offset_y=position.y
+            self.isFirst=False
         print("x, y, rotation", position.x, position.y, rotation)
         
         last_rotation = 0
@@ -85,6 +88,8 @@ class GotoPoint():
         ind = 1
         length = len(arr_path_B)
         init_goal = arr_path_B[0]
+
+
         while ind != length:
             # if goal_z > 180 or goal_z < -180:
             #     print("you input worng z range.")
@@ -92,42 +97,45 @@ class GotoPoint():
             # goal_z = np.deg2rad(goal_z)
             goal_x = arr_path_B[ind][0]-init_goal[0]
             goal_y = arr_path_B[ind][1]-init_goal[1]
+            (position,rotation) = self.get_odom()
             goal_distance = sqrt(pow(goal_x - position.x, 2) + pow(goal_y - position.y, 2))
             distance = goal_distance
-        
             while distance > 0.05:
-                print ("distance = ", distance)
-                (position, rotation) = self.get_odom()
-                #print("x, y, rotation", position.x, position.y, rotation)
-                x_start = position.x
-                y_start = position.y
-                path_angle = atan2(goal_y - y_start, goal_x- x_start)
+                try:
+                    print ("distance = ", distance)
+                    (position, rotation) = self.get_odom()
+                    #print("x, y, rotation", position.x, position.y, rotation)
+                    x_start = position.x
+                    y_start = position.y
+                    path_angle = atan2(goal_y - y_start, goal_x- x_start)
 
-                if path_angle < -pi/4 or path_angle > pi/4:
-                    if goal_y < 0 and y_start < goal_y:
-                        path_angle = -2*pi + path_angle
-                    elif goal_y >= 0 and y_start > goal_y:
-                        path_angle = 2*pi + path_angle
-                if last_rotation > pi-0.1 and rotation <= 0:
-                    rotation = 2*pi + rotation
-                elif last_rotation < -pi+0.1 and rotation > 0:
-                    rotation = -2*pi + rotation
-                move_cmd.angular.z = angular_speed * path_angle-rotation
+                    if path_angle < -pi/4 or path_angle > pi/4:
+                        if goal_y < 0 and y_start < goal_y:
+                            path_angle = -2*pi + path_angle
+                        elif goal_y >= 0 and y_start > goal_y:
+                            path_angle = 2*pi + path_angle
+                    if last_rotation > pi-0.1 and rotation <= 0:
+                        rotation = 2*pi + rotation
+                    elif last_rotation < -pi+0.1 and rotation > 0:
+                        rotation = -2*pi + rotation
+                    move_cmd.angular.z = angular_speed * path_angle-rotation
 
-                distance = sqrt(pow((goal_x - x_start), 2) + pow((goal_y - y_start), 2))
-                move_cmd.linear.x = min(linear_speed * distance, 0.1)
+                    distance = sqrt(pow((goal_x - x_start), 2) + pow((goal_y - y_start), 2))
+                    move_cmd.linear.x = min(linear_speed * distance, 0.1)
 
-                if move_cmd.angular.z > 0:
-                    move_cmd.angular.z = min(move_cmd.angular.z, 1.5)
-                else:
-                    move_cmd.angular.z = max(move_cmd.angular.z, -1.5)
+                    if move_cmd.angular.z > 0:
+                        move_cmd.angular.z = min(move_cmd.angular.z, 1.5)
+                    else:
+                        move_cmd.angular.z = max(move_cmd.angular.z, -1.5)
 
-                last_rotation = rotation
-                self.cmd_vel.publish(move_cmd)
-                r.sleep()
-
+                    last_rotation = rotation
+                    self.cmd_vel.publish(move_cmd)
+                    r.sleep()
+                except KeyboardInterrupt:
+                    pass
             print("Now at Waypoint No.", ind)
-            ind = ind + 2
+            # raw_input("press <Enter>")
+            ind = ind + 4
             (position, rotation) = self.get_odom()
 
             # while abs(rotation - goal_z) > 0.05:
@@ -167,9 +175,11 @@ class GotoPoint():
         except (tf.Exception, tf.ConnectivityException, tf.LookupException):
             rospy.loginfo("TF Exception")
             return
-
-        return (Point(*trans), rotation[2])
-        # return (Point(), rotation[2])
+        pnt=Point(*trans)
+        pnt.x=pnt.x-self.offset_x
+        pnt.y=pnt.y-self.offset_y
+        return (pnt, rotation[2])
+        # return (Point(*trans), rotation[2])
 
     def shutdown(self):
         self.cmd_vel.publish(Twist())
