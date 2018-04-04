@@ -58,9 +58,10 @@ class GotoPoint():
         self.tf_listener = tf.TransformListener()
         self.odom_frame = '/odom'
         self.isFirst = True
+        print("isFirst initialized")
         self.offset_x=0
         self.offset_y=0
-
+        self.offset_rot=0
         try:
             self.tf_listener.waitForTransform(self.odom_frame, '/base_footprint', rospy.Time(), rospy.Duration(1.0))
             self.base_frame = '/base_footprint'
@@ -76,7 +77,10 @@ class GotoPoint():
         if self.isFirst:
             self.offset_x=position.x
             self.offset_y=position.y
+            self.offset_rot=rotation
             self.isFirst=False
+            print("offset initialized")
+        (position, rotation) = self.get_odom()
         print("x, y, rotation", position.x, position.y, rotation)
         
         last_rotation = 0
@@ -100,11 +104,27 @@ class GotoPoint():
             (position,rotation) = self.get_odom()
             goal_distance = sqrt(pow(goal_x - position.x, 2) + pow(goal_y - position.y, 2))
             distance = goal_distance
+            # goal_z= atan2(goal_y - y_start, goal_x- x_start) - rot_angle
+            # rot_angle = goal_z-rotation
+            # rot_angle = atan2(goal_y - position.y, goal_x- position.x) - rotation
+
+            # while abs(rot_angle)> 0.05:
+            #     print("abc")
+            #     (position,rotation)=self.get_odom()
+            #     move_cmd.linear.x=0
+            #     if rot_angle> pi or (rot_angle<0 and rot_angle>-pi):
+            #         move_cmd.angular.z=-0.5
+            #     else:
+            #         move_cmd.angular.z=0.5
+            #     self.cmd_vel.publish(move_cmd)
+            #     r.sleep()
+
             while distance > 0.05:
                 try:
-                    print ("distance = ", distance)
+                    print ("distance= ", distance)
                     (position, rotation) = self.get_odom()
-                    #print("x, y, rotation", position.x, position.y, rotation)
+                    print("x, y, rotation", position.x, position.y, np.rad2deg(rotation))
+                    
                     x_start = position.x
                     y_start = position.y
                     path_angle = atan2(goal_y - y_start, goal_x- x_start)
@@ -134,8 +154,7 @@ class GotoPoint():
                 except KeyboardInterrupt:
                     pass
             print("Now at Waypoint No.", ind)
-            # raw_input("press <Enter>")
-            ind = ind + 4
+            ind = ind + 5
             (position, rotation) = self.get_odom()
 
             # while abs(rotation - goal_z) > 0.05:
@@ -157,15 +176,15 @@ class GotoPoint():
             #     self.cmd_vel.publish(move_cmd)
             #     r.sleep()
 
-        # rospy.loginfo("Stopping the robot...")
-        # self.cmd_vel.publish(Twist())
+        rospy.loginfo("Stopping the robot...")
+        self.cmd_vel.publish(Twist())
 
-    def getkey(self):
-        x, y, z = raw_input("| x | y | z |\n").split()
-        if x == 's':
-            self.shutdown()
-        x, y, z = [float(x), float(y), float(z)]
-        return x, y, z
+    # def getkey(self):
+    #     x, y, z = raw_input("| x | y | z |\n").split()
+    #     if x == 's':
+    #         self.shutdown()
+    #     x, y, z = [float(x), float(y), float(z)]
+    #     return x, y, z
 
     def get_odom(self):
         try:
@@ -175,10 +194,11 @@ class GotoPoint():
         except (tf.Exception, tf.ConnectivityException, tf.LookupException):
             rospy.loginfo("TF Exception")
             return
+
         pnt=Point(*trans)
         pnt.x=pnt.x-self.offset_x
         pnt.y=pnt.y-self.offset_y
-        return (pnt, rotation[2])
+        return (pnt, rotation[2]-self.offset_rot)
         # return (Point(*trans), rotation[2])
 
     def shutdown(self):
