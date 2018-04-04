@@ -12,7 +12,7 @@ compiler:
   - gcc
 notifications:
   email:
-    on_success: always
+    on_success: change
     on_failure: always
     recipients:
       - pyo@robotis.com
