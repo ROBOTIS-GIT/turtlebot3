@@ -118,7 +118,6 @@ class GotoPoint():
             #         move_cmd.angular.z=0.5
             #     self.cmd_vel.publish(move_cmd)
             #     r.sleep()
-
             while distance > 0.05:
                 try:
                     print ("distance= ", distance)
@@ -154,27 +153,33 @@ class GotoPoint():
                 except KeyboardInterrupt:
                     pass
             print("Now at Waypoint No.", ind)
-            ind = ind + 5
+            ind = ind + 1
             (position, rotation) = self.get_odom()
 
-            # while abs(rotation - goal_z) > 0.05:
-            #     (position, rotation) = self.get_odom()
-            #     if goal_z >= 0:
-            #         if rotation <= goal_z and rotation >= goal_z - pi:
-            #             move_cmd.linear.x = 0.00
-            #             move_cmd.angular.z = 0.5
-            #         else:
-            #             move_cmd.linear.x = 0.00
-            #             move_cmd.angular.z = -0.5
-            #     else:
-            #         if rotation <= goal_z + pi and rotation > goal_z:
-            #             move_cmd.linear.x = 0.00
-            #             move_cmd.angular.z = -0.5
-            #         else:
-            #             move_cmd.linear.x = 0.00
-            #             move_cmd.angular.z = 0.5
-            #     self.cmd_vel.publish(move_cmd)
-            #     r.sleep()
+            if ind!=length-1:  #arrived at the final destination
+                goal_z=atan2(arr_path_B[ind+1][1]-position.y, arr_path_B[ind+1][0]- position.x)
+            else:
+                goal_z = 0
+            print("goal_z", goal_z)
+            while abs(rotation - goal_z) > np.deg2rad(15):
+                (position, rotation) = self.get_odom()
+                print("rotation", np.rad2deg(rotation), "goal_z", np.rad2deg(goal_z))
+                if goal_z >= 0:
+                    if rotation <= goal_z and rotation >= goal_z - pi:
+                        move_cmd.linear.x = 0.00
+                        move_cmd.angular.z = 0.2
+                    else:
+                        move_cmd.linear.x = 0.00
+                        move_cmd.angular.z = -0.2
+                else:
+                    if rotation <= goal_z + pi and rotation > goal_z:
+                        move_cmd.linear.x = 0.00
+                        move_cmd.angular.z = -0.2
+                    else:
+                        move_cmd.linear.x = 0.00
+                        move_cmd.angular.z = 0.2
+                self.cmd_vel.publish(move_cmd)
+                r.sleep()
 
         rospy.loginfo("Stopping the robot...")
         self.cmd_vel.publish(Twist())
@@ -198,7 +203,8 @@ class GotoPoint():
         pnt=Point(*trans)
         pnt.x=pnt.x-self.offset_x
         pnt.y=pnt.y-self.offset_y
-        return (pnt, rotation[2]-self.offset_rot)
+        # return (pnt, rotation[2]-self.offset_rot)
+        return (pnt, rotation[2])
         # return (Point(*trans), rotation[2])
 
     def shutdown(self):

@@ -67,6 +67,9 @@ class GotoPoint():
             self.offset_x=position.x
             self.offset_y=position.y
             self.offset_rot=rotation
+            print("offset_x", self.offset_x)
+            print("offset_y", self.offset_y)
+            print("offset_rot", self.offset_rot)
             self.isFist=False
         (position, rotation) = self.get_odom()
         print("x, y, rotation", position.x, position.y, np.rad2deg(rotation))
@@ -83,20 +86,25 @@ class GotoPoint():
 
         while distance > 0.05:
             (position, rotation) = self.get_odom()
-            print("x, y, rotation", position.x, position.y, np.rad2deg(rotation))
+            
             x_start = position.x
             y_start = position.y
             path_angle = atan2(goal_y - y_start, goal_x- x_start)
 
+            #normalization of path_angle
             if path_angle < -pi/4 or path_angle > pi/4:
                 if goal_y < 0 and y_start < goal_y:
                     path_angle = -2*pi + path_angle
                 elif goal_y >= 0 and y_start > goal_y:
-                    path_angle = 2*pi + path_angle
+                    path_angle = 2*pi + path_angle 
+            
+            #normalization of rotation
             if last_rotation > pi-0.1 and rotation <= 0:
                 rotation = 2*pi + rotation
             elif last_rotation < -pi+0.1 and rotation > 0:
                 rotation = -2*pi + rotation
+            print("distance:", distance)
+            print("x, y, rotation", position.x, position.y, np.rad2deg(rotation))
             move_cmd.angular.z = angular_speed * path_angle-rotation
 
             distance = sqrt(pow((goal_x - x_start), 2) + pow((goal_y - y_start), 2))
@@ -152,6 +160,16 @@ class GotoPoint():
         pnt=Point(*trans)
         pnt.x=pnt.x-self.offset_x
         pnt.y=pnt.y-self.offset_y
+
+        if(rotation[2] > pi):
+            print("ERROR!!!!! > pi ")
+            rospy.is_shutdown()
+        if(rotation[2] < -pi):
+            print("ERROR!!!!! < -pi ")
+            rospy.is_shutdown()
+    
+        if rotation[2]-self.offset_rot < -pi:
+            return(pnt, rotation[2]-self.offset_rot+2*pi)
         return (pnt, rotation[2]-self.offset_rot)
         # return (pnt, rotation[2]-self.offset_rot)
         # return (Point(*trans), rotation[2])
