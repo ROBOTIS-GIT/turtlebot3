@@ -36,6 +36,8 @@ If you want to close, insert 's'
 -----------------------
 """
 
+increment =8
+
 arr_path_B = []
 with open(sys.argv[1], "r") as file_path_B:
     for idx, line in enumerate(file_path_B):
@@ -81,10 +83,10 @@ class GotoPoint():
             self.isFirst=False
             print("offset initialized")
         (position, rotation) = self.get_odom()
-        print("x, y, rotation", position.x, position.y, rotation)
+        print("x, y, rotation", position.x, position.y, np.rad2deg(rotation))
         
         last_rotation = 0
-        linear_speed = 0.5
+        linear_speed = 1
         angular_speed = 1
         # (goal_x, goal_y, goal_z) = self.getkey()
 
@@ -92,76 +94,81 @@ class GotoPoint():
         ind = 1
         length = len(arr_path_B)
         init_goal = arr_path_B[0]
+        goal_x = arr_path_B[ind][0]-init_goal[0]
+        goal_y = arr_path_B[ind][1]-init_goal[1]
 
-
-        while ind != length:
+        while ind < length:
             # if goal_z > 180 or goal_z < -180:
             #     print("you input worng z range.")
             #     self.shutdown()
             # goal_z = np.deg2rad(goal_z)
-            goal_x = arr_path_B[ind][0]-init_goal[0]
-            goal_y = arr_path_B[ind][1]-init_goal[1]
-            (position,rotation) = self.get_odom()
+            # (position,rotation) = self.get_odom()
             goal_distance = sqrt(pow(goal_x - position.x, 2) + pow(goal_y - position.y, 2))
             distance = goal_distance
 
             while distance > 0.05:
-                try:
-                    print ("distance= ", distance)
-                    (position, rotation) = self.get_odom()
-                    print("x, y, rotation", position.x, position.y, np.rad2deg(rotation))
-                    
-                    x_start = position.x
-                    y_start = position.y
-                    path_angle = atan2(goal_y - y_start, goal_x- x_start)
+                print ("distance= ", distance)
+                print("x, y, rotation", position.x, position.y, np.rad2deg(rotation))
+                print("goal position:", goal_x, goal_y)
+                
+                x_start = position.x
+                y_start = position.y
+                path_angle = atan2(goal_y - y_start, goal_x- x_start)
 
-                    if path_angle < -pi/4 or path_angle > pi/4:
-                        if goal_y < 0 and y_start < goal_y:
-                            path_angle = -2*pi + path_angle
-                        elif goal_y >= 0 and y_start > goal_y:
-                            path_angle = 2*pi + path_angle
-                    if last_rotation > pi-0.1 and rotation <= 0:
-                        rotation = 2*pi + rotation
-                    elif last_rotation < -pi+0.1 and rotation > 0:
-                        rotation = -2*pi + rotation
+                #Normalization of path_angle
+                if path_angle < -pi/4 or path_angle > pi/4:
+                    if goal_y < 0 and y_start < goal_y:
+                        path_angle = -2*pi + path_angle
+                    elif goal_y >= 0 and y_start > goal_y:
+                        path_angle = 2*pi + path_angle
+                #Normalization of rotation
+                if last_rotation > pi-0.1 and rotation <= 0:
+                    rotation = 2*pi + rotation
+                elif last_rotation < -pi+0.1 and rotation > 0:
+                    rotation = -2*pi + rotation
 
-                    move_cmd.angular.z = angular_speed * path_angle-rotation
+                move_cmd.angular.z = angular_speed * path_angle-rotation
+                move_cmd.linear.x = min(linear_speed * distance, 0.1)
 
-                    distance = sqrt(pow((goal_x - x_start), 2) + pow((goal_y - y_start), 2))
-                    move_cmd.linear.x = min(linear_speed * distance, 0.1)
+                if move_cmd.angular.z > 0:
+                    move_cmd.angular.z = min(move_cmd.angular.z, 1.5)
+                else:
+                    move_cmd.angular.z = max(move_cmd.angular.z, -1.5)
 
-                    if move_cmd.angular.z > 0:
-                        move_cmd.angular.z = min(move_cmd.angular.z, 1.5)
-                    else:
-                        move_cmd.angular.z = max(move_cmd.angular.z, -1.5)
-
-                    last_rotation = rotation
-                    self.cmd_vel.publish(move_cmd)
-                    r.sleep()
-                except KeyboardInterrupt:
-                    break
-            print("Now at Waypoint No.", ind)
-            ind = ind + 8
-            (position, rotation) = self.get_odom()
-
-            if ind<length-1:  #arrived at the final destination
-                goal_z=atan2(arr_path_B[ind+1][1]-position.y, arr_path_B[ind+1][0]- position.x)
-                rot_angle=goal_z-rotation
-            else:
-                # goal_z = 0
-                pass
-            print("goal_z", goal_z)
-
-            
-            while abs(rot_angle) > np.deg2rad(10):
+                last_rotation = rotation
+                self.cmd_vel.publish(move_cmd)
                 (position, rotation) = self.get_odom()
+                distance = sqrt(pow((goal_x - x_start), 2) + pow((goal_y - y_start), 2))
+
+                r.sleep()
+
+            print("Now at Waypoint No.", ind)
+            ind = ind + increment
+            goal_x = arr_path_B[ind][0]-init_goal[0]
+            goal_y = arr_path_B[ind][1]-init_goal[1]
+
+            if ind<length-1: 
+                goal_z=atan2(goal_y - position.y, goal_x- position.x)
+                rot_angle = atan2(goal_y - position.y, goal_x- position.x) - rotation
+                print("goal_z", goal_z)
+            else:               #arrived at the final destination
+                # goal_z = 0
+                pass            
+
+            (position, rotation) = self.get_odom()
+            while abs(rot_angle) > np.deg2rad(5):
+                rot_angle=goal_z-rotation
                 print("rotation", np.rad2deg(rotation), "goal_z", np.rad2deg(goal_z))
                 move_cmd.linear.x=0
-                if rot_angle>pi or (rot_angle<0 and rot_angle)>pi:
-                    move_cmd.angular.z=-0.3
+                if rot_angle>pi or (rot_angle<0 and rot_angle>-pi):
+                    move_cmd.angular.z=-0.2
                 else:
-                    move_cmd.angular.z=0.3
+                    move_cmd.angular.z=0.2
+
                 self.cmd_vel.publish(move_cmd)
+                
+                (position, rotation) = self.get_odom()
+                rot_angle=atan2(goal_y - position.y , goal_x- position.x)-rotation
                 r.sleep()
 
                 # if goal_z >= 0:
@@ -179,10 +186,6 @@ class GotoPoint():
                 #         move_cmd.linear.x = 0.00
                 #         move_cmd.angular.z = 0.2
 
-                 
-                self.cmd_vel.publish(move_cmd)
-                r.sleep()
-
         rospy.loginfo("Stopping the robot...")
         self.cmd_vel.publish(Twist())
 
@@ -194,10 +197,13 @@ class GotoPoint():
         except (tf.Exception, tf.ConnectivityException, tf.LookupException):
             rospy.loginfo("TF Exception")
             return
-
         pnt=Point(*trans)
         pnt.x=pnt.x-self.offset_x
         pnt.y=pnt.y-self.offset_y
+
+        # if rotation[2]-self.offset_rot < -pi:
+        #     return(pnt, rotation[2]-self.offset_rot+2*pi)
+        # return (pnt, rotation[2]-self.offset_rot)
         # return (pnt, rotation[2]-self.offset_rot)
         return (pnt, rotation[2])
         # return (Point(*trans), rotation[2])
