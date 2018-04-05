@@ -49,7 +49,7 @@ with open(sys.argv[1], "r") as file_path_B:
 
 class GotoPoint():
     def __init__(self):
-        rospy.init_node('turtlebot3_sandbot', anonymous=False)
+        rospy.init_node('turtlebot3_sandbot', anonymous=False, disable_signals=True)
         rospy.on_shutdown(self.shutdown)
         self.cmd_vel = rospy.Publisher('/cmd_vel', Twist, queue_size=5)
         position = Point()
@@ -151,7 +151,8 @@ class GotoPoint():
                     self.cmd_vel.publish(move_cmd)
                     r.sleep()
                 except KeyboardInterrupt:
-                    pass
+                    rospy.signal_shutdown("KeboardInterrupt")
+                    break
             print("Now at Waypoint No.", ind)
             ind = ind + 1
             (position, rotation) = self.get_odom()
@@ -162,24 +163,32 @@ class GotoPoint():
                 goal_z = 0
             print("goal_z", goal_z)
             while abs(rotation - goal_z) > np.deg2rad(15):
-                (position, rotation) = self.get_odom()
-                print("rotation", np.rad2deg(rotation), "goal_z", np.rad2deg(goal_z))
-                if goal_z >= 0:
-                    if rotation <= goal_z and rotation >= goal_z - pi:
-                        move_cmd.linear.x = 0.00
-                        move_cmd.angular.z = 0.2
+                try:
+                    (position, rotation) = self.get_odom()
+                    print("rotation", np.rad2deg(rotation), "goal_z", np.rad2deg(goal_z))
+                    if goal_z >= 0:
+                        if rotation <= goal_z and rotation >= goal_z - pi:
+                            move_cmd.linear.x = 0.00
+                            move_cmd.angular.z = 0.2
+                        else:
+                            move_cmd.linear.x = 0.00
+                            move_cmd.angular.z = -0.2
                     else:
-                        move_cmd.linear.x = 0.00
-                        move_cmd.angular.z = -0.2
-                else:
-                    if rotation <= goal_z + pi and rotation > goal_z:
-                        move_cmd.linear.x = 0.00
-                        move_cmd.angular.z = -0.2
-                    else:
-                        move_cmd.linear.x = 0.00
-                        move_cmd.angular.z = 0.2
-                self.cmd_vel.publish(move_cmd)
-                r.sleep()
+                        if rotation <= goal_z + pi and rotation > goal_z:
+                            move_cmd.linear.x = 0.00
+                            move_cmd.angular.z = -0.2
+                        else:
+                            move_cmd.linear.x = 0.00
+                            move_cmd.angular.z = 0.2
+                    self.cmd_vel.publish(move_cmd)
+                    r.sleep()
+                except KeyboardInterrupt:
+                    rospy.signal_shutdown("KeboardInterrupt")
+                    break
+
+
+            if rospy.is_shutdown():
+                break
 
         rospy.loginfo("Stopping the robot...")
         self.cmd_vel.publish(Twist())
