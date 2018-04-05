@@ -51,7 +51,7 @@ with open(sys.argv[1], "r") as file_path_B:
 
 class GotoPoint():
     def __init__(self):
-        rospy.init_node('turtlebot3_sandbot', anonymous=False)
+        rospy.init_node('turtlebot3_sandbot', anonymous=False, disable_signals=True)
         rospy.on_shutdown(self.shutdown)
         self.cmd_vel = rospy.Publisher('/cmd_vel', Twist, queue_size=5)
         position = Point()
@@ -107,41 +107,44 @@ class GotoPoint():
             distance = goal_distance
 
             while distance > 0.05:
-                print ("distance= ", distance)
-                print("x, y, rotation", position.x, position.y, np.rad2deg(rotation))
-                print("goal position:", goal_x, goal_y)
-                
-                x_start = position.x
-                y_start = position.y
-                path_angle = atan2(goal_y - y_start, goal_x- x_start)
+                try:
+                    print ("distance= ", distance)
+                    print("x, y, rotation", position.x, position.y, np.rad2deg(rotation))
+                    print("goal position:", goal_x, goal_y)
 
-                #Normalization of path_angle
-                if path_angle < -pi/4 or path_angle > pi/4:
-                    if goal_y < 0 and y_start < goal_y:
-                        path_angle = -2*pi + path_angle
-                    elif goal_y >= 0 and y_start > goal_y:
-                        path_angle = 2*pi + path_angle
-                #Normalization of rotation
-                if last_rotation > pi-0.1 and rotation <= 0:
-                    rotation = 2*pi + rotation
-                elif last_rotation < -pi+0.1 and rotation > 0:
-                    rotation = -2*pi + rotation
+                    x_start = position.x
+                    y_start = position.y
+                    path_angle = atan2(goal_y - y_start, goal_x- x_start)
 
-                move_cmd.angular.z = angular_speed * path_angle-rotation
-                move_cmd.linear.x = min(linear_speed * distance, 0.1)
+                    #Normalization of path_angle
+                    if path_angle < -pi/4 or path_angle > pi/4:
+                        if goal_y < 0 and y_start < goal_y:
+                            path_angle = -2*pi + path_angle
+                        elif goal_y >= 0 and y_start > goal_y:
+                            path_angle = 2*pi + path_angle
+                    #Normalization of rotation
+                    if last_rotation > pi-0.1 and rotation <= 0:
+                        rotation = 2*pi + rotation
+                    elif last_rotation < -pi+0.1 and rotation > 0:
+                        rotation = -2*pi + rotation
 
-                if move_cmd.angular.z > 0:
-                    move_cmd.angular.z = min(move_cmd.angular.z, 1.5)
-                else:
-                    move_cmd.angular.z = max(move_cmd.angular.z, -1.5)
+                    move_cmd.angular.z = angular_speed * path_angle-rotation
+                    move_cmd.linear.x = min(linear_speed * distance, 0.1)
 
-                last_rotation = rotation
-                self.cmd_vel.publish(move_cmd)
-                (position, rotation) = self.get_odom()
-                distance = sqrt(pow((goal_x - x_start), 2) + pow((goal_y - y_start), 2))
+                    if move_cmd.angular.z > 0:
+                        move_cmd.angular.z = min(move_cmd.angular.z, 1.5)
+                    else:
+                        move_cmd.angular.z = max(move_cmd.angular.z, -1.5)
 
-                r.sleep()
+                    last_rotation = rotation
+                    self.cmd_vel.publish(move_cmd)
+                    (position, rotation) = self.get_odom()
+                    distance = sqrt(pow((goal_x - x_start), 2) + pow((goal_y - y_start), 2))
 
+                    r.sleep()
+                except KeyboardInterrupt:
+                    rospy.signal_shutdown("KeboardInterrupt")
+                    break
             print("Now at Waypoint No.", ind)
             ind = ind + increment
             goal_x = arr_path_B[ind][0]-init_goal[0]
@@ -156,21 +159,28 @@ class GotoPoint():
                 pass            
 
             (position, rotation) = self.get_odom()
-            while abs(rot_angle) > np.deg2rad(5):
-                rot_angle=goal_z-rotation
-                print("rotation", np.rad2deg(rotation), "goal_z", np.rad2deg(goal_z))
-                move_cmd.linear.x=0
-                if rot_angle>pi or (rot_angle<0 and rot_angle>-pi):
-                    move_cmd.angular.z=-0.2
-                else:
-                    move_cmd.angular.z=0.2
+            while abs(rot_angle) > np.deg2rad(15):
+                try:
+                    rot_angle=goal_z-rotation
+                    print("rotation", np.rad2deg(rotation), "goal_z", np.rad2deg(goal_z))
+                    move_cmd.linear.x=0
+                    if rot_angle>pi or (rot_angle<0 and rot_angle>-pi):
+                        move_cmd.angular.z=-0.2
+                    else:
+                        move_cmd.angular.z=0.2
 
-                self.cmd_vel.publish(move_cmd)
-                
-                (position, rotation) = self.get_odom()
-                rot_angle=atan2(goal_y - position.y , goal_x- position.x)-rotation
-                r.sleep()
+                    self.cmd_vel.publish(move_cmd)
 
+                    (position, rotation) = self.get_odom()
+                    rot_angle=atan2(goal_y - position.y , goal_x- position.x)-rotation
+                    r.sleep()
+                except KeyboardInterrupt:
+                    rospy.signal_shutdown("KeboardInterrupt")
+                    break
+
+
+            if rospy.is_shutdown():
+                break
                 # if goal_z >= 0:
                 #     if rotation <= goal_z and rotation >= goal_z - pi:
                 #         move_cmd.linear.x = 0.00
