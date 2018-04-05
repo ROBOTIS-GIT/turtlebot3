@@ -1,6 +1,6 @@
 <launch>
   <!-- turtlebot3_teleop_key already has its own built in velocity smoother -->
-  <node pkg="turtlebot3_sandbot" type="turtlebot3_pointop_key.py" name="turtlebot3_sandbot"  output="screen" args="$(find turtlebot3_sandbot)/data_path/path_B.txt">
+  <node pkg="turtlebot3_sandbot" type="turtlebot3_sandbot_pointop.py" name="turtlebot3_sandbot"  output="screen" args="$(find turtlebot3_sandbot)/data_path/path_B.txt">
     <!-- <param name="data_path" value="$(find turtlebot3_sandbot)/data_path/path_B.txt" type="string" /> -->
   </node>
 </launch>
