@@ -42,7 +42,7 @@ with open(sys.argv[1], "r") as file_path_B:
         str = line.split()
         if not (len(str)==0):
             #print(str)
-            arr_path_B.append([(float)(str[0]), (float)(str[1])])
+            arr_path_B.append([(float)(str[1]), (float)(str[0])])
         else:
             break
 # now we imported arr_path_B from file to arr_path_B
@@ -84,7 +84,7 @@ class GotoPoint():
         print("x, y, rotation", position.x, position.y, rotation)
         
         last_rotation = 0
-        linear_speed = 1
+        linear_speed = 0.5
         angular_speed = 1
         # (goal_x, goal_y, goal_z) = self.getkey()
 
@@ -104,20 +104,7 @@ class GotoPoint():
             (position,rotation) = self.get_odom()
             goal_distance = sqrt(pow(goal_x - position.x, 2) + pow(goal_y - position.y, 2))
             distance = goal_distance
-            # goal_z= atan2(goal_y - y_start, goal_x- x_start) - rot_angle
-            # rot_angle = goal_z-rotation
-            # rot_angle = atan2(goal_y - position.y, goal_x- position.x) - rotation
 
-            # while abs(rot_angle)> 0.05:
-            #     print("abc")
-            #     (position,rotation)=self.get_odom()
-            #     move_cmd.linear.x=0
-            #     if rot_angle> pi or (rot_angle<0 and rot_angle>-pi):
-            #         move_cmd.angular.z=-0.5
-            #     else:
-            #         move_cmd.angular.z=0.5
-            #     self.cmd_vel.publish(move_cmd)
-            #     r.sleep()
             while distance > 0.05:
                 try:
                     print ("distance= ", distance)
@@ -137,6 +124,7 @@ class GotoPoint():
                         rotation = 2*pi + rotation
                     elif last_rotation < -pi+0.1 and rotation > 0:
                         rotation = -2*pi + rotation
+
                     move_cmd.angular.z = angular_speed * path_angle-rotation
 
                     distance = sqrt(pow((goal_x - x_start), 2) + pow((goal_y - y_start), 2))
@@ -151,45 +139,52 @@ class GotoPoint():
                     self.cmd_vel.publish(move_cmd)
                     r.sleep()
                 except KeyboardInterrupt:
-                    pass
+                    break
             print("Now at Waypoint No.", ind)
-            ind = ind + 1
+            ind = ind + 8
             (position, rotation) = self.get_odom()
 
-            if ind!=length-1:  #arrived at the final destination
+            if ind<length-1:  #arrived at the final destination
                 goal_z=atan2(arr_path_B[ind+1][1]-position.y, arr_path_B[ind+1][0]- position.x)
+                rot_angle=goal_z-rotation
             else:
-                goal_z = 0
+                # goal_z = 0
+                pass
             print("goal_z", goal_z)
-            while abs(rotation - goal_z) > np.deg2rad(15):
+
+            
+            while abs(rot_angle) > np.deg2rad(10):
                 (position, rotation) = self.get_odom()
                 print("rotation", np.rad2deg(rotation), "goal_z", np.rad2deg(goal_z))
-                if goal_z >= 0:
-                    if rotation <= goal_z and rotation >= goal_z - pi:
-                        move_cmd.linear.x = 0.00
-                        move_cmd.angular.z = 0.2
-                    else:
-                        move_cmd.linear.x = 0.00
-                        move_cmd.angular.z = -0.2
+                move_cmd.linear.x=0
+                if rot_angle>pi or (rot_angle<0 and rot_angle)>pi:
+                    move_cmd.angular.z=-0.3
                 else:
-                    if rotation <= goal_z + pi and rotation > goal_z:
-                        move_cmd.linear.x = 0.00
-                        move_cmd.angular.z = -0.2
-                    else:
-                        move_cmd.linear.x = 0.00
-                        move_cmd.angular.z = 0.2
+                    move_cmd.angular.z=0.3
+                self.cmd_vel.publish(move_cmd)
+                r.sleep()
+
+                # if goal_z >= 0:
+                #     if rotation <= goal_z and rotation >= goal_z - pi:
+                #         move_cmd.linear.x = 0.00
+                #         move_cmd.angular.z = 0.2
+                #     else:
+                #         move_cmd.linear.x = 0.00
+                #         move_cmd.angular.z = -0.2
+                # else:
+                #     if rotation <= goal_z + pi and rotation > goal_z:
+                #         move_cmd.linear.x = 0.00
+                #         move_cmd.angular.z = -0.2
+                #     else:
+                #         move_cmd.linear.x = 0.00
+                #         move_cmd.angular.z = 0.2
+
+                 
                 self.cmd_vel.publish(move_cmd)
                 r.sleep()
 
         rospy.loginfo("Stopping the robot...")
         self.cmd_vel.publish(Twist())
-
-    # def getkey(self):
-    #     x, y, z = raw_input("| x | y | z |\n").split()
-    #     if x == 's':
-    #         self.shutdown()
-    #     x, y, z = [float(x), float(y), float(z)]
-    #     return x, y, z
 
     def get_odom(self):
         try:
