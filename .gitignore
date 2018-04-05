@@ -58,3 +58,5 @@ build-*/
 *.dat
 *.txt.user
 *.gch
+
+.vscode/

@@ -45,6 +45,10 @@ class GotoPoint():
         r = rospy.Rate(10)
         self.tf_listener = tf.TransformListener()
         self.odom_frame = '/odom'
+        self.offset_x=0
+        self.offset_y=0
+        self.offset_rot=0
+        self.isFirst=True
 
         try:
             self.tf_listener.waitForTransform(self.odom_frame, '/base_footprint', rospy.Time(), rospy.Duration(1.0))
@@ -58,6 +62,17 @@ class GotoPoint():
                 rospy.signal_shutdown("tf Exception")
 
         (position, rotation) = self.get_odom()
+        print("x, y, rotation", position.x, position.y, np.rad2deg(rotation))
+        if self.isFirst:
+            self.offset_x=position.x
+            self.offset_y=position.y
+            self.offset_rot=rotation
+            print("offset_x", self.offset_x)
+            print("offset_y", self.offset_y)
+            print("offset_rot", self.offset_rot)
+            self.isFist=False
+        (position, rotation) = self.get_odom()
+        print("x, y, rotation", position.x, position.y, np.rad2deg(rotation))
         last_rotation = 0
         linear_speed = 1
         angular_speed = 1
@@ -71,19 +86,25 @@ class GotoPoint():
 
         while distance > 0.05:
             (position, rotation) = self.get_odom()
+            
             x_start = position.x
             y_start = position.y
             path_angle = atan2(goal_y - y_start, goal_x- x_start)
 
+            #normalization of path_angle
             if path_angle < -pi/4 or path_angle > pi/4:
                 if goal_y < 0 and y_start < goal_y:
                     path_angle = -2*pi + path_angle
                 elif goal_y >= 0 and y_start > goal_y:
-                    path_angle = 2*pi + path_angle
+                    path_angle = 2*pi + path_angle 
+            
+            #normalization of rotation
             if last_rotation > pi-0.1 and rotation <= 0:
                 rotation = 2*pi + rotation
             elif last_rotation < -pi+0.1 and rotation > 0:
                 rotation = -2*pi + rotation
+            print("distance:", distance)
+            print("x, y, rotation", position.x, position.y, np.rad2deg(rotation))
             move_cmd.angular.z = angular_speed * path_angle-rotation
 
             distance = sqrt(pow((goal_x - x_start), 2) + pow((goal_y - y_start), 2))
@@ -99,24 +120,24 @@ class GotoPoint():
             r.sleep()
         (position, rotation) = self.get_odom()
 
-        while abs(rotation - goal_z) > 0.05:
-            (position, rotation) = self.get_odom()
-            if goal_z >= 0:
-                if rotation <= goal_z and rotation >= goal_z - pi:
-                    move_cmd.linear.x = 0.00
-                    move_cmd.angular.z = 0.5
-                else:
-                    move_cmd.linear.x = 0.00
-                    move_cmd.angular.z = -0.5
-            else:
-                if rotation <= goal_z + pi and rotation > goal_z:
-                    move_cmd.linear.x = 0.00
-                    move_cmd.angular.z = -0.5
-                else:
-                    move_cmd.linear.x = 0.00
-                    move_cmd.angular.z = 0.5
-            self.cmd_vel.publish(move_cmd)
-            r.sleep()
+        # while abs(rotation - goal_z) > 0.05:
+        #     (position, rotation) = self.get_odom()
+        #     if goal_z >= 0:
+        #         if rotation <= goal_z and rotation >= goal_z - pi:
+        #             move_cmd.linear.x = 0.00
+        #             move_cmd.angular.z = 0.5
+        #         else:
+        #             move_cmd.linear.x = 0.00
+        #             move_cmd.angular.z = -0.5
+        #     else:
+        #         if rotation <= goal_z + pi and rotation > goal_z:
+        #             move_cmd.linear.x = 0.00
+        #             move_cmd.angular.z = -0.5
+        #         else:
+        #             move_cmd.linear.x = 0.00
+        #             move_cmd.angular.z = 0.5
+        #     self.cmd_vel.publish(move_cmd)
+        #     r.sleep()
 
         rospy.loginfo("Stopping the robot...")
         self.cmd_vel.publish(Twist())
@@ -136,8 +157,22 @@ class GotoPoint():
         except (tf.Exception, tf.ConnectivityException, tf.LookupException):
             rospy.loginfo("TF Exception")
             return
+        pnt=Point(*trans)
+        pnt.x=pnt.x-self.offset_x
+        pnt.y=pnt.y-self.offset_y
 
-        return (Point(*trans), rotation[2])
+        if(rotation[2] > pi):
+            print("ERROR!!!!! > pi ")
+            rospy.is_shutdown()
+        if(rotation[2] < -pi):
+            print("ERROR!!!!! < -pi ")
+            rospy.is_shutdown()
+    
+        if rotation[2]-self.offset_rot < -pi:
+            return(pnt, rotation[2]-self.offset_rot+2*pi)
+        return (pnt, rotation[2]-self.offset_rot)
+        # return (pnt, rotation[2]-self.offset_rot)
+        # return (Point(*trans), rotation[2])
 
     def shutdown(self):
         self.cmd_vel.publish(Twist())
