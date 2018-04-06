@@ -157,6 +157,10 @@ class GotoPoint():
                 except KeyboardInterrupt:
                     rospy.signal_shutdown("KeboardInterrupt")
                     break
+            
+            if rospy.is_shutdown():
+                break
+                
             print("Now at Waypoint No.", ind)
             ind = ind + increment
             goal_x = arr_path_B[ind][0]-init_goal[0]
