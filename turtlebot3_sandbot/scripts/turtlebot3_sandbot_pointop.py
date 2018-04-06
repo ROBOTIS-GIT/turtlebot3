@@ -36,7 +36,7 @@ If you want to close, insert 's'
 -----------------------
 """
 
-increment =1
+increment = 4
 
 arr_path_B = []
 with open(sys.argv[1], "r") as file_path_B:
@@ -44,7 +44,7 @@ with open(sys.argv[1], "r") as file_path_B:
         str = line.split()
         if not (len(str)==0):
             #print(str)
-            arr_path_B.append([(float)(str[1]), (float)(str[0])])
+            arr_path_B.append([(float)(str[1]), 1.0-(float)(str[0])])
         else:
             break
 # now we imported arr_path_B from file to arr_path_B
@@ -86,7 +86,7 @@ class GotoPoint():
         print("x, y, rotation", position.x, position.y, np.rad2deg(rotation))
         
         last_rotation = 0
-        last_distance =0
+        last_distance = 10
         linear_speed = 1
         angular_speed = 1
         # (goal_x, goal_y, goal_z) = self.getkey()
@@ -94,6 +94,7 @@ class GotoPoint():
         # go through path array
         ind = 1
         length = len(arr_path_B)
+        distanceIncreasing = False
         init_goal = arr_path_B[0]
         goal_x = arr_path_B[ind][0]-init_goal[0]
         goal_y = arr_path_B[ind][1]-init_goal[1]
@@ -104,56 +105,80 @@ class GotoPoint():
             #     self.shutdown()
             # goal_z = np.deg2rad(goal_z)
             # (position,rotation) = self.get_odom()
-            goal_distance = sqrt(pow(goal_x - position.x, 2) + pow(goal_y - position.y, 2))
-            distance = goal_distance
+            
+            distance = sqrt(pow(goal_x - position.x, 2) + pow(goal_y - position.y, 2))
 
 
             while distance > 0.1:
                 try:
-                    print ("distance= ", distance)
-                    print("x, y, rotation", position.x, position.y, np.rad2deg(rotation))
-                    print("goal position:", goal_x, goal_y)
+                    (position, rotation) = self.get_odom()
+                    distance = sqrt(pow((goal_x - position.x), 2) + pow((goal_y - position.y), 2))
+                    path_angle = atan2(goal_y - position.y, goal_x- position.x)
 
-                    x_start = position.x
-                    y_start = position.y
-                    path_angle = atan2(goal_y - y_start, goal_x- x_start)
+                    # if last_distance<distance:
+                        # ind = ind - increment
+                        # distanceIncreasing = True 
 
+                    
                     #Normalization of path_angle
                     if path_angle < -pi/4 or path_angle > pi/4:
-                        if goal_y < 0 and y_start < goal_y:
+                        if goal_y < 0 and position.y < goal_y:
                             path_angle = -2*pi + path_angle
-                        elif goal_y >= 0 and y_start > goal_y:
+                        elif goal_y >= 0 and position.y > goal_y:
                             path_angle = 2*pi + path_angle
+
                     #Normalization of rotation
                     if last_rotation > pi-0.1 and rotation <= 0:
                         rotation = 2*pi + rotation
                     elif last_rotation < -pi+0.1 and rotation > 0:
                         rotation = -2*pi + rotation
 
-                    move_cmd.angular.z = angular_speed * path_angle-rotation
+
+                    
+                    rot_angle = path_angle - rotation
+                    if rot_angle>pi or (rot_angle<0 and rot_angle>-pi):
+                        diff_sign = -1.0
+                    else:
+                        diff_sign = 1.0
+
+                    diff_magnitude = pi - abs(abs(path_angle - rotation) - pi)
+                    diff = diff_sign * diff_magnitude
+
+                    print("CURRENT ", position.x, position.y, np.rad2deg(rotation))
+                    print("GOAL", goal_x, goal_y, np.rad2deg(path_angle))
+                    print ("DISTANCE(m) ", distance)
+
+                    
+                    # move_cmd.angular.z = angular_speed * diff
+                    move_cmd.angular.z = angular_speed * rot_angle
                     move_cmd.linear.x = min(linear_speed * distance, 0.1)
 
-
                     if move_cmd.angular.z > 0:
-                        move_cmd.angular.z = min(move_cmd.angular.z, 1.5)
+                        move_cmd.angular.z = min(move_cmd.angular.z, 0.2)
                     else:
-                        move_cmd.angular.z = max(move_cmd.angular.z, -1.5)
+                        move_cmd.angular.z = max(move_cmd.angular.z, -0.2)
 
-
+                    #if heading angle is over limit (while driving)
+                    if diff_magnitude > pi/4.0:
+                        move_cmd.linear.x = 0             
+                        # move_cmd.angular.z = move_cmd.angular.z * (-1.0)
+                        # move_cmd.angular.z = move_cmd.angular.z
 
                     last_rotation = rotation
+                    last_distance = distance
+                
+                    # if distanceIncreasing == True:
+                    #     print("distance is increasing!!!")
+                    #     self.cmd_vel.publish(Twist())
+                    #     r.sleep()
+                    #     continue
+                    
+                    print("linear.x   angular.z")
+                    print(move_cmd.linear.x, move_cmd.angular.z)
                     
                     self.cmd_vel.publish(move_cmd)
-                    (position, rotation) = self.get_odom()
-                    distance = sqrt(pow((goal_x - x_start), 2) + pow((goal_y - y_start), 2))
-                    if last_distance<distance :
-                        ind = ind-increment
-                        break
-                    ###############test################################################
-                    last_distance = distance
-                    ###################################################################
-
                     r.sleep()
+
                 except KeyboardInterrupt:
                     rospy.signal_shutdown("KeboardInterrupt")
                     break
@@ -161,45 +186,72 @@ class GotoPoint():
             if rospy.is_shutdown():
                 break
 
-            self.cmd_vel.publish(Twist())
-            print(Twist())
+            #self.cmd_vel.publish(Twist())
                 
             print("Now at Waypoint No.", ind)
-            ind = ind + increment
-            goal_x = arr_path_B[ind][0]-init_goal[0]
-            goal_y = arr_path_B[ind][1]-init_goal[1]
 
-            if ind<length-1: 
-                goal_z=atan2(goal_y - position.y, goal_x- position.x)
-                rot_angle = atan2(goal_y - position.y, goal_x- position.x) - rotation
-                print("goal_z", goal_z)
-            else:               #arrived at the final destination
-                # goal_z = 0
-                pass            
+            if ind<length-increment: 
+                ind = ind + increment
+                goal_x = arr_path_B[ind][0]-init_goal[0]
+                goal_y = arr_path_B[ind][1]-init_goal[1]
+            else:  
+                #arrived at the final destination
+                print("Robot at the final destination")
+                rospy.signal_shutdown("Robot Task Done")
+                break
 
             (position, rotation) = self.get_odom()
-            while abs(rot_angle) > np.deg2rad(8):
+            path_angle = atan2(goal_y - position.y, goal_x- position.x)
+            rot_angle = path_angle - rotation
+            while True:
                 try:
-                    # rot_angle=goal_z-rotation
-                    print("rotation", np.rad2deg(rotation), "goal_z", np.rad2deg(goal_z))
-                    move_cmd.linear.x=0
-                    if rot_angle>pi or (rot_angle<0 and rot_angle>-pi):
-                        move_cmd.angular.z=-0.2
-                    else:
-                        move_cmd.angular.z=0.2
+                    print("rotation", np.rad2deg(rotation))
+                    print("path_angle", np.rad2deg(path_angle))
 
-                    self.cmd_vel.publish(move_cmd)
+                    move_cmd.linear.x=0
+
+                    #diff is always positive
+                    diff = pi - abs(abs(rot_angle) - pi)
+                    print("diff", np.rad2deg(diff))
+
+
+                    rot_angle = path_angle - rotation
+                    if rot_angle>pi or (rot_angle<0 and rot_angle>-pi):
+                        diff_sign = -1.0
+                    else:
+                        diff_sign = 1.0
+
+                    diff_magnitude = pi - abs(abs(path_angle - rotation) - pi)
+                    diff = diff_sign * diff_magnitude
+
+                    if diff_sign < 0:
+                        if diff_magnitude < np.deg2rad(20):
+                            move_cmd.angular.z=-0.1    
+                        else:
+                            move_cmd.angular.z=-0.2    
+                    else:
+                        if diff_magnitude < np.deg2rad(20):
+                            move_cmd.angular.z=0.1    
+                        else:
+                            move_cmd.angular.z=0.2    
 
                     (position, rotation) = self.get_odom()
-                    rot_angle=atan2(goal_y - position.y , goal_x- position.x)-rotation
+                    path_angle = atan2(goal_y - position.y, goal_x- position.x)
+                    rot_angle = path_angle - rotation
+
+                    # 8 too small
+                    if abs(rot_angle) < np.deg2rad(8):
+                        r.sleep()
+                        break
+
+                    self.cmd_vel.publish(move_cmd)
                     r.sleep()
                 except KeyboardInterrupt:
                     rospy.signal_shutdown("KeboardInterrupt")
                     break
 
 
-            self.cmd_vel.publish(Twist())
-            print(Twist())
+            #self.cmd_vel.publish(Twist())
 
             if rospy.is_shutdown():
                 break
@@ -223,6 +275,7 @@ class GotoPoint():
         self.cmd_vel.publish(Twist())
         
 
+    #contains offset correction
     def get_odom(self):
         try:
             (trans, rot) = self.tf_listener.lookupTransform(self.odom_frame, self.base_frame, rospy.Time(0))
