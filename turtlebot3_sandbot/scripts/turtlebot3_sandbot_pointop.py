@@ -55,7 +55,7 @@ class GotoPoint():
         rospy.on_shutdown(self.shutdown)
         self.cmd_vel = rospy.Publisher('/cmd_vel', Twist, queue_size=5)
         position = Point()
-        move_cmd = Twist()
+        move_cmd = Twist()  #make empty twist message
         r = rospy.Rate(10)
         self.tf_listener = tf.TransformListener()
         self.odom_frame = '/odom'
@@ -160,6 +160,9 @@ class GotoPoint():
             
             if rospy.is_shutdown():
                 break
+
+            self.cmd_vel.publish(Twist())
+            print(Twist())
                 
             print("Now at Waypoint No.", ind)
             ind = ind + increment
@@ -195,6 +198,9 @@ class GotoPoint():
                     break
 
 
+            self.cmd_vel.publish(Twist())
+            print(Twist())
+
             if rospy.is_shutdown():
                 break
                 # if goal_z >= 0:
@@ -211,9 +217,11 @@ class GotoPoint():
                 #     else:
                 #         move_cmd.linear.x = 0.00
                 #         move_cmd.angular.z = 0.2
+            
 
         rospy.loginfo("Stopping the robot...")
         self.cmd_vel.publish(Twist())
+        
 
     def get_odom(self):
         try:
@@ -241,6 +249,7 @@ class GotoPoint():
 if __name__ == '__main__':
     try:
         while not rospy.is_shutdown():
+
             #print(msg)
             GotoPoint()
 
