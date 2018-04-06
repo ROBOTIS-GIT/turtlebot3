@@ -36,7 +36,7 @@ If you want to close, insert 's'
 -----------------------
 """
 
-increment =8
+increment =1
 
 arr_path_B = []
 with open(sys.argv[1], "r") as file_path_B:
@@ -86,6 +86,7 @@ class GotoPoint():
         print("x, y, rotation", position.x, position.y, np.rad2deg(rotation))
         
         last_rotation = 0
+        last_distance =0
         linear_speed = 1
         angular_speed = 1
         # (goal_x, goal_y, goal_z) = self.getkey()
@@ -106,7 +107,8 @@ class GotoPoint():
             goal_distance = sqrt(pow(goal_x - position.x, 2) + pow(goal_y - position.y, 2))
             distance = goal_distance
 
-            while distance > 0.05:
+
+            while distance > 0.1:
                 try:
                     print ("distance= ", distance)
                     print("x, y, rotation", position.x, position.y, np.rad2deg(rotation))
@@ -131,15 +133,25 @@ class GotoPoint():
                     move_cmd.angular.z = angular_speed * path_angle-rotation
                     move_cmd.linear.x = min(linear_speed * distance, 0.1)
 
+
                     if move_cmd.angular.z > 0:
                         move_cmd.angular.z = min(move_cmd.angular.z, 1.5)
                     else:
                         move_cmd.angular.z = max(move_cmd.angular.z, -1.5)
 
+
+
                     last_rotation = rotation
+                    
                     self.cmd_vel.publish(move_cmd)
                     (position, rotation) = self.get_odom()
                     distance = sqrt(pow((goal_x - x_start), 2) + pow((goal_y - y_start), 2))
+                    if last_distance<distance :
+                        ind = ind-increment
+                        break
+                    ###############test################################################
+                    last_distance = distance
+                    ###################################################################
 
                     r.sleep()
                 except KeyboardInterrupt:
@@ -159,9 +171,9 @@ class GotoPoint():
                 pass            
 
             (position, rotation) = self.get_odom()
-            while abs(rot_angle) > np.deg2rad(15):
+            while abs(rot_angle) > np.deg2rad(8):
                 try:
-                    rot_angle=goal_z-rotation
+                    # rot_angle=goal_z-rotation
                     print("rotation", np.rad2deg(rotation), "goal_z", np.rad2deg(goal_z))
                     move_cmd.linear.x=0
                     if rot_angle>pi or (rot_angle<0 and rot_angle>-pi):
