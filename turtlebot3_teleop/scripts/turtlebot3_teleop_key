@@ -49,6 +49,10 @@ space key, s : force stop
 CTRL-C to quit
 """
 
+e = """
+Communications Failed
+"""
+
 def getKey():
     tty.setraw(sys.stdin.fileno())
     rlist, _, _ = select.select([sys.stdin], [], [], 0.1)
@@ -63,17 +67,28 @@ def getKey():
 def vels(target_linear_vel, target_angular_vel):
     return "currently:\tlinear vel %s\t angular vel %s " % (target_linear_vel,target_angular_vel)
 
+def makeSimpleProfile(output, input, slop):
+    if input > output:
+        output = min( input, output + slop )
+    elif input < output:
+        output = max( input, output - slop )
+    else:
+        output = input
+
+    return output
+
 if __name__=="__main__":
     settings = termios.tcgetattr(sys.stdin)
 
     rospy.init_node('turtlebot3_teleop')
-    pub = rospy.Publisher('/cmd_vel', Twist, queue_size=5)
+    pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
 
     status = 0
     target_linear_vel = 0
     target_angular_vel = 0
     control_linear_vel = 0
     control_angular_vel = 0
+
     try:
         print msg
         while(1):
@@ -99,27 +114,23 @@ if __name__=="__main__":
                 control_linear_vel  = 0
                 target_angular_vel  = 0
                 control_angular_vel = 0
-                print vels(0, 0)
-            elif status == 14 :
-                print msg
-                status = 0
+                print vels(target_linear_vel, target_angular_vel)
             else:
                 if (key == '\x03'):
                     break
 
-            if target_linear_vel > control_linear_vel:
-                control_linear_vel = min( target_linear_vel, control_linear_vel + (0.01/4.0) )
-            else:
-                control_linear_vel = target_linear_vel
-
-            if target_angular_vel > control_angular_vel:
-                control_angular_vel = min( target_angular_vel, control_angular_vel + (0.1/4.0) )
-            else:
-                control_angular_vel = target_angular_vel
+            if status == 20 :
+                print msg
+                status = 0
 
             twist = Twist()
+
+            control_linear_vel = makeSimpleProfile(control_linear_vel, target_linear_vel, (0.01/4.0))
             twist.linear.x = control_linear_vel; twist.linear.y = 0; twist.linear.z = 0
+
+            control_angular_vel = makeSimpleProfile(control_angular_vel, target_angular_vel, (0.1/2.0))
             twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = control_angular_vel
+
             pub.publish(twist)
 
     except:
