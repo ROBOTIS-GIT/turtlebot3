@@ -40,7 +40,8 @@ catkin_package(
 # Install
 ################################################################################
 catkin_install_python(PROGRAMS 
-  scripts/turtlebot3_sandbot
+  scripts/turtlebot3_sandbot_pointop.py
+  scripts/purepursuit.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

@@ -36,7 +36,7 @@ If you want to close, insert 's'
 -----------------------
 """
 
-increment =1
+increment = 5
 
 arr_path_B = []
 with open(sys.argv[1], "r") as file_path_B:
@@ -87,7 +87,7 @@ class GotoPoint():
         (position, rotation) = self.get_odom()
         print("x, y, rotation", position.x, position.y, np.rad2deg(rotation))
         
-        lin_vel=0.05
+        lin_vel=0.1
         # (goal_x, goal_y, goal_z) = self.getkey()
 
         # go through path array
@@ -99,8 +99,8 @@ class GotoPoint():
 
         thres1=np.deg2rad(30)
         thres2=np.deg2rad(15)
-        ang_vel_1=0.2
-        ang_vel_2=0.1
+        ang_vel_1=0.4
+        ang_vel_2=0.15
 
         while ind < length:
             # if goal_z > 180 or goal_z < -180:
@@ -108,19 +108,19 @@ class GotoPoint():
             #     self.shutdown()
             # goal_z = np.deg2rad(goal_z)
             # (position,rotation) = self.get_odom()
+            
             goal_distance = sqrt(pow(goal_x - position.x, 2) + pow(goal_y - position.y, 2))
             distance = goal_distance
-
             while distance > 0.1:
-
                 try:
                     print ("distance= ", distance)
-                    print("x, y, rotation", position.x, position.y, np.rad2deg(rotation))
-                    print("goal position:", goal_x, goal_y)
-
+                    
                     x_start= position.x
                     y_start= position.y
-                    alpha=atan((goal_y-position.y)/(goal_x-x_start))-rotation
+
+                    print("goal", goal_x, goal_y, "position", x_start, y_start)
+                    # alpha=atan2(goal_x-x_start, goal_y-y_start)-rotation
+                    alpha=atan2(goal_y-y_start, goal_x-x_start)-rotation
 
                     #Alpha normalization
                     if alpha>pi:
@@ -128,22 +128,32 @@ class GotoPoint():
                     elif alpha<-pi:
                         alpha=alpha+2*pi
 
+                    print("alpha", np.rad2deg(alpha),"rotation", np.rad2deg(rotation))
 
                     if abs(alpha)> thres1: #abs?
                         if alpha>0 or alpha<-pi:
+                            move_cmd.linear.x=0
                             move_cmd.angular.z=ang_vel_1
+                          
                         else:
+                            move_cmd.linear.x=0
                             move_cmd.angular.z=-ang_vel_1
+                         
                     elif abs(alpha)>thres2:
                         if alpha>0 or alpha<-pi:
+                            move_cmd.linear.x=0
                             move_cmd.angular.z=ang_vel_2
+                         
                         else:
+                            move_cmd.linear.x=0
                             move_cmd.angular.z=-ang_vel_2
+                         
                     else:
-                        x=d*sin(alpha)
-                        curv=2*x/power(distance,2)
+                        x=distance*sin(alpha)
+                        curv=2*x/pow(distance,2)
                         move_cmd.linear.x=lin_vel
                         move_cmd.angular.z=curv*lin_vel
+                        
                   
                     self.cmd_vel.publish(move_cmd)
 
