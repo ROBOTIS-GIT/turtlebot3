@@ -4,63 +4,45 @@
   <xacro:arg name="imu_visual"   default="false"/>
 
   <gazebo reference="base_link">
-    <kp>100000000.0</kp>
-    <kd>10.0</kd>
-    <mu1>0.1</mu1>
-    <mu2>0.1</mu2>
-    <fdir1>1 0 0</fdir1>
-    <maxVel>10.0</maxVel>
-    <minDepth>0.0005</minDepth>
     <material>Gazebo/Grey</material>
   </gazebo>
 
   <gazebo reference="wheel_left_link">
-    <kp>500000.0</kp>
-    <kd>10.0</kd>
     <mu1>10</mu1>
     <mu2>10</mu2>
+    <kp>500000.0</kp>
+    <kd>10.0</kd>
+    <minDepth>0.001</minDepth>
+    <maxVel>0.1</maxVel>
     <fdir1>1 0 0</fdir1>
-    <maxVel>1.0</maxVel>
-    <minDepth>0.003</minDepth>
     <material>Gazebo/DarkGrey</material>
   </gazebo>
 
   <gazebo reference="wheel_right_link">
-    <kp>500000.0</kp>
-    <kd>10.0</kd>
     <mu1>10</mu1>
     <mu2>10</mu2>
+    <kp>500000.0</kp>
+    <kd>10.0</kd>
+    <minDepth>0.001</minDepth>
+    <maxVel>0.1</maxVel>
     <fdir1>1 0 0</fdir1>
-    <maxVel>1.0</maxVel>
-    <minDepth>0.003</minDepth>
     <material>Gazebo/DarkGrey</material>
   </gazebo>
 
   <gazebo reference="caster_back_link">
-    <kp>500000.0</kp>
-    <kd>10.0</kd>
-    <mu1>0.61</mu1>
-    <mu2>0.47</mu2>
-    <fdir1>1 0 0</fdir1>
+    <mu1>0.0</mu1>
+    <mu2>0.0</mu2>
+    <kp>1000000.0</kp>
+    <kd>100.0</kd>
+    <minDepth>0.001</minDepth>
     <maxVel>1.0</maxVel>
-    <minDepth>0.003</minDepth>
     <material>Gazebo/Grey</material>
-  </gazebo>
-
-  <gazebo reference="wheel_left_joint">
-    <implicitSpringDamper>1</implicitSpringDamper>
-  </gazebo>
-  <gazebo reference="wheel_right_joint">
-    <implicitSpringDamper>1</implicitSpringDamper>
-  </gazebo>
-  <gazebo reference="caster_back_joint">
-    <implicitSpringDamper>1</implicitSpringDamper>
   </gazebo>
 
   <gazebo reference="imu_link">
     <sensor type="imu" name="imu">
       <always_on>true</always_on>
-      <update_rate>200</update_rate>
+      <update_rate>50</update_rate>
       <visualize>$(arg imu_visual)</visualize>
     </sensor>
     <material>Gazebo/Grey</material>
@@ -68,22 +50,22 @@
 
   <gazebo>
     <plugin name="turtlebot3_burger_controller" filename="libgazebo_ros_diff_drive.so">
-      <alwaysOn>true</alwaysOn>
       <commandTopic>cmd_vel</commandTopic>
       <odometryTopic>odom</odometryTopic>
       <odometryFrame>odom</odometryFrame>
       <robotBaseFrame>base_footprint</robotBaseFrame>
       <publishWheelTF>false</publishWheelTF>
+      <publishTf>true</publishTf>
       <publishWheelJointState>true</publishWheelJointState>
       <legacyMode>false</legacyMode>
-      <updateRate>125</updateRate>
+      <updateRate>100</updateRate>
       <leftJoint>wheel_left_joint</leftJoint>
       <rightJoint>wheel_right_joint</rightJoint>
       <wheelSeparation>0.160</wheelSeparation>
       <wheelDiameter>0.066</wheelDiameter>
       <wheelAcceleration>1</wheelAcceleration>
       <wheelTorque>10</wheelTorque>
-      <rosDebugLevel>na</rosDebugLevel>      
+      <rosDebugLevel>na</rosDebugLevel>
     </plugin>
   </gazebo>
 
