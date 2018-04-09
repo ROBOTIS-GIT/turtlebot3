@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+
+################# MODIFIED CODE #################################################
 #################################################################################
 # Copyright 2018 ROBOTIS CO., LTD.
 #
@@ -19,8 +21,10 @@
 
 import rospy
 import actionlib
-from geometry_msgs.msg import Twist, Point, Quaternion
+
+from geometry_msgs.msg import Twist, Point, Quaternion, PoseStamped
 from nav_msgs.msg import Odometry
+from nav_msgs.msg import Path
 from sensor_msgs.msg import JointState
 import turtlebot3_example.msg
 from turtlebot3_msgs.msg import SensorState
@@ -31,6 +35,7 @@ class Turtlebot3Action(object):
     _result = turtlebot3_example.msg.turtlebot3ActionResult()
 
     def __init__(self, name):
+
         self._action_name = name
         self._as = actionlib.SimpleActionServer(self._action_name, turtlebot3_example.msg.turtlebot3Action,
                                                 execute_cb=self.execute_cb, auto_start=False)
@@ -38,11 +43,19 @@ class Turtlebot3Action(object):
         self.odom_sub = rospy.Subscriber('/odom', Odometry, self.get_odom)
         self.init_stats = True
         self._as.start()
+        self.path=Path()
         rospy.loginfo('Server On')
 
     def get_odom(self, odom):
         self.position = Point()
         self.position = odom.pose.pose.position
+        global path
+        self.path.header = data.header
+        pose=PoseStamped()
+        self.pose.header = data.header
+        self.pose.poses.append(pose)
+        self.path_pub.publish(path)
+
 
     def get_state(self, data):
         TICK2RAD = 0.001533981
@@ -55,7 +68,7 @@ class Turtlebot3Action(object):
         diff_pos = cur_pos - last_pos
         encoder = encoder + (diff_pos / TICK2RAD)
         self.right_encoder = encoder
-
+	
     def turn(self, angle):
         if self.init_stats:
             self.init_right_encoder = self.right_encoder
@@ -106,6 +119,7 @@ class Turtlebot3Action(object):
     def execute_cb(self, goal):
         position = Point()
         self.cmd_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=5)
+        self.path_pub=rospy.Publisher('/path', Path, queue_size=10)
         self.twist = Twist()
         self.r = rospy.Rate(15)
         self.r1 = rospy.Rate(1)
