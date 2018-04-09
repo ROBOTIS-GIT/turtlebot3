@@ -81,13 +81,13 @@ if __name__=="__main__":
     settings = termios.tcgetattr(sys.stdin)
 
     rospy.init_node('turtlebot3_teleop')
-    pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
+    pub = rospy.Publisher('cmd_vel', Twist, queue_size=10)
 
     status = 0
-    target_linear_vel = 0
-    target_angular_vel = 0
-    control_linear_vel = 0
-    control_angular_vel = 0
+    target_linear_vel   = 0.0
+    target_angular_vel  = 0.0
+    control_linear_vel  = 0.0
+    control_angular_vel = 0.0
 
     try:
         print msg
@@ -110,10 +110,10 @@ if __name__=="__main__":
                 status = status + 1
                 print vels(target_linear_vel,target_angular_vel)
             elif key == ' ' or key == 's' :
-                target_linear_vel   = 0
-                control_linear_vel  = 0
-                target_angular_vel  = 0
-                control_angular_vel = 0
+                target_linear_vel   = 0.0
+                control_linear_vel  = 0.0
+                target_angular_vel  = 0.0
+                control_angular_vel = 0.0
                 print vels(target_linear_vel, target_angular_vel)
             else:
                 if (key == '\x03'):
@@ -125,11 +125,11 @@ if __name__=="__main__":
 
             twist = Twist()
 
-            control_linear_vel = makeSimpleProfile(control_linear_vel, target_linear_vel, (0.01/4.0))
-            twist.linear.x = control_linear_vel; twist.linear.y = 0; twist.linear.z = 0
+            control_linear_vel = makeSimpleProfile(control_linear_vel, target_linear_vel, (0.01/2.0))
+            twist.linear.x = control_linear_vel; twist.linear.y = 0.0; twist.linear.z = 0.0
 
             control_angular_vel = makeSimpleProfile(control_angular_vel, target_angular_vel, (0.1/2.0))
-            twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = control_angular_vel
+            twist.angular.x = 0.0; twist.angular.y = 0.0; twist.angular.z = control_angular_vel
 
             pub.publish(twist)
 
@@ -138,8 +138,8 @@ if __name__=="__main__":
 
     finally:
         twist = Twist()
-        twist.linear.x = 0; twist.linear.y = 0; twist.linear.z = 0
-        twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = 0
+        twist.linear.x = 0.0; twist.linear.y = 0.0; twist.linear.z = 0.0
+        twist.angular.x = 0.0; twist.angular.y = 0.0; twist.angular.z = 0.0
         pub.publish(twist)
 
     termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
