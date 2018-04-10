@@ -33,11 +33,11 @@
     </collision>
     
     <inertial>
-      <origin xyz="-0.064 0 0" rpy="0 0 0"/>
-      <mass value="1.795"/>
-      <inertia ixx="0.01" ixy="0.0" ixz="0.0"
-               iyy="0.01" iyz="0.0"
-               izz="0.01" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="1.3729096e+00"/>
+      <inertia ixx="8.7002718e-03" ixy="-4.7576583e-05" ixz="1.1160499e-04"
+               iyy="8.6195418e-03" iyz="-3.5422299e-06"
+               izz="1.4612727e-02" />
     </inertial>
   </link>
 
@@ -66,11 +66,11 @@
 
     <inertial>
       <origin xyz="0 0 0" />
-      <mass value="0.028" />
-      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
-               iyy="0.001" iyz="0.0"
-               izz="0.001" />
-    </inertial>
+      <mass value="2.8498940e-02" />
+      <inertia ixx="1.1175580e-05" ixy="-4.2369783e-11" ixz="-5.9381719e-09"
+               iyy="1.1192413e-05" iyz="-1.4400107e-11"
+               izz="2.0712558e-05" />
+      </inertial>
   </link>
 
   <joint name="wheel_right_joint" type="continuous">
@@ -98,11 +98,11 @@
 
     <inertial>
       <origin xyz="0 0 0" />
-      <mass value="0.028" />
-      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
-               iyy="0.001" iyz="0.0"
-               izz="0.001" />
-    </inertial>
+      <mass value="2.8498940e-02" />
+      <inertia ixx="1.1175580e-05" ixy="-4.2369783e-11" ixz="-5.9381719e-09"
+               iyy="1.1192413e-05" iyz="-1.4400107e-11"
+               izz="2.0712558e-05" />
+      </inertial>
   </link>
 
   <joint name="caster_back_right_joint" type="fixed">
