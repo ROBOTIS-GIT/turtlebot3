@@ -39,25 +39,23 @@ If you want to close, insert 's'
 increment = 5
 
 def get_path(word):
-    print("b")
     arr_path=[]
-    dir_1= "/home/mjlee/catkin_ws/src/turtlebot3/turtlebot3_sandbot/data_path/path_"
+    dir_1= "/home/bkjung/catkin_ws/src/turtlebot3/turtlebot3_sandbot/data_path/path_"
     dir_2=".txt"
     i=0.0
-    print("c")
     for letter in list(word):
-        with open(dir_1+letter.capitalize()+dir_2,"r") as file_path:
-            for idx, line in enumerate(file_path):
-                print("letter:" ,letter)
-                _str = line.split()
-                if not (len(_str)==0):
-                    arr_path.append((float)(_str[0])+i,(float)(_str[1]))
-                    print("d")
-                else:
-                    break
+        if letter==' ':
+            pass
+            #if spacing is included
+        else:
+            with open(dir_1+letter.capitalize()+dir_2,"r") as file_path:
+                for idx, line in enumerate(file_path):
+                    _str = line.split()
+                    if not (len(_str)==0):
+                        arr_path.append([(float)(_str[0])+i, (float)(_str[1])])
+                    else:
+                        break
         i=i+1
-        print("e")
-    print("c")
     return arr_path
 
 # arr_path_B = []
@@ -73,7 +71,6 @@ def get_path(word):
 
 class GotoPoint():
     def __init__(self):
-        print("a")
         rospy.init_node('turtlebot3_sandbot', anonymous=False, disable_signals=True)
         rospy.on_shutdown(self.shutdown)
         self.cmd_vel = rospy.Publisher('/cmd_vel', Twist, queue_size=5)
