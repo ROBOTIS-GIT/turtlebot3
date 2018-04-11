@@ -21,9 +21,9 @@
     </visual>
 
     <collision>
-      <origin xyz="-0.064 0 0.045" rpy="0 0 0"/>
+      <origin xyz="-0.064 0 0.047" rpy="0 0 0"/>
       <geometry>
-        <box size="0.250 0.260 0.097"/>
+        <box size="0.266 0.266 0.094"/>
       </geometry>
     </collision>
 
@@ -108,7 +108,7 @@
 
   <link name="caster_back_right_link">
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0.001 0" xyz="0 0 0"/>
       <geometry>
         <box size="0.030 0.009 0.020"/>
       </geometry>
@@ -131,7 +131,7 @@
 
   <link name="caster_back_left_link">
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0.001 0" xyz="0 0 0"/>
       <geometry>
         <box size="0.030 0.009 0.020"/>
       </geometry>
@@ -170,7 +170,7 @@
     </visual>
 
     <collision>
-      <origin xyz="0.015 0 -0.005" rpy="0 0 0"/>
+      <origin xyz="0.015 0 -0.003" rpy="0 0 0"/>
       <geometry>
         <cylinder length="0.0415" radius="0.055"/>
       </geometry>
@@ -190,7 +190,15 @@
     <parent link="base_link"/>
     <child link="camera_link"/>
   </joint>
-  <link name="camera_link"/>
+
+  <link name="camera_link">
+    <collision>
+      <origin xyz="0.005 0.011 0.013" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.015 0.030 0.027"/>
+      </geometry>
+    </collision>
+  </link>
 
   <joint name="camera_rgb_joint" type="fixed">
     <origin xyz="0.003 0.011 0.008" rpy="0 0 0"/>
