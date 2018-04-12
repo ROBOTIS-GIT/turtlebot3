@@ -18,7 +18,7 @@
 # Authors: Gilbert #
 
 import rospy
-from geometry_msgs.msg import Twist, Point, Quaternion
+from geometry_msgs.msg import Twist, Point, Quaternion, PoseStamped
 import tf
 from math import radians, copysign, sqrt, pow, pi, atan2, sin
 from tf.transformations import euler_from_quaternion
@@ -37,6 +37,7 @@ If you want to close, insert 's'
 """
 
 waypoint_increment = 1
+
 
 def get_path(word):
     arr_path=[]
@@ -75,6 +76,10 @@ class GotoPoint():
         rospy.init_node('turtlebot3_sandbot', anonymous=False, disable_signals=True)
         rospy.on_shutdown(self.shutdown)
         self.cmd_vel = rospy.Publisher('/cmd_vel', Twist, queue_size=5)
+
+        #Subscriber for Lidar SLAM estimated point, heading
+        self.blam_position_estimate = rospy.Subscriber('/blam/blam_slam/localization_integrated_estimate', PoseStamped, self.callback_blam_position)
+
         position = Point()
         move_cmd = Twist()
         r = rospy.Rate(10)
@@ -86,6 +91,9 @@ class GotoPoint():
         self.offset_x=0
         self.offset_y=0
         self.offset_rot=0
+
+        self.lidar_estimated_pnt = Point()
+        self.lidar_estimated_rotation = 0
 
         try:
             self.tf_listener.waitForTransform(self.odom_frame, '/base_footprint', rospy.Time(), rospy.Duration(1.0))
@@ -179,7 +187,7 @@ class GotoPoint():
                         move_cmd.angular.z=curv*lin_vel
                         
                   
-                    self.cmd_vel.publish(move_cmd)
+                    #self.cmd_vel.publish(move_cmd)
 
                     (position, rotation) = self.get_odom()
                     distance = sqrt(pow((waypoint[0] - position.x), 2) + pow((waypoint[1] - position.y), 2))
@@ -200,6 +208,7 @@ class GotoPoint():
         self.cmd_vel.publish(Twist())
 
     def get_odom(self):
+        #1. Wheel Odometry
         try:
             (trans, rot) = self.tf_listener.lookupTransform(self.odom_frame, self.base_frame, rospy.Time(0))
             rotation = euler_from_quaternion(rot)
@@ -208,16 +217,29 @@ class GotoPoint():
             rospy.loginfo("TF Exception")
             return
         pnt=Point(*trans)
-        #print("point:", pnt.x, pnt.y)
         pnt.x=pnt.x-self.offset_x
         pnt.y=pnt.y-self.offset_y
 
-        # if rotation[2]-self.offset_rot < -pi:
-        #     return(pnt, rotation[2]-self.offset_rot+2*pi)
-        # return (pnt, rotation[2]-self.offset_rot)
-        # return (pnt, rotation[2]-self.offset_rot)
-        return (pnt, rotation[2])
-        # return (Point(*trans), rotation[2])
+        #return (pnt, rotation[2])
+
+        #2. Lidar(Velodyne VLP-16) SLAM (blam, https://github.com/erik-nelson/blam)
+
+
+        return (self.lidar_estimated_pnt, rotation[2])
+        
+
+    def callback_blam_position(self, data):
+        pnt=Point()
+        pnt.x=data.pose.position.x
+        pnt.y=data.pose.position.y
+        
+        quat=[data.pose.orientation.x, data.pose.orientation.y, data.pose.orientation.z, data.pose.orientation.w]
+        rotation=euler_from_quaternion(quat)
+        
+        self.lidar_estimated_pnt = pnt
+        self.lidar_estimated_rotation = rotation[2]
+        
+
 
     def shutdown(self):
         self.cmd_vel.publish(Twist())
