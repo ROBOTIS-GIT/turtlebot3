@@ -160,6 +160,38 @@
     <child link="camera_link"/>
   </joint>
 
+  <joint name="scan_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_scan"/>
+    <!-- <origin xyz="-0.064 0 0.121" rpy="0 0 0"/> -->
+    <origin xyz="-0.008 0 0.121" rpy="0 0 0"/>
+  </joint>
+
+  <link name="base_scan">
+    <visual>
+      <origin xyz="0 0 0.0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://turtlebot3_description/meshes/sensors/lds.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="dark"/>
+    </visual>
+
+    <collision>
+      <origin xyz="0.015 0 -0.003" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.0415" radius="0.055"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <mass value="0.114" />
+      <origin xyz="0 0 0" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+               iyy="0.001" iyz="0.0"
+               izz="0.001" />
+    </inertial>
+  </link>
+
   <link name="camera_link">
     <collision>
       <origin xyz="0.005 0.011 0.013" rpy="0 0 0"/>
