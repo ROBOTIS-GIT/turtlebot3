@@ -20,10 +20,11 @@
 import rospy
 from geometry_msgs.msg import Twist, Point, Quaternion, PoseStamped
 import tf
-from math import radians, copysign, sqrt, pow, pi, atan2, sin
+from math import radians, copysign, sqrt, pow, pi, atan2, sin, floor
 from tf.transformations import euler_from_quaternion
 import numpy as np
 import sys
+from PIL import Image
 
 msg = """
 control your Turtlebot3!
@@ -37,13 +38,20 @@ If you want to close, insert 's'
 """
 
 waypoint_increment = 1
+waypoints_length = 0
+waypoints=[]
+cnt_letter = 0
+
+cnt_path_points = 0
+path_points = []
 
 
 def get_path(word):
+    global cnt_letter
     arr_path=[]
-    dir_1= "/home/bkjung/catkin_ws/src/turtlebot3/turtlebot3_sandbot/data_path/path_"
+    dir_1= sys.argv[1]+"/data_path/path_"
     dir_2=".txt"
-    i=0.0
+    cnt_letter = 0
     for letter in word:
         if letter==' ':
             pass
@@ -52,11 +60,13 @@ def get_path(word):
             with open(dir_1+letter.capitalize()+dir_2,"r") as file_path:
                 for idx, line in enumerate(file_path):
                     _str = line.split()
-                    if not (len(_str)==0):
-                        arr_path.append([(float)(_str[1]), (float)(_str[0])+i])
+                    if not len(_str)==0:
+                        arr_path.append([(float)(_str[0])+(float)(cnt_letter), 1.0-(float)(_str[1])])
                     else:
                         pass
-        i=i+1
+
+        #count the number of letters including spacing
+        cnt_letter = cnt_letter + 1
         
     return arr_path
 
@@ -73,6 +83,9 @@ def get_path(word):
 
 class GotoPoint():
     def __init__(self, arr_path):
+        global waypoints_length
+        global waypoints
+
         rospy.init_node('turtlebot3_sandbot', anonymous=False, disable_signals=True)
         rospy.on_shutdown(self.shutdown)
         self.cmd_vel = rospy.Publisher('/cmd_vel', Twist, queue_size=5)
@@ -117,16 +130,17 @@ class GotoPoint():
             print("offset initialized")
         (position, rotation) = self.get_odom()
         print("x, y, rotation", position.x, position.y, np.rad2deg(rotation))
+
+
         
         lin_vel=0.08
         # (goal_x, goal_y, goal_z) = self.getkey()
 
         # go through path array
-        waypoint_index = 0
-        waypoints_length = len(arr_path)
-        waypoints=[]
-        for idx in range(waypoints_length-1):
-            waypoints.append([arr_path[idx+1][0]-arr_path[0][0], arr_path[idx+1][1]-arr_path[0][1]])
+        
+        waypoints_length = len(arr_path)        
+        for idx in range(waypoints_length):
+            waypoints.append([arr_path[idx][0]-arr_path[0][0], arr_path[idx][1]-arr_path[0][1]])
 
         print("size of waypoints = ", len(waypoints), len(waypoints[0]))
 
@@ -135,24 +149,26 @@ class GotoPoint():
         ang_vel_1=0.3
         ang_vel_2=0.1
 
+        waypoint_index = 1  #starting from index No. 1 (c.f. No.0 is at the origin(0,0))
+
         while waypoint_index < waypoints_length:
-            waypoint = [waypoints[waypoint_index][0], waypoints[waypoint_index][1]]
+            current_waypoint = [waypoints[waypoint_index][0], waypoints[waypoint_index][1]]
             # if goal_z > 180 or goal_z < -180:
             #     print("you input worng z range.")
             #     self.shutdown()
             # goal_z = np.deg2rad(goal_z)
             # (position,rotation) = self.get_odom()
             
-            goal_distance = sqrt(pow(waypoint[0] - position.x, 2) + pow(waypoint[1] - position.y, 2))
+            goal_distance = sqrt(pow(current_waypoint[0] - position.x, 2) + pow(current_waypoint[1] - position.y, 2))
             distance = goal_distance
             
             while distance > 0.1:
                 try:
                     print ("distance= ", '%.3f' % distance)
                     
-                    print("goal_position", '%.3f' % waypoint[0], '%.3f' % waypoint[1], "current_position", '%.3f' % position.x, '%.3f' % position.y)
+                    print("goal_position", '%.3f' % current_waypoint[0], '%.3f' % current_waypoint[1], "current_position", '%.3f' % position.x, '%.3f' % position.y)
                     # alpha=atan2(goal_x-x_start, goal_y-y_start)-rotation
-                    alpha=atan2(waypoint[1]-position.y, waypoint[0]-position.x)-rotation
+                    alpha=atan2(current_waypoint[1]-position.y, current_waypoint[0]-position.x)-rotation
 
                     #Alpha normalization
                     if alpha>pi:
@@ -187,10 +203,17 @@ class GotoPoint():
                         move_cmd.angular.z=curv*lin_vel
                         
                   
-                    #self.cmd_vel.publish(move_cmd)
+                    self.cmd_vel.publish(move_cmd)
 
                     (position, rotation) = self.get_odom()
-                    distance = sqrt(pow((waypoint[0] - position.x), 2) + pow((waypoint[1] - position.y), 2))
+                    
+                    global cnt_path_points
+                    global path_points
+
+                    cnt_path_points = cnt_path_points + 1
+                    path_points.append([position.x, position.y])
+
+                    distance = sqrt(pow((current_waypoint[0] - position.x), 2) + pow((current_waypoint[1] - position.y), 2))
 
                     r.sleep()
                 except KeyboardInterrupt:
@@ -204,7 +227,9 @@ class GotoPoint():
             if rospy.is_shutdown():
                 break
 
-        rospy.loginfo("Stopping the robot...")
+        rospy.loginfo("Stopping the robot at the final destination")
+        self.generate_pathmap()
+
         self.cmd_vel.publish(Twist())
 
     def get_odom(self):
@@ -220,12 +245,12 @@ class GotoPoint():
         pnt.x=pnt.x-self.offset_x
         pnt.y=pnt.y-self.offset_y
 
-        #return (pnt, rotation[2])
+        return (pnt, rotation[2])
 
         #2. Lidar(Velodyne VLP-16) SLAM (blam, https://github.com/erik-nelson/blam)
 
 
-        return (self.lidar_estimated_pnt, rotation[2])
+        #return (self.lidar_estimated_pnt, rotation[2])
         
 
     def callback_blam_position(self, data):
@@ -238,6 +263,32 @@ class GotoPoint():
         
         self.lidar_estimated_pnt = pnt
         self.lidar_estimated_rotation = rotation[2]
+
+
+    def generate_pathmap(self):
+        scale = 10
+        pixel_size = 100 #1m*1m canvas of 1cm accuracy points (including boundary points)
+        img = Image.new("RGB", ((100+pixel_size*cnt_letter)*scale, (100+pixel_size)*scale), (255, 255, 255))
+
+        print("cnt_path_points = ", cnt_path_points)
+        
+        for i in range(cnt_path_points):
+            print(path_points[i][0], path_points[i][1])
+            x = 0.99 if path_points[i][0]==1.0 else path_points[i][0]
+            y = 0.99 if (1.0-path_points[i][1])==1.0 else (1.0-path_points[i][1])
+            x = (int)(floor(x*100))
+            y = (int)(floor(y*100))
+
+            x=x+50
+            y=y+50
+
+            for k in range(scale):
+                for t in range(scale):
+                    img.putpixel((x*scale + t, y*scale + k), (0, 0, 0))
+
+        #img.save(sys.argv[1]+"/output_pathmap/"+rospy.get_param("/turtlebot3_purepursuit/start_time"))
+        print("Pathmap image saved at "+sys.argv[1]+"/output_pathmap/output.png")
+        img.save(sys.argv[1]+"/output_pathmap/output1.png", "PNG")
         
 
 

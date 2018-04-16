@@ -60,3 +60,5 @@ build-*/
 *.gch
 
 .vscode/
+
+turtlebot3_sandbot/output_pathmap/
