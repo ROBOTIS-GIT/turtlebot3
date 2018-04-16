@@ -58,3 +58,7 @@ build-*/
 *.dat
 *.txt.user
 *.gch
+
+.vscode/
+
+turtlebot3_sandbot/output_pathmap/
