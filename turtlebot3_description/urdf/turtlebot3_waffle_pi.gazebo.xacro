@@ -9,8 +9,8 @@
   </gazebo>
 
   <gazebo reference="wheel_left_link">
-    <mu1>10</mu1>
-    <mu2>10</mu2>
+    <mu1>10.0</mu1>
+    <mu2>10.0</mu2>
     <kp>500000.0</kp>
     <kd>10.0</kd>
     <minDepth>0.001</minDepth>
@@ -20,8 +20,8 @@
   </gazebo>
 
   <gazebo reference="wheel_right_link">
-    <mu1>10</mu1>
-    <mu2>10</mu2>
+    <mu1>10.0</mu1>
+    <mu2>10.0</mu2>
     <kp>500000.0</kp>
     <kd>10.0</kd>
     <minDepth>0.001</minDepth>
@@ -66,7 +66,7 @@
       <robotBaseFrame>base_footprint</robotBaseFrame>
       <publishWheelTF>false</publishWheelTF>
       <publishTf>true</publishTf>
-      <publishWheelJointState>true</publishWheelJointState>
+      <publishWheelJointState>false</publishWheelJointState>
       <legacyMode>false</legacyMode>
       <updateRate>30</updateRate>
       <leftJoint>wheel_left_joint</leftJoint>
