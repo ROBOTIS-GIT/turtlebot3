@@ -66,7 +66,7 @@
       <robotBaseFrame>base_footprint</robotBaseFrame>
       <publishWheelTF>false</publishWheelTF>
       <publishTf>true</publishTf>
-      <publishWheelJointState>true</publishWheelJointState>
+      <publishWheelJointState>false</publishWheelJointState>
       <legacyMode>false</legacyMode>
       <updateRate>30</updateRate>
       <leftJoint>wheel_left_joint</leftJoint>
