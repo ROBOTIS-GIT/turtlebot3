@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <robot name="turtlebot3_waffle_pi" xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:include filename="$(find turtlebot3_description)/urdf/common_properties.xacro"/>
-  <xacro:include filename="$(find turtlebot3_description)/urdf/turtlebot3_waffle_pi.gazebo.xacro"/>
+  <xacro:include filename="$(find turtlebot3_description)/urdf/turtlebot3_waffle_pi_naked.gazebo.xacro"/>
 
   <link name="base_footprint"/>
 
@@ -164,7 +164,7 @@
     <parent link="base_link"/>
     <child link="base_scan"/>
     <!-- <origin xyz="-0.064 0 0.121" rpy="0 0 0"/> -->
-    <origin xyz="-0.008 0 0.121" rpy="0 0 0"/>
+    <origin xyz="-0.008 0 0.122" rpy="0 0 0"/>
   </joint>
 
   <link name="base_scan">
@@ -202,7 +202,7 @@
   </link>
 
   <joint name="camera_rgb_joint" type="fixed">
-    <origin xyz="0.003 0.011 0.008" rpy="0 0 0"/>
+    <origin xyz="0.003 0.011 0.009" rpy="0 0 0"/>
     <parent link="camera_link"/>
     <child link="camera_rgb_frame"/>
   </joint>
