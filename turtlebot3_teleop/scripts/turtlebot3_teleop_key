@@ -39,6 +39,9 @@ BURGER_MAX_ANG_VEL = 2.84
 WAFFLE_MAX_LIN_VEL = 0.26
 WAFFLE_MAX_ANG_VEL = 2.84
 
+LIN_VEL_STEP_SIZE = 0.01
+ANG_VEL_STEP_SIZE = 0.1
+
 msg = """
 Control Your Turtlebot3!
 ---------------------------
@@ -93,13 +96,23 @@ def constrain(input, low, high):
 
     return input
 
-def checkLimitVelocity(vel):
+def checkLinearLimitVelocity(vel):
     if turtlebot3_model == "burger":
       vel = constrain(vel, -BURGER_MAX_LIN_VEL, BURGER_MAX_LIN_VEL)
     elif turtlebot3_model == "waffle" or turtlebot3_model == "waffle_pi":
       vel = constrain(vel, -WAFFLE_MAX_LIN_VEL, WAFFLE_MAX_LIN_VEL)
     else:
       vel = constrain(vel, -BURGER_MAX_LIN_VEL, BURGER_MAX_LIN_VEL)
+
+    return vel
+
+def checkAngularLimitVelocity(vel):
+    if turtlebot3_model == "burger":
+      vel = constrain(vel, -BURGER_MAX_ANG_VEL, BURGER_MAX_ANG_VEL)
+    elif turtlebot3_model == "waffle" or turtlebot3_model == "waffle_pi":
+      vel = constrain(vel, -WAFFLE_MAX_ANG_VEL, WAFFLE_MAX_ANG_VEL)
+    else:
+      vel = constrain(vel, -BURGER_MAX_ANG_VEL, BURGER_MAX_ANG_VEL)
 
     return vel
 
@@ -122,19 +135,19 @@ if __name__=="__main__":
         while(1):
             key = getKey()
             if key == 'w' :
-                target_linear_vel = checkLimitVelocity(target_linear_vel + 0.01)
+                target_linear_vel = checkLinearLimitVelocity(target_linear_vel + LIN_VEL_STEP_SIZE)
                 status = status + 1
                 print vels(target_linear_vel,target_angular_vel)
             elif key == 'x' :
-                target_linear_vel = checkLimitVelocity(target_linear_vel - 0.01)
+                target_linear_vel = checkLinearLimitVelocity(target_linear_vel - LIN_VEL_STEP_SIZE)
                 status = status + 1
                 print vels(target_linear_vel,target_angular_vel)
             elif key == 'a' :
-                target_angular_vel = checkLimitVelocity(target_angular_vel + 0.1)
+                target_angular_vel = checkAngularLimitVelocity(target_angular_vel + ANG_VEL_STEP_SIZE)
                 status = status + 1
                 print vels(target_linear_vel,target_angular_vel)
             elif key == 'd' :
-                target_angular_vel = checkLimitVelocity(target_angular_vel - 0.1)
+                target_angular_vel = checkAngularLimitVelocity(target_angular_vel - ANG_VEL_STEP_SIZE)
                 status = status + 1
                 print vels(target_linear_vel,target_angular_vel)
             elif key == ' ' or key == 's' :
