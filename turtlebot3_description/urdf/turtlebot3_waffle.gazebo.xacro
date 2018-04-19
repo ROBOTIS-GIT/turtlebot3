@@ -5,7 +5,7 @@
   <xacro:arg name="imu_visual"    default="false"/>
 
   <gazebo reference="base_link">
-    <material>Gazebo/Grey</material>
+    <material>Gazebo/DarkGrey</material>
   </gazebo>
 
   <gazebo reference="wheel_left_link">
@@ -16,7 +16,7 @@
     <minDepth>0.001</minDepth>
     <maxVel>0.1</maxVel>
     <fdir1>1 0 0</fdir1>
-    <material>Gazebo/DarkGrey</material>
+    <material>Gazebo/FlatBlack</material>
   </gazebo>
 
   <gazebo reference="wheel_right_link">
@@ -27,7 +27,7 @@
     <minDepth>0.001</minDepth>
     <maxVel>0.1</maxVel>
     <fdir1>1 0 0</fdir1>
-    <material>Gazebo/DarkGrey</material>
+    <material>Gazebo/FlatBlack</material>
   </gazebo>
 
   <gazebo reference="caster_back_right_link">
@@ -37,7 +37,7 @@
     <kd>100.0</kd>
     <minDepth>0.001</minDepth>
     <maxVel>1.0</maxVel>
-    <material>Gazebo/Grey</material>
+    <material>Gazebo/FlatBlack</material>
   </gazebo>
 
   <gazebo reference="caster_back_left_link">
@@ -47,7 +47,7 @@
     <kd>100.0</kd>
     <minDepth>0.001</minDepth>
     <maxVel>1.0</maxVel>
-    <material>Gazebo/Grey</material>
+    <material>Gazebo/FlatBlack</material>
   </gazebo>
 
   <gazebo reference="imu_link">
@@ -108,7 +108,7 @@
   </gazebo>
 
   <gazebo reference="base_scan">
-    <material>Gazebo/DarkGrey</material>
+    <material>Gazebo/FlatBlack</material>
     <sensor type="ray" name="lds_lfcd_sensor">
       <pose>0 0 0 0 0 0</pose>
       <visualize>$(arg laser_visual)</visualize>
