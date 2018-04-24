@@ -6,7 +6,5 @@ global_costmap:
   publish_frequency: 10.0
   transform_tolerance: 0.5
 
-  cost_scaling_factor: 10.0
-
   static_map: true
  
