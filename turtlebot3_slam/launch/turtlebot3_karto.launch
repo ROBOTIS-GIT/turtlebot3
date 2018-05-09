@@ -1,0 +1,9 @@
+<launch>
+  <!-- Turtlebot3 -->
+  <include file="$(find turtlebot3_bringup)/launch/turtlebot3_remote.launch" />
+
+  <!-- slam_karto -->
+  <node pkg="slam_karto" type="slam_karto" name="slam_karto" output="screen">
+    <rosparam command="load" file="$(find turtlebot3_slam)/config/karto_mapper_params.yaml" />
+  </node>
+</launch>
