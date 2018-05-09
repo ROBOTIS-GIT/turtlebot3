@@ -18,10 +18,14 @@
   <!-- Turtlebot3 -->
   <include file="$(find turtlebot3_bringup)/launch/turtlebot3_remote.launch" />
 
+  <!-- move_base -->
+  <include file="$(find turtlebot3_navigation)/launch/move_base.launch"/>
+
   <!-- cartographer_node -->
+  <arg name="configuration_basename" default="turtlebot3_lds_2d.lua"/>
   <node pkg="cartographer_ros" type="cartographer_node" name="cartographer_node" 
         args="-configuration_directory $(find turtlebot3_slam)/config
-              -configuration_basename turtlebot3_lds_2d.lua"
+              -configuration_basename $(arg configuration_basename)"
         output="screen">
     <remap from="/imu" to="/flat_imu"/>
     <!--remap from="points2" to="/camera/depth/points" / -->
