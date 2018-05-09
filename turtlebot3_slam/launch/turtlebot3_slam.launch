@@ -1,4 +1,5 @@
 <launch>
-  <!-- SLAM: Gmapping, Cartographer, Hector, Karto, RTAB-Map -->
-  <include file="$(find turtlebot3_slam)/launch/turtlebot3_gmapping.launch" />
+  <arg name="slam_methods" default="gmapping" doc="slam type [gmapping, cartographer, hector, karto, frontier_exploration]"/>
+  <!-- SLAM: Gmapping, Cartographer, Hector, Karto, Frontier_exploration, RTAB-Map -->
+  <include file="$(find turtlebot3_slam)/launch/turtlebot3_$(arg slam_methods).launch" />
 </launch>
