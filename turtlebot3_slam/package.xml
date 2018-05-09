@@ -14,6 +14,8 @@
   <url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3</url>
   <url type="website">http://turtlebot3.robotis.com</url>
   <buildtool_depend>catkin</buildtool_depend>
+  <depend>roscpp</depend>
+  <depend>sensor_msgs</depend>
   <exec_depend>gmapping</exec_depend>
   <exec_depend>turtlebot3_bringup</exec_depend>
 </package>
