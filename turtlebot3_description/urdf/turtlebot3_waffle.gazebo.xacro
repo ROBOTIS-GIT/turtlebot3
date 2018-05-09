@@ -4,10 +4,59 @@
   <xacro:arg name="camera_visual" default="false"/>
   <xacro:arg name="imu_visual"    default="false"/>
 
-  <xacro:arg name="r200_cam_rgb_px" default="0.005"/>
-  <xacro:arg name="r200_cam_rgb_py" default="0.018"/>
-  <xacro:arg name="r200_cam_rgb_pz" default="0.013"/>
-  <xacro:arg name="r200_cam_depth_offset" default="0.01"/>
+  <gazebo reference="base_link">
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+
+  <gazebo reference="wheel_left_link">
+    <mu1>0.1</mu1>
+    <mu2>0.1</mu2>
+    <kp>500000.0</kp>
+    <kd>10.0</kd>
+    <minDepth>0.001</minDepth>
+    <maxVel>0.1</maxVel>
+    <fdir1>1 0 0</fdir1>
+    <material>Gazebo/FlatBlack</material>
+  </gazebo>
+
+  <gazebo reference="wheel_right_link">
+    <mu1>0.1</mu1>
+    <mu2>0.1</mu2>
+    <kp>500000.0</kp>
+    <kd>10.0</kd>
+    <minDepth>0.001</minDepth>
+    <maxVel>0.1</maxVel>
+    <fdir1>1 0 0</fdir1>
+    <material>Gazebo/FlatBlack</material>
+  </gazebo>
+
+  <gazebo reference="caster_back_right_link">
+    <mu1>0.1</mu1>
+    <mu2>0.1</mu2>
+    <kp>1000000.0</kp>
+    <kd>100.0</kd>
+    <minDepth>0.001</minDepth>
+    <maxVel>1.0</maxVel>
+    <material>Gazebo/FlatBlack</material>
+  </gazebo>
+
+  <gazebo reference="caster_back_left_link">
+    <mu1>0.1</mu1>
+    <mu2>0.1</mu2>
+    <kp>1000000.0</kp>
+    <kd>100.0</kd>
+    <minDepth>0.001</minDepth>
+    <maxVel>1.0</maxVel>
+    <material>Gazebo/FlatBlack</material>
+  </gazebo>
+
+  <gazebo reference="imu_link">
+    <sensor type="imu" name="imu">
+      <always_on>true</always_on>
+      <visualize>$(arg imu_visual)</visualize>
+    </sensor>
+    <material>Gazebo/Grey</material>
+  </gazebo>
 
   <gazebo>
     <plugin name="turtlebot3_waffle_controller" filename="libgazebo_ros_diff_drive.so">
@@ -16,62 +65,18 @@
       <odometryFrame>odom</odometryFrame>
       <robotBaseFrame>base_footprint</robotBaseFrame>
       <publishWheelTF>false</publishWheelTF>
+      <publishTf>true</publishTf>
       <publishWheelJointState>true</publishWheelJointState>
       <legacyMode>false</legacyMode>
-      <updateRate>100</updateRate>
+      <updateRate>30</updateRate>
       <leftJoint>wheel_left_joint</leftJoint>
       <rightJoint>wheel_right_joint</rightJoint>
       <wheelSeparation>0.287</wheelSeparation>
       <wheelDiameter>0.066</wheelDiameter>
       <wheelAcceleration>1</wheelAcceleration>
       <wheelTorque>10</wheelTorque>
+      <rosDebugLevel>na</rosDebugLevel>
     </plugin>
-  </gazebo>
-
-  <gazebo reference="base_link">
-    <material>Gazebo/Grey</material>
-  </gazebo>
-
-  <gazebo reference="wheel_left_link">
-    <mu1>10</mu1>
-    <mu2>10</mu2>
-    <kp>500000.0</kp>
-    <kd>10.0</kd>
-    <minDepth>0.001</minDepth>
-    <maxVel>0.1</maxVel>
-    <fdir1>1 0 0</fdir1>
-    <material>Gazebo/DarkGrey</material>
-  </gazebo>
-
-  <gazebo reference="wheel_right_link">
-    <mu1>10</mu1>
-    <mu2>10</mu2>
-    <kp>500000.0</kp>
-    <kd>10.0</kd>
-    <minDepth>0.001</minDepth>
-    <maxVel>0.1</maxVel>
-    <fdir1>1 0 0</fdir1>
-    <material>Gazebo/DarkGrey</material>
-  </gazebo>
-
-  <gazebo reference="caster_back_right_link">
-    <mu1>0.0</mu1>
-    <mu2>0.0</mu2>
-    <kp>1000000.0</kp>
-    <kd>100.0</kd>
-    <minDepth>0.001</minDepth>
-    <maxVel>1.0</maxVel>
-    <material>Gazebo/Grey</material>
-  </gazebo>
-
-  <gazebo reference="caster_back_left_link">
-    <mu1>0.0</mu1>
-    <mu2>0.0</mu2>
-    <kp>1000000.0</kp>
-    <kd>100.0</kd>
-    <minDepth>0.001</minDepth>
-    <maxVel>1.0</maxVel>
-    <material>Gazebo/Grey</material>
   </gazebo>
 
   <gazebo>
@@ -81,7 +86,7 @@
       <topicName>imu</topicName>
       <serviceName>imu_service</serviceName>
       <gaussianNoise>0.0</gaussianNoise>
-      <updateRate>100.0</updateRate>
+      <updateRate>200</updateRate>
       <imu>
         <noise>
           <type>gaussian</type>
@@ -102,21 +107,11 @@
     </plugin>
   </gazebo>
 
-  <gazebo reference="imu_link">
-    <sensor type="imu" name="imu">
-      <always_on>true</always_on>
-      <update_rate>50</update_rate>
-      <visualize>$(arg imu_visual)</visualize>
-    </sensor>
-    <material>Gazebo/Grey</material>
-  </gazebo>
-
   <gazebo reference="base_scan">
-    <material>Gazebo/DarkGrey</material>
+    <material>Gazebo/FlatBlack</material>
     <sensor type="ray" name="lds_lfcd_sensor">
       <pose>0 0 0 0 0 0</pose>
       <visualize>$(arg laser_visual)</visualize>
-      <update_rate>1800</update_rate>
       <ray>
         <scan>
           <horizontal>
@@ -140,17 +135,17 @@
       <plugin name="gazebo_ros_lds_lfcd_controller" filename="libgazebo_ros_laser.so">
         <topicName>scan</topicName>
         <frameName>base_scan</frameName>
+        <update_rate>1800</update_rate>
       </plugin>
     </sensor>
   </gazebo>
 
-  <gazebo reference="camera_link">
+  <gazebo reference="camera_rgb_frame">
     <sensor type="depth" name="realsense_R200">
-      <pose>$(arg r200_cam_rgb_px) $(arg r200_cam_rgb_py) $(arg r200_cam_rgb_pz) 0 0 0</pose>
       <always_on>true</always_on>
       <visualize>$(arg camera_visual)</visualize>
       <camera>
-          <horizontal_fov>1.02974</horizontal_fov>
+          <horizontal_fov>1.3439</horizontal_fov>
           <image>
               <width>1920</width>
               <height>1080</height>
@@ -158,16 +153,16 @@
           </image>
           <depth_camera></depth_camera>
           <clip>
-              <near>0.02</near>
-              <far>300</far>
+              <near>0.03</near>
+              <far>100</far>
           </clip>
       </camera>
       <plugin name="camera_controller" filename="libgazebo_ros_openni_kinect.so">
-        <pose>$(arg r200_cam_depth_offset) 0 0 0 0 0</pose>
+        <baseline>0.2</baseline>
         <alwaysOn>true</alwaysOn>
-            <updateRate>30.0</updateRate>
-            <cameraName>camera</cameraName>
-            <frameName>camera_link</frameName>
+        <updateRate>30.0</updateRate>
+        <cameraName>camera</cameraName>
+        <frameName>camera_rgb_optical_frame</frameName>
         <imageTopicName>rgb/image_raw</imageTopicName>
         <depthImageTopicName>depth/image_raw</depthImageTopicName>
         <pointCloudTopicName>depth/points</pointCloudTopicName>
@@ -183,7 +178,8 @@
         <CxPrime>0.0</CxPrime>
         <Cx>0.0</Cx>
         <Cy>0.0</Cy>
-        <focalLength>0.0</focalLength>
+        <focalLength>0</focalLength>
+        <hackBaseline>0</hackBaseline>
       </plugin>
     </sensor>
   </gazebo>
