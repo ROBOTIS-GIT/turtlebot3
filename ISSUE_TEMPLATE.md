@@ -22,7 +22,7 @@ ISSUE TEMPLATE ver. 0.0.1
 
 - [ ] Ubuntu 16.04 LTS (Xenial Xerus)
 - [ ] Ubuntu 18.04 LTS (Bionic Beaver)
-- [ ] Linux Mint 18.X Cinnamon
+- [ ] Linux Mint 18.X
 - [ ] etc (PLEASE, WRITE DOWN YOUR OS)
 
 3. Write down software version and firmware version
