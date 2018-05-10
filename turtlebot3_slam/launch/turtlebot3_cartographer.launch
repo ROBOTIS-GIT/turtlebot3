@@ -15,14 +15,21 @@
 -->
 
 <launch>
+  <!-- Arguments -->
+  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [waffle, waffle_pi]"/>
+  <arg name="configuration_basename" default="turtlebot3_lds_2d.lua"/>
+
   <!-- Turtlebot3 -->
   <include file="$(find turtlebot3_bringup)/launch/turtlebot3_remote.launch" />
+    <arg name="model" value="$(arg model)" />
+  </include>
 
   <!-- move_base -->
   <include file="$(find turtlebot3_navigation)/launch/move_base.launch"/>
+    <arg name="model" value="$(arg model)" />
+  </include>
 
   <!-- cartographer_node -->
-  <arg name="configuration_basename" default="turtlebot3_lds_2d.lua"/>
   <node pkg="cartographer_ros" type="cartographer_node" name="cartographer_node" 
         args="-configuration_directory $(find turtlebot3_slam)/config
               -configuration_basename $(arg configuration_basename)"
@@ -41,8 +48,4 @@
   <node pkg="cartographer_ros" type="cartographer_occupancy_grid_node"
         name="cartographer_occupancy_grid_node" 
         args="-resolution 0.05" />
-
-  <!-- rviz -->
-  <node pkg="rviz" type="rviz" name="rviz" required="true"
-        args="-d $(find turtlebot3_slam)/rviz/turtlebot3_cartographer.rviz" />
 </launch>

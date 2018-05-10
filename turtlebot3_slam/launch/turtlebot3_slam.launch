@@ -1,5 +1,19 @@
 <launch>
+  <!-- Arguments -->
+  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [waffle, waffle_pi]"/>
   <arg name="slam_methods" default="gmapping" doc="slam type [gmapping, cartographer, hector, karto, frontier_exploration]"/>
+  <arg name="configuration_basename" default="turtlebot3_lds_2d.lua"/>
+  <arg name="open_rviz"    default="true" />
+
   <!-- SLAM: Gmapping, Cartographer, Hector, Karto, Frontier_exploration, RTAB-Map -->
-  <include file="$(find turtlebot3_slam)/launch/turtlebot3_$(arg slam_methods).launch" />
+  <include file="$(find turtlebot3_slam)/launch/turtlebot3_$(arg slam_methods).launch">
+    <arg name="model" value="$(arg model)" />
+    <arg name="configuration_basename" value="$(arg configuration_basename)" />
+  </include>
+
+  <!-- rviz -->
+  <group if="$(arg open_rviz)"> 
+    <node pkg="rviz" type="rviz" name="rviz" required="true"
+          args="-d $(find turtlebot3_slam)/rviz/turtlebot3_$(arg slam_methods).rviz" />
+  </group>
 </launch>
