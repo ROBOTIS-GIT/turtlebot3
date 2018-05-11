@@ -1,9 +1,11 @@
 <launch>
+  <!-- Arguments -->
   <arg name="scan_topic"     default="scan"/>
   <arg name="initial_pose_x" default="0.0"/>
   <arg name="initial_pose_y" default="0.0"/>
   <arg name="initial_pose_a" default="0.0"/>
 
+  <!-- AMCL -->
   <node pkg="amcl" type="amcl" name="amcl">
 
     <param name="min_particles"             value="500"/>
