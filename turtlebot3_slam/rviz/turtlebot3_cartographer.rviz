@@ -140,7 +140,7 @@ Visualization Manager:
       Queue Size: 10
       Selectable: true
       Size (Pixels): 3
-      Size (m): 0.0500000007
+      Size (m): 0.0300000007
       Style: Flat Squares
       Topic: /scan
       Unreliable: false
@@ -314,7 +314,7 @@ Visualization Manager:
           Queue Size: 10
           Selectable: true
           Size (Pixels): 3
-          Size (m): 0.0500000007
+          Size (m): 0.0300000007
           Style: Flat Squares
           Topic: /scan_matched_points2
           Unreliable: false
