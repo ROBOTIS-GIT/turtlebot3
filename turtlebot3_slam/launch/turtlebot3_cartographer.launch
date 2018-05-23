@@ -16,7 +16,7 @@
 
 <launch>
   <!-- Arguments -->
-  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [waffle, waffle_pi]"/>
+  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]"/>
   <arg name="configuration_basename" default="turtlebot3_lds_2d.lua"/>
 
   <!-- move_base -->
@@ -33,14 +33,14 @@
     <!--remap from="points2" to="/camera/depth/points" / -->
   </node>
 
+  <!-- cartographer_occupancy_grid_node -->
+  <node pkg="cartographer_ros" type="cartographer_occupancy_grid_node"
+        name="cartographer_occupancy_grid_node" 
+        args="-resolution 0.05" />
+
   <!-- flat_world_imu_node -->
   <node pkg="turtlebot3_slam" type="flat_world_imu_node" name="flat_world_imu_node" output="screen">
     <remap from="imu_in" to="/imu" />
     <remap from="imu_out" to="/flat_imu" />
   </node>
-  
-  <!-- flat_world_imu_node -->
-  <node pkg="cartographer_ros" type="cartographer_occupancy_grid_node"
-        name="cartographer_occupancy_grid_node" 
-        args="-resolution 0.05" />
 </launch>
