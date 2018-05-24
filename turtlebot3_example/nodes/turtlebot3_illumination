@@ -18,30 +18,35 @@
 # Authors: Gilbert #
 
 import rospy
-from std_msgs.msg import Byte
 from geometry_msgs.msg import Twist
 from turtlebot3_msgs.msg import SensorState
 
 class Illumination():
     def __init__(self):
         self.cmd_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
-        self.illumination_sub = rospy.Subscriber('/sensor_state', SensorState, self.get_sonar, queue_size = 1)
+        self.illumination_sub = rospy.Subscriber('/sensor_state', SensorState, self.get_illumination, queue_size = 1)
         self.illumination()
 
-    def get_sonar(self, sensor):
-        self.light = sensor.illumination
+    def get_illumination(self, sensor):
+        twist = Twist()
+        if sensor.illumination < 200:
+            linear_vel = 0.05
+        else:
+            linear_vel = 0
 
-        print(self.light)
+        twist.linear.x = linear_vel
+        self.cmd_pub.publish(twist)
 
     def illumination(self):
-        self.linear_vel = 0.05
+        rate = rospy.Rate(10)
         while not rospy.is_shutdown():
-            pass
+            rate.sleep()
 
-    def main(self):
-        rospy.loginfo("start illumination mode")
-        rospy.spin()
-if __name__ == '__main__':
+def main():
     rospy.init_node('turtlebot3_illumination')
-    illumination = Illumination()
-    illumination.main()
+    try:
+        illumination = Illumination()
+    except rospy.ROSInterruptException:
+        pass
+if __name__ == '__main__':
+    main()

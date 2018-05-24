@@ -18,30 +18,36 @@
 # Authors: Gilbert #
 
 import rospy
-from std_msgs.msg import Byte
 from geometry_msgs.msg import Twist
 from turtlebot3_msgs.msg import SensorState
 
 class Sonar():
     def __init__(self):
-        self.cmd_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=5)
-        self.sonar_sub = rospy.Subscriber('/sensor_state', SensorState, self.get_sonar, queue_size = 5)
+        self.cmd_pub = rospy.Publisher('/cmd_vel', Twist, queue_size = 1)
+        self.sonar_sub = rospy.Subscriber('/sensor_state', SensorState, self.get_sonar, queue_size = 1)
         self.sonar()
 
     def get_sonar(self, sensor):
-        self.distance = sensor.sonar
+        twist = Twist()
+        if sensor.sonar < 10:
+            linear_vel = 0
+        else:
+            linear_vel = 0.05
 
-        print(self.distance)
+        twist.linear.x = linear_vel
+        self.cmd_pub.publish(twist)
 
     def sonar(self):
-        self.linear_vel = 0.05
+        rate = rospy.Rate(10)
         while not rospy.is_shutdown():
-            pass
+            rate.sleep()
 
-    def main(self):
-        rospy.loginfo("start sonar mode")
-        rospy.spin()
-if __name__ == '__main__':
+def main():
     rospy.init_node('turtlebot3_sonar')
-    sonar = Sonar()
-    sonar.main()
+    try:
+        sonar = Sonar()
+    except rospy.ROSInterruptException:
+        pass
+
+if __name__ == '__main__':
+    main()
