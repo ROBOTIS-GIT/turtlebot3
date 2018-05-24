@@ -53,7 +53,7 @@ class Turtlebot3MarkerServer
       nh.param<double>("linear_scale", linear_scale, 1.0);
       nh.param<double>("angular_scale", angular_scale, 2.2);
 
-      vel_pub = nh.advertise<geometry_msgs::Twist>("/interactive_marker_velocity_smoother/raw_cmd_vel", 1);
+      vel_pub = nh.advertise<geometry_msgs::Twist>("interactive_marker_velocity_smoother/raw_cmd_vel", 1);
       createInteractiveMarkers();
 
       ROS_INFO("[turtlebot3_marker_server] Initialized.");
