@@ -141,10 +141,10 @@ int main(int argc, char **argv)
 
   tb3_diagnostics_pub  = nh.advertise<diagnostic_msgs::DiagnosticArray>("diagnostics", 10);
 
-  ros::Subscriber imu         = nh.subscribe("/imu", 10, imuMsgCallback);
-  ros::Subscriber lds         = nh.subscribe("/scan", 10, LDSMsgCallback);
-  ros::Subscriber tb3_sensor  = nh.subscribe("/sensor_state", 10, sensorStateMsgCallback);
-  ros::Subscriber version     = nh.subscribe("/version_info", 10, versionMsgCallback);
+  ros::Subscriber imu         = nh.subscribe("imu", 10, imuMsgCallback);
+  ros::Subscriber lds         = nh.subscribe("scan", 10, LDSMsgCallback);
+  ros::Subscriber tb3_sensor  = nh.subscribe("sensor_state", 10, sensorStateMsgCallback);
+  ros::Subscriber version     = nh.subscribe("version_info", 10, versionMsgCallback);
 
   ros::Rate loop_rate(1);
 
