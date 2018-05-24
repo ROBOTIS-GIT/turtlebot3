@@ -8,6 +8,7 @@ Panels:
         - /TF1/Tree1
         - /Global Map1/Costmap1
         - /Global Map1/Planner1
+        - /Local Map1
         - /Local Map1/Polygon1
         - /Local Map1/Costmap1
         - /Local Map1/Planner1
@@ -138,7 +139,7 @@ Visualization Manager:
       Queue Size: 10
       Selectable: true
       Size (Pixels): 3
-      Size (m): 0.0300000007
+      Size (m): 0.0300000012
       Style: Flat Squares
       Topic: /scan
       Unreliable: false
@@ -250,7 +251,7 @@ Visualization Manager:
         - Alpha: 1
           Buffer Length: 1
           Class: rviz/Path
-          Color: 0; 0; 255
+          Color: 255; 255; 0
           Enabled: true
           Head Diameter: 0.300000012
           Head Length: 0.200000003
