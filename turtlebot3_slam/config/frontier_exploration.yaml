@@ -1,0 +1,32 @@
+transform_tolerance: 0.5
+update_frequency: 5.0
+publish_frequency: 5.0
+
+global_frame: map
+robot_base_frame: base_link
+resolution: 0.05
+
+rolling_window: false
+track_unknown_space: true
+
+plugins:
+  - {name: static,           type: "costmap_2d::StaticLayer"}
+  - {name: explore_boundary, type: "frontier_exploration::BoundedExploreLayer"}
+  - {name: sensor,           type: "costmap_2d::ObstacleLayer"}
+  - {name: inflation,        type: "costmap_2d::InflationLayer"}
+
+static:
+  map_topic: /map
+  subscribe_to_updates: true
+
+explore_boundary:
+  resize_to_boundary: false
+  frontier_travel_point: middle
+  explore_clear_space: false
+
+sensor:
+  observation_sources: laser
+  laser: {data_type: LaserScan, clearing: true, marking: true, topic: scan, inf_is_valid: true, raytrace_range: $(arg sensor_range), obstacle_range: $(arg sensor_range)}
+
+inflation:
+  inflation_radius: 0.15
