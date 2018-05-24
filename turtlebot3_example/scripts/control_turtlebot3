@@ -1,0 +1,164 @@
+#!/usr/bin/env python
+#################################################################################
+# Copyright 2018 ROBOTIS CO., LTD.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#################################################################################
+
+# Authors: Gilbert #
+
+import rospy
+from geometry_msgs.msg import Twist, Point, Quaternion
+from nav_msgs.msg import Odometry
+from sensor_msgs.msg import JointState, LaserScan
+import turtlebot3_example.msg
+from turtlebot3_msgs.msg import SensorState
+import numpy as np
+
+
+class Run():
+    def __init__(self):
+        self.cmd_pub_1 = rospy.Publisher('/move_tb3_1/cmd_vel', Twist, queue_size=5)
+       # self.scan_sub_1 = rospy.Subscriber('/move_tb3_1/scan', LaserScan, self.get_scan)
+        self.stats_sub_1 = rospy.Subscriber('/joint_states', JointState, self.get_state)
+        self.odom_sub_1 = rospy.Subscriber('/move_tb3_1/odom', Odometry, self.get_odom)
+
+        self.cmd_pub_2 = rospy.Publisher('/move_tb3_2/cmd_vel', Twist, queue_size=5)
+      #  self.scan_sub_2 = rospy.Subscriber('/move_tb3_1/scan', LaserScan, self.get_scan)
+        self.stats_sub_2 = rospy.Subscriber('/joint_states', JointState, self.get_state)
+        self.odom_sub_2 = rospy.Subscriber('/move_tb3_1/odom', Odometry, self.get_odom)
+
+        self.cmd_pub_3 = rospy.Publisher('/fix_tb3_2/cmd_vel', Twist, queue_size=5)
+        self.cmd_pub_4 = rospy.Publisher('/fix_tb3_3/cmd_vel', Twist, queue_size=5)
+        self.r = rospy.Rate(15)
+        self.run()
+
+    def get_scan(self, scan):
+
+        discretized_ranges = []
+        min_range = 0.3
+        done = False
+
+        for i, item in enumerate(scan.ranges):
+            if scan.ranges[i] == float('Inf') or np.isinf(scan.ranges[i]):
+                discretized_ranges.append(3.5)
+            elif np.isnan(scan.ranges[i]):
+                discretized_ranges.append(0)
+            else:
+                discretized_ranges.append(scan.ranges[i])
+
+                # if (min_range > data.ranges[i] > 0):
+                #  done = True
+
+        min_data = discretized_ranges[:60] + discretized_ranges[-60:]
+       # min_data = discretized_ranges
+        if (min_range > min(min_data) > 0):
+            done = True
+
+        return done
+
+    def get_odom(self, odom):
+        self.position = Point()
+        self.position = odom.pose.pose.position
+
+    def get_state(self, data):
+        TICK2RAD = 0.001533981
+        last_pos = 0.0
+        diff_pos = 0.0
+        cur_pos = 0.0
+        encoder = 0
+
+        cur_pos = data.position[0]
+        diff_pos = cur_pos - last_pos
+        encoder = encoder + (diff_pos / TICK2RAD)
+        self.right_encoder = encoder
+
+    def turn(self, angle):
+        if self.init_stats:
+            self.init_right_encoder = self.right_encoder
+            self.init_stats = False
+        diff_encoder = (np.deg2rad(angle) * 0.080) / (0.207 / 4096)
+        while (abs(self.init_right_encoder - self.right_encoder) < abs(diff_encoder)):
+            if diff_encoder >= 0:
+                self.twist.angular.z = -0.5
+            else:
+                self.twist.angular.z = 0.5
+
+            self.cmd_pub.publish(self.twist)
+            self.r.sleep()
+        self.init_stats = True
+        self.twist.angular.z = 0
+        self.cmd_pub.publish(self.twist)
+
+
+
+    def run(self):
+        twist_1 = Twist()
+        twist_2 = Twist()
+        twist_3 = Twist()
+        twist_4 = Twist()
+        while not rospy.is_shutdown():
+            scan_1 = rospy.wait_for_message("/move_tb3_1/scan", LaserScan)
+            scan_2 = rospy.wait_for_message("/move_tb3_2/scan", LaserScan)
+            scan_3 = rospy.wait_for_message("/fix_tb3_2/scan", LaserScan)
+            scan_4 = rospy.wait_for_message("/fix_tb3_3/scan", LaserScan)
+
+            done_1 = self.get_scan(scan_1)
+            done_2 = self.get_scan(scan_2)
+            done_3 = self.get_scan(scan_3)
+            done_4 = self.get_scan(scan_4)
+
+            if not done_1:
+                twist_1.linear.x = 0.2
+                twist_1.angular.z = 0.0
+            else:
+                twist_1.linear.x = 0.0
+                twist_1.angular.z = 2
+
+            if not done_2:
+                twist_2.linear.x = 0.2
+                twist_2.angular.z = 0.0
+            else:
+                twist_2.linear.x = 0.0
+                twist_2.angular.z = -2
+
+            if not done_3:
+                twist_3.linear.x = 0.2
+                twist_3.angular.z = 0.0
+            else:
+                twist_3.linear.x = 0.0
+                twist_3.angular.z = 2
+
+            if not done_4:
+                twist_4.linear.x = 0.2
+                twist_4.angular.z = 0.0
+            else:
+                twist_4.linear.x = 0.0
+                twist_4.angular.z = -2
+
+            self.cmd_pub_1.publish(twist_1)
+            self.cmd_pub_2.publish(twist_2)
+            self.cmd_pub_3.publish(twist_3)
+            self.cmd_pub_4.publish(twist_4)
+            self.r.sleep()
+
+
+def main():
+    rospy.init_node('turtlebot_control')
+    try:
+        run = Run()
+    except rospy.ROSInterruptException:
+        pass
+
+if __name__ == '__main__':
+    main()

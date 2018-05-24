@@ -38,7 +38,7 @@ class Obstacle():
     def obstacle(self):
         self.twist = Twist()
         while not rospy.is_shutdown():
-            msg = rospy.wait_for_message("scan", LaserScan)
+            msg = rospy.wait_for_message("/scan", LaserScan)
             self.scan_filter = []
             for i in range(360):
                 if i <= 15 or i > 335:
