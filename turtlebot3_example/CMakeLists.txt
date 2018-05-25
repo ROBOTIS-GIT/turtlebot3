@@ -76,9 +76,9 @@ catkin_install_python(PROGRAMS
     nodes/turtlebot3_cliff
     nodes/turtlebot3_sonar
     nodes/turtlebot3_illumination
+    nodes/turtlebot3_marker_server
     DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
-
 
 install(DIRECTORY launch 
 	DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
