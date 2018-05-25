@@ -32,8 +32,10 @@ catkin_python_setup()
 ################################################################################
 # Declare ROS messages, services and actions
 ################################################################################
-add_action_files(FILES 
-    turtlebot3.action
+add_action_files(
+  DIRECTORY action
+  FILES
+  turtlebot3.action
 )
 
 generate_messages(DEPENDENCIES
@@ -67,13 +69,6 @@ include_directories(
 ################################################################################
 # Install
 ################################################################################
-install(PROGRAMS
-  scripts/turtlebot3_server.py
-  scripts/turtlebot3_client.py
-  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
-
-
 catkin_install_python(PROGRAMS 
     nodes/turtlebot3_obstacle
     nodes/turtlebot3_client
