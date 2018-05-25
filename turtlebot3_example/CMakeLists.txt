@@ -46,7 +46,7 @@ generate_messages(DEPENDENCIES
 # Catkin specific configuration
 ################################################################################
 catkin_package(
-  LIBRARIES turtlebot3_patrol
+  LIBRARIES
   CATKIN_DEPENDS
   std_msgs
   message_runtime
@@ -67,25 +67,11 @@ include_directories(
 ################################################################################
 # Install
 ################################################################################
-install(PROGRAMS 
-   scripts/turtlebot3_pointop_key.py
-   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
-
-install(PROGRAMS
-  scripts/turtlebot3_client.py
-  scripts/turtlebot3_server.py
-  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
-
-install(PROGRAMS
-  scripts/control_turtlebot3
-  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
-
-catkin_install_python(PROGRAMS scripts/control_turtlebot3
-                      DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
-
 catkin_install_python(PROGRAMS 
+    nodes/turtlebot3_obstacle
+    nodes/turtlebot3_client
+    nodes/turtlebot3_server
+    nodes/turtlebot3_pointop_key
     nodes/turtlebot3_bumper 
     nodes/turtlebot3_cliff
     nodes/turtlebot3_sonar

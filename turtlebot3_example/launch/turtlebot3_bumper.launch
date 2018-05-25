@@ -1,7 +1,4 @@
 <launch>
-  <!-- launch turtlebot3_autorace_detect_lane.launch before launch this file -->
-
-  <!-- lane control -->
   <node pkg="turtlebot3_example" type="turtlebot3_bumper" name="turtlebot3_bumper" output="screen">
   </node>
 </launch>
