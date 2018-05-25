@@ -38,7 +38,6 @@ count - patrol count
 If you want to close, insert 'x'
 """
 
-
 class Client():
     def __init__(self):
         rospy.loginfo("wait for server")
@@ -47,6 +46,7 @@ class Client():
     def getkey(self):
         mode, area, count = raw_input("| mode | area | count |\n").split()
         mode, area, count = [str(mode), float(area), int(count)]
+
         if mode == 's':
             mode = 1
         elif mode == 't':
@@ -86,5 +86,3 @@ if __name__ == '__main__':
             result = Client()
     except:
         print("program close.", file=sys.stderr)
-
-

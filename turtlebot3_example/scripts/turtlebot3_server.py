@@ -26,7 +26,6 @@ import turtlebot3_example.msg
 from turtlebot3_msgs.msg import SensorState
 import numpy as np
 
-
 class Turtlebot3Action(object):
     _feedback = turtlebot3_example.msg.turtlebot3ActionFeedback()
     _result = turtlebot3_example.msg.turtlebot3ActionResult()
@@ -160,6 +159,7 @@ class Turtlebot3Action(object):
             self._as.set_succeeded(self._result)
 
 if __name__ == '__main__':
-    rospy.init_node('turtlebot3_server')
+    rospy.init_node('turtlebot3')
     server = Turtlebot3Action(rospy.get_name())
     rospy.spin()
+    
