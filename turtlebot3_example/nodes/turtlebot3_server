@@ -22,20 +22,20 @@ import actionlib
 from geometry_msgs.msg import Twist, Point, Quaternion
 from nav_msgs.msg import Odometry
 from sensor_msgs.msg import JointState
-import turtlebot3_example.msg
 from turtlebot3_msgs.msg import SensorState
+from turtlebot3_example.msg import Turtlebot3
 import numpy as np
 
 class Turtlebot3Action(object):
-    _feedback = turtlebot3_example.msg.turtlebot3ActionFeedback()
-    _result = turtlebot3_example.msg.turtlebot3ActionResult()
+    _feedback = turtlebot3_example.msg.Turtlebot3ActionFeedback()
+    _result = turtlebot3_example.msg.Turtlebot3ActionResult()
 
     def __init__(self, name):
         self._action_name = name
-        self._as = actionlib.SimpleActionServer(self._action_name, turtlebot3_example.msg.turtlebot3Action,
+        self._as = actionlib.SimpleActionServer(self._action_name, turtlebot3_example.msg.Turtlebot3Action,
                                                 execute_cb=self.execute_cb, auto_start=False)
-        self.stats_sub = rospy.Subscriber('/joint_states', JointState, self.get_state)
-        self.odom_sub = rospy.Subscriber('/odom', Odometry, self.get_odom)
+        self.stats_sub = rospy.Subscriber('joint_states', JointState, self.get_state)
+        self.odom_sub = rospy.Subscriber('odom', Odometry, self.get_odom)
         self.init_stats = True
         self._as.start()
         rospy.loginfo('Server On')
@@ -105,7 +105,7 @@ class Turtlebot3Action(object):
 
     def execute_cb(self, goal):
         position = Point()
-        self.cmd_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=5)
+        self.cmd_pub = rospy.Publisher('cmd_vel', Twist, queue_size=5)
         self.twist = Twist()
         self.r = rospy.Rate(15)
         self.r1 = rospy.Rate(1)

@@ -1,6 +1,0 @@
-#goal definition
-geometry_msgs/Vector3 goal
----
-string result
----
-string state

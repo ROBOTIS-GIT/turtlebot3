@@ -2,6 +2,16 @@
 Changelog for package turtlebot3_slam
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.0.0 (2018-05-29)
+------------------
+* added cartographer
+* added hector mapping
+* added karto SLAM
+* added frontier_exploration
+* added launch files to run various SLAMs
+* modified pull request `#220 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/220>`_ `#219 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/219>`_ `#215 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/215>`_ `#212 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/212>`_ `#202 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/202>`_ `#154 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/154>`_ `#153 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/153>`_ `#147 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/147>`_ `#146 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/146>`_ `#145 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/145>`_
+* Contributors: Darby Lim, ncnynl, Pyo
+
 0.2.1 (2018-03-14)
 ------------------
 * none
