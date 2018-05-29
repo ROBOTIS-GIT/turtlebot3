@@ -3,6 +3,50 @@
   <xacro:arg name="laser_visual" default="false"/>
   <xacro:arg name="imu_visual"   default="false"/>
 
+  <gazebo reference="base_link">
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+
+  <gazebo reference="wheel_left_link">
+    <mu1>0.1</mu1>
+    <mu2>0.1</mu2>
+    <kp>500000.0</kp>
+    <kd>10.0</kd>
+    <minDepth>0.001</minDepth>
+    <maxVel>0.1</maxVel>
+    <fdir1>1 0 0</fdir1>
+    <material>Gazebo/FlatBlack</material>
+  </gazebo>
+
+  <gazebo reference="wheel_right_link">
+    <mu1>0.1</mu1>
+    <mu2>0.1</mu2>
+    <kp>500000.0</kp>
+    <kd>10.0</kd>
+    <minDepth>0.001</minDepth>
+    <maxVel>0.1</maxVel>
+    <fdir1>1 0 0</fdir1>
+    <material>Gazebo/FlatBlack</material>
+  </gazebo>
+
+  <gazebo reference="caster_back_link">
+    <mu1>0.1</mu1>
+    <mu2>0.1</mu2>
+    <kp>1000000.0</kp>
+    <kd>100.0</kd>
+    <minDepth>0.001</minDepth>
+    <maxVel>1.0</maxVel>
+    <material>Gazebo/FlatBlack</material>
+  </gazebo>
+
+  <gazebo reference="imu_link">
+    <sensor type="imu" name="imu">
+      <always_on>true</always_on>
+      <visualize>$(arg imu_visual)</visualize>
+    </sensor>
+    <material>Gazebo/FlatBlack</material>
+  </gazebo>
+
   <gazebo>
     <plugin name="turtlebot3_burger_controller" filename="libgazebo_ros_diff_drive.so">
       <commandTopic>cmd_vel</commandTopic>
@@ -10,62 +54,29 @@
       <odometryFrame>odom</odometryFrame>
       <robotBaseFrame>base_footprint</robotBaseFrame>
       <publishWheelTF>false</publishWheelTF>
+      <publishTf>true</publishTf>
       <publishWheelJointState>true</publishWheelJointState>
       <legacyMode>false</legacyMode>
-      <updateRate>100</updateRate>
+      <updateRate>30</updateRate>
       <leftJoint>wheel_left_joint</leftJoint>
       <rightJoint>wheel_right_joint</rightJoint>
       <wheelSeparation>0.160</wheelSeparation>
       <wheelDiameter>0.066</wheelDiameter>
       <wheelAcceleration>1</wheelAcceleration>
       <wheelTorque>10</wheelTorque>
+      <rosDebugLevel>na</rosDebugLevel>
     </plugin>
-  </gazebo>
-
-  <gazebo reference="base_link">
-    <material>Gazebo/Grey</material>
-  </gazebo>
-
-  <gazebo reference="wheel_left_link">
-    <mu1>10</mu1>
-    <mu2>10</mu2>
-    <kp>500000.0</kp>
-    <kd>10.0</kd>
-    <minDepth>0.001</minDepth>
-    <maxVel>0.1</maxVel>
-    <fdir1>1 0 0</fdir1>
-    <material>Gazebo/DarkGrey</material>
-  </gazebo>
-
-  <gazebo reference="wheel_right_link">
-    <mu1>10</mu1>
-    <mu2>10</mu2>
-    <kp>500000.0</kp>
-    <kd>10.0</kd>
-    <minDepth>0.001</minDepth>
-    <maxVel>0.1</maxVel>
-    <fdir1>1 0 0</fdir1>
-    <material>Gazebo/DarkGrey</material>
-  </gazebo>
-
-  <gazebo reference="caster_back_link">
-    <mu1>0.0</mu1>
-    <mu2>0.0</mu2>
-    <kp>1000000.0</kp>
-    <kd>100.0</kd>
-    <minDepth>0.001</minDepth>
-    <maxVel>1.0</maxVel>
-    <material>Gazebo/Grey</material>
   </gazebo>
 
   <gazebo>
     <plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
       <alwaysOn>true</alwaysOn>
       <bodyName>imu_link</bodyName>
+      <frameName>imu_link</frameName>
       <topicName>imu</topicName>
       <serviceName>imu_service</serviceName>
       <gaussianNoise>0.0</gaussianNoise>
-      <updateRate>100.0</updateRate>
+      <updateRate>200</updateRate>
       <imu>
         <noise>
           <type>gaussian</type>
@@ -86,28 +97,18 @@
     </plugin>
   </gazebo>
 
-  <gazebo reference="imu_link">
-    <sensor type="imu" name="imu">
-      <always_on>true</always_on>
-      <update_rate>50</update_rate>
-      <visualize>$(arg imu_visual)</visualize>
-    </sensor>
-    <material>Gazebo/Grey</material>
-  </gazebo>
-
   <gazebo reference="base_scan">
-    <material>Gazebo/DarkGrey</material>
+    <material>Gazebo/FlatBlack</material>
     <sensor type="ray" name="lds_lfcd_sensor">
       <pose>0 0 0 0 0 0</pose>
       <visualize>$(arg laser_visual)</visualize>
-      <update_rate>1800</update_rate>
       <ray>
         <scan>
           <horizontal>
             <samples>360</samples>
             <resolution>1</resolution>
             <min_angle>0.0</min_angle>
-            <max_angle>6.28</max_angle>
+            <max_angle>6.28319</max_angle>
           </horizontal>
         </scan>
         <range>
@@ -124,6 +125,7 @@
       <plugin name="gazebo_ros_lds_lfcd_controller" filename="libgazebo_ros_laser.so">
         <topicName>scan</topicName>
         <frameName>base_scan</frameName>
+        <update_rate>1800</update_rate>
       </plugin>
     </sensor>
   </gazebo>

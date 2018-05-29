@@ -26,7 +26,7 @@
 #include <turtlebot3_msgs/VersionInfo.h>
 
 #define SOFTWARE_VERSION "1.0.0"
-#define FIRMWARE_VERSION "1.1.0"
+#define FIRMWARE_VERSION "1.2.0"
 #define HARDWARE_VERSION "1.0.0"
 
 ros::Publisher tb3_diagnostics_pub;
@@ -103,15 +103,21 @@ void sensorStateMsgCallback(const turtlebot3_msgs::SensorState::ConstPtr &msg)
 
 void versionMsgCallback(const turtlebot3_msgs::VersionInfo::ConstPtr &msg)
 {
+  static bool check_version = false;
 
-  if (std::string(msg->software) != std::string(SOFTWARE_VERSION))
-    ROS_WARN("Check turtlebot3 repository and Update your software!!");
-  
-  if (std::string(msg->hardware) != std::string(HARDWARE_VERSION))
-    ROS_WARN("Check turtlebot3 wiki page and Update your hardware!!");
-    
-  if (std::string(msg->firmware) != std::string(FIRMWARE_VERSION))
-    ROS_WARN("Check OpenCR update and change your firmware!!");
+  if (check_version == false)
+  {
+    if (std::string(msg->software) != std::string(SOFTWARE_VERSION))
+      ROS_WARN("Check turtlebot3 repository and Update your software!!");
+
+    if (std::string(msg->hardware) != std::string(HARDWARE_VERSION))
+      ROS_WARN("Check turtlebot3 wiki page and Update your hardware!!");
+
+    if (std::string(msg->firmware) != std::string(FIRMWARE_VERSION))
+      ROS_WARN("Check OpenCR update and change your firmware!!");
+
+    check_version = true;
+  }
 }
 
 void msgPub()
@@ -135,10 +141,10 @@ int main(int argc, char **argv)
 
   tb3_diagnostics_pub  = nh.advertise<diagnostic_msgs::DiagnosticArray>("diagnostics", 10);
 
-  ros::Subscriber imu         = nh.subscribe("/imu", 10, imuMsgCallback);
-  ros::Subscriber lds         = nh.subscribe("/scan", 10, LDSMsgCallback);
-  ros::Subscriber tb3_sensor  = nh.subscribe("/sensor_state", 10, sensorStateMsgCallback);
-  ros::Subscriber version     = nh.subscribe("/version_info", 10, versionMsgCallback);
+  ros::Subscriber imu         = nh.subscribe("imu", 10, imuMsgCallback);
+  ros::Subscriber lds         = nh.subscribe("scan", 10, LDSMsgCallback);
+  ros::Subscriber tb3_sensor  = nh.subscribe("sensor_state", 10, sensorStateMsgCallback);
+  ros::Subscriber version     = nh.subscribe("version_info", 10, versionMsgCallback);
 
   ros::Rate loop_rate(1);
 

@@ -1,8 +1,6 @@
-# Define the action goal message
+#goal definition
 geometry_msgs/Vector3 goal
 ---
-# Define the action result message
 string result
 ---
-# Define the action feedback message
 string state
