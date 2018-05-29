@@ -23,8 +23,8 @@ from turtlebot3_msgs.msg import SensorState
 
 class Bumper():
     def __init__(self):
-        self.cmd_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
-        self.bumper_sub = rospy.Subscriber('/sensor_state', SensorState, self.get_bumper, queue_size = 1)
+        self.cmd_pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
+        self.bumper_sub = rospy.Subscriber('sensor_state', SensorState, self.get_bumper, queue_size = 1)
         self.twist = Twist()
         self.bumper()
     def get_bumper(self, sensor):

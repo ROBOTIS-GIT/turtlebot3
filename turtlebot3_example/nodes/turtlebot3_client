@@ -24,7 +24,7 @@ import turtlebot3_example.msg
 import sys
 
 msg = """
-patrol your Turtlebot3!
+patrol your TurtleBot3!
 -----------------------
 mode : s - Patrol to Square
        t - Patrol to Triangle
@@ -61,7 +61,7 @@ class Client():
         return mode, area, count
 
     def client(self):
-        client = actionlib.SimpleActionClient('turtlebot3', turtlebot3_example.msg.turtlebot3Action)
+        client = actionlib.SimpleActionClient('turtlebot3', turtlebot3_example.msg.Turtlebot3Action)
 
         mode, area, count = self.getkey()
         client.wait_for_server()

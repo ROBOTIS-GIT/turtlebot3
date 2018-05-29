@@ -1,0 +1,8 @@
+# Define the goal
+geometry_msgs/Vector3 goal
+---
+# Define the result
+string result
+---
+# Define a feedback message
+string state

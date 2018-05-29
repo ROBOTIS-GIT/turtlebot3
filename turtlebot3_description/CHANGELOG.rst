@@ -2,6 +2,16 @@
 Changelog for package turtlebot3_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.0.0 (2018-05-29)
+------------------
+* added frameName for imu on gazebo (however, there is no effect.)
+* modified robot names
+* modified range of lidar, lidar position, scan param
+* modified camera position and fixed slip bug
+* modified waffle_pi stl files
+* merged pull request `#220 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/220>`_ `#212 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/212>`_ `#200 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/200>`_ `#155 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/155>`_ `#154 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/154>`_ `#153 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/153>`_ `#147 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/147>`_ `#146 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/146>`_
+* Contributors: Darby Lim, Pyo
+
 0.2.1 (2018-03-14)
 ------------------
 * refactoring for release
