@@ -23,7 +23,7 @@ from geometry_msgs.msg import Twist, Point, Quaternion
 from nav_msgs.msg import Odometry
 from sensor_msgs.msg import JointState
 from turtlebot3_msgs.msg import SensorState
-from turtlebot3_example.msg import Turtlebot3
+import turtlebot3_example.msg 
 import numpy as np
 
 class Turtlebot3Action(object):
