@@ -4,10 +4,10 @@
   <arg name="configuration_basename" default="turtlebot3_lds_2d.lua"/>
   <arg name="odom_frame" default="odom"/>
   <arg name="base_frame" default="base_footprint"/>
-  <arg name="pub_map_odom_transform" default="true"/>
   <arg name="scan_subscriber_queue_size" default="5"/>
   <arg name="scan_topic" default="scan"/>
   <arg name="map_size" default="2048"/>
+  <arg name="pub_map_odom_transform" default="true"/>
   <arg name="tf_map_scanmatch_transform_frame_name" default="scanmatcher_frame"/>
 
   <!-- Hector mapping -->
@@ -22,6 +22,7 @@
     <param name="use_tf_pose_start_estimate"  value="false"/>
     <param name="pub_map_scanmatch_transform" value="true" />
     <param name="pub_map_odom_transform"      value="$(arg pub_map_odom_transform)"/>
+    <param name="tf_map_scanmatch_transform_frame_name" value="$(arg tf_map_scanmatch_transform_frame_name)" />
 
     <!-- Map size / start point -->
     <param name="map_resolution" value="0.050"/>
@@ -52,6 +53,5 @@
       <param name="pub_drawings"     value="true"/>
       <param name="pub_debug_output" value="true"/>
     -->
-    <param name="tf_map_scanmatch_transform_frame_name" value="$(arg tf_map_scanmatch_transform_frame_name)" />
   </node>
 </launch>
