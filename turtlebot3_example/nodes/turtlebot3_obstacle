@@ -27,14 +27,6 @@ class Obstacle():
         self._cmd_pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
         self.obstacle()
 
-    def get_scan(self, data):
-        scan = LaserScan()
-        scan = data
-        for i in range(360):
-            if i <= 15 or i > 335:
-                if scan.ranges[i] >= self.LIDAR_ERR:
-                    self.scan_filter.append(scan.ranges[i])
-
     def obstacle(self):
         self.twist = Twist()
         while not rospy.is_shutdown():
