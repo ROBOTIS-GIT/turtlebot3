@@ -28,9 +28,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 import rospy
-
 from geometry_msgs.msg import Twist
-
 import sys, select, termios, tty
 
 BURGER_MAX_LIN_VEL = 0.22
@@ -43,7 +41,7 @@ LIN_VEL_STEP_SIZE = 0.01
 ANG_VEL_STEP_SIZE = 0.1
 
 msg = """
-Control Your Turtlebot3!
+Control Your TurtleBot3!
 ---------------------------
 Moving around:
         w

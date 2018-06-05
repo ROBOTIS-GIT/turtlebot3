@@ -40,22 +40,22 @@ class GotoPoint():
     def __init__(self):
         rospy.init_node('turtlebot3_pointop_key', anonymous=False)
         rospy.on_shutdown(self.shutdown)
-        self.cmd_vel = rospy.Publisher('/cmd_vel', Twist, queue_size=5)
+        self.cmd_vel = rospy.Publisher('cmd_vel', Twist, queue_size=5)
         position = Point()
         move_cmd = Twist()
         r = rospy.Rate(10)
         self.tf_listener = tf.TransformListener()
-        self.odom_frame = '/odom'
+        self.odom_frame = 'odom'
 
         try:
-            self.tf_listener.waitForTransform(self.odom_frame, '/base_footprint', rospy.Time(), rospy.Duration(1.0))
-            self.base_frame = '/base_footprint'
+            self.tf_listener.waitForTransform(self.odom_frame, 'base_footprint', rospy.Time(), rospy.Duration(1.0))
+            self.base_frame = 'base_footprint'
         except (tf.Exception, tf.ConnectivityException, tf.LookupException):
             try:
-                self.tf_listener.waitForTransform(self.odom_frame, '/base_link', rospy.Time(), rospy.Duration(1.0))
-                self.base_frame = '/base_link'
+                self.tf_listener.waitForTransform(self.odom_frame, 'base_link', rospy.Time(), rospy.Duration(1.0))
+                self.base_frame = 'base_link'
             except (tf.Exception, tf.ConnectivityException, tf.LookupException):
-                rospy.loginfo("Cannot find transform between /odom and /base_link or /base_footprint")
+                rospy.loginfo("Cannot find transform between odom and base_link or base_footprint")
                 rospy.signal_shutdown("tf Exception")
 
         (position, rotation) = self.get_odom()

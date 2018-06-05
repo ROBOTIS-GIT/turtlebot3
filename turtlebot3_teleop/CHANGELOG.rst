@@ -2,6 +2,13 @@
 Changelog for package turtlebot3_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.0.0 (2018-05-29)
+------------------
+* added constrain to limit velocity
+* modified initial value, profile function, limit velocity msg
+* modified global names `#211 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/211>`_ from FurqanHabibi/fix_global_topic_name
+* Contributors: Darby Lim, Muhammad Furqan Habibi, Pyo
+
 0.2.1 (2018-03-14)
 ------------------
 * none

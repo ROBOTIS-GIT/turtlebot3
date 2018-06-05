@@ -2,6 +2,16 @@
 Changelog for package turtlebot3_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.0.0 (2018-05-29)
+------------------
+* added variable to check version only once
+* modified firmware version
+* modified global names `#211 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/211>`_ from FurqanHabibi/fix_global_topic_name
+* modified turtlebot3_rpicamera.yaml gets camera_info_url value from the initialized calibration file
+* deleted count version info msg
+* merged pull request `#220 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/220>`_ `#212 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/212>`_ `#200 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/200>`_ `#156 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/156>`_ `#154 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/154>`_ `#153 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/153>`_ `#150 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/150>`_ `#147 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/147>`_ `#146 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/146>`_
+* Contributors: Darby Lim, Leon Jung, Muhammad Furqan Habibi, Pyo
+
 0.2.1 (2018-03-12)
 ------------------
 * refactoring for release

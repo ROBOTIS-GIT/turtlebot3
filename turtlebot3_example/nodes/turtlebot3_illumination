@@ -23,8 +23,8 @@ from turtlebot3_msgs.msg import SensorState
 
 class Illumination():
     def __init__(self):
-        self.cmd_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
-        self.illumination_sub = rospy.Subscriber('/sensor_state', SensorState, self.get_illumination, queue_size = 1)
+        self.cmd_pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
+        self.illumination_sub = rospy.Subscriber('sensor_state', SensorState, self.get_illumination, queue_size = 1)
         self.illumination()
 
     def get_illumination(self, sensor):

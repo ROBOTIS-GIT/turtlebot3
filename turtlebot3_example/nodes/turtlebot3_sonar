@@ -23,8 +23,8 @@ from turtlebot3_msgs.msg import SensorState
 
 class Sonar():
     def __init__(self):
-        self.cmd_pub = rospy.Publisher('/cmd_vel', Twist, queue_size = 1)
-        self.sonar_sub = rospy.Subscriber('/sensor_state', SensorState, self.get_sonar, queue_size = 1)
+        self.cmd_pub = rospy.Publisher('cmd_vel', Twist, queue_size = 1)
+        self.sonar_sub = rospy.Subscriber('sensor_state', SensorState, self.get_sonar, queue_size = 1)
         self.sonar()
 
     def get_sonar(self, sensor):

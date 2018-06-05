@@ -2,6 +2,29 @@
 Changelog for package turtlebot3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.0.0 (2018-05-29)
+------------------
+* added cartographer
+* added hector mapping
+* added karto SLAM
+* added frontier_exploration
+* added launch files to run various SLAMs
+* added robot model for OpenManipulator and turtlebot3_autorace
+* added exec python nodes like marker_server in catkin_install_python
+* added frameName for imu on gazebo (however, there is no effect.)
+* added variable to check version only once (turtlebot3_bringup)
+* modified global names `#211 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/211>`_ from FurqanHabibi/fix_global_topic_name
+* modified gmapping parameters
+* modified navigation parameters
+* modified version check and firmware version (turtlebot3_bringup)
+* modified robot names
+* modified range of lidar, lidar position, scan param
+* modified camera position and fixed slip bug
+* modified waffle_pi stl files
+* modified initial value, profile function, limit velocity msg (teleop)
+* merged pull request `#154 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/154>`_ `#153 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/153>`_ `#148 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/148>`_ `#147 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/147>`_ `#146 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/146>`_ `#145 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/145>`_
+* Contributors: Darby Lim, Leon Jung, Gilbert, KurtE, ncnynl, FurqanHabibi, skasperski, ihadzic, Pyo
+
 0.2.1 (2018-03-14)
 ------------------
 * added install directory
