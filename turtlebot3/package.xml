@@ -24,5 +24,6 @@
   <exec_depend>turtlebot3_navigation</exec_depend>
   <exec_depend>turtlebot3_slam</exec_depend>
   <exec_depend>turtlebot3_teleop</exec_depend>
+  <exec_depend>turtlebot3_msgs</exec_depend>
   <export><metapackage/></export>
 </package>
