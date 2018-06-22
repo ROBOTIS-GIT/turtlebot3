@@ -1,9 +1,9 @@
 <launch>
-  <arg name="odom_tf_prefix" default=""/>
+  <arg name="ns" default=""/>
 
-  <node pkg="rosserial_python" type="serial_node.py" name="turtlebot3_core" output="screen">
+  <node pkg="rosserial_python" type="serial_node.py" name="turtlebot3_core" output="screen" ns="$(arg ns)">
     <param name="port" value="/dev/ttyACM0"/>
     <param name="baud" value="115200"/>
-    <param name="tf_prefix" value="$(arg odom_tf_prefix)"/>
+    <param name="tf_prefix" value="$(arg ns)"/>
   </node>
 </launch>

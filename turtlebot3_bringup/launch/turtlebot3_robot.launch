@@ -2,7 +2,7 @@
   <arg name="ns" default=""/>
 
   <include file="$(find turtlebot3_bringup)/launch/turtlebot3_core.launch">
-    <arg name="odom_tf_prefix" value="$(arg ns)"/>
+    <arg name="ns" value="$(arg ns)"/>
   </include>
 
   <include file="$(find turtlebot3_bringup)/launch/turtlebot3_lidar.launch">
