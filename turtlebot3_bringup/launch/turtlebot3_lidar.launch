@@ -1,5 +1,7 @@
 <launch>
-  <node pkg="hls_lfcd_lds_driver" type="hlds_laser_publisher" name="turtlebot3_lds" output="screen">
+  <arg name="ns" default=""/>
+
+  <node pkg="hls_lfcd_lds_driver" type="hlds_laser_publisher" name="turtlebot3_lds" output="screen" ns="$(arg ns)">
     <param name="port" value="/dev/ttyUSB0"/>
     <param name="frame_id" value="base_scan"/>
   </node>
