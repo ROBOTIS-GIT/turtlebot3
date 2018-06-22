@@ -1,13 +1,6 @@
 <launch>
-  <arg name="ns" default=""/>
+  <include file="$(find turtlebot3_bringup)/launch/turtlebot3_core.launch"/>
+  <include file="$(find turtlebot3_bringup)/launch/turtlebot3_lidar.launch"/>
 
-  <include file="$(find turtlebot3_bringup)/launch/turtlebot3_core.launch">
-    <arg name="ns" value="$(arg ns)"/>
-  </include>
-
-  <include file="$(find turtlebot3_bringup)/launch/turtlebot3_lidar.launch">
-    <arg name="ns" value="$(arg ns)"/>
-  </include>
-
-  <node pkg="turtlebot3_bringup" type="turtlebot3_diagnostics" name="turtlebot3_diagnostics" output="screen" ns="$(arg ns)"/>
+  <node pkg="turtlebot3_bringup" type="turtlebot3_diagnostics" name="turtlebot3_diagnostics" output="screen"/>
 </launch>
