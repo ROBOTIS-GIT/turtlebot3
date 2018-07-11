@@ -65,7 +65,7 @@ class Client():
 
         mode, area, count = self.getkey()
         client.wait_for_server()
-        goal = turtlebot3_example.msg.turtlebot3Goal()
+        goal = turtlebot3_example.msg.Turtlebot3Goal()
         goal.goal.x = mode
         goal.goal.y = area
         goal.goal.z = count

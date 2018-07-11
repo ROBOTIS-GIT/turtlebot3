@@ -152,8 +152,8 @@
         <updateRate>30.0</updateRate>
         <cameraName>camera</cameraName>
         <frameName>camera_rgb_optical_frame</frameName>
-        <imageTopicName>rgb/image_raw</imageTopicName>
-        <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
+        <imageTopicName>image</imageTopicName>
+        <cameraInfoTopicName>camera_info</cameraInfoTopicName>
         <hackBaseline>0.07</hackBaseline>
         <distortionK1>0.0</distortionK1>
         <distortionK2>0.0</distortionK2>
