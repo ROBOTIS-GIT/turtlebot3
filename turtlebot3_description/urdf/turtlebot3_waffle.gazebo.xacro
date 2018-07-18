@@ -136,7 +136,7 @@
       <plugin name="gazebo_ros_lds_lfcd_controller" filename="libgazebo_ros_laser.so">
         <topicName>scan</topicName>
         <frameName>base_scan</frameName>
-        <update_rate>1800</update_rate>
+        <update_rate>5</update_rate>
       </plugin>
     </sensor>
   </gazebo>
