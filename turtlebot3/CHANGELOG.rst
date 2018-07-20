@@ -2,6 +2,19 @@
 Changelog for package turtlebot3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.1.0 (2018-07-20)
+------------------
+* added bringup to load multiple robot simply #251
+* added arguments for multiple robot
+* added odometrySource
+* modified camera topic name
+* modified base_scan update_rate and add param on diff_drive #258
+* modified the laser scanner update_rate in the gazebo xacro files #258
+* modified origin of collision in Waffle URDF
+* updated firmware version from 1.2.0 to 1.2.1
+* deleted unused get_scan function #227
+* Contributors: Darby Lim, Gilbert, Eduardo Avelar, shtseng, Pyo
+
 1.0.0 (2018-05-29)
 ------------------
 * added cartographer

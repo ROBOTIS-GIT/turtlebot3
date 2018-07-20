@@ -2,6 +2,13 @@
 Changelog for package turtlebot3_slam
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.1.0 (2018-07-20)
+------------------
+* added bringup to load multiple robot simply #251
+* added arguments for multiple robot
+* deleted unused get_scan function #227
+* Contributors: Darby Lim, Gilbert, Pyo
+
 1.0.0 (2018-05-29)
 ------------------
 * added cartographer

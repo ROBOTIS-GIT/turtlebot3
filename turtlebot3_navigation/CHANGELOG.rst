@@ -2,6 +2,11 @@
 Changelog for package turtlebot3_navigation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.1.0 (2018-07-20)
+------------------
+* deleted unused get_scan function #227
+* Contributors: Gilbert, Pyo
+
 1.0.0 (2018-05-29)
 ------------------
 * modified navigation parameters
