@@ -39,6 +39,13 @@ diagnostic_msgs::DiagnosticStatus LDS_state;
 diagnostic_msgs::DiagnosticStatus battery_state;
 diagnostic_msgs::DiagnosticStatus button_state;
 
+typedef struct
+{
+  int major_number;
+  int minor_number;
+  int patch_number;
+}VERSION;
+
 void setDiagnosisMsg(diagnostic_msgs::DiagnosticStatus *diag, uint8_t level, std::string name, std::string message, std::string hardware_id)
 {
   diag->level = level;
@@ -106,20 +113,25 @@ void firmwareVersionMsgCallback(const turtlebot3_msgs::VersionInfo::ConstPtr &ms
 {
   static bool check_version = false;
 
+  VERSION firmware_version;
+  firmware_version.major_number = msg->firmware.at(0) - '0';
+  firmware_version.minor_number = msg->firmware.at(2) - '0';
+  firmware_version.patch_number = msg->firmware.at(4) - '0';
+
   if (check_version == false)
   {
-    if (msg->firmware.at(0) == FIRMWARE_VERSION_MAJOR_NUMBER)
+    if (firmware_version.major_number == FIRMWARE_VERSION_MAJOR_NUMBER)
     {
-      if (msg->firmware.at(2) > FIRMWARE_VERSION_MINOR_NUMBER)
+      if (firmware_version.minor_number > FIRMWARE_VERSION_MINOR_NUMBER)
       {
-        ROS_WARN("%d, %d, %d", msg->firmware.at(0), msg->firmware.at(2), msg->firmware.at(4));
+        ROS_WARN("%d, %d, %d", firmware_version.major_number, firmware_version.minor_number, firmware_version.patch_number);
         ROS_WARN("This firmware(v%s) isn't compatible with your software (v%s)", msg->firmware.data(), msg->software.data());
         ROS_WARN("You can find how to update it in `FAQ` section(turtlebot3.robotis.com)");
       }
     }
     else
     {
-      ROS_WARN("%d, %d, %d", msg->firmware.at(0), msg->firmware.at(2), msg->firmware.at(4));
+      ROS_WARN("%d, %d, %d", firmware_version.major_number, firmware_version.minor_number, firmware_version.patch_number);
       ROS_WARN("Please upgrade TurtleBot3 firmware!");
       ROS_WARN("You can find how to do it in `FAQ` section(turtlebot3.robotis.com)");
     }
