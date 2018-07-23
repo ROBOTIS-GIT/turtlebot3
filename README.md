@@ -4,7 +4,7 @@
 ## ROS Packages for TurtleBot3
 |Version|Kinetic + Ubuntu Xenial|Melodic + Ubuntu Bionic|
 |:---:|:---:|:---:|
-|[![GitHub version](https://badge.fury.io/gh/ROBOTIS-GIT%2Fturtlebot3.svg)](https://badge.fury.io/gh/ROBOTIS-GIT%2Fturtlebot3)|[![Build Status](https://travis-ci.org/ROBOTIS-GIT/turtlebot3.svg?branch=kinetic-devel)](https://travis-ci.org/ROBOTIS-GIT/turtlebot3)|-|
+|[![GitHub version](https://badge.fury.io/gh/ROBOTIS-GIT%2Fturtlebot3.svg)](https://badge.fury.io/gh/ROBOTIS-GIT%2Fturtlebot3)|[![Build Status](https://travis-ci.org/ROBOTIS-GIT/turtlebot3.svg?branch=kinetic-devel)](https://travis-ci.org/ROBOTIS-GIT/turtlebot3)|[![Build Status](https://travis-ci.org/ROBOTIS-GIT/turtlebot3.svg?branch=melodic-devel)](https://travis-ci.org/ROBOTIS-GIT/turtlebot3)|
 
 ## ROBOTIS e-Manual for TurtleBot3
 - [ROBOTIS e-Manual for TurtleBot3](http://turtlebot3.robotis.com/)

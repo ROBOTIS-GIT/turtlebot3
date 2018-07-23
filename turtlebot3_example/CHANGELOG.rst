@@ -2,6 +2,13 @@
 Changelog for package turtlebot3_example
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.1.0 (2018-07-23)
+------------------
+* added bringup to load multiple robot simply #251
+* modified topic name
+* deleted unused get_scan function #227
+* Contributors: Darby Lim, Eduardo Avelar, Gilbert, Pyo
+
 1.0.0 (2018-05-29)
 ------------------
 * added sensor examples
