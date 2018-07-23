@@ -65,6 +65,7 @@ void split(std::string data, std::string separator, std::string* temp)
     else
     {
       temp[cnt] = copy.substr(0, copy.length());
+      break;
     }
     
 		++cnt;
@@ -154,14 +155,14 @@ void firmwareVersionMsgCallback(const turtlebot3_msgs::VersionInfo::ConstPtr &ms
     {
       if (firmware_version.minor_number > FIRMWARE_VERSION_MINOR_NUMBER)
       {
-        ROS_WARN("This firmware(v%s) isn't compatible with your software (v%s)", msg->firmware.data(), msg->software.data());
+        ROS_WARN("This firmware(v%s) isn't compatible with your software (v%s)", msg->firmware.data(), SOFTWARE_VERSION);
         ROS_WARN("You can find how to update it in `FAQ` section(turtlebot3.robotis.com)");
       }
     }
     else
     {
-      ROS_WARN("Please upgrade TurtleBot3 firmware!");
-      ROS_WARN("You can find how to do it in `FAQ` section(turtlebot3.robotis.com)");
+      ROS_WARN("This firmware(v%s) isn't compatible with your software (v%s)", msg->firmware.data(), SOFTWARE_VERSION);
+      ROS_WARN("You can find how to upgrade it in `FAQ` section(turtlebot3.robotis.com)");
     }
 
     check_version = true;
