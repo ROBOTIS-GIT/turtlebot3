@@ -2,7 +2,7 @@
 Changelog for package turtlebot3_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.1.0 (2018-07-20)
+1.1.0 (2018-07-23)
 ------------------
 * added bringup to load multiple robot simply #251
 * added odometrySource

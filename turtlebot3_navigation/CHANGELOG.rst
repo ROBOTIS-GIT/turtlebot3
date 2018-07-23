@@ -2,10 +2,11 @@
 Changelog for package turtlebot3_navigation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.1.0 (2018-07-20)
+1.1.0 (2018-07-23)
 ------------------
-* deleted unused get_scan function #227
-* Contributors: Gilbert, Pyo
+* added bringup to load multiple robot simply #251
+* added arguments for multiple robot
+* Contributors: Darby Lim, Gilbert, Pyo
 
 1.0.0 (2018-05-29)
 ------------------

@@ -2,11 +2,9 @@
 Changelog for package turtlebot3_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.1.0 (2018-07-20)
+1.1.0 (2018-07-23)
 ------------------
-* added bringup to load multiple robot simply #251
-* deleted unused get_scan function #227
-* Contributors: Darby Lim, Gilbert, Pyo
+* none
 
 1.0.0 (2018-05-29)
 ------------------

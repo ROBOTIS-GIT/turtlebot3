@@ -2,11 +2,15 @@
 Changelog for package turtlebot3_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.1.0 (2018-07-20)
+1.1.0 (2018-07-23)
 ------------------
 * added bringup to load multiple robot simply #251
 * added argument about namespace
-* updated firmware version from 1.2.0 to 1.2.1
+* updated turtlebot3_diagnostic node
+* updated firmware version from 1.2.0 to 1.2.2
+* updated get firmware version
+* updated version check function
+* updated warn msg for version check
 * Contributors: Darby Lim, Gilbert, Pyo
 
 1.0.0 (2018-05-29)
