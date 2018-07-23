@@ -2,6 +2,10 @@
 Changelog for package turtlebot3_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.1.0 (2018-07-23)
+------------------
+* none
+
 1.0.0 (2018-05-29)
 ------------------
 * added constrain to limit velocity
