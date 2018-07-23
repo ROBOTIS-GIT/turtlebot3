@@ -119,6 +119,7 @@ void firmwareVersionMsgCallback(const turtlebot3_msgs::VersionInfo::ConstPtr &ms
     }
     else
     {
+      ROS_WARN("%d, %d, %d", msg->firmware.at(0), msg->firmware.at(2), msg->firmware.at(4));
       ROS_WARN("Please upgrade TurtleBot3 firmware!");
       ROS_WARN("You can find how to do it in `FAQ` section(turtlebot3.robotis.com)");
     }
