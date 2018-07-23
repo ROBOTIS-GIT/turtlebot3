@@ -24,6 +24,7 @@
 #include <diagnostic_msgs/DiagnosticArray.h>
 #include <turtlebot3_msgs/SensorState.h>
 #include <turtlebot3_msgs/VersionInfo.h>
+#include <string>
 
 #define SOFTWARE_VERSION "1.1.0"
 #define HARDWARE_VERSION "2017.05.30"
@@ -45,6 +46,30 @@ typedef struct
   int minor_number;
   int patch_number;
 }VERSION;
+
+void split(std::string data, std::string separator, std::string* temp)
+{
+	int cnt = 0;
+  std::string copy = data;
+  
+	while(true)
+	{
+		std::size_t index = copy.find(separator);
+
+    if (index != std::string::npos)
+    {
+      temp[cnt] = copy.substr(0, index);
+
+      copy = copy.substr(index+1, copy.length());
+    }
+    else
+    {
+      temp[cnt] = copy.substr(0, copy.length());
+    }
+    
+		++cnt;
+	}
+}
 
 void setDiagnosisMsg(diagnostic_msgs::DiagnosticStatus *diag, uint8_t level, std::string name, std::string message, std::string hardware_id)
 {
@@ -112,11 +137,16 @@ void sensorStateMsgCallback(const turtlebot3_msgs::SensorState::ConstPtr &msg)
 void firmwareVersionMsgCallback(const turtlebot3_msgs::VersionInfo::ConstPtr &msg)
 {
   static bool check_version = false;
+  std::string get_version[3];
 
-  VERSION firmware_version;
-  firmware_version.major_number = msg->firmware.at(0) - '0';
-  firmware_version.minor_number = msg->firmware.at(2) - '0';
-  firmware_version.patch_number = msg->firmware.at(4) - '0';
+  split(msg->firmware, ".", get_version);
+
+  VERSION firmware_version; 
+  firmware_version.major_number = std::stoi(get_version[0]);
+  firmware_version.minor_number = std::stoi(get_version[1]);
+  firmware_version.patch_number = std::stoi(get_version[2]);
+
+  ROS_WARN("%d %d %d", firmware_version.major_number, firmware_version.minor_number, firmware_version.patch_number);
 
   if (check_version == false)
   {
@@ -124,14 +154,12 @@ void firmwareVersionMsgCallback(const turtlebot3_msgs::VersionInfo::ConstPtr &ms
     {
       if (firmware_version.minor_number > FIRMWARE_VERSION_MINOR_NUMBER)
       {
-        ROS_WARN("%d, %d, %d", firmware_version.major_number, firmware_version.minor_number, firmware_version.patch_number);
         ROS_WARN("This firmware(v%s) isn't compatible with your software (v%s)", msg->firmware.data(), msg->software.data());
         ROS_WARN("You can find how to update it in `FAQ` section(turtlebot3.robotis.com)");
       }
     }
     else
     {
-      ROS_WARN("%d, %d, %d", firmware_version.major_number, firmware_version.minor_number, firmware_version.patch_number);
       ROS_WARN("Please upgrade TurtleBot3 firmware!");
       ROS_WARN("You can find how to do it in `FAQ` section(turtlebot3.robotis.com)");
     }
