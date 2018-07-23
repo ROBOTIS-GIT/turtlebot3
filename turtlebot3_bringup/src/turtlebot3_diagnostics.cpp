@@ -147,8 +147,6 @@ void firmwareVersionMsgCallback(const turtlebot3_msgs::VersionInfo::ConstPtr &ms
   firmware_version.minor_number = std::stoi(get_version[1]);
   firmware_version.patch_number = std::stoi(get_version[2]);
 
-  ROS_WARN("%d %d %d", firmware_version.major_number, firmware_version.minor_number, firmware_version.patch_number);
-
   if (check_version == false)
   {
     if (firmware_version.major_number == FIRMWARE_VERSION_MAJOR_NUMBER)
@@ -162,7 +160,7 @@ void firmwareVersionMsgCallback(const turtlebot3_msgs::VersionInfo::ConstPtr &ms
     else
     {
       ROS_WARN("This firmware(v%s) isn't compatible with your software (v%s)", msg->firmware.data(), SOFTWARE_VERSION);
-      ROS_WARN("You can find how to upgrade it in `FAQ` section(turtlebot3.robotis.com)");
+      ROS_WARN("You can find how to update it in `FAQ` section(turtlebot3.robotis.com)");
     }
 
     check_version = true;
