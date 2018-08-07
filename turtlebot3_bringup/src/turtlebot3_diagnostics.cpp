@@ -24,19 +24,53 @@
 #include <diagnostic_msgs/DiagnosticArray.h>
 #include <turtlebot3_msgs/SensorState.h>
 #include <turtlebot3_msgs/VersionInfo.h>
+#include <string>
 
-#define SOFTWARE_VERSION "1.0.0"
-#define FIRMWARE_VERSION "1.2.0"
-#define HARDWARE_VERSION "1.0.0"
+#define SOFTWARE_VERSION "1.1.0"
+#define HARDWARE_VERSION "2017.05.30"
+#define FIRMWARE_VERSION_MAJOR_NUMBER 1
+#define FIRMWARE_VERSION_MINOR_NUMBER 2
 
+ros::Publisher tb3_version_info_pub;
 ros::Publisher tb3_diagnostics_pub;
-diagnostic_msgs::DiagnosticArray tb3_diagnostics;
 
 diagnostic_msgs::DiagnosticStatus imu_state;
 diagnostic_msgs::DiagnosticStatus motor_state;
 diagnostic_msgs::DiagnosticStatus LDS_state;
 diagnostic_msgs::DiagnosticStatus battery_state;
 diagnostic_msgs::DiagnosticStatus button_state;
+
+typedef struct
+{
+  int major_number;
+  int minor_number;
+  int patch_number;
+}VERSION;
+
+void split(std::string data, std::string separator, std::string* temp)
+{
+	int cnt = 0;
+  std::string copy = data;
+  
+	while(true)
+	{
+		std::size_t index = copy.find(separator);
+
+    if (index != std::string::npos)
+    {
+      temp[cnt] = copy.substr(0, index);
+
+      copy = copy.substr(index+1, copy.length());
+    }
+    else
+    {
+      temp[cnt] = copy.substr(0, copy.length());
+      break;
+    }
+    
+		++cnt;
+	}
+}
 
 void setDiagnosisMsg(diagnostic_msgs::DiagnosticStatus *diag, uint8_t level, std::string name, std::string message, std::string hardware_id)
 {
@@ -101,27 +135,50 @@ void sensorStateMsgCallback(const turtlebot3_msgs::SensorState::ConstPtr &msg)
     setMotorDiagnosis(diagnostic_msgs::DiagnosticStatus::WARN, "Torque OFF");
 }
 
-void versionMsgCallback(const turtlebot3_msgs::VersionInfo::ConstPtr &msg)
+void firmwareVersionMsgCallback(const turtlebot3_msgs::VersionInfo::ConstPtr &msg)
 {
   static bool check_version = false;
+  std::string get_version[3];
+
+  split(msg->firmware, ".", get_version);
+
+  VERSION firmware_version; 
+  firmware_version.major_number = std::stoi(get_version[0]);
+  firmware_version.minor_number = std::stoi(get_version[1]);
+  firmware_version.patch_number = std::stoi(get_version[2]);
 
   if (check_version == false)
   {
-    if (std::string(msg->software) != std::string(SOFTWARE_VERSION))
-      ROS_WARN("Check turtlebot3 repository and Update your software!!");
-
-    if (std::string(msg->hardware) != std::string(HARDWARE_VERSION))
-      ROS_WARN("Check turtlebot3 wiki page and Update your hardware!!");
-
-    if (std::string(msg->firmware) != std::string(FIRMWARE_VERSION))
-      ROS_WARN("Check OpenCR update and change your firmware!!");
+    if (firmware_version.major_number == FIRMWARE_VERSION_MAJOR_NUMBER)
+    {
+      if (firmware_version.minor_number > FIRMWARE_VERSION_MINOR_NUMBER)
+      {
+        ROS_WARN("This firmware(v%s) isn't compatible with this software (v%s)", msg->firmware.data(), SOFTWARE_VERSION);
+        ROS_WARN("You can find how to update its in `FAQ` section(turtlebot3.robotis.com)");
+      }
+    }
+    else
+    {
+      ROS_WARN("This firmware(v%s) isn't compatible with this software (v%s)", msg->firmware.data(), SOFTWARE_VERSION);
+      ROS_WARN("You can find how to update its in `FAQ` section(turtlebot3.robotis.com)");
+    }
 
     check_version = true;
   }
+  
+  turtlebot3_msgs::VersionInfo version;
+
+  version.software = SOFTWARE_VERSION;
+  version.hardware = HARDWARE_VERSION;
+  version.firmware = msg->firmware;
+
+  tb3_version_info_pub.publish(version);
 }
 
 void msgPub()
 {
+  diagnostic_msgs::DiagnosticArray tb3_diagnostics;
+
   tb3_diagnostics.header.stamp = ros::Time::now();
 
   tb3_diagnostics.status.clear();
@@ -140,11 +197,12 @@ int main(int argc, char **argv)
   ros::NodeHandle nh;
 
   tb3_diagnostics_pub  = nh.advertise<diagnostic_msgs::DiagnosticArray>("diagnostics", 10);
+  tb3_version_info_pub = nh.advertise<turtlebot3_msgs::VersionInfo>("version_info", 10);
 
   ros::Subscriber imu         = nh.subscribe("imu", 10, imuMsgCallback);
   ros::Subscriber lds         = nh.subscribe("scan", 10, LDSMsgCallback);
   ros::Subscriber tb3_sensor  = nh.subscribe("sensor_state", 10, sensorStateMsgCallback);
-  ros::Subscriber version     = nh.subscribe("version_info", 10, versionMsgCallback);
+  ros::Subscriber version     = nh.subscribe("firmware_version", 10, firmwareVersionMsgCallback);
 
   ros::Rate loop_rate(1);
 

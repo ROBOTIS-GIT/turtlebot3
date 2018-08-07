@@ -2,6 +2,16 @@
 Changelog for package turtlebot3_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.1.0 (2018-07-23)
+------------------
+* added bringup to load multiple robot simply #251
+* added odometrySource
+* modified camera topic name
+* modified base_scan update_rate and add param on diff_drive #258
+* modified the laser scanner update_rate in the gazebo xacro files #258
+* modified origin of collision in Waffle URDF
+* Contributors: Darby Lim, Gilbert, shtseng, Pyo
+
 1.0.0 (2018-05-29)
 ------------------
 * added frameName for imu on gazebo (however, there is no effect.)
