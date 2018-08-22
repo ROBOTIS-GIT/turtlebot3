@@ -1,16 +1,22 @@
 ################################################################################
 # Set minimum required version of cmake, project name and compile options
 ################################################################################
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.5)
 project(turtlebot3_description)
 
+if(NOT CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD 14)
+endif()
+
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(-Wall -Wextra -Wpedantic)
+endif()
+
 ################################################################################
-# Find catkin packages and libraries for catkin and system dependencies
+# Find ament packages and libraries for ament and system dependencies
 ################################################################################
-find_package(catkin REQUIRED COMPONENTS
-  urdf
-  xacro
-)
+find_package(ament_cmake REQUIRED)
+find_package(urdf REQUIRED)
 
 ################################################################################
 # Setup for python modules and scripts
@@ -27,24 +33,30 @@ find_package(catkin REQUIRED COMPONENTS
 ################################################################################
 # Declare catkin specific configuration to be passed to dependent projects
 ################################################################################
-catkin_package(
-  CATKIN_DEPENDS urdf xacro
-)
 
 ################################################################################
 # Build
 ################################################################################
-include_directories(
-  ${catkin_INCLUDE_DIRS}
-)
 
 ################################################################################
 # Install
 ################################################################################
 install(DIRECTORY meshes rviz urdf
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+  DESTINATION share/${PROJECT_NAME}
 )
 
 ################################################################################
 # Test
 ################################################################################
+if(BUILD_TESTING)
+  find_package(ament_lint_auto REQUIRED)
+  set(ament_cmake_copyright_FOUND TRUE)
+  ament_lint_auto_find_test_dependencies()
+endif()
+
+################################################################################
+# Macro for ament package
+################################################################################
+ament_export_dependencies(xacro)
+ament_export_dependencies(urdf)
+ament_package()
