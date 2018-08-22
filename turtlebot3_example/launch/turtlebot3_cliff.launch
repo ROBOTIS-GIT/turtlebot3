@@ -1,4 +1,0 @@
-<launch>
-  <node pkg="turtlebot3_example" type="turtlebot3_cliff" name="turtlebot3_cliff" output="screen">
-  </node>
-</launch>

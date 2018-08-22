@@ -1,4 +1,0 @@
-<launch>
-  <node pkg="turtlebot3_example" type="turtlebot3_pointop_key" name="turtlebot3_pointop_keyboard"  output="screen">
-  </node>
-</launch>

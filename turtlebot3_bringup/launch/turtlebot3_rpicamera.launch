@@ -1,9 +1,0 @@
-<launch>
-  <node pkg="raspicam_node" type="raspicam_node" name="raspicam_node" output="screen">
-    <param name="camera_info_url" value="package://turtlebot3_bringup/camera_info/turtlebot3_rpicamera.yaml"/>
-    <param name="width" value="640"/>
-    <param name="height" value="480"/>
-    <param name="framerate" value="15"/>
-    <param name="camera_frame_id" value="camera"/>
-  </node>
-</launch>

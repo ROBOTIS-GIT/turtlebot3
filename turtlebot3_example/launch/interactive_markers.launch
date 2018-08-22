@@ -1,5 +1,0 @@
-<launch>
-  <node pkg="turtlebot3_example" type="turtlebot3_marker_server" name="turtlebot3_marker_server">
-    <remap from="interactive_marker_velocity_smoother/raw_cmd_vel" to="cmd_vel"/>
-  </node>
-</launch>

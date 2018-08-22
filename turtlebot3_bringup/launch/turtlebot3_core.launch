@@ -1,9 +1,0 @@
-<launch>
-  <arg name="multi_robot_name" default=""/>
-
-  <node pkg="rosserial_python" type="serial_node.py" name="turtlebot3_core" output="screen">
-    <param name="port" value="/dev/ttyACM0"/>
-    <param name="baud" value="115200"/>
-    <param name="tf_prefix" value="$(arg multi_robot_name)"/>
-  </node>
-</launch>
