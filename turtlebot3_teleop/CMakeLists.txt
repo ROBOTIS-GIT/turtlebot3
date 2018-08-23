@@ -40,7 +40,7 @@ catkin_package(
 # Install
 ################################################################################
 catkin_install_python(PROGRAMS
-  nodes/turtlebot3_teleop_key
+  nodes/turtlebot3_teleop_key.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
