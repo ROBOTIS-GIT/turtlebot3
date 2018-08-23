@@ -107,32 +107,32 @@ void setButtonDiagnosis(uint8_t level, std::string message)
 
 void imuMsgCallback(const sensor_msgs::Imu::ConstPtr &msg)
 {
-  setIMUDiagnosis(diagnostic_msgs::DiagnosticStatus::OK, "Good Condition");
+  setIMUDiagnosis(diagnostic_msgs::DiagnosticStatus::DIAG_OK, "Good Condition");
 }
 
 void LDSMsgCallback(const sensor_msgs::LaserScan::ConstPtr &msg)
 {
-  setLDSDiagnosis(diagnostic_msgs::DiagnosticStatus::OK, "Good Condition");
+  setLDSDiagnosis(diagnostic_msgs::DiagnosticStatus::DIAG_OK, "Good Condition");
 }
 
 void sensorStateMsgCallback(const turtlebot3_msgs::SensorState::ConstPtr &msg)
 {
   if (msg->battery > 11.0)
-    setBatteryDiagnosis(diagnostic_msgs::DiagnosticStatus::OK, "Good Condition");
+    setBatteryDiagnosis(diagnostic_msgs::DiagnosticStatus::DIAG_OK, "Good Condition");
   else
-    setBatteryDiagnosis(diagnostic_msgs::DiagnosticStatus::WARN, "Charge!!! Charge!!!");
+    setBatteryDiagnosis(diagnostic_msgs::DiagnosticStatus::DIAG_WARN, "Charge!!! Charge!!!");
 
   if (msg->button == turtlebot3_msgs::SensorState::BUTTON0)
-    setButtonDiagnosis(diagnostic_msgs::DiagnosticStatus::OK, "BUTTON 0 IS PUSHED");
+    setButtonDiagnosis(diagnostic_msgs::DiagnosticStatus::DIAG_OK, "BUTTON 0 IS PUSHED");
   else if (msg->button == turtlebot3_msgs::SensorState::BUTTON1)
-    setButtonDiagnosis(diagnostic_msgs::DiagnosticStatus::OK, "BUTTON 1 IS PUSHED");
+    setButtonDiagnosis(diagnostic_msgs::DiagnosticStatus::DIAG_OK, "BUTTON 1 IS PUSHED");
   else
-    setButtonDiagnosis(diagnostic_msgs::DiagnosticStatus::OK, "Pushed Nothing");
+    setButtonDiagnosis(diagnostic_msgs::DiagnosticStatus::DIAG_OK, "Pushed Nothing");
 
-  if (msg->torque == true)
-    setMotorDiagnosis(diagnostic_msgs::DiagnosticStatus::OK, "Torque ON");
+  if (!!(msg->torque) == true)
+    setMotorDiagnosis(diagnostic_msgs::DiagnosticStatus::DIAG_OK, "Torque ON");
   else
-    setMotorDiagnosis(diagnostic_msgs::DiagnosticStatus::WARN, "Torque OFF");
+    setMotorDiagnosis(diagnostic_msgs::DiagnosticStatus::DIAG_WARN, "Torque OFF");
 }
 
 void firmwareVersionMsgCallback(const turtlebot3_msgs::VersionInfo::ConstPtr &msg)
