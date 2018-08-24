@@ -50,18 +50,14 @@ find_package(tf2_ros REQUIRED)
 add_executable(odometry src/odometry.cpp)
 ament_target_dependencies(odometry rclcpp std_msgs sensor_msgs geometry_msgs nav_msgs turtlebot3_msgs)
 
-# add_executable(topic_subscriber src/topic_subscriber.cpp)
-# ament_target_dependencies(topic_subscriber rclcpp std_msgs)
+add_executable(tf_publisher src/tf_publisher.cpp)
+ament_target_dependencies(tf_publisher rclcpp std_msgs geometry_msgs nav_msgs tf2_ros)
 
 install(TARGETS
   odometry
-  # tf
+  tf_publisher
   DESTINATION lib/${PROJECT_NAME}
 )
-
-# install(DIRECTORY launch
-#   DESTINATION share/${PROJECT_NAME}
-# )
 
 ################################################################################
 # Test
