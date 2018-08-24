@@ -17,8 +17,6 @@
 /* Author: Darby Lim */
 
 #include <chrono>
-#include <array>
-#include <math.h>
 
 #include "rclcpp/rclcpp.hpp"
 #include "nav_msgs/msg/odometry.hpp"
@@ -59,7 +57,7 @@ public:
 
     imu_sub_ = this->create_subscription<sensor_msgs::msg::Imu>(
         "imu",
-        [&](sensor_msgs::msg::Imu::UniquePtr msg) {
+        [this](sensor_msgs::msg::Imu::UniquePtr msg) {
           this->orientation_[0] = msg->orientation.w;
           this->orientation_[1] = msg->orientation.x;
           this->orientation_[2] = msg->orientation.y;
@@ -88,6 +86,7 @@ private:
   rclcpp::TimerBase::SharedPtr timer_;
 
   rclcpp::Publisher<nav_msgs::msg::Odometry>::SharedPtr odom_pub_;
+
   rclcpp::Subscription<turtlebot3_msgs::msg::SensorState>::SharedPtr sensor_state_sub_;
   rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr imu_sub_;
 
@@ -209,6 +208,8 @@ private:
     odom.pose.pose.orientation.x = cy * sr * cp - sy * cr * sp;
     odom.pose.pose.orientation.y = cy * cr * sp + sy * sr * cp;
     odom.pose.pose.orientation.z = sy * cr * cp - cy * sr * sp;
+
+    // odom.pose.pose.orientation = tf::createQuaternionFromYaw(odom_pose[2]);
 
     odom.twist.twist.linear.x  = odom_vel_[0];
     odom.twist.twist.angular.z = odom_vel_[2];
