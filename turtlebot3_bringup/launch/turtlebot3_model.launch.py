@@ -26,5 +26,7 @@ from launch_ros.actions import Node
 def generate_launch_description():
     urdf = os.path.join(get_package_share_directory('turtlebot3_description'), 'urdf', 'turtlebot3_burger.urdf')
     return LaunchDescription([
-        Node(package='robot_state_publisher', node_executable='robot_state_publisher', output='screen', arguments=[urdf])
+        Node(package='robot_state_publisher', node_executable='robot_state_publisher', output='screen', arguments=[urdf]),
+        Node(package='turtlebot3_node', node_executable='odometry', output='screen')
+        # Node(package='dummy_sensors', node_executable='dummy_joint_states', output='screen'),
     ])
