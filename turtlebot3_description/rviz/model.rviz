@@ -54,7 +54,7 @@ Visualization Manager:
       Color: 255; 255; 255
       Color Transformer: ""
       Decay Time: 0
-      Enabled: true
+      Enabled: false
       Invert Rainbow: false
       Max Color: 255; 255; 255
       Max Intensity: 4096
@@ -71,7 +71,7 @@ Visualization Manager:
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
-      Value: true
+      Value: false
     - Alpha: 1
       Class: rviz_default_plugins/RobotModel
       Collision Enabled: false
@@ -106,6 +106,8 @@ Visualization Manager:
           Value: true
         imu_link:
           Value: true
+        odom:
+          Value: true
         wheel_left_link:
           Value: true
         wheel_right_link:
@@ -128,6 +130,8 @@ Visualization Manager:
               {}
             wheel_right_link:
               {}
+        odom:
+          {}
       Update Interval: 0
       Value: true
     - Angle Tolerance: 0.100000001
@@ -185,7 +189,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 1.1350863
+      Distance: 4.95294094
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
@@ -200,10 +204,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.400398076
+      Pitch: 0.830397964
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.920399368
+      Yaw: 1.07539916
     Saved: ~
 Window Geometry:
   Displays:
@@ -219,5 +223,5 @@ Window Geometry:
   Views:
     collapsed: true
   Width: 1355
-  X: 949
-  Y: 70
+  X: 1173
+  Y: 63
