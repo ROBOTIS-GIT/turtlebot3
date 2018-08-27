@@ -39,7 +39,7 @@ public:
         time_msg = rclcpp::Clock().now();
         this->time_pub_->publish(time_msg);
       };
-    timer_ = this->create_wall_timer(10ms, timer_callback);
+    timer_ = this->create_wall_timer(5ms, timer_callback);
   }
 
 private:
