@@ -188,8 +188,12 @@ private:
     last_velocity_[RIGHT] = wheel_r / step_time;
     last_theta = theta;
 
+
+    auto now = rclcpp::Clock().now();
+
     odom.header.frame_id = "odom";
     odom.child_frame_id  = "base_footprint";
+    odom.header.stamp = now;
 
     odom.pose.pose.position.x = odom_pose_[0];
     odom.pose.pose.position.y = odom_pose_[1];
