@@ -23,6 +23,7 @@ find_package(geometry_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(turtlebot3_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
+find_package(builtin_interfaces REQUIRED)
 
 ################################################################################
 # Setup for python modules and scripts
@@ -53,9 +54,13 @@ ament_target_dependencies(odometry rclcpp std_msgs sensor_msgs geometry_msgs nav
 add_executable(tf_publisher src/tf_publisher.cpp)
 ament_target_dependencies(tf_publisher rclcpp std_msgs geometry_msgs nav_msgs tf2_ros)
 
+add_executable(time_sync src/time_sync.cpp)
+ament_target_dependencies(time_sync rclcpp std_msgs builtin_interfaces)
+
 install(TARGETS
   odometry
   tf_publisher
+  time_sync
   DESTINATION lib/${PROJECT_NAME}
 )
 
@@ -78,5 +83,6 @@ ament_export_dependencies(geometry_msgs)
 ament_export_dependencies(nav_msgs)
 ament_export_dependencies(tf2_ros)
 ament_export_dependencies(turtlebot3_msgs)
+ament_export_dependencies(builtin_interfaces)
 # ament_export_include_directories(include)
 ament_package()

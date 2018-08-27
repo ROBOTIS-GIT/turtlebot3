@@ -21,6 +21,7 @@
   <depend>nav_msgs</depend>
   <depend>turtlebot3_msgs</depend>
   <depend>tf2_ros</depend>
+  <depend>builtin_interfaces</depend>
   <export>
     <build_type>ament_cmake</build_type>
   </export>
