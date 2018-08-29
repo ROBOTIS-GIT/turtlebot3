@@ -17,6 +17,7 @@
 /* Author: Darby Lim */
 
 #include <chrono>
+#include <math.h>
 
 #include "rclcpp/rclcpp.hpp"
 #include "nav_msgs/msg/odometry.hpp"
