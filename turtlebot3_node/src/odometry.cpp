@@ -71,8 +71,8 @@ public:
     rmw_qos_profile_t odom_qos_profile = rmw_qos_profile_sensor_data;
     
     odom_qos_profile.history = RMW_QOS_POLICY_HISTORY_KEEP_LAST;
-    odom_qos_profile.depth = 50;
-    odom_qos_profile.reliability = RMW_QOS_POLICY_RELIABILITY_BEST_EFFORT;
+    odom_qos_profile.depth = 1;
+    odom_qos_profile.reliability = RMW_QOS_POLICY_RELIABILITY_RELIABLE;
     odom_qos_profile.durability = RMW_QOS_POLICY_DURABILITY_VOLATILE;
 
     odom_pub_ = this->create_publisher<nav_msgs::msg::Odometry>("odom", odom_qos_profile);

@@ -62,8 +62,8 @@ int main(int argc, char *argv[])
 
   rmw_qos_profile_t sensor_state_qos_profile = rmw_qos_profile_sensor_data;
   sensor_state_qos_profile.history = RMW_QOS_POLICY_HISTORY_KEEP_LAST;
-  sensor_state_qos_profile.depth = 50;
-  sensor_state_qos_profile.reliability = RMW_QOS_POLICY_RELIABILITY_BEST_EFFORT;
+  sensor_state_qos_profile.depth = 1;
+  sensor_state_qos_profile.reliability = RMW_QOS_POLICY_RELIABILITY_RELIABLE;
   sensor_state_qos_profile.durability = RMW_QOS_POLICY_DURABILITY_VOLATILE;
 
   auto sensor_state_sub = node->create_subscription<turtlebot3_msgs::msg::SensorState>("sensor_state", sensorStateMsgCallback, sensor_state_qos_profile);
