@@ -17,6 +17,7 @@
 /* Author: Darby Lim */
 
 #include <chrono>
+#include <string>
 
 #include "rclcpp/clock.hpp"
 #include "rclcpp/rclcpp.hpp"
@@ -66,36 +67,49 @@ using namespace std::chrono_literals;
 //   geometry_msgs::msg::TransformStamped odom_tf_transform_;
 // };
 
-rclcpp::Node::SharedPtr node = nullptr;
+geometry_msgs::msg::TransformStamped odom_tf;
 
 void odomMsgCallback(const nav_msgs::msg::Odometry::SharedPtr msg)
 {
-  tf2_ros::TransformBroadcaster tf_broadcaster(node);
-  geometry_msgs::msg::TransformStamped odom_tf_transform;
+  odom_tf.transform.translation.x = msg->pose.pose.position.x;
+  odom_tf.transform.translation.y = msg->pose.pose.position.y;
+  odom_tf.transform.translation.z = msg->pose.pose.position.z;
+  odom_tf.transform.rotation      = msg->pose.pose.orientation;
 
-  odom_tf_transform.transform.translation.x = msg->pose.pose.position.x;
-  odom_tf_transform.transform.translation.y = msg->pose.pose.position.y;
-  odom_tf_transform.transform.translation.z = msg->pose.pose.position.z;
-  odom_tf_transform.transform.rotation      = msg->pose.pose.orientation;
+  // auto now = rclcpp::Clock().now();
 
-  auto now = rclcpp::Clock().now();
-
-  odom_tf_transform.header.frame_id = "odom";
-  odom_tf_transform.child_frame_id = "base_footprint";
-  odom_tf_transform.header.stamp = now;
-
-  tf_broadcaster.sendTransform(odom_tf_transform);
+  odom_tf.header.frame_id = "odom";
+  odom_tf.child_frame_id = "base_footprint";
+  odom_tf.header.stamp = msg->header.stamp;
 }
 
 int main(int argc, char *argv[])
 {
   rclcpp::init(argc, argv);
 
-  node = rclcpp::Node::make_shared("tf_publisher");
+  auto node = rclcpp::Node::make_shared("tf_publisher");
 
-  auto odom_sub = node->create_subscription<nav_msgs::msg::Odometry>("odom", odomMsgCallback);
+  RCLCPP_INFO(node->get_logger(), "Init tf publisher")
 
-  rclcpp::spin(node);
+  rmw_qos_profile_t odom_qos_profile = rmw_qos_profile_sensor_data;
+  odom_qos_profile.history = RMW_QOS_POLICY_HISTORY_KEEP_LAST;
+  odom_qos_profile.depth = 50;
+  odom_qos_profile.reliability = RMW_QOS_POLICY_RELIABILITY_BEST_EFFORT;
+  odom_qos_profile.durability = RMW_QOS_POLICY_DURABILITY_VOLATILE;
+
+  auto odom_sub = node->create_subscription<nav_msgs::msg::Odometry>("odom", odomMsgCallback, odom_qos_profile);
+
+  tf2_ros::TransformBroadcaster tf_broadcaster(node);
+
+  rclcpp::WallRate loop_rate(5ms);
+
+  while (rclcpp::ok())
+  {
+    tf_broadcaster.sendTransform(odom_tf);
+
+    rclcpp::spin_some(node);
+    loop_rate.sleep();
+  }
   rclcpp::shutdown();
 
   odom_sub = nullptr;

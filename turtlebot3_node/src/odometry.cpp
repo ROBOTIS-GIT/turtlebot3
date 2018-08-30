@@ -23,6 +23,7 @@
 #include "nav_msgs/msg/odometry.hpp"
 #include "sensor_msgs/msg/imu.hpp"
 #include "turtlebot3_msgs/msg/sensor_state.hpp"
+#include "tf2/LinearMath/Quaternion.h"
 
 #define LEFT  0
 #define RIGHT 1
@@ -50,6 +51,8 @@ public:
   Odometry()
       : Node("odometry"), init_encoder_(true)
   {
+    RCLCPP_INFO(this->get_logger(), "Init Odometry publisher")
+
     sensor_state_sub_ = this->create_subscription<turtlebot3_msgs::msg::SensorState>(
         "sensor_state",
         [this](turtlebot3_msgs::msg::SensorState::UniquePtr msg) {
@@ -65,7 +68,14 @@ public:
           this->orientation_[3] = msg->orientation.z;
         });
 
-    odom_pub_ = this->create_publisher<nav_msgs::msg::Odometry>("odom");
+    rmw_qos_profile_t odom_qos_profile = rmw_qos_profile_sensor_data;
+    
+    odom_qos_profile.history = RMW_QOS_POLICY_HISTORY_KEEP_LAST;
+    odom_qos_profile.depth = 50;
+    odom_qos_profile.reliability = RMW_QOS_POLICY_RELIABILITY_BEST_EFFORT;
+    odom_qos_profile.durability = RMW_QOS_POLICY_DURABILITY_VOLATILE;
+
+    odom_pub_ = this->create_publisher<nav_msgs::msg::Odometry>("odom", odom_qos_profile);
 
     time_priv_ = std::chrono::system_clock::now();
 
@@ -80,7 +90,7 @@ public:
       this->calcOdometry(odom_msg, (double)(diff_time.count()) * 0.001f);
       this->odom_pub_->publish(odom_msg);
     };
-    timer_ = this->create_wall_timer(33ms, timer_callback);
+    timer_ = this->create_wall_timer(10ms, timer_callback);
   }
 
 private:
@@ -202,19 +212,26 @@ private:
 
     // Ref : https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles#Source_Code
 
-    double cy = cos(odom_pose_[2] * 0.5);
-    double sy = sin(odom_pose_[2] * 0.5);
-    double cr = cos(0.0 * 0.5);
-    double sr = sin(0.0 * 0.5);
-    double cp = cos(0.0 * 0.5);
-    double sp = sin(0.0 * 0.5);
+    // double cy = cos(odom_pose_[2] * 0.5);
+    // double sy = sin(odom_pose_[2] * 0.5);
+    // double cr = cos(0.0 * 0.5);
+    // double sr = sin(0.0 * 0.5);
+    // double cp = cos(0.0 * 0.5);
+    // double sp = sin(0.0 * 0.5);
 
-    odom.pose.pose.orientation.w = cy * cr * cp + sy * sr * sp;
-    odom.pose.pose.orientation.x = cy * sr * cp - sy * cr * sp;
-    odom.pose.pose.orientation.y = cy * cr * sp + sy * sr * cp;
-    odom.pose.pose.orientation.z = sy * cr * cp - cy * sr * sp;
+    // odom.pose.pose.orientation.w = cy * cr * cp + sy * sr * sp;
+    // odom.pose.pose.orientation.x = cy * sr * cp - sy * cr * sp;
+    // odom.pose.pose.orientation.y = cy * cr * sp + sy * sr * cp;
+    // odom.pose.pose.orientation.z = sy * cr * cp - cy * sr * sp;
 
     // odom.pose.pose.orientation = tf::createQuaternionFromYaw(odom_pose[2]);
+
+    tf2::Quaternion q;
+    q.setRPY(0.0, 0.0, odom_pose_[2]);
+    odom.pose.pose.orientation.x = q.x();
+    odom.pose.pose.orientation.y = q.y();
+    odom.pose.pose.orientation.z = q.z();
+    odom.pose.pose.orientation.w = q.w();
 
     odom.twist.twist.linear.x  = odom_vel_[0];
     odom.twist.twist.angular.z = odom_vel_[2];

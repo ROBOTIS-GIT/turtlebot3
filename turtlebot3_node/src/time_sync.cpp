@@ -32,7 +32,16 @@ public:
   TimeSync()
   : Node("time_sync")
   {
-    time_pub_ = this->create_publisher<builtin_interfaces::msg::Time>("time_sync");
+    RCLCPP_INFO(this->get_logger(), "Init System Time publisher")
+
+    rmw_qos_profile_t time_sync_qos_profile = rmw_qos_profile_default;
+
+    time_sync_qos_profile.history = RMW_QOS_POLICY_HISTORY_KEEP_LAST;
+    time_sync_qos_profile.depth = 10;
+    time_sync_qos_profile.reliability = RMW_QOS_POLICY_RELIABILITY_BEST_EFFORT;
+    time_sync_qos_profile.durability = RMW_QOS_POLICY_DURABILITY_VOLATILE;
+
+    time_pub_ = this->create_publisher<builtin_interfaces::msg::Time>("time_sync", time_sync_qos_profile);
     auto timer_callback =
       [this]() -> void {
         auto time_msg = builtin_interfaces::msg::Time();
