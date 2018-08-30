@@ -22,6 +22,7 @@ find_package(sensor_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(turtlebot3_msgs REQUIRED)
+find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(builtin_interfaces REQUIRED)
 
@@ -49,10 +50,13 @@ find_package(builtin_interfaces REQUIRED)
 # Install
 ################################################################################
 add_executable(odometry src/odometry.cpp)
-ament_target_dependencies(odometry rclcpp std_msgs sensor_msgs geometry_msgs nav_msgs turtlebot3_msgs)
+ament_target_dependencies(odometry rclcpp std_msgs sensor_msgs geometry_msgs nav_msgs turtlebot3_msgs tf2)
 
 add_executable(tf_publisher src/tf_publisher.cpp)
-ament_target_dependencies(tf_publisher rclcpp std_msgs geometry_msgs nav_msgs tf2_ros)
+ament_target_dependencies(tf_publisher rclcpp std_msgs sensor_msgs nav_msgs tf2_ros)
+
+add_executable(joint_states src/joint_states.cpp)
+ament_target_dependencies(joint_states rclcpp std_msgs sensor_msgs turtlebot3_msgs)
 
 add_executable(time_sync src/time_sync.cpp)
 ament_target_dependencies(time_sync rclcpp std_msgs builtin_interfaces)
@@ -60,6 +64,7 @@ ament_target_dependencies(time_sync rclcpp std_msgs builtin_interfaces)
 install(TARGETS
   odometry
   tf_publisher
+  joint_states
   time_sync
   DESTINATION lib/${PROJECT_NAME}
 )
@@ -81,6 +86,7 @@ ament_export_dependencies(std_msgs)
 ament_export_dependencies(sensor_msgs)
 ament_export_dependencies(geometry_msgs)
 ament_export_dependencies(nav_msgs)
+ament_export_dependencies(tf2)
 ament_export_dependencies(tf2_ros)
 ament_export_dependencies(turtlebot3_msgs)
 ament_export_dependencies(builtin_interfaces)
