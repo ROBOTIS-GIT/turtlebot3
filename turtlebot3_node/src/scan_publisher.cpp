@@ -82,11 +82,6 @@ int main(int argc, char *argv[])
 
   while (rclcpp::ok())
   {
-    // rclcpp::TimeSource ts(node);
-    // rclcpp::Clock::SharedPtr clock = std::make_shared<rclcpp::Clock>(RCL_ROS_TIME);
-    // ts.attachClock(clock);
-
-    // laser_scan->header.stamp = clock->now();
     scan_pub->publish(laser_scan);
 
     rclcpp::spin_some(node);
