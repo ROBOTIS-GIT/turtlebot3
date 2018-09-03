@@ -49,7 +49,7 @@ class Odometry : public rclcpp::Node
 {
 public:
   Odometry()
-      : Node("odometry"), init_encoder_(true)
+      : Node("odometry_publisher"), init_encoder_(true)
   {
     RCLCPP_INFO(this->get_logger(), "Init Odometry publisher")
 
