@@ -49,22 +49,26 @@ find_package(builtin_interfaces REQUIRED)
 ################################################################################
 # Install
 ################################################################################
-add_executable(odometry src/odometry.cpp)
-ament_target_dependencies(odometry rclcpp std_msgs sensor_msgs geometry_msgs nav_msgs turtlebot3_msgs tf2)
+add_executable(odometry_publisher src/odometry_publisher.cpp)
+ament_target_dependencies(odometry_publisher rclcpp std_msgs sensor_msgs geometry_msgs nav_msgs turtlebot3_msgs tf2)
 
 add_executable(tf_publisher src/tf_publisher.cpp)
 ament_target_dependencies(tf_publisher rclcpp std_msgs sensor_msgs nav_msgs tf2_ros)
 
-add_executable(joint_states src/joint_states.cpp)
-ament_target_dependencies(joint_states rclcpp std_msgs sensor_msgs turtlebot3_msgs)
+add_executable(joint_states_publisher src/joint_states_publisher.cpp)
+ament_target_dependencies(joint_states_publisher rclcpp std_msgs sensor_msgs turtlebot3_msgs)
 
 add_executable(time_sync src/time_sync.cpp)
 ament_target_dependencies(time_sync rclcpp std_msgs builtin_interfaces)
 
+add_executable(scan_publisher src/scan_publisher.cpp)
+ament_target_dependencies(scan_publisher rclcpp std_msgs sensor_msgs)
+
 install(TARGETS
-  odometry
+  odometry_publisher
   tf_publisher
-  joint_states
+  joint_states_publisher
+  scan_publisher
   time_sync
   DESTINATION lib/${PROJECT_NAME}
 )
