@@ -45,9 +45,6 @@ void scanHalfMsgCallback(const sensor_msgs::msg::LaserScan::SharedPtr msg)
   laser_scan->ranges.resize(360);
   laser_scan->intensities.resize(360);
 
-  // laser_scan->ranges.clear();
-  // laser_scan->intensities.clear();
-
   uint16_t j = 0;
   for (uint16_t i = 0; i < 180; i++)
   {
