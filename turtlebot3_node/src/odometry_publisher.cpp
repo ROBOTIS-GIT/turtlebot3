@@ -175,7 +175,6 @@ private:
 
     delta_s     = WHEEL_RADIUS * (wheel_r + wheel_l) / 2.0;
     // theta = WHEEL_RADIUS * (wheel_r - wheel_l) / WHEEL_SEPARATION;  
-    // orientation = &orientation_;
     theta       = atan2f(orientation_[1]*orientation_[2] + orientation_[0]*orientation_[3], 
                   0.5f - orientation_[2]*orientation_[2] - orientation_[3]*orientation_[3]);
 
@@ -209,22 +208,6 @@ private:
     odom.pose.pose.position.x = odom_pose_[0];
     odom.pose.pose.position.y = odom_pose_[1];
     odom.pose.pose.position.z = 0;
-
-    // Ref : https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles#Source_Code
-
-    // double cy = cos(odom_pose_[2] * 0.5);
-    // double sy = sin(odom_pose_[2] * 0.5);
-    // double cr = cos(0.0 * 0.5);
-    // double sr = sin(0.0 * 0.5);
-    // double cp = cos(0.0 * 0.5);
-    // double sp = sin(0.0 * 0.5);
-
-    // odom.pose.pose.orientation.w = cy * cr * cp + sy * sr * sp;
-    // odom.pose.pose.orientation.x = cy * sr * cp - sy * cr * sp;
-    // odom.pose.pose.orientation.y = cy * cr * sp + sy * sr * cp;
-    // odom.pose.pose.orientation.z = sy * cr * cp - cy * sr * sp;
-
-    // odom.pose.pose.orientation = tf::createQuaternionFromYaw(odom_pose[2]);
 
     tf2::Quaternion q;
     q.setRPY(0.0, 0.0, odom_pose_[2]);
