@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>turtlebot3_cartographer</name>
-  <version>1.1.0</version>
+  <version>0.0.1</version>
   <description>
     roslaunch scripts for cartographer
   </description>
   <license>Apache 2.0</license>
-  <author email="pyo@robotis.com">Pyo</author>
   <author email="thlim@robotis.com">Darby Lim</author>
+  <author email="pyo@robotis.com">Pyo</author>  
   <maintainer email="pyo@robotis.com">Pyo</maintainer>
   <url type="website">http://wiki.ros.org/turtlebot3_bringup</url>
   <url type="emanual">http://turtlebot3.robotis.com</url>
@@ -15,14 +15,9 @@
   <url type="bugtracker">https://github.com/ROBOTIS-GIT/turtlebot3/issues</url>
   <buildtool_depend>ament_cmake</buildtool_depend>
   <exec_depend>ament_index_python</exec_depend>
-  <!-- <exec_depend>astra_camera</exec_depend> -->
   <exec_depend>cartographer_ros</exec_depend>
-  <!-- <exec_depend>depthimage_to_laserscan</exec_depend> -->
-  <!-- <exec_depend>depthimage_to_pointcloud2</exec_depend> -->
-  <!-- <exec_depend>joy</exec_depend> -->
   <exec_depend>launch</exec_depend>
   <exec_depend>ros2run</exec_depend>
-  <!-- <exec_depend>teleop_twist_joy</exec_depend> -->
   <exec_depend>tf2_ros</exec_depend>
   <exec_depend>turtlebot2_drivers</exec_depend>
   <export>
