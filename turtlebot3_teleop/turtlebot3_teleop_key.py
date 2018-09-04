@@ -27,6 +27,8 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
+# /* Author: Darby Lim */
+
 import rclpy
 from geometry_msgs.msg import Twist
 import sys, select, termios, tty

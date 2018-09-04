@@ -28,45 +28,6 @@
 
 using namespace std::chrono_literals;
 
-// class TransformPublisher : public rclcpp::Node
-// {
-// public:
-//   TransformPublisher()
-//       : Node("tf_publisher")
-//   {
-//     tf_broadcaster_ = std::make_shared<tf2_ros::TransformBroadcaster>(shared_from_this());
-
-//     odom_sub_ = this->create_subscription<nav_msgs::msg::Odometry>(
-//         "odom",
-//         [this](nav_msgs::msg::Odometry::UniquePtr msg) {
-//           this->odom_tf_transform_.transform.translation.x = msg->pose.pose.position.x;
-//           this->odom_tf_transform_.transform.translation.y = msg->pose.pose.position.y;
-//           this->odom_tf_transform_.transform.translation.z = msg->pose.pose.position.z;
-//           this->odom_tf_transform_.transform.rotation      = msg->pose.pose.orientation;
-//         });
-
-//     auto timer_callback =
-//       [this]() -> void {
-//         auto now = rclcpp::Clock().now();
-
-//         this->odom_tf_transform_.header.frame_id = "odom";
-//         this->odom_tf_transform_.child_frame_id = "base_footprint";
-//         this->odom_tf_transform_.header.stamp = now;
-
-//         this->tf_broadcaster_->sendTransform(this->odom_tf_transform_);
-//       };
-//     timer_ = this->create_wall_timer(33ms, timer_callback);
-//   }
-
-// private:
-//   rclcpp::TimerBase::SharedPtr timer_;
-
-//   rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odom_sub_;
-
-//   std::shared_ptr<tf2_ros::TransformBroadcaster> tf_broadcaster_;
-//   geometry_msgs::msg::TransformStamped odom_tf_transform_;
-// };
-
 geometry_msgs::msg::TransformStamped odom_tf;
 
 void odomMsgCallback(const nav_msgs::msg::Odometry::SharedPtr msg)
