@@ -37,7 +37,7 @@ public:
     rmw_qos_profile_t time_sync_qos_profile = rmw_qos_profile_default;
 
     time_sync_qos_profile.history = RMW_QOS_POLICY_HISTORY_KEEP_LAST;
-    time_sync_qos_profile.depth = 10;
+    time_sync_qos_profile.depth = 1;
     time_sync_qos_profile.reliability = RMW_QOS_POLICY_RELIABILITY_BEST_EFFORT;
     time_sync_qos_profile.durability = RMW_QOS_POLICY_DURABILITY_VOLATILE;
 
@@ -48,7 +48,7 @@ public:
         time_msg = rclcpp::Clock().now();
         this->time_pub_->publish(time_msg);
       };
-    timer_ = this->create_wall_timer(5ms, timer_callback);
+    timer_ = this->create_wall_timer(100ms, timer_callback);
   }
 
 private:
