@@ -7,7 +7,6 @@ Panels:
         - /Global Options1
         - /Status1
         - /TF1
-        - /TF1/Status1
         - /TF1/Frames1
       Splitter Ratio: 0.5
     Tree Height: 750
@@ -109,8 +108,6 @@ Visualization Manager:
           Value: true
         imu_link:
           Value: true
-        odom:
-          Value: true
         wheel_left_link:
           Value: true
         wheel_right_link:
@@ -121,19 +118,7 @@ Visualization Manager:
       Show Axes: true
       Show Names: false
       Tree:
-        odom:
-          base_footprint:
-            base_link:
-              base_scan:
-                {}
-              caster_back_link:
-                {}
-              imu_link:
-                {}
-              wheel_left_link:
-                {}
-              wheel_right_link:
-                {}
+        {}
       Update Interval: 0
       Value: true
     - Angle Tolerance: 0.100000001
@@ -225,5 +210,5 @@ Window Geometry:
   Views:
     collapsed: true
   Width: 1355
-  X: 51
+  X: 6
   Y: 13
