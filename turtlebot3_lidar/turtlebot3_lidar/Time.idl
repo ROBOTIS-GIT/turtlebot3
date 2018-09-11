@@ -1,0 +1,13 @@
+// generated from rosidl_generator_dds_idl/resource/msg.idl.em
+
+#ifndef __std_msgs__msg__Header__idl__
+#define __std_msgs__msg__Header__idl__
+
+struct Time
+{
+  long sec; 
+  unsigned long nanosec;
+};  // struct Header_
+
+
+#endif  // __std_msgs__msg__Header__idl__
