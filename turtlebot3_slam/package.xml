@@ -18,7 +18,7 @@
   <depend>roscpp</depend>
   <depend>sensor_msgs</depend>
   <exec_depend>turtlebot3_bringup</exec_depend>
-  <exec_depend>gmapping</exec_depend>
+  <exec_depend>slam_gmapping</exec_depend>
   <!-- <exec_depend>cartographer</exec_depend>
   <exec_depend>cartographer_ros</exec_depend>
   <exec_depend>cartographer_ros_msgs</exec_depend>
