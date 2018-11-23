@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 
   auto node = rclcpp::Node::make_shared("joint_states_publisher");
 
-  RCLCPP_INFO(node->get_logger(), "Init joint_states publisher")
+  RCLCPP_INFO(node->get_logger(), "Init joint_states publisher");
 
   rmw_qos_profile_t sensor_state_qos_profile = rmw_qos_profile_sensor_data;
   sensor_state_qos_profile.history = RMW_QOS_POLICY_HISTORY_KEEP_LAST;

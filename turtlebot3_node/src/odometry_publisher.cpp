@@ -51,7 +51,7 @@ public:
   Odometry()
       : Node("odometry_publisher"), init_encoder_(true)
   {
-    RCLCPP_INFO(this->get_logger(), "Init Odometry publisher")
+    RCLCPP_INFO(this->get_logger(), "Init Odometry publisher");
 
     sensor_state_sub_ = this->create_subscription<turtlebot3_msgs::msg::SensorState>(
         "sensor_state",

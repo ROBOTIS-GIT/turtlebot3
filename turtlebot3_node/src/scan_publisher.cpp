@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
 
   node = rclcpp::Node::make_shared("scan_publisher");
 
-  RCLCPP_INFO(node->get_logger(), "Init scan publisher")
+  RCLCPP_INFO(node->get_logger(), "Init scan publisher");
 
   rmw_qos_profile_t scan_qos_profile = rmw_qos_profile_sensor_data;
   scan_qos_profile.history = RMW_QOS_POLICY_HISTORY_KEEP_LAST;
