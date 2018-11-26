@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
 
   auto node = rclcpp::Node::make_shared("tf_publisher");
 
-  RCLCPP_INFO(node->get_logger(), "Init tf publisher")
+  RCLCPP_INFO(node->get_logger(), "Init tf publisher");
 
   rmw_qos_profile_t odom_qos_profile = rmw_qos_profile_sensor_data;
   odom_qos_profile.history = RMW_QOS_POLICY_HISTORY_KEEP_LAST;

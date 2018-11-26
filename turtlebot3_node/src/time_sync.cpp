@@ -32,7 +32,7 @@ public:
   TimeSync()
   : Node("time_sync")
   {
-    RCLCPP_INFO(this->get_logger(), "Init System Time publisher")
+    RCLCPP_INFO(this->get_logger(), "Init System Time publisher");
 
     rmw_qos_profile_t time_sync_qos_profile = rmw_qos_profile_default;
 
