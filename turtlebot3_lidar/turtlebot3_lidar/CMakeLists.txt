@@ -27,7 +27,7 @@ else()
    FIND_PACKAGE( Boost 1.62 COMPONENTS system REQUIRED )
    INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 
-    add_executable(${PROJECT_NAME} main.cpp Time.c Header.c LaserScan.c LaserScanWriter.c lds_driver.cpp)
+    add_executable(${PROJECT_NAME} main.cpp Time.c Header.c LaserScan.c lds_driver.cpp)
     if(MSVC OR MSVC_IDE)
         target_compile_options(${PROJECT_NAME} PRIVATE /wd4996)
     endif()
