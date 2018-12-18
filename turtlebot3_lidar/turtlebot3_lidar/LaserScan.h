@@ -54,11 +54,13 @@ typedef struct LaserScan
 
 } LaserScan;
 
-struct MicroBuffer;
+struct ucdrBuffer;
 
-bool LaserScan_serialize_topic(struct MicroBuffer* writer, const LaserScan* topic);
-bool LaserScan_deserialize_topic(struct MicroBuffer* reader, LaserScan* topic);
+bool LaserScan_serialize_topic(struct ucdrBuffer* writer, const LaserScan* topic);
+bool LaserScan_deserialize_topic(struct ucdrBuffer* reader, LaserScan* topic);
 uint32_t LaserScan_size_of_topic(const LaserScan* topic, uint32_t size);
+
+
 #ifdef __cplusplus
 }
 #endif

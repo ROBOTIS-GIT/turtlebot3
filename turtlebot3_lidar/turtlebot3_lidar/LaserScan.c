@@ -21,52 +21,58 @@
 
 #include "LaserScan.h"
 
-#include <microcdr/microcdr.h>
+#include <ucdr/microcdr.h>
 #include <string.h>
 
-bool LaserScan_serialize_topic(MicroBuffer* writer, const LaserScan* topic)
+bool LaserScan_serialize_topic(ucdrBuffer* writer, const LaserScan* topic)
 {
     (void) Header_serialize_topic(writer, &topic->header);
-    (void) serialize_float(writer, topic->angle_min);
-    (void) serialize_float(writer, topic->angle_max);
-    (void) serialize_float(writer, topic->angle_increment);
-    (void) serialize_float(writer, topic->time_increment);
-    (void) serialize_float(writer, topic->scan_time);
-    (void) serialize_float(writer, topic->range_min);
-    (void) serialize_float(writer, topic->range_max);
-    (void) serialize_sequence_float(writer, topic->ranges, topic->ranges_size);(void) serialize_sequence_float(writer, topic->intensities, topic->intensities_size);
-    return writer->error == BUFFER_OK;
+    (void) ucdr_serialize_float(writer, topic->angle_min);
+    (void) ucdr_serialize_float(writer, topic->angle_max);
+    (void) ucdr_serialize_float(writer, topic->angle_increment);
+    (void) ucdr_serialize_float(writer, topic->time_increment);
+    (void) ucdr_serialize_float(writer, topic->scan_time);
+    (void) ucdr_serialize_float(writer, topic->range_min);
+    (void) ucdr_serialize_float(writer, topic->range_max);
+    (void) ucdr_serialize_sequence_float(writer, topic->ranges, topic->ranges_size);
+    (void) ucdr_serialize_sequence_float(writer, topic->intensities, topic->intensities_size);
+    return !writer->error;
 }
 
-bool LaserScan_deserialize_topic(MicroBuffer* reader, LaserScan* topic)
+bool LaserScan_deserialize_topic(ucdrBuffer* reader, LaserScan* topic)
 {
     (void) Header_deserialize_topic(reader, &topic->header);
-    (void) deserialize_float(reader, &topic->angle_min);
-    (void) deserialize_float(reader, &topic->angle_max);
-    (void) deserialize_float(reader, &topic->angle_increment);
-    (void) deserialize_float(reader, &topic->time_increment);
-    (void) deserialize_float(reader, &topic->scan_time);
-    (void) deserialize_float(reader, &topic->range_min);
-    (void) deserialize_float(reader, &topic->range_max);
-    (void) deserialize_sequence_float(reader, topic->ranges, &topic->ranges_size);(void) deserialize_sequence_float(reader, topic->intensities, &topic->intensities_size);
-    return reader->error == BUFFER_OK;
+    (void) ucdr_deserialize_float(reader, &topic->angle_min);
+    (void) ucdr_deserialize_float(reader, &topic->angle_max);
+    (void) ucdr_deserialize_float(reader, &topic->angle_increment);
+    (void) ucdr_deserialize_float(reader, &topic->time_increment);
+    (void) ucdr_deserialize_float(reader, &topic->scan_time);
+    (void) ucdr_deserialize_float(reader, &topic->range_min);
+    (void) ucdr_deserialize_float(reader, &topic->range_max);
+    (void) ucdr_deserialize_sequence_float(reader, topic->ranges, sizeof(topic->ranges)/sizeof(float), &topic->ranges_size);
+    (void) ucdr_deserialize_sequence_float(reader, topic->intensities, sizeof(topic->intensities)/sizeof(float), &topic->intensities_size);
+
+    return !reader->error;
 }
 
 uint32_t LaserScan_size_of_topic(const LaserScan* topic, uint32_t size)
 {
-    size  = Header_size_of_topic(&topic->header, size);
-    size += 4 + get_alignment(size, 4);
-    size += 4 + get_alignment(size, 4);
-    size += 4 + get_alignment(size, 4);
-    size += 4 + get_alignment(size, 4);
-    size += 4 + get_alignment(size, 4);
-    size += 4 + get_alignment(size, 4);
-    size += 4 + get_alignment(size, 4);
-    size += 4 + get_alignment(size, 4);
-    size += (topic->ranges_size * 4) + get_alignment(size, 4);
+    uint32_t previousSize = size;
 
-    size += 4 + get_alignment(size, 4);
-    size += (topic->intensities_size * 4) + get_alignment(size, 4);
+    size += Header_size_of_topic(&topic->header, size);
+    size += ucdr_alignment(size, 4) + 4;
+    size += ucdr_alignment(size, 4) + 4;
+    size += ucdr_alignment(size, 4) + 4;
+    size += ucdr_alignment(size, 4) + 4;
+    size += ucdr_alignment(size, 4) + 4;
+    size += ucdr_alignment(size, 4) + 4;
+    size += ucdr_alignment(size, 4) + 4;
+    
+    size += ucdr_alignment(size, 4) + 4;
+    size += ucdr_alignment(size, 4) + (topic->ranges_size * 4);
 
-    return size;
+    size += ucdr_alignment(size, 4) + 4;
+    size += ucdr_alignment(size, 4) + (topic->intensities_size * 4);
+
+    return size - previousSize;
 }

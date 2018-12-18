@@ -41,11 +41,13 @@ typedef struct Header
   char frame_id[255];
 } Header;
 
-struct MicroBuffer;
+struct ucdrBuffer;
 
-bool Header_serialize_topic(struct MicroBuffer* writer, const Header* topic);
-bool Header_deserialize_topic(struct MicroBuffer* reader, Header* topic);
+bool Header_serialize_topic(struct ucdrBuffer* writer, const Header* topic);
+bool Header_deserialize_topic(struct ucdrBuffer* reader, Header* topic);
 uint32_t Header_size_of_topic(const Header* topic, uint32_t size);
+
+
 #ifdef __cplusplus
 }
 #endif

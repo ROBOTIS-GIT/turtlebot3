@@ -41,11 +41,13 @@ typedef struct Time
 
 } Time;
 
-struct MicroBuffer;
+struct ucdrBuffer;
 
-bool Time_serialize_topic(struct MicroBuffer* writer, const Time* topic);
-bool Time_deserialize_topic(struct MicroBuffer* reader, Time* topic);
+bool Time_serialize_topic(struct ucdrBuffer* writer, const Time* topic);
+bool Time_deserialize_topic(struct ucdrBuffer* reader, Time* topic);
 uint32_t Time_size_of_topic(const Time* topic, uint32_t size);
+
+
 #ifdef __cplusplus
 }
 #endif

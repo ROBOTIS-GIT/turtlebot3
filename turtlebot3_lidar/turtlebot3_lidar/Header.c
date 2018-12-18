@@ -21,27 +21,30 @@
 
 #include "Header.h"
 
-#include <microcdr/microcdr.h>
+#include <ucdr/microcdr.h>
 #include <string.h>
 
-bool Header_serialize_topic(MicroBuffer* writer, const Header* topic)
+bool Header_serialize_topic(ucdrBuffer* writer, const Header* topic)
 {
     (void) Time_serialize_topic(writer, &topic->stamp);
-    (void) serialize_sequence_char(writer, topic->frame_id, (uint32_t)strlen(topic->frame_id) + 1);
-    return writer->error == BUFFER_OK;
+    (void) ucdr_serialize_string(writer, topic->frame_id);
+    return !writer->error;
 }
 
-bool Header_deserialize_topic(MicroBuffer* reader, Header* topic)
+bool Header_deserialize_topic(ucdrBuffer* reader, Header* topic)
 {
     uint32_t size_frame_id;
     (void) Time_deserialize_topic(reader, &topic->stamp);
-    (void) deserialize_sequence_char(reader, topic->frame_id, &size_frame_id);
-    return reader->error == BUFFER_OK;
+    (void) ucdr_deserialize_string(reader, topic->frame_id, sizeof(topic->frame_id));
+    return !reader->error;
 }
 
 uint32_t Header_size_of_topic(const Header* topic, uint32_t size)
 {
-    size  = Time_size_of_topic(&topic->stamp, size);
-    size += 4 + get_alignment(size, 4) + (uint32_t)strlen(topic->frame_id) + 1;
-    return size;
+    uint32_t previousSize = size;
+
+    size += Time_size_of_topic(&topic->stamp, size);
+    size += ucdr_alignment(size, 4) + 4 + (uint32_t)strlen(topic->frame_id) + 1;
+    
+    return size - previousSize;
 }
