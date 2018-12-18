@@ -1,4 +1,4 @@
-// Copyright 2017 Proyectos y Sistemas de Mantenimiento SL (eProsima).
+﻿// Copyright 2017 Proyectos y Sistemas de Mantenimiento SL (eProsima).
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@
 #include <uxr/client/client.h>
 #include <ucdr/microcdr.h>
 
-#include "LaserScanWriter.h"
+#include "LaserScan.h"
 #include "lds_driver.h"
 
 #define STREAM_HISTORY  8
@@ -124,59 +124,59 @@ int main(int args, char** argv)
     std::vector<float> lidar_info = laser.poll();
     char frame_id[20];
     uint32_t topic_size;
-	  sprintf(frame_id, "base_scan");
-	  std::chrono::nanoseconds now = std::chrono::high_resolution_clock::now().time_since_epoch();
+    sprintf(frame_id, "base_scan");
+    std::chrono::nanoseconds now = std::chrono::high_resolution_clock::now().time_since_epoch();
 
-  	topic.header.stamp.sec = now.count() / 1000000000;
-  	topic.header.stamp.nanosec = now.count() % 1000000000;
+    topic.header.stamp.sec = now.count() / 1000000000;
+    topic.header.stamp.nanosec = now.count() % 1000000000;
 
-  	strcpy(topic.header.frame_id, frame_id);
+    strcpy(topic.header.frame_id, frame_id);
 
     topic.angle_increment = (2.0*M_PI/360.0);
-	  topic.time_increment = lidar_info.at(lidar_info.size()-1);
+    topic.time_increment = lidar_info.at(lidar_info.size()-1);
     topic.angle_min = 0.0f;
     topic.angle_max = 2.0*M_PI-topic.angle_increment;
-	  topic.scan_time = 0.0f;
+    topic.scan_time = 0.0f;
     topic.range_min = 0.12f;
     topic.range_max = 3.5;
 
-	  if (ALL_RANGES)
+    if (ALL_RANGES)
     {
-	    topic.ranges_size = 360;
+      topic.ranges_size = 360;
     }
-	  else
+    else
     {
       topic.ranges_size = 180;
     }
-	  
+
     topic.intensities_size = 1;
 
-	  if (ALL_RANGES)
-	  {
+    if (ALL_RANGES)
+    {
       for (uint16_t index = 0; index < (lidar_info.size()-1); index++)
-  	  {
+      {
         topic.ranges[(topic.ranges_size-1)-index] = lidar_info.at(index);
-	    }
-	  }
-	  else
-	  {
+      }
+    }
+    else
+    {
       for (uint16_t index = 0; index < ((lidar_info.size()-1)/2); index++)
       {
         topic.ranges[(topic.ranges_size-1)-index] = lidar_info.at(index*2);
       }
-	  }
-    
+    }
+
     topic_size = LaserScan_size_of_topic(&topic, 0);
     uxr_prepare_output_stream(&session, reliable_out, datawriter_id, &mb, topic_size);
     LaserScan_serialize_topic(&mb, &topic);
 
     connected = uxr_run_session_until_timeout(&session, 200);
     //connected = mr_run_session_until_confirm_delivery(&session, 200);
-	  if(connected)
+    if(connected)
     {
       //printf("Sent topic: %f, range_max: %d\n", lidar_info.at(1), lidar_info.size());
     }
-  } 
+  }
 
   // Delete resources
   laser.close();
