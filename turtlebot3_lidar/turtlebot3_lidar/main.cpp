@@ -82,7 +82,7 @@ int main(int args, char** argv)
   uxrObjectId topic_id = uxr_object_id(0x01, UXR_TOPIC_ID);
   const char* topic_xml = "<dds>"
                             "<topic>"
-                              "<name>scan</name>"
+                              "<name>LaserScan</name>"
                               "<dataType>sensor_msgs::msg::dds_::LaserScan_</dataType>"
                             "</topic>"
                           "</dds>";
@@ -97,7 +97,7 @@ int main(int args, char** argv)
                                   "<data_writer>"
                                     "<topic>"
                                       "<kind>NO_KEY</kind>"
-                                      "<name>rt/scan</name>"
+                                      "<name>rt/scan_half</name>"
                                       "<dataType>sensor_msgs::msg::dds_::LaserScan_</dataType>"
                                     "</topic>"
                                   "</data_writer>"
@@ -114,9 +114,11 @@ int main(int args, char** argv)
     return 1;
   }
 
+  printf("turtlebot3 lidar client setup complete!\r\n")
+
   // Write topics
   bool connected = true;
-  uint32_t pre_time = 0;
+  uint32_t cnt = 0;
   while(connected)
   {
     LaserScan topic;
@@ -170,11 +172,11 @@ int main(int args, char** argv)
     uxr_prepare_output_stream(&session, reliable_out, datawriter_id, &mb, topic_size);
     LaserScan_serialize_topic(&mb, &topic);
 
-    connected = uxr_run_session_until_timeout(&session, 200);
-    //connected = mr_run_session_until_confirm_delivery(&session, 200);
+    //connected = uxr_run_session_until_timeout(&session, 200);
+    connected = mr_run_session_until_confirm_delivery(&session, 200);
     if(connected)
     {
-      //printf("Sent topic: %f, range_max: %d\n", lidar_info.at(1), lidar_info.size());
+      printf("%u - Sent topic: %f, range_max: %d\n", cnt, lidar_info.at(1), lidar_info.size());
     }
   }
 
