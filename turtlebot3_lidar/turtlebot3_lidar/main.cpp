@@ -176,7 +176,7 @@ int main(int args, char** argv)
     connected = uxr_run_session_until_confirm_delivery(&session, 200);
     if(connected)
     {
-      printf("%u - Sent topic: %f, range_max: %d\n", cnt, lidar_info.at(1), lidar_info.size());
+      printf("%u - Sent topic: %f, range_max: %d\n", ++cnt, lidar_info.at(1), lidar_info.size());
     }
   }
 
