@@ -114,7 +114,7 @@ int main(int args, char** argv)
     return 1;
   }
 
-  printf("turtlebot3 lidar client setup complete!\r\n")
+  printf("turtlebot3 lidar client setup complete!\r\n");
 
   // Write topics
   bool connected = true;
@@ -173,7 +173,7 @@ int main(int args, char** argv)
     LaserScan_serialize_topic(&mb, &topic);
 
     //connected = uxr_run_session_until_timeout(&session, 200);
-    connected = mr_run_session_until_confirm_delivery(&session, 200);
+    connected = uxr_run_session_until_confirm_delivery(&session, 200);
     if(connected)
     {
       printf("%u - Sent topic: %f, range_max: %d\n", cnt, lidar_info.at(1), lidar_info.size());
