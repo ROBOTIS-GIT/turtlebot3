@@ -17,9 +17,8 @@
 import os
 
 from ament_index_python.packages import get_package_share_directory
+from launch.exit_handler import restart_exit_handler
 from ros2run.api import get_executable_path
-from launch import LaunchDescription
-from launch_ros.actions import Node
 
 # def generate_launch_description():
 #     resolution = 0.05
@@ -29,6 +28,12 @@ from launch_ros.actions import Node
 
 def launch(launch_descriptor, argv):
     ld = launch_descriptor
+    # ld.add_process(
+    #     cmd=[get_executable_path(package_name=package, executable_name='occupancy_grid_node_main'),
+    #         '-resolution', '0.05'],
+    #     name='occupancy_grid_node',
+    #     exit_handler=restart_exit_handler,
+    # )
     package = 'cartographer_ros'
     turtlebot3_cartographer_prefix = get_package_share_directory('turtlebot3_cartographer')
     cartographer_config_dir = os.path.join(turtlebot3_cartographer_prefix, 'config')
@@ -39,14 +44,7 @@ def launch(launch_descriptor, argv):
             '-configuration_basename', 'turtlebot3_lds_2d.lua'
         ],
         name='cartographer_node',
+        exit_handler=restart_exit_handler,
     )
-
-    # ld.add_process(
-    #     cmd=[
-    #         get_executable_path(package_name=package, executable_name='occupancy_grid_node_main'),
-    #         '-resolution', '0.05'
-    #     ],
-    #     name='occupancy_grid_node',
-    # )
 
     return ld
