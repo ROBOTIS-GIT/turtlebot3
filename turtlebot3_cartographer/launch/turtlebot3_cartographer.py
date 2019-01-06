@@ -20,12 +20,6 @@ from ament_index_python.packages import get_package_share_directory
 from launch.exit_handler import restart_exit_handler
 from ros2run.api import get_executable_path
 
-# def generate_launch_description():
-#     resolution = 0.05
-#     return LaunchDescription([
-#         Node(package='cartographer_ros', node_executable='occupancy_grid_node_main', output='screen', arguments=[resolution])
-#     ])
-
 def launch(launch_descriptor, argv):
     ld = launch_descriptor
     # ld.add_process(
