@@ -15,28 +15,37 @@
 # /* Author: Darby Lim */
 
 import os
-
 from ament_index_python.packages import get_package_share_directory
-from ros2run.api import get_executable_path
+from launch import LaunchDescription
+import launch.actions
+import launch_ros.actions
 
-def launch(launch_descriptor, argv):
-    ld = launch_descriptor
-    # ld.add_process(
-    #     cmd=[get_executable_path(package_name=package, executable_name='occupancy_grid_node_main'),
-    #         '-resolution', '0.05'],
-    #     name='occupancy_grid_node',
-    #     exit_handler=restart_exit_handler,
-    # )
-    package = 'cartographer_ros'
+def generate_launch_description():
+    use_sim_time = launch.substitutions.LaunchConfiguration('use_sim_time', default='false')
     turtlebot3_cartographer_prefix = get_package_share_directory('turtlebot3_cartographer')
-    cartographer_config_dir = os.path.join(turtlebot3_cartographer_prefix, 'config')
-    ld.add_process(
-        cmd=[
-            get_executable_path(package_name=package, executable_name='cartographer_node'),
-            '-configuration_directory', cartographer_config_dir,
-            '-configuration_basename', 'turtlebot3_lds_2d.lua'
-        ],
-        name='cartographer_node',
-    )
+    cartographer_config_dir = launch.substitutions.LaunchConfiguration('cartographer_config_dir', 
+                                                                        default=os.path.join(turtlebot3_cartographer_prefix, 'config'))
+    configuration_basename = launch.substitutions.LaunchConfiguration('configuration_basename', default='/turtlebot3_lds_2d.lua')
 
-    return ld
+    return LaunchDescription([
+        launch.actions.DeclareLaunchArgument(
+            'cartographer_config_dir',
+            default_value=cartographer_config_dir,
+            description='Full path to config file to load'),
+        launch.actions.DeclareLaunchArgument(
+            'configuration_basename',
+            default_value=configuration_basename,
+            description='Name of lua file for cartographer'),
+        launch.actions.DeclareLaunchArgument(
+            'use_sim_time',
+            default_value='false',
+            description='Use simulation (Gazebo) clock if true'),
+
+        launch_ros.actions.Node(
+            package='cartographer_ros',
+            node_executable='cartographer_node',
+            node_name='cartographer_node',
+            output='screen',
+            parameters=[{' use_sim_time': use_sim_time}],
+            arguments=['-configuration_directory', cartographer_config_dir, '-configuration_basename', configuration_basename]),
+    ])
