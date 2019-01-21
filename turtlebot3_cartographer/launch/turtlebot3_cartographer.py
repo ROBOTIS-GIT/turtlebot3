@@ -27,6 +27,9 @@ def generate_launch_description():
                                                                         default=os.path.join(turtlebot3_cartographer_prefix, 'config'))
     configuration_basename = launch.substitutions.LaunchConfiguration('configuration_basename', default='turtlebot3_lds_2d.lua')
 
+    resolution = launch.substitutions.LaunchConfiguration('resolution', default='0.05')
+    publish_period_sec = launch.substitutions.LaunchConfiguration('publish_period_sec', default='1.0')
+
     return LaunchDescription([
         launch.actions.DeclareLaunchArgument(
             'cartographer_config_dir',
@@ -48,4 +51,22 @@ def generate_launch_description():
             output='screen',
             parameters=[{' use_sim_time': use_sim_time}],
             arguments=['-configuration_directory', cartographer_config_dir, '-configuration_basename', configuration_basename]),
+
+        launch.actions.DeclareLaunchArgument(
+            'resolution',
+            default_value=resolution,
+            description='Resolution of a grid cell in the published occupancy grid'),
+
+        launch.actions.DeclareLaunchArgument(
+            'publish_period_sec',
+            default_value=publish_period_sec,
+            description='OccupancyGrid publishing period'),
+
+        launch_ros.actions.Node(
+            package='cartographer_ros',
+            node_executable='occupancy_grid_node',
+            node_name='occupancy_grid_node',
+            output='screen',
+            parameters=[{' use_sim_time': use_sim_time}],
+            arguments=['-resolution', resolution, '-publish_period_sec', publish_period_sec]),
     ])
