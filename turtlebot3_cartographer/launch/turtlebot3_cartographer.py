@@ -25,7 +25,7 @@ def generate_launch_description():
     turtlebot3_cartographer_prefix = get_package_share_directory('turtlebot3_cartographer')
     cartographer_config_dir = launch.substitutions.LaunchConfiguration('cartographer_config_dir', 
                                                                         default=os.path.join(turtlebot3_cartographer_prefix, 'config'))
-    configuration_basename = launch.substitutions.LaunchConfiguration('configuration_basename', default='/turtlebot3_lds_2d.lua')
+    configuration_basename = launch.substitutions.LaunchConfiguration('configuration_basename', default='turtlebot3_lds_2d.lua')
 
     return LaunchDescription([
         launch.actions.DeclareLaunchArgument(
