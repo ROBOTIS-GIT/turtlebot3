@@ -29,7 +29,11 @@
 
 import rospy
 from geometry_msgs.msg import Twist
-import sys, select, termios, tty
+import sys, select, os
+if os.name == 'nt':
+  import msvcrt
+else:
+  import tty, termios
 
 BURGER_MAX_LIN_VEL = 0.22
 BURGER_MAX_ANG_VEL = 2.84
@@ -61,6 +65,9 @@ Communications Failed
 """
 
 def getKey():
+    if os.name == 'nt':
+      return msvcrt.getch()
+
     tty.setraw(sys.stdin.fileno())
     rlist, _, _ = select.select([sys.stdin], [], [], 0.1)
     if rlist:
@@ -115,7 +122,8 @@ def checkAngularLimitVelocity(vel):
     return vel
 
 if __name__=="__main__":
-    settings = termios.tcgetattr(sys.stdin)
+    if os.name != 'nt':
+        settings = termios.tcgetattr(sys.stdin)
 
     rospy.init_node('turtlebot3_teleop')
     pub = rospy.Publisher('cmd_vel', Twist, queue_size=10)
@@ -181,4 +189,5 @@ if __name__=="__main__":
         twist.angular.x = 0.0; twist.angular.y = 0.0; twist.angular.z = 0.0
         pub.publish(twist)
 
-    termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
+    if os.name != 'nt':
+        termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)

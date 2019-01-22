@@ -2,6 +2,17 @@
 Changelog for package turtlebot3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.2.0 (2019-01-22)
+------------------
+* changed math.ceil() operation `#373 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/373>`_
+* fixed TypeError integers
+* fixed read of scanned samples when there isn't 360
+* updated map.yaml `#348 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/348>`_
+* added an additional argument move_forward_only to prohibit backward locomotion in navigation `#339 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/339>`_
+* fixed typo `#280 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/280>`_
+* added windows port `#358 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/358>`_
+* Contributors: Gilbert, Darby Lim, linzhibo, oiz5201618, yoshimalucky, Steven Macenski, Eduardo Avelar, Sean Yen, Pyo
+
 1.1.0 (2018-07-23)
 ------------------
 * added bringup to load multiple robot simply #251
