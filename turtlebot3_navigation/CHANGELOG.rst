@@ -2,6 +2,13 @@
 Changelog for package turtlebot3_navigation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.2.0 (2019-01-22)
+------------------
+* updated map.yaml `#348 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/348>`_
+* added an additional argument move_forward_only to prohibit backward locomotion in navigation `#339 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/339>`_
+* fixed typo `#280 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/280>`_
+* Contributors: Gilbert, Darby Lim, linzhibo, oiz5201618, yoshimalucky, Pyo
+
 1.1.0 (2018-07-23)
 ------------------
 * added bringup to load multiple robot simply #251
