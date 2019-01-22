@@ -1,15 +1,17 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>turtlebot3_slam</name>
-  <version>1.1.0</version>
+  <version>1.2.0</version>
   <description>
     The turtlebot3_slam package provides roslaunch scripts for starting the SLAM
   </description>
   <license>Apache 2.0</license>
   <author email="pyo@robotis.com">Pyo</author>
   <author email="thlim@robotis.com">Darby Lim</author>
+  <author email="kkjong@robotis.com">Gilbert</author>
   <author>Leon Jung</author>
   <maintainer email="pyo@robotis.com">Pyo</maintainer>
+  <maintainer email="kkjong@robotis.com">Gilbert</maintainer>
   <url type="website">http://wiki.ros.org/turtlebot3_slam</url>
   <url type="emanual">http://turtlebot3.robotis.com</url>
   <url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3</url>
@@ -18,8 +20,8 @@
   <depend>roscpp</depend>
   <depend>sensor_msgs</depend>
   <exec_depend>turtlebot3_bringup</exec_depend>
-  <exec_depend>slam_gmapping</exec_depend>
-  <!-- <exec_depend>cartographer</exec_depend>
+  <!--  <exec_depend>slam_gmapping</exec_depend>
+  <exec_depend>cartographer</exec_depend>
   <exec_depend>cartographer_ros</exec_depend>
   <exec_depend>cartographer_ros_msgs</exec_depend>
   <exec_depend>cartographer_rviz</exec_depend>
