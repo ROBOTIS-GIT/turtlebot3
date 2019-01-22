@@ -2,6 +2,11 @@
 Changelog for package turtlebot3_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.2.0 (2019-01-22)
+------------------
+* added windows port `#358 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/358>`_
+* Contributors: Sean Yen, Taehun Lim
+
 1.1.0 (2018-07-23)
 ------------------
 * none

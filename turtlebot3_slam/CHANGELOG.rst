@@ -2,6 +2,11 @@
 Changelog for package turtlebot3_slam
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.2.0 (2019-01-22)
+------------------
+* modified rosdep `#342 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/342>`_
+* Contributors: Steven Macenski, Darby Lim
+
 1.1.0 (2018-07-23)
 ------------------
 * added bringup to load multiple robot simply #251

@@ -2,6 +2,10 @@
 Changelog for package turtlebot3_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.2.0 (2019-01-22)
+------------------
+* none
+
 1.1.0 (2018-07-23)
 ------------------
 * added bringup to load multiple robot simply #251

@@ -2,6 +2,13 @@
 Changelog for package turtlebot3_example
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.2.0 (2019-01-22)
+------------------
+* changed math.ceil() operation `#373 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/373>`_
+* fixed TypeError integers
+* fixed read of scanned samples when there isn't 360
+* Contributors: Eduardo Avelar, Gilbert, Pyo
+
 1.1.0 (2018-07-23)
 ------------------
 * added bringup to load multiple robot simply #251
