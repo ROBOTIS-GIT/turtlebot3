@@ -1,3 +1,7 @@
+import glob
+import os
+
+from setuptools import find_packages
 from setuptools import setup
 
 package_name = 'turtlebot3_teleop'
@@ -5,16 +9,18 @@ package_name = 'turtlebot3_teleop'
 setup(
     name=package_name,
     version='0.0.1',
-    packages=[],
-    py_modules=[
-        'turtlebot3_teleop_key'
-    ],
+    packages=find_packages(exclude=[]),
     data_files=[
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
+        ('share/turtlebot3_teleop/launch',
+            glob.glob(os.path.join('launch', '*.launch.py'))),
     ],
-    install_requires=['setuptools'],
+    install_requires=[
+        'launch',
+        'setuptools',
+    ],
     zip_safe=True,
     author='Darby Lim',
     author_email='thlim@robotis.com',
@@ -34,7 +40,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'turtlebot3_teleop_key = turtlebot3_teleop_key:main'
+            'teleop_keyboard = turtlebot3_teleop.script.teleop_keyboard:main'
         ],
     },
 )

@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 # Copyright (c) 2011, Willow Garage, Inc.
 # All rights reserved.
 #
@@ -28,10 +26,13 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 # /* Author: Darby Lim */
+import sys
+import select
+import termios
+import tty
 
 import rclpy
 from geometry_msgs.msg import Twist
-import sys, select, termios, tty
 
 BURGER_MAX_LIN_VEL = 0.22
 BURGER_MAX_ANG_VEL = 2.84
@@ -111,7 +112,7 @@ def main():
 
     rclpy.init()
 
-    node = rclpy.create_node('turtlebot3_teleop_key')
+    node = rclpy.create_node('teleop_keyboard')
     pub = node.create_publisher(
         Twist, 'cmd_vel')
 
