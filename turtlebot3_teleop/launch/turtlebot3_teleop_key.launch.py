@@ -16,13 +16,14 @@
 
 # /* Author: Darby Lim */
 
-import os
-
-from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch_ros.actions import Node
+import launch.actions
+from launch_ros.substitutions import ExecutableInPackage
 
 def generate_launch_description():
+    executable = ExecutableInPackage(package='turtlebot3_teleop', executable='teleop_keyboard')
     return LaunchDescription([
-        Node(package='turtlebot3_teleop', node_executable='turtlebot3_teleop_key', output='screen')
+        launch.actions.ExecuteProcess(
+            cmd=[executable],
+            output='screen'),
     ])
