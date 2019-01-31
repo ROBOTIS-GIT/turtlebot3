@@ -3,7 +3,7 @@
   <name>turtlebot3_cartographer</name>
   <version>0.0.1</version>
   <description>
-    roslaunch scripts for cartographer
+    launch scripts for cartographer
   </description>
   <license>Apache 2.0</license>
   <author email="thlim@robotis.com">Darby Lim</author>
@@ -19,7 +19,6 @@
   <exec_depend>launch</exec_depend>
   <exec_depend>ros2run</exec_depend>
   <exec_depend>tf2_ros</exec_depend>
-  <exec_depend>turtlebot2_drivers</exec_depend>
   <export>
     <build_type>ament_cmake</build_type>
   </export>
