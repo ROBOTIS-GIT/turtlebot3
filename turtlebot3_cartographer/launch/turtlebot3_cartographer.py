@@ -49,7 +49,7 @@ def generate_launch_description():
             node_executable='cartographer_node',
             node_name='cartographer_node',
             output='screen',
-            parameters=[{' use_sim_time': use_sim_time}],
+            parameters=[{'use_sim_time': use_sim_time}],
             arguments=['-configuration_directory', cartographer_config_dir, '-configuration_basename', configuration_basename]),
 
         launch.actions.DeclareLaunchArgument(
@@ -67,6 +67,6 @@ def generate_launch_description():
             node_executable='occupancy_grid_node',
             node_name='occupancy_grid_node',
             output='screen',
-            parameters=[{' use_sim_time': use_sim_time}],
+            parameters=[{'use_sim_time': use_sim_time}],
             arguments=['-resolution', resolution, '-publish_period_sec', publish_period_sec]),
     ])
