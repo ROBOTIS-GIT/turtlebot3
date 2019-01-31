@@ -18,49 +18,46 @@
 
 import os
 
-from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-import launch.actions
-import launch_ros.actions
+from launch.actions import IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.substitutions import ThisLaunchFileDir
+from launch_ros.actions import Node
 
 def generate_launch_description():
-    urdf = os.path.join(get_package_share_directory('turtlebot3_description'), 'urdf', 'turtlebot3_burger.urdf')
-
     return LaunchDescription([
-        launch_ros.actions.Node(
-            package='robot_state_publisher', 
-            node_executable='robot_state_publisher', 
-            node_name='robot_state_publisher',
-            output='screen', 
-            arguments=[urdf]),
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource([ThisLaunchFileDir(), '/burger_state_publisher.launch.py']),
+            launch_arguments={'use_sim_time': 'false'}.items(),
+        ),
 
-        launch_ros.actions.Node(
+        Node(
             package='turtlebot3_node',
             node_executable='time_sync',
             node_name='time_sync_node',
             output='screen'),
 
-        launch_ros.actions.Node(
+        Node(
             package='turtlebot3_node',
             node_executable='odometry_publisher',
             node_name='odometry_publisher',
             output='screen'),
 
-        launch_ros.actions.Node(
+        Node(
             package='turtlebot3_node',
             node_executable='tf_publisher',
             node_name='tf_publisher',
             output='screen'),
 
-        launch_ros.actions.Node(
+        Node(
             package='turtlebot3_node',
             node_executable='joint_states_publisher',
             node_name='joint_states_publisher',
             output='screen'),
 
-        launch_ros.actions.Node(
+        Node(
             package='turtlebot3_node',
             node_executable='scan_publisher',
             node_name='scan_publisher',
-            output='screen')
+            output='screen'),
     ])
