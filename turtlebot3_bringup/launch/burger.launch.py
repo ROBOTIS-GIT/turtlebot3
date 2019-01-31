@@ -1,5 +1,5 @@
 # /*******************************************************************************
-# * Copyright 2017 ROBOTIS CO., LTD.
+# * Copyright 2019 ROBOTIS CO., LTD.
 # *
 # * Licensed under the Apache License, Version 2.0 (the "License");
 # * you may not use this file except in compliance with the License.
@@ -25,10 +25,12 @@ from launch.substitutions import ThisLaunchFileDir
 from launch_ros.actions import Node
 
 def generate_launch_description():
+    use_sim_time = LaunchConfiguration('use_sim_time', default='false')
+
     return LaunchDescription([
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource([ThisLaunchFileDir(), '/burger_state_publisher.launch.py']),
-            launch_arguments={'use_sim_time': 'false'}.items(),
+            launch_arguments={'use_sim_time': use_sim_time}.items(),
         ),
 
         Node(
