@@ -17,13 +17,13 @@
 # /* Author: Darby Lim */
 
 from launch import LaunchDescription
-import launch.actions
+from launch.actions import ExecuteProcess
 from launch_ros.substitutions import ExecutableInPackage
 
 def generate_launch_description():
     executable = ExecutableInPackage(package='turtlebot3_teleop', executable='teleop_keyboard')
     return LaunchDescription([
-        launch.actions.ExecuteProcess(
+        ExecuteProcess(
             cmd=[executable],
             output='screen'),
     ])
