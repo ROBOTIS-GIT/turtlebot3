@@ -23,13 +23,15 @@ from launch.substitutions import LaunchConfiguration
 from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import ThisLaunchFileDir
+from launch.actions import ExecuteProcess
 
 def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
     map_dir = LaunchConfiguration('map', 
                                 default=os.path.join(get_package_share_directory('turtlebot3_navigation2'), 'map', 'map.yaml'))
-    
-    param_dir = os.path.join(get_package_share_directory('turtlebot3_navigation2'), 'param', 'burger_params.yaml')
+
+    param_dir = LaunchConfiguration('params', 
+                                default=os.path.join(get_package_share_directory('turtlebot3_navigation2'), 'param', 'burger_params.yaml'))
     
     nav2_launch_file_dir = os.path.join(get_package_share_directory('nav2_bringup'), 'launch')
     rviz_config_dir = os.path.join(get_package_share_directory('turtlebot3_navigation2'), 'rviz', 'tb3_navigation2.rviz')
@@ -39,6 +41,11 @@ def generate_launch_description():
             'map', 
             default_value=map_dir,
             description='Full path to map file to load'),
+
+        DeclareLaunchArgument(
+            'params', 
+            default_value=param_dir,
+            description='Full path to param file to load'),
 
         DeclareLaunchArgument(
             'use_sim_time', 
@@ -52,7 +59,7 @@ def generate_launch_description():
 
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource([nav2_launch_file_dir, '/nav2_bringup_2nd_launch.py']),
-            launch_arguments={'use_sim_time': use_sim_time}.items(),
+            launch_arguments={'use_sim_time': use_sim_time, 'params': param_dir}.items(),
         ),
 
         Node(
@@ -61,4 +68,16 @@ def generate_launch_description():
             node_name='rviz2',
             arguments=['-d', rviz_config_dir],
             output='screen'),
+
+        ExecuteProcess(
+            cmd=['ros2', 'param', 'set', '/world_model', 'use_sim_time', use_sim_time],
+            output='screen'),
+
+        ExecuteProcess(
+            cmd=['ros2', 'param', 'set', '/global_costmap/global_costmap', 'use_sim_time', use_sim_time],
+            output='screen'),
+
+        ExecuteProcess(
+            cmd=['ros2', 'param', 'set', '/local_costmap/local_costmap', 'use_sim_time', use_sim_time],
+            output='screen')
     ])
