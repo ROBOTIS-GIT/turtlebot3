@@ -45,31 +45,58 @@ find_package(builtin_interfaces REQUIRED)
 ################################################################################
 # Build
 ################################################################################
+include_directories(
+  ${rclcpp_INCLUDE_DIRS}
+  ${std_msgs_INCLUDE_DIRS}
+  ${sensor_msgs_INCLUDE_DIRS}
+  ${geometry_msgs_INCLUDE_DIRS}
+  ${nav_msgs_INCLUDE_DIRS}
+  ${turtlebot3_msgs_INCLUDE_DIRS}  
+  ${tf2_INCLUDE_DIRS}
+  ${tf2_ros_INCLUDE_DIRS}
+)
+
+set(ALL_SRCS
+  "src/joint_states.cpp"
+  # "src/odometry.cpp"
+  # "src/scan.cpp"
+  # "src/tf.cpp"
+  # "src/time_sync"
+  )
+add_library(${PROJECT_NAME} ${ALL_SRCS})
+
+add_executable(burger src/node_main.cpp)
+target_link_libraries(burger ${PROJECT_NAME})
+ament_target_dependencies(
+  burger
+  "rclcpp"
+  "std_msgs"
+  "sensor_msgs"
+  "geometry_msgs"
+  "nav_msgs"
+  "turtlebot3_msgs"
+  "tf2"
+  "tf2_ros"
+  "builtin_interfaces"
+)
 
 ################################################################################
 # Install
 ################################################################################
-add_executable(odometry_publisher src/odometry_publisher.cpp)
-ament_target_dependencies(odometry_publisher rclcpp std_msgs sensor_msgs geometry_msgs nav_msgs turtlebot3_msgs tf2)
+# add_executable(tf_publisher src/tf_publisher.cpp)
+# ament_target_dependencies(tf_publisher rclcpp std_msgs sensor_msgs nav_msgs tf2_ros)
 
-add_executable(tf_publisher src/tf_publisher.cpp)
-ament_target_dependencies(tf_publisher rclcpp std_msgs sensor_msgs nav_msgs tf2_ros)
+# add_executable(joint_states_publisher src/joint_states_publisher.cpp)
+# ament_target_dependencies(joint_states_publisher rclcpp std_msgs sensor_msgs turtlebot3_msgs)
 
-add_executable(joint_states_publisher src/joint_states_publisher.cpp)
-ament_target_dependencies(joint_states_publisher rclcpp std_msgs sensor_msgs turtlebot3_msgs)
+# add_executable(time_sync src/time_sync.cpp)
+# ament_target_dependencies(time_sync rclcpp std_msgs builtin_interfaces)
 
-add_executable(time_sync src/time_sync.cpp)
-ament_target_dependencies(time_sync rclcpp std_msgs builtin_interfaces)
-
-add_executable(scan_publisher src/scan_publisher.cpp)
-ament_target_dependencies(scan_publisher rclcpp std_msgs sensor_msgs)
+# add_executable(scan_publisher src/scan_publisher.cpp)
+# ament_target_dependencies(scan_publisher rclcpp std_msgs sensor_msgs)
 
 install(TARGETS
-  odometry_publisher
-  tf_publisher
-  joint_states_publisher
-  scan_publisher
-  time_sync
+  burger
   DESTINATION lib/${PROJECT_NAME}
 )
 
