@@ -27,6 +27,7 @@
 #include "sensor_msgs/msg/imu.hpp"
 #include "sensor_msgs/msg/laser_scan.hpp"
 #include "nav_msgs/msg/odometry.hpp"
+#include "builtin_interfaces/msg/time.hpp"
 #include <tf2_ros/transform_broadcaster.h>
 
 #include "constants.h"
@@ -52,6 +53,7 @@ class TurtleBot3 : public rclcpp::Node
     joint_state_pub_ = this->create_publisher<sensor_msgs::msg::JointState>(JointStateTopic, rmw_qos_profile_default);
     laser_scan_pub_ = this->create_publisher<sensor_msgs::msg::LaserScan>(ScanTopic, rmw_qos_profile_default);
     odom_pub_ = this->create_publisher<nav_msgs::msg::Odometry>(OdomTopic, rmw_qos_profile_default);
+    time_pub_ = this->create_publisher<builtin_interfaces::msg::Time>(TimeTopic, rmw_qos_profile_default);
 
     auto sensor_state_callback = 
       [this](const turtlebot3_msgs::msg::SensorState::SharedPtr sensor_state) -> void
@@ -94,12 +96,22 @@ class TurtleBot3 : public rclcpp::Node
     );
 
     odom_timer_ = this->create_wall_timer(
-      OdometryPublishPeroidMillis,
+      OdometryPublishPeriodMillis,
       [this]()
       {
         this->odom_->updateJointState(this->joint_state_->getJointState(this->now()));
         this->odom_pub_->publish(this->odom_->getOdom(this->now(), WheelRadius));
         this->tf_broadcaster_->sendTransform(this->odom_->getOdomTf());
+      }
+    );
+
+    time_timer_ = this->create_wall_timer(
+      TimeSyncPublishPeriodSec,
+      [this]()
+      {
+        auto time_msg = builtin_interfaces::msg::Time();
+        time_msg = this->now();
+        this->time_pub_->publish(time_msg);
       }
     );
   }
