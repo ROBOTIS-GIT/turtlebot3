@@ -19,6 +19,7 @@
 #ifndef TURTLEBOT3_JOINT_STATE_H
 #define TURTLEBOT3_JOINT_STATE_H
 
+#include <memory>
 #include <array>
 #include <mutex>
 

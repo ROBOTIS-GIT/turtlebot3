@@ -19,7 +19,7 @@
 #ifndef TURTLEBOT3_LIDAR_H
 #define TURTLEBOT3_LIDAR_H
 
-#include <array>
+#include <memory>
 #include <mutex>
 
 #include "rclcpp/time.hpp"
