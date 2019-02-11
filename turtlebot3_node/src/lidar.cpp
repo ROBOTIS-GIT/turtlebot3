@@ -32,11 +32,11 @@ void Lidar::makeFullRange(const sensor_msgs::msg::LaserScan::SharedPtr msg)
   }
 }
 
-sensor_msgs::msg::LaserScan::SharedPtr Lidar::getLaserScan(rclcpp::Time time)
+sensor_msgs::msg::LaserScan::SharedPtr Lidar::getLaserScan(rclcpp::Time now)
 {
   std::lock_guard<std::mutex> lock(laser_scan_msg_mutex_);
 
-  laser_scan_msg_->header.stamp = time;
+  laser_scan_msg_->header.stamp = now;
 
   return laser_scan_msg_;
 }

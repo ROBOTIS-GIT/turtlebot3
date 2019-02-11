@@ -36,7 +36,7 @@ class Lidar
   };
   virtual ~Lidar(){};
 
-  sensor_msgs::msg::LaserScan::SharedPtr getLaserScan(rclcpp::Time time);
+  sensor_msgs::msg::LaserScan::SharedPtr getLaserScan(rclcpp::Time now);
   void makeFullRange(const sensor_msgs::msg::LaserScan::SharedPtr scan);
 
  private:
