@@ -25,25 +25,25 @@ constexpr char FRAME_ID_OF_JOINT_STATE[] = "base_link";
 constexpr char LEFT_WHEEL_JOINT_NAME[] = "wheel_left_joint";
 constexpr char RIGHT_WHEEL_JOINT_NAME[] = "wheel_right_joint";
 
-sensor_msgs::msg::JointState JointState::getJointState(rclcpp::Time time)
+sensor_msgs::msg::JointState::SharedPtr JointState::getJointState(rclcpp::Time now)
 {
   std::lock_guard<std::mutex> lock(last_rad_mutex_);
-  sensor_msgs::msg::JointState joint_state;
+  auto joint_state = std::make_shared<sensor_msgs::msg::JointState>();
 
-  joint_state.header.frame_id = FRAME_ID_OF_JOINT_STATE;
-  joint_state.header.stamp = time;
+  joint_state->header.frame_id = FRAME_ID_OF_JOINT_STATE;
+  joint_state->header.stamp = now;
 
-  joint_state.name.push_back(LEFT_WHEEL_JOINT_NAME);
-  joint_state.name.push_back(RIGHT_WHEEL_JOINT_NAME);
+  joint_state->name.push_back(LEFT_WHEEL_JOINT_NAME);
+  joint_state->name.push_back(RIGHT_WHEEL_JOINT_NAME);
 
-  joint_state.position.push_back(last_rad_[0]);
-  joint_state.position.push_back(last_rad_[1]);
+  joint_state->position.push_back(last_rad_[0]);
+  joint_state->position.push_back(last_rad_[1]);
 
-  joint_state.velocity.push_back(0.0f);
-  joint_state.velocity.push_back(0.0f);
+  joint_state->velocity.push_back(0.0f);
+  joint_state->velocity.push_back(0.0f);
 
-  joint_state.effort.push_back(0.0f);
-  joint_state.effort.push_back(0.0f);
+  joint_state->effort.push_back(0.0f);
+  joint_state->effort.push_back(0.0f);
 
   return joint_state;
 }
