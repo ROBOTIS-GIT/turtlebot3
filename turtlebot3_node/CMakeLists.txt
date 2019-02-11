@@ -57,8 +57,9 @@ include_directories(
 )
 
 set(ALL_SRCS
+  "src/constants.cpp"
   "src/joint_states.cpp"
-  # "src/odometry.cpp"
+  "src/odometry.cpp"
   "src/lidar.cpp"
   # "src/tf.cpp"
   # "src/time_sync"
