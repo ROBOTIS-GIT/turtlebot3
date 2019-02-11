@@ -25,9 +25,11 @@
 
 #include "rclcpp/time.hpp"
 #include "rclcpp/duration.hpp"
+
 #include "sensor_msgs/msg/joint_state.hpp"
 #include "nav_msgs/msg/odometry.hpp"
 #include "sensor_msgs/msg/imu.hpp"
+#include "geometry_msgs/msg/transform_stamped.hpp"
 
 #include "tf2/LinearMath/Quaternion.h"
 
@@ -37,29 +39,32 @@ class Odometry
 {
  public:
   Odometry()
+    :last_theta_(0.0f)
   {
     joint_state_ = std::make_shared<sensor_msgs::msg::JointState>();
     imu_ = std::make_shared<sensor_msgs::msg::Imu>();
-
-    last_theta_ = 0.0f;
   };
   virtual ~Odometry(){};
 
   nav_msgs::msg::Odometry::SharedPtr getOdom(rclcpp::Time now, double wheel_radius);
+  const geometry_msgs::msg::TransformStamped getOdomTf();
+  void updateOdomTf(rclcpp::Time now, const nav_msgs::msg::Odometry::SharedPtr odom);
   void updateImu(const sensor_msgs::msg::Imu::SharedPtr imu);
   void updateJointState(const sensor_msgs::msg::JointState::SharedPtr joint_state);
 
  private:
   bool calcOdometry(rclcpp::Duration duration, double wheel_radius);
 
-  std::mutex sensor_msgs_mutex_;
+  std::mutex mutex_;
   std::shared_ptr<sensor_msgs::msg::JointState> joint_state_;
   std::shared_ptr<sensor_msgs::msg::Imu> imu_;
+  geometry_msgs::msg::TransformStamped odom_tf_;
 
   double last_theta_;
-  std::array<double,3> odom_pose_;
-  std::array<double,3> odom_vel_;
   rclcpp::Time last_time_;
+
+  std::array<double,3> odom_pose_;
+  std::array<double,3> odom_vel_;  
 };
 }
 

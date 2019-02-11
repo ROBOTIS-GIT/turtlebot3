@@ -49,24 +49,46 @@ nav_msgs::msg::Odometry::SharedPtr Odometry::getOdom(rclcpp::Time now, double wh
   odom->twist.twist.linear.x  = odom_vel_[0];
   odom->twist.twist.angular.z = odom_vel_[2];
 
+  updateOdomTf(now, odom);
+
   return odom;
+}
+
+const geometry_msgs::msg::TransformStamped Odometry::getOdomTf()
+{
+  std::lock_guard<std::mutex> lock(mutex_);
+  return odom_tf_;
+}
+
+void Odometry::updateOdomTf(rclcpp::Time now, const nav_msgs::msg::Odometry::SharedPtr odom)
+{
+  std::lock_guard<std::mutex> lock(mutex_);
+
+  odom_tf_.transform.translation.x = odom->pose.pose.position.x;
+  odom_tf_.transform.translation.y = odom->pose.pose.position.y;
+  odom_tf_.transform.translation.z = odom->pose.pose.position.z;
+  odom_tf_.transform.rotation      = odom->pose.pose.orientation;
+
+  odom_tf_.header.frame_id = FRAME_ID_OF_ODOMETRY;
+  odom_tf_.child_frame_id = CHILD_FRAME_ID_OF_ODOMETRY;
+  odom_tf_.header.stamp = now;
 }
 
 void Odometry::updateJointState(const sensor_msgs::msg::JointState::SharedPtr joint_state)
 {
-  std::lock_guard<std::mutex> lock(sensor_msgs_mutex_);
+  std::lock_guard<std::mutex> lock(mutex_);
   joint_state_ = joint_state;
 }
 
 void Odometry::updateImu(const sensor_msgs::msg::Imu::SharedPtr imu)
 {
-  std::lock_guard<std::mutex> lock(sensor_msgs_mutex_);
+  std::lock_guard<std::mutex> lock(mutex_);
   imu_ = imu;
 }
 
 bool Odometry::calcOdometry(rclcpp::Duration duration, double wheel_radius)
 {
-  std::lock_guard<std::mutex> lock(sensor_msgs_mutex_);
+  std::lock_guard<std::mutex> lock(mutex_);
 
   double wheel_l = 0.0f;
   double wheel_r = 0.0f; // rotation value of wheel [rad]
