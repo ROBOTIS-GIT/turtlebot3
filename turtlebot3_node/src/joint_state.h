@@ -20,6 +20,7 @@
 #define TURTLEBOT3_JOINT_STATE_H
 
 #include <array>
+#include <mutex>
 
 #include "rclcpp/time.hpp"
 
@@ -40,6 +41,8 @@ class JointState
  private:
   std::array<int32_t,2> last_tick_;
   std::array<double,2> last_rad_;
+
+  std::mutex last_rad_mutex_;
 };
 }
 

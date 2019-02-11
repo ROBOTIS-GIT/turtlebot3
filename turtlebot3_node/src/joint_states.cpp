@@ -27,6 +27,7 @@ constexpr char RIGHT_WHEEL_JOINT_NAME[] = "wheel_right_joint";
 
 sensor_msgs::msg::JointState JointState::getJointState(rclcpp::Time time)
 {
+  std::lock_guard<std::mutex> lock(last_rad_mutex_);
   sensor_msgs::msg::JointState joint_state;
 
   joint_state.header.frame_id = FRAME_ID_OF_JOINT_STATE;
@@ -54,6 +55,7 @@ void JointState::updateRadianFromTick(const turtlebot3_msgs::msg::SensorState::S
 
   for (uint8_t index = 0; index < current_tick.size(); index++)
   {
+    std::lock_guard<std::mutex> lock(last_rad_mutex_);
     last_diff_tick[index] = current_tick[index] - last_tick_[index];
     last_rad_[index]      += (DXL_TICK2RAD * static_cast<double>(last_diff_tick[index]));
     last_tick_[index]      = current_tick[index];
