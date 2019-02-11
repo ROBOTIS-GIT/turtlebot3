@@ -31,7 +31,8 @@ constexpr char TimeTopic[] = "time_sync";
 
 constexpr auto JointStatePublishPeriodMillis = 33ms;
 constexpr auto ScanPublishPeriodMillis = 33ms;
-constexpr auto OdometryPublishPeroidMillis = 33ms;
+constexpr auto OdometryPublishPeriodMillis = 33ms;
+constexpr auto TimeSyncPublishPeriodSec = 1s;
 
 constexpr double WheelRadius = 0.033f;
 }
