@@ -17,6 +17,7 @@
 /* Author: Darby Lim */
 
 #include <chrono>
+#include <memory>
 #include <string>
 
 #include "rclcpp/rclcpp.hpp"
@@ -28,6 +29,9 @@
 #include "nav_msgs/msg/odometry.hpp"
 
 #include "joint_state.h"
+#include "lidar.h"
+
+using namespace std::chrono_literals;
 
 constexpr char SensorStateTopic[] = "sensor_state";
 constexpr char JointStateTopic[] = "joint_states";
@@ -37,7 +41,8 @@ constexpr char ScanTopic[] = "scan";
 constexpr char ImuTopic[] = "imu";
 constexpr char TimeTopic[] = "time_sync";
 
-constexpr double JointStatePublishPeriodSec = 0.03;
+constexpr auto JointStatePublishPeriodMillis = 33ms;
+constexpr auto ScanPublishPeriodMillis = 33ms;
 
 namespace turtlebot3
 {
@@ -47,10 +52,12 @@ class TurtleBot3 : public rclcpp::Node
   explicit TurtleBot3(const std::string &node_name)
    : Node(node_name)
   {
-    this->joint_state_ = std::shared_ptr<JointState>();
+    RCLCPP_INFO(get_logger(), "Init TurtleBot3 Node Main");
+    joint_state_ = std::make_shared<JointState>();
+    lidar_ = std::make_shared<Lidar>();
 
-    RCLCPP_INFO(this->get_logger(), "Init Joint State Publisher");
     joint_state_pub_ = this->create_publisher<sensor_msgs::msg::JointState>(JointStateTopic, rmw_qos_profile_default);
+    laser_scan_pub_ = this->create_publisher<sensor_msgs::msg::LaserScan>(ScanTopic, rmw_qos_profile_default);
 
     auto sensor_state_callback = 
       [this](const turtlebot3_msgs::msg::SensorState::SharedPtr sensor_state) -> void
@@ -60,11 +67,27 @@ class TurtleBot3 : public rclcpp::Node
 
     sensor_state_sub_ = this->create_subscription<turtlebot3_msgs::msg::SensorState>(SensorStateTopic, sensor_state_callback);
 
+    auto laser_scan_callback = 
+      [this](const sensor_msgs::msg::LaserScan::SharedPtr laser_scan) -> void
+      {
+        this->lidar_->makeFullRange(laser_scan);
+      };
+
+    laser_scan_sub_ = this->create_subscription<sensor_msgs::msg::LaserScan>(ScanHalfTopic, laser_scan_callback);
+
     joint_state_timer_ = this->create_wall_timer(
-      std::chrono::milliseconds(int(JointStatePublishPeriodSec * 1000)),
+      JointStatePublishPeriodMillis,
       [this]()
       {
         this->joint_state_pub_->publish(this->joint_state_->getJointState(this->now()));
+      }
+    );
+
+    laser_scan_timer_ = this->create_wall_timer(
+      ScanPublishPeriodMillis,
+      [this]()
+      {
+        this->laser_scan_pub_->publish(this->lidar_->getLaserScan(this->now()));
       }
     );
   }
@@ -73,19 +96,20 @@ class TurtleBot3 : public rclcpp::Node
 
  private:
   std::shared_ptr<JointState> joint_state_;
+  std::shared_ptr<Lidar> lidar_;
 
   rclcpp::Subscription<turtlebot3_msgs::msg::SensorState>::SharedPtr sensor_state_sub_;
   rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr imu_sub_;
-  rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr scan_half_sub_;
+  rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr laser_scan_sub_;
 
   rclcpp::Publisher<sensor_msgs::msg::JointState>::SharedPtr joint_state_pub_;
   rclcpp::Publisher<nav_msgs::msg::Odometry>::SharedPtr odom_pub_;
-  rclcpp::Publisher<sensor_msgs::msg::LaserScan>::SharedPtr scan_pub_;
+  rclcpp::Publisher<sensor_msgs::msg::LaserScan>::SharedPtr laser_scan_pub_;
   rclcpp::Publisher<builtin_interfaces::msg::Time>::SharedPtr time_pub_;
 
   rclcpp::TimerBase::SharedPtr joint_state_timer_;
   rclcpp::TimerBase::SharedPtr odom_timer_;
-  rclcpp::TimerBase::SharedPtr scan_timer_;
+  rclcpp::TimerBase::SharedPtr laser_scan_timer_;
   rclcpp::TimerBase::SharedPtr time_timer_;
 };
 }
@@ -94,9 +118,10 @@ int main(int argc, char *argv[])
 {
   rclcpp::init(argc, argv);
 
-  auto node = rclcpp::Node::make_shared("turtlebot3_node");
+  auto node = std::make_shared<turtlebot3::TurtleBot3>("turtlebot3_node");
 
   rclcpp::spin(node);
 
+  rclcpp::shutdown();
   return 0;
 }

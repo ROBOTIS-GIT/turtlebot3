@@ -59,16 +59,18 @@ include_directories(
 set(ALL_SRCS
   "src/joint_states.cpp"
   # "src/odometry.cpp"
-  # "src/scan.cpp"
+  "src/lidar.cpp"
   # "src/tf.cpp"
   # "src/time_sync"
   )
 add_library(${PROJECT_NAME} ${ALL_SRCS})
 
-add_executable(burger src/node_main.cpp)
-target_link_libraries(burger ${PROJECT_NAME})
+set(NODE_NAME "turtlebot3_ros")
+
+add_executable(${NODE_NAME} src/node_main.cpp)
+target_link_libraries(${NODE_NAME} ${PROJECT_NAME})
 ament_target_dependencies(
-  burger
+  ${NODE_NAME}
   "rclcpp"
   "std_msgs"
   "sensor_msgs"
@@ -96,7 +98,7 @@ ament_target_dependencies(
 # ament_target_dependencies(scan_publisher rclcpp std_msgs sensor_msgs)
 
 install(TARGETS
-  burger
+  ${NODE_NAME}
   DESTINATION lib/${PROJECT_NAME}
 )
 
