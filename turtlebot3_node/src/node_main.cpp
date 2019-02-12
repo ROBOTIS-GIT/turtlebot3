@@ -106,7 +106,7 @@ class TurtleBot3 : public rclcpp::Node
     );
 
     time_timer_ = this->create_wall_timer(
-      TimeSyncPublishPeriodSec,
+      TimeSyncPublishPeriodMillis,
       [this]()
       {
         auto time_msg = builtin_interfaces::msg::Time();
