@@ -36,31 +36,7 @@ def generate_launch_description():
 
         Node(
             package='turtlebot3_node',
-            node_executable='time_sync',
-            node_name='time_sync_node',
-            output='screen'),
-
-        Node(
-            package='turtlebot3_node',
-            node_executable='odometry_publisher',
-            node_name='odometry_publisher',
-            output='screen'),
-
-        Node(
-            package='turtlebot3_node',
-            node_executable='tf_publisher',
-            node_name='tf_publisher',
-            output='screen'),
-
-        Node(
-            package='turtlebot3_node',
-            node_executable='joint_states_publisher',
-            node_name='joint_states_publisher',
-            output='screen'),
-
-        Node(
-            package='turtlebot3_node',
-            node_executable='scan_publisher',
-            node_name='scan_publisher',
+            node_executable='turtlebot3_ros',
+            node_name='turtlebot3_node',
             output='screen'),
     ])
