@@ -8,6 +8,8 @@ project(turtlebot3_cartographer)
 # Find ament packages and libraries for ament and system dependencies
 ################################################################################
 find_package(ament_cmake REQUIRED)
+find_package(cartographer REQUIRED)
+find_package(cartographer_ros REQUIRED)
 
 ################################################################################
 # Setup for python modules and scripts
