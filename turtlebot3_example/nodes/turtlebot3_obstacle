@@ -48,8 +48,8 @@ class Obstacle():
             scan_filter.append(scan.ranges[0])
 
         else:
-            left_lidar_samples_ranges = -(samples_view//2 + samples_view % 2)
-            right_lidar_samples_ranges = samples_view//2
+            left_lidar_samples_ranges = -(samples_view//2)
+            right_lidar_samples_ranges = samples_view//2 + samples_view % 2
             
             left_lidar_samples = scan.ranges[left_lidar_samples_ranges:]
             right_lidar_samples = scan.ranges[:right_lidar_samples_ranges]
