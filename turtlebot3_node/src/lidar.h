@@ -30,18 +30,15 @@ namespace turtlebot3
 class Lidar
 {
  public:
-  Lidar()
-  { 
-    laser_scan_msg_ = std::make_shared<sensor_msgs::msg::LaserScan>();
-  };
+  Lidar(){};
   virtual ~Lidar(){};
 
-  sensor_msgs::msg::LaserScan::SharedPtr getLaserScan(rclcpp::Time now);
-  void makeFullRange(const sensor_msgs::msg::LaserScan::SharedPtr scan);
+  sensor_msgs::msg::LaserScan getLaserScan(const rclcpp::Time now);
+  void makeFullRange(const sensor_msgs::msg::LaserScan::ConstSharedPtr& scan);
 
  private:
   std::mutex laser_scan_msg_mutex_;
-  std::shared_ptr<sensor_msgs::msg::LaserScan> laser_scan_msg_;
+  sensor_msgs::msg::LaserScan laser_scan_msg_;
 };
 }
 

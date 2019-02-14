@@ -25,7 +25,7 @@ constexpr char FRAME_ID_OF_JOINT_STATE[] = "base_link";
 constexpr char LEFT_WHEEL_JOINT_NAME[] = "wheel_left_joint";
 constexpr char RIGHT_WHEEL_JOINT_NAME[] = "wheel_right_joint";
 
-sensor_msgs::msg::JointState::SharedPtr JointState::getJointState(rclcpp::Time now)
+sensor_msgs::msg::JointState::SharedPtr JointState::getJointState(const rclcpp::Time now)
 {
   std::lock_guard<std::mutex> lock(last_rad_mutex_);
   auto joint_state = std::make_shared<sensor_msgs::msg::JointState>();

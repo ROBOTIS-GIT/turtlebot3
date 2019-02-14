@@ -20,24 +20,32 @@
 
 using namespace turtlebot3;
 
-void Lidar::makeFullRange(const sensor_msgs::msg::LaserScan::SharedPtr msg)
+void Lidar::makeFullRange(const sensor_msgs::msg::LaserScan::ConstSharedPtr& msg)
 {
   std::lock_guard<std::mutex> lock(laser_scan_msg_mutex_);
-  laser_scan_msg_ = msg;
+  laser_scan_msg_.header.frame_id = msg->header.frame_id;
+  laser_scan_msg_.header.stamp = msg->header.stamp;
 
-  for (uint16_t i = 0, j = 0; i < 180; i++, j+=2)
+  laser_scan_msg_.angle_min = msg->angle_min;
+  laser_scan_msg_.angle_max = msg->angle_max;
+  laser_scan_msg_.angle_increment = msg->angle_increment;
+  laser_scan_msg_.time_increment = msg->time_increment;
+  laser_scan_msg_.scan_time = msg->scan_time;
+  laser_scan_msg_.range_min = msg->range_min;
+  laser_scan_msg_.range_max = msg->range_max; 
+  laser_scan_msg_.ranges.resize(360);
+
+  for (uint16_t i=0, j=0; i<180; j=j+2, i++)
   {
-    laser_scan_msg_->ranges[j] = msg->ranges[i];
-    laser_scan_msg_->ranges[j+1] = msg->ranges[i];
+    laser_scan_msg_.ranges[j] = msg->ranges[i];
+    laser_scan_msg_.ranges[j+1] = msg->ranges[i];
   }
 }
 
-sensor_msgs::msg::LaserScan::SharedPtr Lidar::getLaserScan(rclcpp::Time now)
+sensor_msgs::msg::LaserScan Lidar::getLaserScan(const rclcpp::Time now)
 {
   std::lock_guard<std::mutex> lock(laser_scan_msg_mutex_);
-
-  laser_scan_msg_->header.stamp = now;
-
+  laser_scan_msg_.header.stamp = now;
   return laser_scan_msg_;
 }
 
