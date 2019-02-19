@@ -41,8 +41,9 @@ class JointState
 
  private:
   std::array<double,2> last_rad_;
+  std::array<int32_t,2> last_diff_tick_;
 
-  std::mutex last_rad_mutex_;
+  std::mutex mutex_;
 };
 }
 
