@@ -52,13 +52,14 @@ void JointState::updateRadianFromTick(const turtlebot3_msgs::msg::SensorState::S
 {
   std::array<int32_t,2> current_tick = {state->left_encoder, state->right_encoder};
   std::array<int32_t,2> last_diff_tick;
+  static std::array<int32_t,2> last_tick;
 
   for (uint8_t index = 0; index < current_tick.size(); index++)
   {
     std::lock_guard<std::mutex> lock(last_rad_mutex_);
-    last_diff_tick[index] = current_tick[index] - last_tick_[index];
+    last_diff_tick[index] = current_tick[index] - last_tick[index];
     last_rad_[index]      += (DXL_TICK2RAD * static_cast<double>(last_diff_tick[index]));
-    last_tick_[index]      = current_tick[index];
+    last_tick[index]      = current_tick[index];
   }
 }
 
