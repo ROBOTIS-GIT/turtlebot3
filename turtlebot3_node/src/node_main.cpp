@@ -44,11 +44,14 @@ class TurtleBot3 : public rclcpp::Node
    : Node(node_name)
   {
     RCLCPP_INFO(get_logger(), "Init TurtleBot3 Node Main");
+
+    node_handle_ = std::shared_ptr<::rclcpp::Node>(this, [](::rclcpp::Node *) {});
+
     joint_state_ = std::make_shared<JointState>();
     lidar_ = std::make_shared<Lidar>();
     odom_ = std::make_shared<Odometry>();
 
-    tf_broadcaster_ = std::make_shared<tf2_ros::TransformBroadcaster>(this->shared_from_this());
+    tf_broadcaster_ = std::make_shared<tf2_ros::TransformBroadcaster>(node_handle_);
 
     joint_state_pub_ = this->create_publisher<sensor_msgs::msg::JointState>(JointStateTopic, rmw_qos_profile_default);
     laser_scan_pub_ = this->create_publisher<sensor_msgs::msg::LaserScan>(ScanTopic, rmw_qos_profile_default);
@@ -119,6 +122,8 @@ class TurtleBot3 : public rclcpp::Node
   virtual ~TurtleBot3(){};
 
  private:
+  rclcpp::Node::SharedPtr node_handle_;
+
   std::shared_ptr<JointState> joint_state_;
   std::shared_ptr<Lidar> lidar_;
   std::shared_ptr<Odometry> odom_;
