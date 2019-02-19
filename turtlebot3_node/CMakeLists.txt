@@ -61,8 +61,6 @@ set(ALL_SRCS
   "src/joint_states.cpp"
   "src/odometry.cpp"
   "src/lidar.cpp"
-  # "src/tf.cpp"
-  # "src/time_sync"
   )
 add_library(${PROJECT_NAME} ${ALL_SRCS})
 
@@ -86,18 +84,6 @@ ament_target_dependencies(
 ################################################################################
 # Install
 ################################################################################
-# add_executable(tf_publisher src/tf_publisher.cpp)
-# ament_target_dependencies(tf_publisher rclcpp std_msgs sensor_msgs nav_msgs tf2_ros)
-
-# add_executable(joint_states_publisher src/joint_states_publisher.cpp)
-# ament_target_dependencies(joint_states_publisher rclcpp std_msgs sensor_msgs turtlebot3_msgs)
-
-# add_executable(time_sync src/time_sync.cpp)
-# ament_target_dependencies(time_sync rclcpp std_msgs builtin_interfaces)
-
-# add_executable(scan_publisher src/scan_publisher.cpp)
-# ament_target_dependencies(scan_publisher rclcpp std_msgs sensor_msgs)
-
 install(TARGETS
   ${NODE_NAME}
   DESTINATION lib/${PROJECT_NAME}
@@ -107,9 +93,11 @@ install(TARGETS
 # Test
 ################################################################################
 if(BUILD_TESTING)
+  find_package(ament_cmake_pytest REQUIRED)
+  find_package(ament_cmake_gtest REQUIRED)
   find_package(ament_lint_auto REQUIRED)
-  set(ament_cmake_copyright_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
+  # add_subdirectory(test)
 endif()
 
 ################################################################################
