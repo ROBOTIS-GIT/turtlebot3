@@ -25,13 +25,16 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import ThisLaunchFileDir
 from launch.actions import ExecuteProcess
 
+TURTLEBOT3_MODEL = os.environ['TURTLEBOT3_MODEL']
+
 def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
     map_dir = LaunchConfiguration('map', 
                                 default=os.path.join(get_package_share_directory('turtlebot3_navigation2'), 'map', 'map.yaml'))
 
+    param_file_name = TURTLEBOT3_MODEL + '_params.yaml'
     param_dir = LaunchConfiguration('params', 
-                                default=os.path.join(get_package_share_directory('turtlebot3_navigation2'), 'param', 'burger_params.yaml'))
+                                default=os.path.join(get_package_share_directory('turtlebot3_navigation2'), 'param', param_file_name))
     
     nav2_launch_file_dir = os.path.join(get_package_share_directory('nav2_bringup'), 'launch')
     rviz_config_dir = os.path.join(get_package_share_directory('turtlebot3_navigation2'), 'rviz', 'tb3_navigation2.rviz')
