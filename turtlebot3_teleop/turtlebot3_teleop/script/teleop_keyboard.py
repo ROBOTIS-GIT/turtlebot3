@@ -26,7 +26,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 # /* Author: Darby Lim */
-import sys
+import os, sys
 import select
 import termios
 import tty
@@ -42,6 +42,8 @@ WAFFLE_MAX_ANG_VEL = 1.82
 
 LIN_VEL_STEP_SIZE = 0.01
 ANG_VEL_STEP_SIZE = 0.1
+
+TURTLEBOT3_MODEL = os.environ['TURTLEBOT3_MODEL']
 
 msg = """
 Control Your TurtleBot3!
@@ -98,12 +100,19 @@ def constrain(input, low, high):
     return input
 
 def checkLinearLimitVelocity(vel):
-    vel = constrain(vel, -BURGER_MAX_LIN_VEL, BURGER_MAX_LIN_VEL)
+    if TURTLEBOT3_MODEL == 'burger':
+        vel = constrain(vel, -BURGER_MAX_LIN_VEL, BURGER_MAX_LIN_VEL)
+    else:
+        vel = constrain(vel, -WAFFLE_MAX_LIN_VEL, WAFFLE_MAX_LIN_VEL)
 
     return vel
 
 def checkAngularLimitVelocity(vel):
-    vel = constrain(vel, -BURGER_MAX_ANG_VEL, BURGER_MAX_ANG_VEL)
+    if TURTLEBOT3_MODEL == 'burger':
+        vel = constrain(vel, -BURGER_MAX_ANG_VEL, BURGER_MAX_ANG_VEL)
+    else:
+        vel = constrain(vel, -WAFFLE_MAX_ANG_VEL, WAFFLE_MAX_ANG_VEL)
+        
 
     return vel
 
