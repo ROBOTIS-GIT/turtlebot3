@@ -25,7 +25,7 @@ constexpr char CHILD_FRAME_ID_OF_ODOMETRY[] = "base_footprint";
 
 nav_msgs::msg::Odometry Odometry::getOdom(const rclcpp::Time now, const double wheel_radius)
 {
-  static rclcpp::Time last_time = rclcpp::Time(0);
+  static rclcpp::Time last_time = now;
   rclcpp::Duration duration(now.nanoseconds() - last_time.nanoseconds());    
   
   calcOdometry(duration, wheel_radius);
