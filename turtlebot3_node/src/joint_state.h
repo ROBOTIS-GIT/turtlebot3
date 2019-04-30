@@ -40,8 +40,8 @@ class JointState
   void updateRadianFromTick(const turtlebot3_msgs::msg::SensorState::SharedPtr state);
 
  private:
-  std::array<double,2> last_rad_;
-  std::array<int32_t,2> last_diff_tick_;
+  std::array<double,2> last_rad_ = {0.0, 0.0};
+  std::array<int32_t,2> last_diff_tick_ = {0, 0};
 
   std::mutex mutex_;
 };
