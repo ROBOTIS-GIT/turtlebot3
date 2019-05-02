@@ -27,8 +27,9 @@ constexpr char RIGHT_WHEEL_JOINT_NAME[] = "wheel_right_joint";
 
 sensor_msgs::msg::JointState::SharedPtr JointState::getJointState(const rclcpp::Time now)
 {
-  static rclcpp::Time last_time = rclcpp::Time(0);
-  rclcpp::Duration duration(now.nanoseconds() - last_time.nanoseconds());  
+  static rclcpp::Time last_time = now;
+  rclcpp::Duration duration(now.nanoseconds() - last_time.nanoseconds());
+
   auto joint_state = std::make_shared<sensor_msgs::msg::JointState>();
 
   joint_state->header.frame_id = FRAME_ID_OF_JOINT_STATE;
@@ -41,12 +42,15 @@ sensor_msgs::msg::JointState::SharedPtr JointState::getJointState(const rclcpp::
   joint_state->position.push_back(last_rad_[0]);
   joint_state->position.push_back(last_rad_[1]);
 
-  joint_state->velocity.push_back(DXL_TICK2RAD*last_diff_tick_[0]/(duration.seconds()));
-  joint_state->velocity.push_back(DXL_TICK2RAD*last_diff_tick_[1]/(duration.seconds()));
+  if (duration > rclcpp::Duration(0,0)) // can't have negative or zero duration
+  {
+    joint_state->velocity.push_back(DXL_TICK2RAD*last_diff_tick_[0]/(duration.seconds()));
+    joint_state->velocity.push_back(DXL_TICK2RAD*last_diff_tick_[1]/(duration.seconds()));
+  }
 
   joint_state->effort.push_back(0.0f);
   joint_state->effort.push_back(0.0f);
-  
+
   last_time = now;
   return joint_state;
 }
@@ -54,7 +58,7 @@ sensor_msgs::msg::JointState::SharedPtr JointState::getJointState(const rclcpp::
 void JointState::updateRadianFromTick(const turtlebot3_msgs::msg::SensorState::SharedPtr state)
 {
   std::array<int32_t,2> current_tick = {state->left_encoder, state->right_encoder};
-  static std::array<int32_t,2> last_tick;
+  static std::array<int32_t,2> last_tick = current_tick;
 
   for (uint8_t index = 0; index < current_tick.size(); index++)
   {
