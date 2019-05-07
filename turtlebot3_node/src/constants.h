@@ -30,7 +30,7 @@ constexpr char ImuTopic[] = "imu";
 constexpr char TimeTopic[] = "time_sync";
 
 constexpr auto JointStatePublishPeriodMillis = 33ms;
-constexpr auto ScanPublishPeriodMillis = 33ms;
+constexpr auto ScanPublishPeriodMillis = 200ms;
 constexpr auto OdometryPublishPeriodMillis = 33ms;
 constexpr auto TimeSyncPublishPeriodMillis = 1000ms;
 
