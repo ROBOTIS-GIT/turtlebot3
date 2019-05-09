@@ -18,7 +18,8 @@
 
 FlatWorldImuNode::FlatWorldImuNode()
 {
-  ROS_ASSERT(init());
+  bool init_result = init();
+  ROS_ASSERT(init_result);
 }
 
 FlatWorldImuNode::~FlatWorldImuNode()
