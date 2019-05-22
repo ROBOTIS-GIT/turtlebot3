@@ -5,9 +5,18 @@
   <include file="$(find turtlebot3_bringup)/launch/turtlebot3_core.launch">
     <arg name="multi_robot_name" value="$(arg multi_robot_name)"/>
   </include>
-  <include file="$(find turtlebot3_bringup)/launch/turtlebot3_lidar.launch">
+  
+  <include file="$(find rplidar_ros)/launch/rplidar_a3.launch"/>
+
+<!--include file="$(find turtlebot3_bringup)/launch/turtlebot3_lidar.launch">
     <arg name="set_frame_id" value="$(arg set_lidar_frame_id)"/>
-  </include>
+  </include-->
 
   <node pkg="turtlebot3_bringup" type="turtlebot3_diagnostics" name="turtlebot3_diagnostics" output="screen"/>
+
+
+<include file="$(find raspicam_node)/launch/camerav2_1280x960_10fps.launch">
+    <arg name="enable_raw" value="true"/>
+</include>
+
 </launch>
