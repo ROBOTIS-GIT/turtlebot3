@@ -14,11 +14,11 @@ repositories:
   gazebo/gazebo_ros_pkgs:
     type: git
     url: https://github.com/ros-simulation/gazebo_ros_pkgs.git
-    version: ros2
+    version: crystal
   gazebo/camera_info_manager:
     type: git
     url: https://github.com/ros-perception/image_common.git
-    version: ros2
+    version: crystal
   gazebo/vision_opencv:
     type: git
     url: https://github.com/ros-perception/vision_opencv.git
@@ -34,11 +34,11 @@ repositories:
   cartographer/pcl_conversions:
     type: git
     url: https://github.com/ros2/pcl_conversions.git
-    version: ros2
+    version: crystal
   navigation2/navigation2:
     type: git
     url: https://github.com/ros-planning/navigation2.git
-    version: master
+    version: crystal-devel
   navigation2/BehaviorTree.CPP:
     type: git
     url: https://github.com/BehaviorTree/BehaviorTree.CPP.git
