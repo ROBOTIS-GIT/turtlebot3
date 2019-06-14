@@ -58,3 +58,4 @@ build-*/
 *.dat
 *.txt.user
 *.gch
+/.project
