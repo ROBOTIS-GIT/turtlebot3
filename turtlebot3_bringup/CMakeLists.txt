@@ -16,9 +16,6 @@ endif()
 # Find ament packages and libraries for ament and system dependencies
 ################################################################################
 find_package(ament_cmake REQUIRED)
-find_package(rclcpp REQUIRED)
-find_package(std_msgs REQUIRED)
-find_package(sensor_msgs REQUIRED)
 
 ################################################################################
 # Setup for python modules and scripts
@@ -52,19 +49,7 @@ install(
 )
 
 ################################################################################
-# Test
-################################################################################
-if(BUILD_TESTING)
-  find_package(ament_lint_auto REQUIRED)
-  set(ament_cmake_copyright_FOUND TRUE)
-  ament_lint_auto_find_test_dependencies()
-endif()
-
-################################################################################
 # Macro for ament package
 ################################################################################
-ament_export_dependencies(rclcpp)
-ament_export_dependencies(std_msgs)
-ament_export_dependencies(sensor_msgs)
 ament_package()
 

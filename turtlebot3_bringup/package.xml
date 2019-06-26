@@ -14,9 +14,6 @@
   <url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3</url>
   <url type="bugtracker">https://github.com/ROBOTIS-GIT/turtlebot3/issues</url>
   <buildtool_depend>ament_cmake</buildtool_depend>
-  <depend>turtlebot3_description</depend>
-  <exec_depend>launch</exec_depend>
-  <exec_depend>robot_state_publisher</exec_depend>
   <export>
     <build_type>ament_cmake</build_type>
   </export>
