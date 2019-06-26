@@ -26,11 +26,11 @@ repositories:
   cartographer/cartographer:
     type: git
     url: https://github.com/ROBOTIS-GIT/cartographer.git
-    version: crystal
+    version: dashing
   cartographer/cartographer_ros:
     type: git
     url: https://github.com/ROBOTIS-GIT/cartographer_ros.git
-    version: crystal
+    version: dashing
   cartographer/pcl_conversions:
     type: git
     url: https://github.com/ros2/pcl_conversions.git
