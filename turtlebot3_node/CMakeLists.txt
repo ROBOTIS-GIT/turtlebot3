@@ -90,17 +90,6 @@ install(TARGETS
 )
 
 ################################################################################
-# Test
-################################################################################
-if(BUILD_TESTING)
-  find_package(ament_cmake_pytest REQUIRED)
-  find_package(ament_cmake_gtest REQUIRED)
-  find_package(ament_lint_auto REQUIRED)
-  ament_lint_auto_find_test_dependencies()
-  # add_subdirectory(test)
-endif()
-
-################################################################################
 # Macro for ament package
 ################################################################################
 ament_export_dependencies(rclcpp)
