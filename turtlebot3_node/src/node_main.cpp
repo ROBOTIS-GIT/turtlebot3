@@ -53,10 +53,10 @@ class TurtleBot3 : public rclcpp::Node
 
     tf_broadcaster_ = std::make_shared<tf2_ros::TransformBroadcaster>(node_handle_);
 
-    joint_state_pub_ = this->create_publisher<sensor_msgs::msg::JointState>(JointStateTopic, rmw_qos_profile_default);
-    laser_scan_pub_ = this->create_publisher<sensor_msgs::msg::LaserScan>(ScanTopic, rmw_qos_profile_default);
-    odom_pub_ = this->create_publisher<nav_msgs::msg::Odometry>(OdomTopic, rmw_qos_profile_default);
-    time_pub_ = this->create_publisher<builtin_interfaces::msg::Time>(TimeTopic, rmw_qos_profile_default);
+    joint_state_pub_ = this->create_publisher<sensor_msgs::msg::JointState>(JointStateTopic, 10);
+    laser_scan_pub_ = this->create_publisher<sensor_msgs::msg::LaserScan>(ScanTopic, 10);
+    odom_pub_ = this->create_publisher<nav_msgs::msg::Odometry>(OdomTopic, 10);
+    time_pub_ = this->create_publisher<builtin_interfaces::msg::Time>(TimeTopic, 10);
 
     auto sensor_state_callback = 
       [this](const turtlebot3_msgs::msg::SensorState::SharedPtr sensor_state) -> void
@@ -64,7 +64,7 @@ class TurtleBot3 : public rclcpp::Node
         this->joint_state_->updateRadianFromTick(sensor_state);
       };
 
-    sensor_state_sub_ = this->create_subscription<turtlebot3_msgs::msg::SensorState>(SensorStateTopic, sensor_state_callback);
+    sensor_state_sub_ = this->create_subscription<turtlebot3_msgs::msg::SensorState>(SensorStateTopic, 10, sensor_state_callback);
 
     auto laser_scan_callback = 
       [this](const sensor_msgs::msg::LaserScan::SharedPtr laser_scan) -> void
@@ -72,7 +72,7 @@ class TurtleBot3 : public rclcpp::Node
         this->lidar_->makeFullRange(laser_scan);
       };
 
-    laser_scan_sub_ = this->create_subscription<sensor_msgs::msg::LaserScan>(ScanHalfTopic, laser_scan_callback);
+    laser_scan_sub_ = this->create_subscription<sensor_msgs::msg::LaserScan>(ScanHalfTopic, 10, laser_scan_callback);
 
     auto imu_callback = 
       [this](const sensor_msgs::msg::Imu::SharedPtr imu) -> void
@@ -80,7 +80,7 @@ class TurtleBot3 : public rclcpp::Node
         this->odom_->updateImu(imu);
       };
 
-    imu_sub_ = this->create_subscription<sensor_msgs::msg::Imu>(ImuTopic, imu_callback);
+    imu_sub_ = this->create_subscription<sensor_msgs::msg::Imu>(ImuTopic, 10, imu_callback);
 
     joint_state_timer_ = this->create_wall_timer(
       JointStatePublishPeriodMillis,
