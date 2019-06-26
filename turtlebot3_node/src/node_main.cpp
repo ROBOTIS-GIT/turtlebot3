@@ -86,7 +86,7 @@ class TurtleBot3 : public rclcpp::Node
       JointStatePublishPeriodMillis,
       [this]()
       {
-        this->joint_state_pub_->publish(this->joint_state_->getJointState(this->now()));
+        this->joint_state_pub_->publish(*this->joint_state_->getJointState(this->now()));
       }
     );
 
