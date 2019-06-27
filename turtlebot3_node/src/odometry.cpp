@@ -75,16 +75,16 @@ void Odometry::updateOdomTf(const rclcpp::Time now, const nav_msgs::msg::Odometr
   odom_tf_.header.stamp = now;
 }
 
-void Odometry::updateJointState(const sensor_msgs::msg::JointState::SharedPtr joint_state)
+void Odometry::updateJointState(const sensor_msgs::msg::JointState& joint_state)
 {
   std::lock_guard<std::mutex> lock(robot_mutex_);
   static double last_joint_positions[2] = {0.0f, 0.0f};
 
-  diff_mobile_.diff_wheels[0] = joint_state->position[0] - last_joint_positions[0];
-  diff_mobile_.diff_wheels[1] = joint_state->position[1] - last_joint_positions[1];
+  diff_mobile_.diff_wheels[0] = joint_state.position[0] - last_joint_positions[0];
+  diff_mobile_.diff_wheels[1] = joint_state.position[1] - last_joint_positions[1];
 
-  last_joint_positions[0] = joint_state->position[0];
-  last_joint_positions[1] = joint_state->position[1];
+  last_joint_positions[0] = joint_state.position[0];
+  last_joint_positions[1] = joint_state.position[1];
 }
 
 void Odometry::updateImu(const sensor_msgs::msg::Imu::SharedPtr imu)

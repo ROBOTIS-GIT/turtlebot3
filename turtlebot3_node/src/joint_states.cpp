@@ -25,31 +25,31 @@ constexpr char FRAME_ID_OF_JOINT_STATE[] = "base_link";
 constexpr char LEFT_WHEEL_JOINT_NAME[] = "wheel_left_joint";
 constexpr char RIGHT_WHEEL_JOINT_NAME[] = "wheel_right_joint";
 
-sensor_msgs::msg::JointState::SharedPtr JointState::getJointState(const rclcpp::Time now)
+sensor_msgs::msg::JointState JointState::getJointState(const rclcpp::Time now)
 {
   static rclcpp::Time last_time = now;
   rclcpp::Duration duration(now.nanoseconds() - last_time.nanoseconds());
 
-  auto joint_state = std::make_shared<sensor_msgs::msg::JointState>();
+  sensor_msgs::msg::JointState joint_state;
 
-  joint_state->header.frame_id = FRAME_ID_OF_JOINT_STATE;
-  joint_state->header.stamp = now;
+  joint_state.header.frame_id = FRAME_ID_OF_JOINT_STATE;
+  joint_state.header.stamp = now;
 
-  joint_state->name.push_back(LEFT_WHEEL_JOINT_NAME);
-  joint_state->name.push_back(RIGHT_WHEEL_JOINT_NAME);
+  joint_state.name.push_back(LEFT_WHEEL_JOINT_NAME);
+  joint_state.name.push_back(RIGHT_WHEEL_JOINT_NAME);
 
   std::lock_guard<std::mutex> lock(mutex_);
-  joint_state->position.push_back(last_rad_[0]);
-  joint_state->position.push_back(last_rad_[1]);
+  joint_state.position.push_back(last_rad_[0]);
+  joint_state.position.push_back(last_rad_[1]);
 
   if (duration > rclcpp::Duration(0,0)) // can't have negative or zero duration
   {
-    joint_state->velocity.push_back(DXL_TICK2RAD*last_diff_tick_[0]/(duration.seconds()));
-    joint_state->velocity.push_back(DXL_TICK2RAD*last_diff_tick_[1]/(duration.seconds()));
+    joint_state.velocity.push_back(DXL_TICK2RAD*last_diff_tick_[0]/(duration.seconds()));
+    joint_state.velocity.push_back(DXL_TICK2RAD*last_diff_tick_[1]/(duration.seconds()));
   }
 
-  joint_state->effort.push_back(0.0f);
-  joint_state->effort.push_back(0.0f);
+  joint_state.effort.push_back(0.0f);
+  joint_state.effort.push_back(0.0f);
 
   last_time = now;
   return joint_state;

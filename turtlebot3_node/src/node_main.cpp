@@ -78,7 +78,16 @@ class TurtleBot3 : public rclcpp::Node
       33ms,
       [this]()
       {
-        joint_state_pub_->publish(*joint_state_->getJointState(this->now()));
+        constexpr double WheelRadius = 0.033f;
+
+        sensor_msgs::msg::JointState joint_state_msg = joint_state_->getJointState(now());
+
+        odom_->updateJointState(joint_state_msg);
+
+        odom_pub_->publish(odom_->getOdom(now(), WheelRadius));
+        tf_broadcaster_->sendTransform(odom_->getOdomTf());
+
+        joint_state_pub_->publish(joint_state_msg);
       }
     );
 
@@ -86,11 +95,11 @@ class TurtleBot3 : public rclcpp::Node
       33ms,
       [this]()
       {
-        constexpr double WheelRadius = 0.033f;
-        odom_->updateJointState(joint_state_->getJointState(now()));
-        
-        odom_pub_->publish(odom_->getOdom(now(), WheelRadius));
-        tf_broadcaster_->sendTransform(odom_->getOdomTf());
+        // constexpr double WheelRadius = 0.033f;
+        // odom_->updateJointState(*joint_state_->getJointState(now()));
+
+        // odom_pub_->publish(odom_->getOdom(now(), WheelRadius));
+        // tf_broadcaster_->sendTransform(odom_->getOdomTf());
       }
     );
 

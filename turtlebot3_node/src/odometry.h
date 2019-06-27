@@ -52,7 +52,7 @@ class Odometry
   const geometry_msgs::msg::TransformStamped getOdomTf();
   void updateOdomTf(const rclcpp::Time now, const nav_msgs::msg::Odometry odom);
   void updateImu(const sensor_msgs::msg::Imu::SharedPtr imu);
-  void updateJointState(const sensor_msgs::msg::JointState::SharedPtr joint_state);
+  void updateJointState(const sensor_msgs::msg::JointState& joint_state);
 
  private:
   bool calcOdometry(const rclcpp::Duration duration, const double wheel_radius);
