@@ -70,8 +70,8 @@ void Odometry::updateOdomTf(const rclcpp::Time now, const nav_msgs::msg::Odometr
   odom_tf_.transform.translation.z = odom.pose.pose.position.z;
   odom_tf_.transform.rotation      = odom.pose.pose.orientation;
 
-  odom_tf_.header.frame_id = "odom";
-  odom_tf_.child_frame_id = "base_link";
+  odom_tf_.header.frame_id = FRAME_ID_OF_ODOMETRY;
+  odom_tf_.child_frame_id = CHILD_FRAME_ID_OF_ODOMETRY;
   odom_tf_.header.stamp = now;
 }
 
