@@ -25,9 +25,9 @@
 #include "turtlebot3_msgs/msg/sensor_state.hpp"
 #include "sensor_msgs/msg/joint_state.hpp"
 #include "sensor_msgs/msg/imu.hpp"
-#include "sensor_msgs/msg/laser_scan.hpp"
 #include "nav_msgs/msg/odometry.hpp"
 #include "builtin_interfaces/msg/time.hpp"
+
 #include <tf2_ros/transform_broadcaster.h>
 
 #include "joint_state.h"
@@ -40,8 +40,8 @@ namespace turtlebot3
 class TurtleBot3 : public rclcpp::Node
 {
  public:
-  explicit TurtleBot3(const std::string &node_name)
-   : Node(node_name)
+  explicit TurtleBot3()
+   : Node("turtlebot3_node")
   {
     RCLCPP_INFO(get_logger(), "Init TurtleBot3 Node Main");
 
@@ -56,27 +56,29 @@ class TurtleBot3 : public rclcpp::Node
     odom_pub_ = this->create_publisher<nav_msgs::msg::Odometry>("odom", 10);
     time_pub_ = this->create_publisher<builtin_interfaces::msg::Time>("time_sync", 10);
 
-    auto sensor_state_callback = 
+    sensor_state_sub_ = this->create_subscription<turtlebot3_msgs::msg::SensorState>(
+      "sensor_state",
+      10,
       [this](const turtlebot3_msgs::msg::SensorState::SharedPtr sensor_state) -> void
       {
-        this->joint_state_->updateRadianFromTick(sensor_state);
-      };
+        joint_state_->updateRadianFromTick(sensor_state);
+      }
+    );
 
-    sensor_state_sub_ = this->create_subscription<turtlebot3_msgs::msg::SensorState>("sensor_state", 10, sensor_state_callback);
-
-    auto imu_callback = 
+    imu_sub_ = this->create_subscription<sensor_msgs::msg::Imu>(
+      "imu", 
+      10, 
       [this](const sensor_msgs::msg::Imu::SharedPtr imu) -> void
       {
-        this->odom_->updateImu(imu);
-      };
-
-    imu_sub_ = this->create_subscription<sensor_msgs::msg::Imu>("imu", 10, imu_callback);
+        odom_->updateImu(imu);
+      }
+    );
 
     joint_state_timer_ = this->create_wall_timer(
       33ms,
       [this]()
       {
-        this->joint_state_pub_->publish(*this->joint_state_->getJointState(this->now()));
+        joint_state_pub_->publish(*joint_state_->getJointState(this->now()));
       }
     );
 
@@ -85,9 +87,10 @@ class TurtleBot3 : public rclcpp::Node
       [this]()
       {
         constexpr double WheelRadius = 0.033f;
-        this->odom_->updateJointState(this->joint_state_->getJointState(this->now()));
-        this->odom_pub_->publish(this->odom_->getOdom(this->now(), WheelRadius));
-        this->tf_broadcaster_->sendTransform(this->odom_->getOdomTf());
+        odom_->updateJointState(joint_state_->getJointState(now()));
+        
+        odom_pub_->publish(odom_->getOdom(now(), WheelRadius));
+        tf_broadcaster_->sendTransform(odom_->getOdomTf());
       }
     );
 
@@ -96,8 +99,8 @@ class TurtleBot3 : public rclcpp::Node
       [this]()
       {
         auto time_msg = builtin_interfaces::msg::Time();
-        time_msg = this->now();
-        this->time_pub_->publish(time_msg);
+        time_msg = now();
+        time_pub_->publish(time_msg);
       }
     );
   }
@@ -129,7 +132,7 @@ int main(int argc, char *argv[])
 {
   rclcpp::init(argc, argv);
 
-  auto node = std::make_shared<turtlebot3::TurtleBot3>("turtlebot3_node");
+  auto node = std::make_shared<turtlebot3::TurtleBot3>();
 
   rclcpp::spin(node);
 
