@@ -45,29 +45,12 @@ find_package(builtin_interfaces REQUIRED)
 ################################################################################
 # Build
 ################################################################################
-include_directories(
-  ${rclcpp_INCLUDE_DIRS}
-  ${std_msgs_INCLUDE_DIRS}
-  ${sensor_msgs_INCLUDE_DIRS}
-  ${geometry_msgs_INCLUDE_DIRS}
-  ${nav_msgs_INCLUDE_DIRS}
-  ${turtlebot3_msgs_INCLUDE_DIRS}  
-  ${tf2_INCLUDE_DIRS}
-  ${tf2_ros_INCLUDE_DIRS}
-)
-
-set(ALL_SRCS
+add_library(${PROJECT_NAME}_LIB SHARED
   "src/joint_states.cpp"
   "src/odometry.cpp"
-  )
-add_library(${PROJECT_NAME} ${ALL_SRCS})
+)
 
-set(NODE_NAME "turtlebot3_ros")
-
-add_executable(${NODE_NAME} src/node_main.cpp)
-target_link_libraries(${NODE_NAME} ${PROJECT_NAME})
-ament_target_dependencies(
-  ${NODE_NAME}
+set(DEPENDENCIES 
   "rclcpp"
   "std_msgs"
   "sensor_msgs"
@@ -79,24 +62,24 @@ ament_target_dependencies(
   "builtin_interfaces"
 )
 
+target_link_libraries(${PROJECT_NAME}_LIB)
+ament_target_dependencies(${PROJECT_NAME}_LIB ${DEPENDENCIES})
+
+set(EXECUTABLE_NAME "turtlebot3_ros")
+
+add_executable(${EXECUTABLE_NAME} src/node_main.cpp)
+target_link_libraries(${EXECUTABLE_NAME} ${PROJECT_NAME}_LIB)
+ament_target_dependencies(${EXECUTABLE_NAME} ${dependencies})
+
 ################################################################################
 # Install
 ################################################################################
 install(TARGETS
-  ${NODE_NAME}
+  ${EXECUTABLE_NAME}
   DESTINATION lib/${PROJECT_NAME}
 )
 
 ################################################################################
 # Macro for ament package
 ################################################################################
-ament_export_dependencies(rclcpp)
-ament_export_dependencies(std_msgs)
-ament_export_dependencies(sensor_msgs)
-ament_export_dependencies(geometry_msgs)
-ament_export_dependencies(nav_msgs)
-ament_export_dependencies(tf2)
-ament_export_dependencies(tf2_ros)
-ament_export_dependencies(turtlebot3_msgs)
-ament_export_dependencies(builtin_interfaces)
 ament_package()
