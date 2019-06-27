@@ -60,7 +60,6 @@ set(ALL_SRCS
   "src/constants.cpp"
   "src/joint_states.cpp"
   "src/odometry.cpp"
-  "src/lidar.cpp"
   )
 add_library(${PROJECT_NAME} ${ALL_SRCS})
 
