@@ -60,6 +60,7 @@ class TurtleBot3 : public rclcpp::Node
       [this](const turtlebot3_msgs::msg::SensorState::SharedPtr sensor_state) -> void
       {
         this->joint_state_->updateRadianFromTick(sensor_state);
+        this->joint_state_pub_->publish(*this->joint_state_->getJointState(this->now()));
       };
 
     sensor_state_sub_ = this->create_subscription<turtlebot3_msgs::msg::SensorState>("sensor_state", 10, sensor_state_callback);
@@ -72,19 +73,12 @@ class TurtleBot3 : public rclcpp::Node
 
     imu_sub_ = this->create_subscription<sensor_msgs::msg::Imu>("imu", 10, imu_callback);
 
-    joint_state_timer_ = this->create_wall_timer(
-      33ms,
-      [this]()
-      {
-        this->joint_state_pub_->publish(*this->joint_state_->getJointState(this->now()));
-      }
-    );
-
     odom_timer_ = this->create_wall_timer(
       33ms,
       [this]()
       {
-        constexpr double WheelRadius = 0.033f;
+        constexpr double WheelRadius = 0.033f;       
+
         this->odom_->updateJointState(this->joint_state_->getJointState(this->now()));
         this->odom_pub_->publish(this->odom_->getOdom(this->now(), WheelRadius));
         this->tf_broadcaster_->sendTransform(this->odom_->getOdomTf());
@@ -119,7 +113,6 @@ class TurtleBot3 : public rclcpp::Node
   rclcpp::Publisher<nav_msgs::msg::Odometry>::SharedPtr odom_pub_;
   rclcpp::Publisher<builtin_interfaces::msg::Time>::SharedPtr time_pub_;
 
-  rclcpp::TimerBase::SharedPtr joint_state_timer_;
   rclcpp::TimerBase::SharedPtr odom_timer_;
   rclcpp::TimerBase::SharedPtr time_timer_;
 };
