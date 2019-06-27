@@ -74,7 +74,7 @@ class TurtleBot3 : public rclcpp::Node
       }
     );
 
-    joint_state_timer_ = this->create_wall_timer(
+    odom_timer_ = this->create_wall_timer(
       33ms,
       [this]()
       {
@@ -88,18 +88,6 @@ class TurtleBot3 : public rclcpp::Node
         tf_broadcaster_->sendTransform(odom_->getOdomTf());
 
         joint_state_pub_->publish(joint_state_msg);
-      }
-    );
-
-    odom_timer_ = this->create_wall_timer(
-      33ms,
-      [this]()
-      {
-        // constexpr double WheelRadius = 0.033f;
-        // odom_->updateJointState(*joint_state_->getJointState(now()));
-
-        // odom_pub_->publish(odom_->getOdom(now(), WheelRadius));
-        // tf_broadcaster_->sendTransform(odom_->getOdomTf());
       }
     );
 
@@ -131,7 +119,6 @@ class TurtleBot3 : public rclcpp::Node
   rclcpp::Publisher<nav_msgs::msg::Odometry>::SharedPtr odom_pub_;
   rclcpp::Publisher<builtin_interfaces::msg::Time>::SharedPtr time_pub_;
 
-  rclcpp::TimerBase::SharedPtr joint_state_timer_;
   rclcpp::TimerBase::SharedPtr odom_timer_;
   rclcpp::TimerBase::SharedPtr time_timer_;
 };
