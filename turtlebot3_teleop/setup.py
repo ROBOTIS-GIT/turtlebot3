@@ -14,11 +14,8 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
-        ('share/turtlebot3_teleop/launch',
-            glob.glob(os.path.join('launch', '*.launch.py'))),
     ],
     install_requires=[
-        'launch',
         'setuptools',
     ],
     zip_safe=True,
