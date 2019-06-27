@@ -57,7 +57,6 @@ include_directories(
 )
 
 set(ALL_SRCS
-  "src/constants.cpp"
   "src/joint_states.cpp"
   "src/odometry.cpp"
   )
