@@ -37,7 +37,8 @@ def generate_launch_description():
                                 default=os.path.join(get_package_share_directory('turtlebot3_navigation2'), 'param', param_file_name))
     
     nav2_launch_file_dir = os.path.join(get_package_share_directory('nav2_bringup'), 'launch')
-    rviz_config_dir = os.path.join(get_package_share_directory('turtlebot3_navigation2'), 'rviz', 'tb3_navigation2.rviz')
+
+    rviz_config_dir = os.path.join(get_package_share_directory('nav2_bringup'), 'launch', 'nav2_default_view.rviz')
 
     return LaunchDescription([
         DeclareLaunchArgument(
@@ -56,13 +57,8 @@ def generate_launch_description():
             description='Use simulation (Gazebo) clock if true'),
 
         IncludeLaunchDescription(
-            PythonLaunchDescriptionSource([nav2_launch_file_dir, '/nav2_bringup_1st_launch.py']),
-            launch_arguments={'map': map_dir, 'use_sim_time': use_sim_time}.items(),
-        ),
-
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource([nav2_launch_file_dir, '/nav2_bringup_2nd_launch.py']),
-            launch_arguments={'use_sim_time': use_sim_time, 'params': param_dir}.items(),
+            PythonLaunchDescriptionSource([nav2_launch_file_dir, '/nav2_bringup_launch.py']),
+            launch_arguments={'map': map_dir, 'use_sim_time': use_sim_time, 'params': param_dir}.items(),
         ),
 
         Node(
@@ -71,16 +67,4 @@ def generate_launch_description():
             node_name='rviz2',
             arguments=['-d', rviz_config_dir],
             output='screen'),
-
-        ExecuteProcess(
-            cmd=['ros2', 'param', 'set', '/world_model', 'use_sim_time', use_sim_time],
-            output='screen'),
-
-        ExecuteProcess(
-            cmd=['ros2', 'param', 'set', '/global_costmap/global_costmap', 'use_sim_time', use_sim_time],
-            output='screen'),
-
-        ExecuteProcess(
-            cmd=['ros2', 'param', 'set', '/local_costmap/local_costmap', 'use_sim_time', use_sim_time],
-            output='screen')
     ])
