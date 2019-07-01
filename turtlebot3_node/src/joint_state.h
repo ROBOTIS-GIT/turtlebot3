@@ -36,7 +36,7 @@ class JointState
   JointState(){};
   virtual ~JointState(){};
 
-  sensor_msgs::msg::JointState::SharedPtr getJointState(const rclcpp::Time now);
+  sensor_msgs::msg::JointState getJointState(const rclcpp::Time now);
   void updateRadianFromTick(const turtlebot3_msgs::msg::SensorState::SharedPtr state);
 
  private:

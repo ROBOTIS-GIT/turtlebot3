@@ -18,6 +18,7 @@
   <exec_depend>turtlebot3_cartographer</exec_depend>
   <exec_depend>turtlebot3_description</exec_depend>
   <exec_depend>turtlebot3_lidar</exec_depend>
+  <exec_depend>turtlebot3_navigation2</exec_depend>
   <exec_depend>turtlebot3_node</exec_depend>
   <exec_depend>turtlebot3_teleop</exec_depend>
   <export>

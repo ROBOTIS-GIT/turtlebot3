@@ -25,96 +25,79 @@
 #include "turtlebot3_msgs/msg/sensor_state.hpp"
 #include "sensor_msgs/msg/joint_state.hpp"
 #include "sensor_msgs/msg/imu.hpp"
-#include "sensor_msgs/msg/laser_scan.hpp"
 #include "nav_msgs/msg/odometry.hpp"
 #include "builtin_interfaces/msg/time.hpp"
+
 #include <tf2_ros/transform_broadcaster.h>
 
-#include "constants.h"
 #include "joint_state.h"
-#include "lidar.h"
 #include "odometry.h"
+
+using namespace std::chrono_literals;
 
 namespace turtlebot3
 {
 class TurtleBot3 : public rclcpp::Node
 {
  public:
-  explicit TurtleBot3(const std::string &node_name)
-   : Node(node_name)
+  explicit TurtleBot3()
+   : Node("turtlebot3_node")
   {
     RCLCPP_INFO(get_logger(), "Init TurtleBot3 Node Main");
 
     node_handle_ = std::shared_ptr<::rclcpp::Node>(this, [](::rclcpp::Node *) {});
 
-    joint_state_ = std::make_shared<JointState>();
-    lidar_ = std::make_shared<Lidar>();
-    odom_ = std::make_shared<Odometry>();
+    joint_state_ = std::make_unique<JointState>();
+    odom_ = std::make_unique<Odometry>();
 
     tf_broadcaster_ = std::make_shared<tf2_ros::TransformBroadcaster>(node_handle_);
 
-    joint_state_pub_ = this->create_publisher<sensor_msgs::msg::JointState>(JointStateTopic, rmw_qos_profile_default);
-    laser_scan_pub_ = this->create_publisher<sensor_msgs::msg::LaserScan>(ScanTopic, rmw_qos_profile_default);
-    odom_pub_ = this->create_publisher<nav_msgs::msg::Odometry>(OdomTopic, rmw_qos_profile_default);
-    time_pub_ = this->create_publisher<builtin_interfaces::msg::Time>(TimeTopic, rmw_qos_profile_default);
+    joint_state_pub_ = this->create_publisher<sensor_msgs::msg::JointState>("joint_states", 10);
+    odom_pub_ = this->create_publisher<nav_msgs::msg::Odometry>("odom", 10);
+    time_pub_ = this->create_publisher<builtin_interfaces::msg::Time>("time_sync", 10);
 
-    auto sensor_state_callback = 
+    sensor_state_sub_ = this->create_subscription<turtlebot3_msgs::msg::SensorState>(
+      "sensor_state",
+      10,
       [this](const turtlebot3_msgs::msg::SensorState::SharedPtr sensor_state) -> void
       {
-        this->joint_state_->updateRadianFromTick(sensor_state);
-      };
-
-    sensor_state_sub_ = this->create_subscription<turtlebot3_msgs::msg::SensorState>(SensorStateTopic, sensor_state_callback);
-
-    auto laser_scan_callback = 
-      [this](const sensor_msgs::msg::LaserScan::SharedPtr laser_scan) -> void
-      {
-        this->lidar_->makeFullRange(laser_scan);
-      };
-
-    laser_scan_sub_ = this->create_subscription<sensor_msgs::msg::LaserScan>(ScanHalfTopic, laser_scan_callback);
-
-    auto imu_callback = 
-      [this](const sensor_msgs::msg::Imu::SharedPtr imu) -> void
-      {
-        this->odom_->updateImu(imu);
-      };
-
-    imu_sub_ = this->create_subscription<sensor_msgs::msg::Imu>(ImuTopic, imu_callback);
-
-    joint_state_timer_ = this->create_wall_timer(
-      JointStatePublishPeriodMillis,
-      [this]()
-      {
-        this->joint_state_pub_->publish(this->joint_state_->getJointState(this->now()));
+        joint_state_->updateRadianFromTick(sensor_state);
       }
     );
 
-    laser_scan_timer_ = this->create_wall_timer(
-      ScanPublishPeriodMillis,
-      [this]()
+    imu_sub_ = this->create_subscription<sensor_msgs::msg::Imu>(
+      "imu", 
+      10, 
+      [this](const sensor_msgs::msg::Imu::SharedPtr imu) -> void
       {
-        this->laser_scan_pub_->publish(this->lidar_->getLaserScan(this->now()));
+        odom_->updateImu(imu);
       }
     );
 
     odom_timer_ = this->create_wall_timer(
-      OdometryPublishPeriodMillis,
+      33ms,
       [this]()
       {
-        this->odom_->updateJointState(this->joint_state_->getJointState(this->now()));
-        this->odom_pub_->publish(this->odom_->getOdom(this->now(), WheelRadius));
-        this->tf_broadcaster_->sendTransform(this->odom_->getOdomTf());
+        constexpr double WheelRadius = 0.033f;
+
+        sensor_msgs::msg::JointState joint_state_msg = joint_state_->getJointState(now());
+
+        odom_->updateJointState(joint_state_msg);
+
+        odom_pub_->publish(odom_->getOdom(now(), WheelRadius));
+        tf_broadcaster_->sendTransform(odom_->getOdomTf());
+
+        joint_state_pub_->publish(joint_state_msg);
       }
     );
 
     time_timer_ = this->create_wall_timer(
-      TimeSyncPublishPeriodMillis,
+      1s,
       [this]()
       {
         auto time_msg = builtin_interfaces::msg::Time();
-        time_msg = this->now();
-        this->time_pub_->publish(time_msg);
+        time_msg = now();
+        time_pub_->publish(time_msg);
       }
     );
   }
@@ -124,24 +107,19 @@ class TurtleBot3 : public rclcpp::Node
  private:
   rclcpp::Node::SharedPtr node_handle_;
 
-  std::shared_ptr<JointState> joint_state_;
-  std::shared_ptr<Lidar> lidar_;
-  std::shared_ptr<Odometry> odom_;
+  std::unique_ptr<JointState> joint_state_;
+  std::unique_ptr<Odometry> odom_;
 
   std::shared_ptr<tf2_ros::TransformBroadcaster> tf_broadcaster_;
 
   rclcpp::Subscription<turtlebot3_msgs::msg::SensorState>::SharedPtr sensor_state_sub_;
-  rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr laser_scan_sub_;
   rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr imu_sub_;
 
   rclcpp::Publisher<sensor_msgs::msg::JointState>::SharedPtr joint_state_pub_;
   rclcpp::Publisher<nav_msgs::msg::Odometry>::SharedPtr odom_pub_;
-  rclcpp::Publisher<sensor_msgs::msg::LaserScan>::SharedPtr laser_scan_pub_;
   rclcpp::Publisher<builtin_interfaces::msg::Time>::SharedPtr time_pub_;
 
-  rclcpp::TimerBase::SharedPtr joint_state_timer_;
   rclcpp::TimerBase::SharedPtr odom_timer_;
-  rclcpp::TimerBase::SharedPtr laser_scan_timer_;
   rclcpp::TimerBase::SharedPtr time_timer_;
 };
 }
@@ -150,7 +128,7 @@ int main(int argc, char *argv[])
 {
   rclcpp::init(argc, argv);
 
-  auto node = std::make_shared<turtlebot3::TurtleBot3>("turtlebot3_node");
+  auto node = std::make_shared<turtlebot3::TurtleBot3>();
 
   rclcpp::spin(node);
 

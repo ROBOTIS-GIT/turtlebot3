@@ -122,8 +122,7 @@ def main():
     rclpy.init()
 
     node = rclpy.create_node('teleop_keyboard')
-    pub = node.create_publisher(
-        Twist, 'cmd_vel')
+    pub = node.create_publisher(Twist, 'cmd_vel', 10)
 
     status = 0
     target_linear_vel   = 0.0
