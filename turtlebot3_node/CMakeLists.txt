@@ -50,7 +50,7 @@ add_library(${PROJECT_NAME}_LIB SHARED
   "src/odometry.cpp"
 )
 
-set(DEPENDENCIES 
+set(DEPENDENCIES
   "rclcpp"
   "std_msgs"
   "sensor_msgs"
@@ -74,6 +74,13 @@ ament_target_dependencies(${EXECUTABLE_NAME} ${dependencies})
 ################################################################################
 # Install
 ################################################################################
+install(TARGETS
+  ${PROJECT_NAME}_LIB
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin
+)
+
 install(TARGETS
   ${EXECUTABLE_NAME}
   DESTINATION lib/${PROJECT_NAME}
