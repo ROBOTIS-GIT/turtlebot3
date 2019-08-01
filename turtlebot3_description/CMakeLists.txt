@@ -48,6 +48,5 @@ install(DIRECTORY meshes rviz urdf
 ################################################################################
 # Macro for ament package
 ################################################################################
-ament_export_dependencies(xacro)
 ament_export_dependencies(urdf)
 ament_package()
