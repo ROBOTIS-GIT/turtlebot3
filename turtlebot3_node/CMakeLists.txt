@@ -16,73 +16,55 @@ endif()
 # Find ament packages and libraries for ament and system dependencies
 ################################################################################
 find_package(ament_cmake REQUIRED)
-find_package(rclcpp REQUIRED)
-find_package(std_msgs REQUIRED)
-find_package(sensor_msgs REQUIRED)
+find_package(builtin_interfaces REQUIRED)
+find_package(dynamixel_sdk REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
-find_package(turtlebot3_msgs REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(sensor_msgs REQUIRED)
+find_package(std_msgs REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
-find_package(builtin_interfaces REQUIRED)
-
-################################################################################
-# Setup for python modules and scripts
-################################################################################
-
-################################################################################
-# Declare ROS messages, services and actions
-################################################################################
-
-################################################################################
-# Declare ROS dynamic reconfigure parameters
-################################################################################
-
-################################################################################
-# Declare catkin specific configuration to be passed to dependent projects
-################################################################################
+find_package(turtlebot3_msgs REQUIRED)
 
 ################################################################################
 # Build
 ################################################################################
-add_library(${PROJECT_NAME}_LIB SHARED
+include_directories(
+  include
+)
+
+add_library(${PROJECT_NAME}_lib SHARED
   "src/joint_states.cpp"
   "src/odometry.cpp"
 )
 
 set(DEPENDENCIES
-  "rclcpp"
-  "std_msgs"
-  "sensor_msgs"
+  "builtin_interfaces"
+  "dynamixel_sdk"
   "geometry_msgs"
   "nav_msgs"
-  "turtlebot3_msgs"
-  "tf2"
+  "rclcpp"
+  "sensor_msgs"
+  "std_msgs"
   "tf2_ros"
-  "builtin_interfaces"
+  "tf2"
+  "turtlebot3_msgs"
 )
 
-target_link_libraries(${PROJECT_NAME}_LIB)
-ament_target_dependencies(${PROJECT_NAME}_LIB ${DEPENDENCIES})
+target_link_libraries(${PROJECT_NAME}_lib)
+ament_target_dependencies(${PROJECT_NAME}_lib ${DEPENDENCIES})
 
 set(EXECUTABLE_NAME "turtlebot3_ros")
 
 add_executable(${EXECUTABLE_NAME} src/node_main.cpp)
-target_link_libraries(${EXECUTABLE_NAME} ${PROJECT_NAME}_LIB)
-ament_target_dependencies(${EXECUTABLE_NAME} ${dependencies})
+target_link_libraries(${EXECUTABLE_NAME} ${PROJECT_NAME}_lib)
+ament_target_dependencies(${EXECUTABLE_NAME} ${DEPENDENCIES})
 
 ################################################################################
 # Install
 ################################################################################
-install(TARGETS
-  ${PROJECT_NAME}_LIB
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin
-)
-
-install(TARGETS
-  ${EXECUTABLE_NAME}
+install(TARGETS ${EXECUTABLE_NAME}
   DESTINATION lib/${PROJECT_NAME}
 )
 
