@@ -1,21 +1,23 @@
 <?xml version="1.0"?>
-<package format="2">
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
   <name>turtlebot3_teleop</name>
   <version>0.0.1</version>
   <description>
     Provides teleoperation using keyboard for TurtleBot3.
   </description>
-  <license>Apache 2.0</license>
   <author email="thlim@robotis.com">Darby Lim</author>
-  <author email="pyo@robotis.com">Pyo</author>  
+  <author email="pyo@robotis.com">Pyo</author>
   <maintainer email="pyo@robotis.com">Pyo</maintainer>
+  <license>Apache 2.0</license>
   <url type="website">http://wiki.ros.org/turtlebot3_description</url>
   <url type="emanual">http://turtlebot3.robotis.com</url>
   <url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3</url>
   <url type="bugtracker">https://github.com/ROBOTIS-GIT/turtlebot3/issues</url>
-  <build_depend>rclpy</build_depend>
-  <exec_depend>rclpy</exec_depend>
-  <exec_depend>geometry_msgs</exec_depend>
+  <depend>geometry_msgs</depend>
+  <depend>launch</depend>
+  <depend>launch_ros</depend>
+  <depend>rclpy</depend>
   <export>
     <build_type>ament_python</build_type>
   </export>

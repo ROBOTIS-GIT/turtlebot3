@@ -1,0 +1,4 @@
+hlds_laser_publisher:
+  ros__parameters:
+    port: "/dev/ttyUSB0"
+    frame_id: "base_scan"

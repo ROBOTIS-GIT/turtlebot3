@@ -16,6 +16,9 @@
 
 # /* Author: Darby Lim */
 
+import os
+
+from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.actions import IncludeLaunchDescription
@@ -26,6 +29,28 @@ from launch_ros.actions import Node
 
 
 def generate_launch_description():
+    TURTLEBOT3_MODEL = os.environ['TURTLEBOT3_MODEL']
+
+    usb_port = LaunchConfiguration('usb_port', default='/dev/ttyACM0')
+
+    tb3_param_dir = LaunchConfiguration(
+        'tb3_param_dir',
+        default=os.path.join(
+            get_package_share_directory('turtlebot3_bringup'),
+            'param',
+            TURTLEBOT3_MODEL + '.yaml'))
+
+    lidar_param_dir = LaunchConfiguration(
+        'lidar_param_dir',
+        default=os.path.join(
+            get_package_share_directory('turtlebot3_bringup'),
+            'param',
+            'hlds_lidar.yaml'))
+
+    lidar_pkg_dir = LaunchConfiguration(
+        'lidar_pkg_dir',
+        default=os.path.join(get_package_share_directory('hls_lfcd_lds_driver'), 'launch'))
+
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
 
     return LaunchDescription([
@@ -34,15 +59,36 @@ def generate_launch_description():
            default_value=use_sim_time,
            description='Use simulation (Gazebo) clock if true'),
 
+        DeclareLaunchArgument(
+            'usb_port',
+            default_value=usb_port,
+            description='Connected USB port with OpenCR'),
+
+        DeclareLaunchArgument(
+            'tb3_param_dir',
+            default_value=tb3_param_dir,
+            description='Full path to turtlebot3 parameter file to load'),
+
+        DeclareLaunchArgument(
+            'lidar_param_dir',
+            default_value=lidar_param_dir,
+            description='Full path to lidar parameter file to load'),
+
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 [ThisLaunchFileDir(), '/turtlebot3_state_publisher.launch.py']),
             launch_arguments={'use_sim_time': use_sim_time}.items(),
         ),
 
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource([lidar_pkg_dir, '/hlds_laser.launch.py']),
+            launch_arguments={'param_dir': lidar_param_dir}.items(),
+        ),
+
         Node(
             package='turtlebot3_node',
             node_executable='turtlebot3_ros',
-            node_name='turtlebot3_node',
+            parameters=[tb3_param_dir],
+            arguments=['-i', usb_port],
             output='screen'),
     ])
