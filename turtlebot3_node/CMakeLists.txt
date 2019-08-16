@@ -16,7 +16,6 @@ endif()
 # Find ament packages and libraries for ament and system dependencies
 ################################################################################
 find_package(ament_cmake REQUIRED)
-find_package(builtin_interfaces REQUIRED)
 find_package(dynamixel_sdk REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(message_filters REQUIRED)
@@ -55,7 +54,6 @@ add_library(${PROJECT_NAME}_lib SHARED
 )
 
 set(DEPENDENCIES
-  "builtin_interfaces"
   "dynamixel_sdk"
   "geometry_msgs"
   "message_filters"
