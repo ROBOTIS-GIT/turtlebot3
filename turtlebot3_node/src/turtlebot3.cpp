@@ -234,6 +234,7 @@ void TurtleBot3::publish_timer(const std::chrono::milliseconds timeout)
           scan_msg->header.stamp = now;
 
           scan_pub_->publish(std::move(scan_msg));
+          scan_msg_queue_.pop();
         }
       }
     );
