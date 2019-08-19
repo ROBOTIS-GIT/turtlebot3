@@ -53,7 +53,7 @@ class Sensors
  protected:
   std::shared_ptr<rclcpp::Node> nh_;
   std::string frame_id_;
-  rclcpp::QoS qos_ = rclcpp::QoS(rclcpp::KeepLast(10));
+  rclcpp::QoS qos_ = rclcpp::QoS(rclcpp::SensorDataQoS());
 };
 } // sensors
 } // turtlebot3
