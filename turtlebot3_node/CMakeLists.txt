@@ -37,7 +37,7 @@ include_directories(
   include
 )
 
-add_library(${PROJECT_NAME}_lib SHARED
+add_library(${PROJECT_NAME}_lib
   "src/devices/motor_power.cpp"
   "src/devices/sound.cpp"
   "src/devices/reset.cpp"
@@ -92,5 +92,4 @@ install(TARGETS ${EXECUTABLE_NAME}
 # Macro for ament package
 ################################################################################
 ament_export_include_directories(include)
-ament_export_dependencies(dynamixel_sdk)
 ament_package()
