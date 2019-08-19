@@ -1,6 +1,6 @@
 amcl:
   ros__parameters:
-    use_sim_time: True
+    use_sim_time: False
     alpha1: 0.2
     alpha2: 0.2
     alpha3: 0.2
@@ -40,20 +40,20 @@ amcl:
 
 amcl_map_client:
   ros__parameters:
-    use_sim_time: True
+    use_sim_time: False
 
 amcl_rclcpp_node:
   ros__parameters:
-    use_sim_time: True
+    use_sim_time: False
 
 bt_navigator:
   ros__parameters:
-    use_sim_time: True
+    use_sim_time: False
     bt_xml_filename: "bt_navigator.xml"
 
 dwb_controller:
   ros__parameters:
-    use_sim_time: True
+    use_sim_time: False
     debug_trajectory_details: True
     min_vel_x: 0.0
     min_vel_y: 0.0
@@ -92,7 +92,7 @@ dwb_controller:
 local_costmap:
   local_costmap:
     ros__parameters:
-      use_sim_time: True
+      use_sim_time: False
       global_frame: odom
       plugin_names: ["obstacle_layer", "inflation_layer"]
       plugin_types: ["nav2_costmap_2d::ObstacleLayer", "nav2_costmap_2d::InflationLayer"]
@@ -113,15 +113,15 @@ local_costmap:
         marking: True
   local_costmap_client:
     ros__parameters:
-      use_sim_time: True
+      use_sim_time: False
   local_costmap_rclcpp_node:
     ros__parameters:
-      use_sim_time: True
+      use_sim_time: False
 
 global_costmap:
   global_costmap:
     ros__parameters:
-      use_sim_time: True
+      use_sim_time: False
       robot_radius: 0.220
       obstacle_layer:
         enabled: True
@@ -134,19 +134,19 @@ global_costmap:
         marking: True
   global_costmap_client:
     ros__parameters:
-      use_sim_time: True
+      use_sim_time: False
   global_costmap_rclcpp_node:
     ros__parameters:
-      use_sim_time: True
+      use_sim_time: False
 
 map_server:
   ros__parameters:
-    use_sim_time: True
+    use_sim_time: False
     yaml_filename: "turtlebot3_world.yaml"
 
 lifecycle_manager:
   ros__parameters:
-    use_sim_time: True
+    use_sim_time: False
     autostart: True
     node_names: ['map_server', 'amcl',
                  'world_model', 'dwb_controller',
@@ -154,26 +154,26 @@ lifecycle_manager:
 
 lifecycle_manager_service_client:
   ros__parameters:
-    use_sim_time: True
+    use_sim_time: False
 
 lifecycle_manager_client_service_client:
   ros__parameters:
-    use_sim_time: True
+    use_sim_time: False
 
 navfn_planner:
   ros__parameters:
-    use_sim_time: True
+    use_sim_time: False
     tolerance: 0.0
     use_astar: false
 
 navfn_planner_GetCostmap_client:
   ros__parameters:
-    use_sim_time: True
+    use_sim_time: False
 
 robot_state_publisher:
   ros__parameters:
-    use_sim_time: True
+    use_sim_time: False
 
 world_model:
   ros__parameters:
-    use_sim_time: True
+    use_sim_time: False
