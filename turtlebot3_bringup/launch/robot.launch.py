@@ -40,13 +40,6 @@ def generate_launch_description():
             'param',
             TURTLEBOT3_MODEL + '.yaml'))
 
-    lidar_param_dir = LaunchConfiguration(
-        'lidar_param_dir',
-        default=os.path.join(
-            get_package_share_directory('turtlebot3_bringup'),
-            'param',
-            'hlds_lidar.yaml'))
-
     lidar_pkg_dir = LaunchConfiguration(
         'lidar_pkg_dir',
         default=os.path.join(get_package_share_directory('hls_lfcd_lds_driver'), 'launch'))
@@ -69,11 +62,6 @@ def generate_launch_description():
             default_value=tb3_param_dir,
             description='Full path to turtlebot3 parameter file to load'),
 
-        DeclareLaunchArgument(
-            'lidar_param_dir',
-            default_value=lidar_param_dir,
-            description='Full path to lidar parameter file to load'),
-
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 [ThisLaunchFileDir(), '/turtlebot3_state_publisher.launch.py']),
@@ -82,7 +70,7 @@ def generate_launch_description():
 
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource([lidar_pkg_dir, '/hlds_laser.launch.py']),
-            launch_arguments={'param_dir': lidar_param_dir}.items(),
+            launch_arguments={'port': '/dev/ttyUSB0', 'frame_id': 'base_scan'}.items(),
         ),
 
         Node(
