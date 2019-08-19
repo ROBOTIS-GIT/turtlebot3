@@ -206,10 +206,15 @@ void TurtleBot3::run()
 
   parameter_event_callback();
   cmd_vel_callback();
+  scan_callback();
 }
 
 void TurtleBot3::publish_timer(const std::chrono::milliseconds timeout)
 {
+  scan_pub_ = this->create_publisher<sensor_msgs::msg::LaserScan>(
+    "scan",
+    rclcpp::QoS(rclcpp::SensorDataQoS()));
+
   publish_timer_ = this->create_wall_timer(
     timeout,
     [this]() -> void
@@ -221,6 +226,14 @@ void TurtleBot3::publish_timer(const std::chrono::milliseconds timeout)
         for (const auto &sensor:sensors_)
         {
           sensor->publish(now, dxl_sdk_wrapper_);
+        }
+
+        if (scan_msg_queue_.empty() == false)
+        {
+          auto scan_msg = std::make_unique<sensor_msgs::msg::LaserScan>(*scan_msg_queue_.front());
+          scan_msg->header.stamp = now;
+
+          scan_pub_->publish(std::move(scan_msg));
         }
       }
     );
@@ -349,6 +362,18 @@ void TurtleBot3::cmd_vel_callback()
         RCLCPP_DEBUG(
           this->get_logger(),
           "lin_vel: %f ang_vel: %f msg : %s", msg->linear.x, msg->angular.z, sdk_msg.c_str());
+      }
+    );
+}
+
+void TurtleBot3::scan_callback()
+{
+  scan_sub_ = this->create_subscription<sensor_msgs::msg::LaserScan>(
+    "hls_lfcd_lds/scan",
+    rclcpp::QoS(rclcpp::SensorDataQoS()),
+    [this](const sensor_msgs::msg::LaserScan::SharedPtr msg) -> void
+      {
+        scan_msg_queue_.push(msg);
       }
     );
 }

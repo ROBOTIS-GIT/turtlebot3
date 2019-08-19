@@ -25,6 +25,7 @@
 #include <memory>
 #include <mutex>
 #include <string>
+#include <queue>
 
 #include <geometry_msgs/msg/twist.hpp>
 #include <nav_msgs/msg/odometry.hpp>
@@ -32,6 +33,7 @@
 #include <sensor_msgs/msg/battery_state.hpp>
 #include <sensor_msgs/msg/imu.hpp>
 #include <sensor_msgs/msg/joint_state.hpp>
+#include <sensor_msgs/msg/laser_scan.hpp>
 #include <tf2_ros/transform_broadcaster.h>
 #include <turtlebot3_msgs/msg/sensor_state.hpp>
 
@@ -91,6 +93,7 @@ class TurtleBot3 : public rclcpp::Node
   void heartbeat_timer(const std::chrono::milliseconds timeout);
 
   void cmd_vel_callback();
+  void scan_callback();
   void parameter_event_callback();
 
   Wheels wheels_;
@@ -100,6 +103,7 @@ class TurtleBot3 : public rclcpp::Node
 
   std::list<sensors::Sensors*> sensors_;
   std::map<std::string, devices::Devices*> devices_;
+  std::queue<sensor_msgs::msg::LaserScan::SharedPtr> scan_msg_queue_;
 
   std::unique_ptr<Odometry> odom_;
 
@@ -108,7 +112,10 @@ class TurtleBot3 : public rclcpp::Node
   rclcpp::TimerBase::SharedPtr publish_timer_;
   rclcpp::TimerBase::SharedPtr heartbeat_timer_;
 
+  rclcpp::Publisher<sensor_msgs::msg::LaserScan>::SharedPtr scan_pub_;
+
   rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_sub_;
+  rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr scan_sub_;
 
   rclcpp::AsyncParametersClient::SharedPtr priv_parameters_client_;
   rclcpp::Subscription<rcl_interfaces::msg::ParameterEvent>::SharedPtr parameter_event_sub_;
