@@ -11,39 +11,15 @@ repositories:
     type: git
     url: https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
     version: ros2
-  gazebo/gazebo_ros_pkgs:
-    type: git
-    url: https://github.com/ros-simulation/gazebo_ros_pkgs.git
-    version: ros2
-  gazebo/camera_info_manager:
-    type: git
-    url: https://github.com/ros-perception/image_common.git
-    version: ros2
-  gazebo/vision_opencv:
-    type: git
-    url: https://github.com/ros-perception/vision_opencv.git
-    version: ros2
-  cartographer/cartographer:
-    type: git
-    url: https://github.com/ROBOTIS-GIT/cartographer.git
-    version: dashing
-  cartographer/cartographer_ros:
+  utils/cartographer_ros:
     type: git
     url: https://github.com/ROBOTIS-GIT/cartographer_ros.git
     version: dashing
-  cartographer/pcl_conversions:
+  utils/DynamixelSDK:
     type: git
-    url: https://github.com/ros2/pcl_conversions.git
+    url: https://github.com/ROBOTIS-GIT/DynamixelSDK.git
     version: ros2
-  navigation2/navigation2:
+  utils/hls_lfcd_lds_driver:
     type: git
-    url: https://github.com/ros-planning/navigation2.git
-    version: dashing-devel
-  navigation2/BehaviorTree.CPP:
-    type: git
-    url: https://github.com/BehaviorTree/BehaviorTree.CPP.git
-    version: ros2
-  navigation2/angles:
-    type: git
-    url: https://github.com/ros/angles.git
+    url: https://github.com/ROBOTIS-GIT/hls_lfcd_lds_driver.git
     version: ros2
