@@ -83,8 +83,8 @@ dwb_controller:
     transform_tolerance: 0.2
     critics: ["RotateToGoal", "Oscillation", "BaseObstacle", "GoalAlign", "PathAlign", "PathDist", "GoalDist"]
     BaseObstacle.scale: 0.02
-    PathAlign.scale: 32.0
-    GoalAlign.scale: 24.0
+    PathAlign.scale: 0.0
+    GoalAlign.scale: 0.0
     PathDist.scale: 32.0
     GoalDist.scale: 24.0
     RotateToGoal.scale: 32.0
@@ -100,7 +100,7 @@ local_costmap:
       width: 3
       height: 3
       resolution: 0.05
-      robot_radius: 0.220
+      robot_radius: 0.22
       inflation_layer.cost_scaling_factor: 3.0
       obstacle_layer:
         enabled: True
@@ -122,7 +122,7 @@ global_costmap:
   global_costmap:
     ros__parameters:
       use_sim_time: False
-      robot_radius: 0.220
+      robot_radius: 0.22
       obstacle_layer:
         enabled: True
       always_send_full_costmap: True
@@ -142,7 +142,7 @@ global_costmap:
 map_server:
   ros__parameters:
     use_sim_time: False
-    yaml_filename: "turtlebot3_world.yaml"
+    yaml_filename: "map.yaml"
 
 lifecycle_manager:
   ros__parameters:
