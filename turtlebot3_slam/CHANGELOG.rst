@@ -2,6 +2,11 @@
 Changelog for package turtlebot3_slam
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.2.1 (2019-08-20)
+------------------
+* Fixed ROS_ASSERT bug `#416 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/416>`_
+* Contributors: ant, Ryan Shim, Kayman
+
 1.2.0 (2019-01-22)
 ------------------
 * modified rosdep `#342 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/342>`_
