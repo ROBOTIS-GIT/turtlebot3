@@ -2,6 +2,11 @@
 Changelog for package turtlebot3_example
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.2.1 (2019-08-20)
+------------------
+* Fixed typo `#436 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/436>`_
+* Contributors: Pallav Bhalla
+
 1.2.0 (2019-01-22)
 ------------------
 * changed math.ceil() operation `#373 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/373>`_
