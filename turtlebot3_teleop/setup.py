@@ -8,11 +8,10 @@ package_name = 'turtlebot3_teleop'
 
 setup(
     name=package_name,
-    version='0.0.1',
+    version='2.0.0',
     packages=find_packages(exclude=[]),
     data_files=[
-        ('share/ament_index/resource_index/packages',
-            ['resource/' + package_name]),
+        ('share/ament_index/resource_index/packages', ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
     ],
     install_requires=[
@@ -31,7 +30,7 @@ setup(
         'Topic :: Software Development',
     ],
     description=(
-        'Provides teleoperation using keyboard for TurtleBot3.'
+        'Teleoperation node using keyboard for TurtleBot3.'
     ),
     license='Apache License, Version 2.0',
     tests_require=['pytest'],
