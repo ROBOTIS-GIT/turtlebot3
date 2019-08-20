@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>turtlebot3</name>
-  <version>1.2.0</version>
+  <version>1.2.1</version>
   <description>
     ROS packages for the Turtlebot3 (meta package)
   </description>
@@ -13,7 +13,6 @@
   <author email="chc@robotis.com">HanCheol Cho</author>
   <author>Leon Jung</author>
   <maintainer email="pyo@robotis.com">Pyo</maintainer>
-  <maintainer email="kkjong@robotis.com">Gilbert</maintainer>
   <url type="website">http://wiki.ros.org/turtlebot3</url>
   <url type="emanual">http://turtlebot3.robotis.com</url>
   <url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3</url>

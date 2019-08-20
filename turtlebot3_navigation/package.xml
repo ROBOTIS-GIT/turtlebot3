@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>turtlebot3_navigation</name>
-  <version>1.2.0</version>
+  <version>1.2.1</version>
   <description>
     The turtlebot3_navigation provides roslaunch scripts for starting the navigation.
   </description>
@@ -11,7 +11,6 @@
   <author email="kkjong@robotis.com">Gilbert</author>
   <author>Leon Jung</author>
   <maintainer email="pyo@robotis.com">Pyo</maintainer>
-  <maintainer email="kkjong@robotis.com">Gilbert</maintainer>
   <url type="website">http://wiki.ros.org/turtlebot3_navigation</url>
   <url type="emanual">http://turtlebot3.robotis.com</url>
   <url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3</url>
