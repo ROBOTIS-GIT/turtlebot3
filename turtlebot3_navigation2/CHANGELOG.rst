@@ -5,8 +5,11 @@ Changelog for package turtlebot3_navigation2
 2.0.0 (2019-08-20)
 ------------------
 * Supported ROS 2 Dashing Diademata
+* Updated the CHANGELOG and version to release binary packages
+* Added use_sim_time parameter for rviz2 `#456 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/456>`_
+* Updated map.yaml `#386 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/386>`_
 * Changed package name to turtlebot3_navigation2, it supoorts Nav2 of ROS 2
-* Contributors: Darby Lim, Pyo
+* Contributors: Mikael Arguedas, Alberto Soragna, Darby Lim, Pyo
 
 1.2.2 (2019-08-20)
 ------------------

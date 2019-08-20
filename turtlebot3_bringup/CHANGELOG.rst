@@ -4,6 +4,10 @@ Changelog for package turtlebot3_bringup
 
 2.0.0 (2019-08-20)
 ------------------
+* Supported ROS 2 Dashing Diademata
+* Updated the CHANGELOG and version to release binary packages
+* Fixed ROS2 dependencies and library install `#454 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/454>`_
+* Contributors: Emerson Knapp, Darby Lim, Pyo
 
 1.2.2 (2019-08-20)
 ------------------

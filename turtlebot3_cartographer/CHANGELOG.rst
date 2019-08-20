@@ -5,6 +5,7 @@ Changelog for package turtlebot3_cartographer
 2.0.0 (2019-08-20)
 ------------------
 * Supported ROS 2 Dashing Diademata
+* Updated the CHANGELOG and version to release binary packages
 * Changed package name to turtlebot3_cartographer from turtlebot3_slam
 * Contributors: Darby Lim, Pyo
 

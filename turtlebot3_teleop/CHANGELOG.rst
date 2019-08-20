@@ -2,6 +2,12 @@
 Changelog for package turtlebot3_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.0.0 (2019-08-20)
+------------------
+* Supported ROS 2 Dashing Diademata
+* Updated the CHANGELOG and version to release binary packages
+* Contributors: Darby Lim, Pyo
+
 1.2.2 (2019-08-20)
 ------------------
 * none

@@ -5,13 +5,14 @@ Changelog for package turtlebot3
 2.0.0 (2019-08-20)
 ------------------
 * Supported ROS 2 Dashing Diademata
+* Updated the CHANGELOG and version to release binary packages
+* Removed ament_export_dependency(xacro) `#462 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/462>`_
+* Added use_sim_time parameter for rviz2 `#456 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/456>`_
+* Fixed ROS2 dependencies and library install `#454 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/454>`_
+* Fixed turtlebot3.repos `#447 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/447>`_ `#432 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/432>`_
+* Fixed scan rate to 5hz `#418 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/418>`_
 * Initialized joint states variables `#411 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/411>`_
 * Updated map.yaml `#386 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/386>`_
-* Fixed scan rate to 5hz `#418 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/418>`_
-* Fixed turtlebot3.repos `#447 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/447>`_ `#432 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/432>`_
-* Fixed ROS2 dependencies and library install `#454 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/454>`_
-* Added use_sim_time parameter for rviz2 `#456 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/456>`_
-* Removed ament_export_dependency(xacro) `#462 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/462>`_
 * Contributors: Matt Hansen, Alberto Soragna, Carl Delsey, sousou1, Emerson Knapp, Mikael Arguedas, Ross Desmond, Darby Lim, Pyo
 
 1.2.2 (2019-08-20)

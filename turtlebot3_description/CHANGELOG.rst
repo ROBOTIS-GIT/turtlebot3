@@ -5,7 +5,9 @@ Changelog for package turtlebot3_description
 2.0.0 (2019-08-20)
 ------------------
 * Supported ROS 2 Dashing Diademata
-* Contributors: Darby Lim, Pyo
+* Updated the CHANGELOG and version to release binary packages
+* Removed ament_export_dependency(xacro) `#462 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/462>`_
+* Contributors: Ross Desmond, Darby Lim, Pyo
 
 1.2.2 (2019-08-20)
 ------------------
