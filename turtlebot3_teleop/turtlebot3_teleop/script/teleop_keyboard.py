@@ -26,13 +26,16 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 # /* Author: Darby Lim */
-import os, sys
+
+import os
 import select
+import sys
 import termios
 import tty
 
-import rclpy
 from geometry_msgs.msg import Twist
+import rclpy
+from rclpy.qos import QoSProfile
 
 BURGER_MAX_LIN_VEL = 0.22
 BURGER_MAX_ANG_VEL = 2.84
@@ -65,7 +68,8 @@ e = """
 Communications Failed
 """
 
-def getKey(settings):
+
+def get_key(settings):
     tty.setraw(sys.stdin.fileno())
     rlist, _, _ = select.select([sys.stdin], [], [], 0.1)
     if rlist:
@@ -76,10 +80,14 @@ def getKey(settings):
     termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
     return key
 
-def vels(target_linear_vel, target_angular_vel):
-    return "currently:\tlinear vel %s\t angular vel %s " % (target_linear_vel,target_angular_vel)
 
-def makeSimpleProfile(output, input, slop):
+def print_vels(target_linear_velocity, target_angular_velocity):
+    print('currently:\tlinear velocity {0}\t angular velocity {1} '.format(
+        target_linear_velocity,
+        target_angular_velocity))
+
+
+def make_simple_profile(output, input, slop):
     if input > output:
         output = min( input, output + slop )
     elif input < output:
@@ -89,73 +97,76 @@ def makeSimpleProfile(output, input, slop):
 
     return output
 
-def constrain(input, low, high):
-    if input < low:
-      input = low
-    elif input > high:
-      input = high
+
+def constrain(input_vel, low_bound, high_bound):
+    if input_vel < low_bound:
+        input_vel = low_bound
+    elif input_vel > high_bound:
+        input_vel = high_bound
     else:
-      input = input
+        input_vel = input_vel
 
-    return input
+    return input_vel
 
-def checkLinearLimitVelocity(vel):
+
+def check_linear_limit_velocity(velocity):
     if TURTLEBOT3_MODEL == 'burger':
-        vel = constrain(vel, -BURGER_MAX_LIN_VEL, BURGER_MAX_LIN_VEL)
+        return constrain(velocity, -BURGER_MAX_LIN_VEL, BURGER_MAX_LIN_VEL)
     else:
-        vel = constrain(vel, -WAFFLE_MAX_LIN_VEL, WAFFLE_MAX_LIN_VEL)
+        return constrain(velocity, -WAFFLE_MAX_LIN_VEL, WAFFLE_MAX_LIN_VEL)
 
-    return vel
-
-def checkAngularLimitVelocity(vel):
+def check_angular_limit_velocity(velocity):
     if TURTLEBOT3_MODEL == 'burger':
-        vel = constrain(vel, -BURGER_MAX_ANG_VEL, BURGER_MAX_ANG_VEL)
+        return constrain(velocity, -BURGER_MAX_ANG_VEL, BURGER_MAX_ANG_VEL)
     else:
-        vel = constrain(vel, -WAFFLE_MAX_ANG_VEL, WAFFLE_MAX_ANG_VEL)
-        
+        return constrain(velocity, -WAFFLE_MAX_ANG_VEL, WAFFLE_MAX_ANG_VEL)
 
-    return vel
 
 def main():
     settings = termios.tcgetattr(sys.stdin)
 
     rclpy.init()
 
+    qos = QoSProfile(depth=10)
     node = rclpy.create_node('teleop_keyboard')
-    pub = node.create_publisher(Twist, 'cmd_vel', 10)
+    pub = node.create_publisher(Twist, 'cmd_vel', qos)
 
     status = 0
-    target_linear_vel   = 0.0
-    target_angular_vel  = 0.0
-    control_linear_vel  = 0.0
-    control_angular_vel = 0.0
+    target_linear_velocity   = 0.0
+    target_angular_velocity  = 0.0
+    control_linear_velocity  = 0.0
+    control_angular_velocity = 0.0
 
     try:
         print(msg)
         while(1):
-            key = getKey(settings)
+            key = get_key(settings)
             if key == 'w' :
-                target_linear_vel = checkLinearLimitVelocity(target_linear_vel + LIN_VEL_STEP_SIZE)
+                target_linear_velocity =\
+                    check_linear_limit_velocity(target_linear_velocity + LIN_VEL_STEP_SIZE)
                 status = status + 1
-                print(vels(target_linear_vel,target_angular_vel))
+                print_vels(target_linear_velocity, target_angular_velocity)
             elif key == 'x' :
-                target_linear_vel = checkLinearLimitVelocity(target_linear_vel - LIN_VEL_STEP_SIZE)
+                target_linear_velocity =\
+                    check_linear_limit_velocity(target_linear_velocity - LIN_VEL_STEP_SIZE)
                 status = status + 1
-                print(vels(target_linear_vel,target_angular_vel))
+                print_vels(target_linear_velocity, target_angular_velocity)
             elif key == 'a' :
-                target_angular_vel = checkAngularLimitVelocity(target_angular_vel + ANG_VEL_STEP_SIZE)
+                target_angular_velocity =\
+                    check_angular_limit_velocity(target_angular_velocity + ANG_VEL_STEP_SIZE)
                 status = status + 1
-                print(vels(target_linear_vel,target_angular_vel))
+                print_vels(target_linear_velocity, target_angular_velocity)
             elif key == 'd' :
-                target_angular_vel = checkAngularLimitVelocity(target_angular_vel - ANG_VEL_STEP_SIZE)
+                target_angular_velocity =\
+                    check_angular_limit_velocity(target_angular_velocity - ANG_VEL_STEP_SIZE)
                 status = status + 1
-                print(vels(target_linear_vel,target_angular_vel))
+                print_vels(target_linear_velocity, target_angular_velocity)
             elif key == ' ' or key == 's' :
-                target_linear_vel   = 0.0
-                control_linear_vel  = 0.0
-                target_angular_vel  = 0.0
-                control_angular_vel = 0.0
-                print(vels(target_linear_vel, target_angular_vel))
+                target_linear_velocity   = 0.0
+                control_linear_velocity  = 0.0
+                target_angular_velocity  = 0.0
+                control_angular_velocity = 0.0
+                print_vels(target_linear_velocity, target_angular_velocity)
             else:
                 if (key == '\x03'):
                     break
@@ -166,11 +177,23 @@ def main():
 
             twist = Twist()
 
-            control_linear_vel = makeSimpleProfile(control_linear_vel, target_linear_vel, (LIN_VEL_STEP_SIZE/2.0))
-            twist.linear.x = control_linear_vel; twist.linear.y = 0.0; twist.linear.z = 0.0
+            control_linear_velocity = make_simple_profile(
+                control_linear_velocity,
+                target_linear_velocity,
+                (LIN_VEL_STEP_SIZE/2.0))
 
-            control_angular_vel = makeSimpleProfile(control_angular_vel, target_angular_vel, (ANG_VEL_STEP_SIZE/2.0))
-            twist.angular.x = 0.0; twist.angular.y = 0.0; twist.angular.z = control_angular_vel
+            twist.linear.x = control_linear_velocity
+            twist.linear.y = 0.0
+            twist.linear.z = 0.0
+
+            control_angular_velocity = make_simple_profile(
+                control_angular_velocity,
+                target_angular_velocity,
+                (ANG_VEL_STEP_SIZE/2.0))
+
+            twist.angular.x = 0.0
+            twist.angular.y = 0.0
+            twist.angular.z = control_angular_velocity
 
             pub.publish(twist)
 
@@ -179,8 +202,14 @@ def main():
 
     finally:
         twist = Twist()
-        twist.linear.x = 0.0; twist.linear.y = 0.0; twist.linear.z = 0.0
-        twist.angular.x = 0.0; twist.angular.y = 0.0; twist.angular.z = 0.0
+        twist.linear.x = 0.0
+        twist.linear.y = 0.0
+        twist.linear.z = 0.0
+
+        twist.angular.x = 0.0
+        twist.angular.y = 0.0
+        twist.angular.z = 0.0
+
         pub.publish(twist)
 
         termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)

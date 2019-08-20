@@ -1,28 +1,32 @@
 <?xml version="1.0"?>
-<package format="2">
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
   <name>turtlebot3_node</name>
-  <version>0.0.1</version>
+  <version>2.0.0</version>
   <description>
-    Include odometry and tf node
+    TurtleBot3 driver node that include diff drive controller, odometry and tf node
   </description>
   <license>Apache 2.0</license>
   <author email="thlim@robotis.com">Darby Lim</author>
-  <author email="pyo@robotis.com">Pyo</author>  
+  <author email="pyo@robotis.com">Pyo</author>
   <maintainer email="pyo@robotis.com">Pyo</maintainer>
-  <url type="website">http://wiki.ros.org/turtlebot3_description</url>
+  <url type="website">http://wiki.ros.org/turtlebot3_node</url>
   <url type="emanual">http://turtlebot3.robotis.com</url>
   <url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3</url>
   <url type="bugtracker">https://github.com/ROBOTIS-GIT/turtlebot3/issues</url>
   <buildtool_depend>ament_cmake</buildtool_depend>
-  <depend>rclcpp</depend>
-  <depend>std_msgs</depend>
-  <depend>sensor_msgs</depend>
+  <depend>dynamixel_sdk</depend>
   <depend>geometry_msgs</depend>
+  <depend>message_filters</depend>
   <depend>nav_msgs</depend>
-  <depend>turtlebot3_msgs</depend>
-  <depend>tf2</depend>
+  <depend>rclcpp</depend>
+  <depend>rcutils</depend>
+  <depend>sensor_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>std_srvs</depend>
   <depend>tf2_ros</depend>
-  <depend>builtin_interfaces</depend>
+  <depend>tf2</depend>
+  <depend>turtlebot3_msgs</depend>
   <export>
     <build_type>ament_cmake</build_type>
   </export>

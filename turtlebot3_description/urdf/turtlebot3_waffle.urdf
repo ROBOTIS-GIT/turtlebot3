@@ -7,7 +7,7 @@
   <xacro:property name="r200_cam_rgb_pz" value="0.013"/>
   <xacro:property name="r200_cam_depth_offset" value="0.01"/> -->
 
-  <!-- Init colour -->  
+  <!-- Init colour -->
   <material name="black">
       <color rgba="0.0 0.0 0.0 1.0"/>
   </material>
@@ -71,7 +71,7 @@
         <box size="0.266 0.266 0.094"/>
       </geometry>
     </collision>
-    
+
     <inertial>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <mass value="1.3729096e+00"/>

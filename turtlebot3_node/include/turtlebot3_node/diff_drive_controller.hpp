@@ -16,35 +16,29 @@
 
 /* Author: Darby Lim */
 
-#ifndef TURTLEBOT3_JOINT_STATE_H
-#define TURTLEBOT3_JOINT_STATE_H
+#ifndef TURTLEBOT3_NODE_DIFF_DRIVE_CONTROLLER_HPP_
+#define TURTLEBOT3_NODE_DIFF_DRIVE_CONTROLLER_HPP_
 
 #include <memory>
-#include <array>
-#include <mutex>
 
-#include "rclcpp/time.hpp"
+#include <rclcpp/rclcpp.hpp>
 
-#include "turtlebot3_msgs/msg/sensor_state.hpp"
-#include "sensor_msgs/msg/joint_state.hpp"
+#include "turtlebot3_node/odometry.hpp"
 
+namespace robotis
+{
 namespace turtlebot3
 {
-class JointState
+class DiffDriveController : public rclcpp::Node
 {
  public:
-  JointState(){};
-  virtual ~JointState(){};
-
-  sensor_msgs::msg::JointState getJointState(const rclcpp::Time now);
-  void updateRadianFromTick(const turtlebot3_msgs::msg::SensorState::SharedPtr state);
+  explicit DiffDriveController(const float wheel_seperation, const float wheel_radius);
+  virtual ~DiffDriveController(){};
 
  private:
-  std::array<double,2> last_rad_ = {0.0, 0.0};
-  std::array<int32_t,2> last_diff_tick_ = {0, 0};
-
-  std::mutex mutex_;
+  std::shared_ptr<rclcpp::Node> nh_;
+  std::unique_ptr<Odometry> odometry_;
 };
-}
-
-#endif //TURTLEBOT3_JOINT_STATE_H
+} // turtlebot3
+} // robotis
+#endif // TURTLEBOT3_NODE_DIFF_DRIVE_CONTROLLER_HPP_

@@ -2,6 +2,26 @@
 Changelog for package turtlebot3_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.0.0 (2019-08-20)
+------------------
+* Supported ROS 2 Dashing Diademata
+* Updated the CHANGELOG and version to release binary packages
+* Fixed ROS2 dependencies and library install `#454 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/454>`_
+* Contributors: Emerson Knapp, Darby Lim, Pyo
+
+1.2.2 (2019-08-20)
+------------------
+* none
+
+1.2.1 (2019-08-20)
+------------------
+* Added turtlebot3_remote.launch to turtlebot3_model.launch `#389 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/389>`_
+* Contributors: Jonathan Hechtbauer, Gilbert
+
+1.2.0 (2019-01-22)
+------------------
+* none
+
 1.1.0 (2018-07-23)
 ------------------
 * added bringup to load multiple robot simply #251
