@@ -2,6 +2,12 @@
 Changelog for package turtlebot3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.2.2 (2019-08-20)
+------------------
+* Fixed `dwa local planner params` for dwa_local_planner 1.16.2 `#415 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/415>`_
+* This patch only applies to ROS 1 Melodic.
+* Contributors: atinfinity, Kayman
+
 1.2.1 (2019-08-20)
 ------------------
 * Fixed typo `#436 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/436>`_

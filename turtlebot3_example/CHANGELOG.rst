@@ -2,6 +2,10 @@
 Changelog for package turtlebot3_example
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.2.2 (2019-08-20)
+------------------
+* none
+
 1.2.1 (2019-08-20)
 ------------------
 * Fixed typo `#436 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/436>`_
