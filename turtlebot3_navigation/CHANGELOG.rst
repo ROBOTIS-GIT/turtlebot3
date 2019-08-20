@@ -2,6 +2,11 @@
 Changelog for package turtlebot3_navigation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.2.1 (2019-08-20)
+------------------
+* Deleted '/' to sync tf2 `#402 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/402>`_
+* Contributors: Ryan Shim, Kayman, Darby Lim
+
 1.2.0 (2019-01-22)
 ------------------
 * updated map.yaml `#348 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/348>`_
@@ -18,7 +23,7 @@ Changelog for package turtlebot3_navigation
 1.0.0 (2018-05-29)
 ------------------
 * modified navigation parameters
-* modified control frequency and inflation radius 
+* modified control frequency and inflation radius
 * modified param after experiments
 * merged pull request `#202 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/202>`_ from ROBOTIS-GIT/feature-cartographer
 * merged pull request `#220 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/220>`_ `#212 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/212>`_ `#200 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/200>`_ `#154 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/154>`_ `#153 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/153>`_ `#147 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/147>`_ `#146 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/146>`_
