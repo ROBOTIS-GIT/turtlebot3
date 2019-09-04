@@ -3,10 +3,6 @@ repositories:
     type: git
     url: https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git
     version: ros2
-  utils/cartographer_ros:
-    type: git
-    url: https://github.com/ros2/cartographer_ros.git
-    version: dashing
   utils/DynamixelSDK:
     type: git
     url: https://github.com/ROBOTIS-GIT/DynamixelSDK.git
