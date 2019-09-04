@@ -97,7 +97,7 @@ bool DynamixelSDKWrapper::set_data_to_device(
     return false;
   }
 
-  return false;
+  return ret;
 }
 
 bool DynamixelSDKWrapper::init_dynamixel_sdk_handlers()
