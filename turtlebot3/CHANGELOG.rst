@@ -2,6 +2,13 @@
 Changelog for package turtlebot3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.0.1 (2019-09-05)
+------------------
+* Updated the CHANGELOG and version to release binary packages
+* Added missing exec_depend for nav2_bringup
+* Modified dependency packages
+* Contributors: Ruffin, Darby Lim, Pyo
+
 2.0.0 (2019-08-20)
 ------------------
 * Supported ROS 2 Dashing Diademata

@@ -20,7 +20,6 @@ branches:
 
 install:
   - git clone --quiet --depth 1 https://github.com/ROBOTIS-GIT/ros2ci.git .ros2ci
-  - cp turtlebot3_ci.repos .ros2ci/additional_repos.repos
 
 matrix:
   include:

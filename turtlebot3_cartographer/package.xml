@@ -2,7 +2,7 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>turtlebot3_cartographer</name>
-  <version>2.0.0</version>
+  <version>2.0.1</version>
   <description>
     ROS 2 launch scripts for cartographer
   </description>
@@ -15,9 +15,7 @@
   <url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3</url>
   <url type="bugtracker">https://github.com/ROBOTIS-GIT/turtlebot3/issues</url>
   <buildtool_depend>ament_cmake</buildtool_depend>
-  <exec_depend>ament_index_python</exec_depend>
   <exec_depend>cartographer_ros</exec_depend>
-  <exec_depend>launch</exec_depend>
   <export>
     <build_type>ament_cmake</build_type>
   </export>
