@@ -24,7 +24,6 @@ find_package(rclcpp REQUIRED)
 find_package(rcutils REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
-find_package(std_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
@@ -63,8 +62,8 @@ set(DEPENDENCIES
   "sensor_msgs"
   "std_msgs"
   "std_srvs"
-  "tf2_ros"
   "tf2"
+  "tf2_ros"
   "turtlebot3_msgs"
 )
 

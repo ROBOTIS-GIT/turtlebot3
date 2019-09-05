@@ -14,10 +14,8 @@
   <url type="emanual">http://turtlebot3.robotis.com</url>
   <url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3</url>
   <url type="bugtracker">https://github.com/ROBOTIS-GIT/turtlebot3/issues</url>
-  <depend>geometry_msgs</depend>
-  <depend>launch</depend>
-  <depend>launch_ros</depend>
-  <depend>rclpy</depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>rclpy</exec_depend>
   <export>
     <build_type>ament_python</build_type>
   </export>

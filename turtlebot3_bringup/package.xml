@@ -15,11 +15,11 @@
   <url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3</url>
   <url type="bugtracker">https://github.com/ROBOTIS-GIT/turtlebot3/issues</url>
   <buildtool_depend>ament_cmake</buildtool_depend>
-  <depend>hls_lfcd_lds_driver</depend>
-  <depend>robot_state_publisher</depend>
-  <depend>rviz2</depend>
-  <depend>turtlebot3_description</depend>
-  <depend>turtlebot3_node</depend>
+  <exec_depend>hls_lfcd_lds_driver</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>rviz2</exec_depend>
+  <exec_depend>turtlebot3_description</exec_depend>
+  <exec_depend>turtlebot3_node</exec_depend>
   <export>
     <build_type>ament_cmake</build_type>
   </export>
