@@ -115,7 +115,7 @@ class Turtlebot3PatrolServer(Node):
             # Process rate
             time.sleep(0.010)  # unit: s
 
-        # When the action is completed 
+        # When the action is completed
         twist = Twist()
         self.cmd_vel_pub.publish(twist)
 
