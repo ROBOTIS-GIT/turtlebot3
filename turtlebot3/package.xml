@@ -8,6 +8,7 @@
   </description>
   <license>Apache 2.0</license>
   <author email="thlim@robotis.com">Darby Lim</author>
+  <author email="jhshim@robotis.com">Ryan Shim</author>
   <author email="pyo@robotis.com">Pyo</author>
   <maintainer email="pyo@robotis.com">Pyo</maintainer>
   <url type="website">http://wiki.ros.org/turtlebot3_description</url>
@@ -18,6 +19,7 @@
   <exec_depend>turtlebot3_bringup</exec_depend>
   <exec_depend>turtlebot3_cartographer</exec_depend>
   <exec_depend>turtlebot3_description</exec_depend>
+  <exec_depend>turtlebot3_example</exec_depend>
   <exec_depend>turtlebot3_navigation2</exec_depend>
   <exec_depend>turtlebot3_node</exec_depend>
   <exec_depend>turtlebot3_teleop</exec_depend>
