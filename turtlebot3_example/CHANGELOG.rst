@@ -6,6 +6,7 @@ Changelog for package turtlebot3_example
 ------------------
 *
 *
+*
 
 1.2.1 (2019-08-20)
 ------------------
