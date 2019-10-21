@@ -34,7 +34,7 @@ class Turtlebot3ObstacleDetection(Node):
         ************************************************************"""
         self.linear_velocity = 0.0  # unit: m/s
         self.angular_velocity = 0.0  # unit: m/s
-        self.scan_ranges = numpy.ones(360) * numpy.Infinity  # Scan resolution is 360
+        self.scan_ranges = numpy.ones(360) * numpy.Infinity  # Scan resolution is 1[deg]
 
         """************************************************************
         ** Initialise ROS publishers and subscribers
@@ -50,10 +50,10 @@ class Turtlebot3ObstacleDetection(Node):
             'scan',
             self.scan_callback,
             qos_profile=qos_profile_sensor_data)
-        self.raw_cmd_vel_sub = self.create_subscription(
+        self.cmd_vel_raw_sub = self.create_subscription(
             Twist,
-            'raw_cmd_vel',
-            self.cmd_vel_callback,
+            'cmd_vel_raw',
+            self.cmd_vel_raw_callback,
             qos)
 
         """************************************************************
@@ -71,7 +71,7 @@ class Turtlebot3ObstacleDetection(Node):
     def scan_callback(self, msg):
         self.scan_ranges = msg.ranges
 
-    def cmd_vel_callback(self, msg):
+    def cmd_vel_raw_callback(self, msg):
         self.linear_velocity = msg.linear.x
         self.angular_velocity = msg.angular.z
 
