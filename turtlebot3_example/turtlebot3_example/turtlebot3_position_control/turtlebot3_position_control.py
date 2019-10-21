@@ -23,7 +23,6 @@ from rclpy.qos import QoSProfile
 import sys
 import termios
 from turtlebot3_example.turtlebot3_position_control.turtlebot3_path import Turtlebot3Path
-
 from geometry_msgs.msg import Twist
 from nav_msgs.msg import Odometry
 
