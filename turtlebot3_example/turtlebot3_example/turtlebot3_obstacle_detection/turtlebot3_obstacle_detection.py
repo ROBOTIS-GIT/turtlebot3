@@ -35,7 +35,8 @@ class Turtlebot3ObstacleDetection(Node):
         ************************************************************"""
         self.linear_velocity = 0.0  # unit: m/s
         self.angular_velocity = 0.0  # unit: m/s
-        self.scan_ranges = numpy.ones(360) * numpy.Infinity  # Scan resolution is 1[deg]
+        self.scan_ranges = []
+        self.init_scan_state = False  # To get the initial scan data at the beginning
 
         """************************************************************
         ** Initialise ROS publishers and subscribers
@@ -60,9 +61,9 @@ class Turtlebot3ObstacleDetection(Node):
         """************************************************************
         ** Initialise timers
         ************************************************************"""
-        self.detect_obstacle_timer = self.create_timer(
+        self.update_timer = self.create_timer(
             0.010,  # unit: s
-            self.detect_obstacle_callback)
+            self.update_callback)
 
         self.get_logger().info("Turtlebot3 obstacle detection node has been initialised.")
 
@@ -71,12 +72,17 @@ class Turtlebot3ObstacleDetection(Node):
     *******************************************************************************"""
     def scan_callback(self, msg):
         self.scan_ranges = msg.ranges
+        self.init_scan_state = True
 
     def cmd_vel_raw_callback(self, msg):
         self.linear_velocity = msg.linear.x
         self.angular_velocity = msg.angular.z
 
-    def detect_obstacle_callback(self):
+    def update_callback(self):
+        if self.init_scan_state is True:
+            self.detect_obstacle()
+
+    def detect_obstacle(self):
         twist = Twist()
         obstacle_distance = min(self.scan_ranges)
         safety_distance = 0.3  # unit: m
