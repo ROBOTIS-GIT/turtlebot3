@@ -17,6 +17,7 @@
 # Authors: Ryan Shim, Gilbert
 
 import rclpy
+
 from turtlebot3_example.turtlebot3_patrol_server.turtlebot3_patrol_server \
     import Turtlebot3PatrolServer
 

@@ -16,8 +16,9 @@
 #
 # Authors: Ryan Shim, Gilbert
 
-from geometry_msgs.msg import Twist
 import numpy
+
+from geometry_msgs.msg import Twist
 from rclpy.node import Node
 from rclpy.qos import QoSProfile
 from rclpy.qos import qos_profile_sensor_data

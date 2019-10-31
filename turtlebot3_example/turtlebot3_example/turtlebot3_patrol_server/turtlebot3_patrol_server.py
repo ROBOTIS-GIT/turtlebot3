@@ -17,6 +17,9 @@
 # Authors: Ryan Shim, Gilbert
 
 import math
+import time
+
+from geometry_msgs.msg import Twist
 from rclpy.action import ActionServer
 from rclpy.action import CancelResponse
 from rclpy.action import GoalResponse
@@ -24,10 +27,9 @@ from rclpy.callback_groups import ReentrantCallbackGroup
 from rclpy.duration import Duration
 from rclpy.node import Node
 from rclpy.qos import QoSProfile
-import time
+
 from turtlebot3_example.turtlebot3_patrol_server.turtlebot3_path \
     import Turtlebot3Path
-from geometry_msgs.msg import Twist
 from turtlebot3_msgs.action import Patrol
 
 

@@ -18,13 +18,15 @@
 
 import math
 import numpy
-from rclpy.node import Node
-from rclpy.qos import QoSProfile
 import sys
 import termios
-from turtlebot3_example.turtlebot3_position_control.turtlebot3_path import Turtlebot3Path
+
 from geometry_msgs.msg import Twist
+from rclpy.node import Node
+from rclpy.qos import QoSProfile
 from nav_msgs.msg import Odometry
+
+from turtlebot3_example.turtlebot3_position_control.turtlebot3_path import Turtlebot3Path
 
 terminal_msg = """
 Turtlebot3 Position Control

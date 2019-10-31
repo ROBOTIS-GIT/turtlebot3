@@ -16,12 +16,14 @@
 #
 # Authors: Ryan Shim, Gilbert
 
+import sys
+import termios
+
+from action_msgs.msg import GoalStatus
 import rclpy
 from rclpy.action import ActionClient
 from rclpy.node import Node
-import sys
-import termios
-from action_msgs.msg import GoalStatus
+
 from turtlebot3_msgs.action import Patrol
 
 terminal_msg = """

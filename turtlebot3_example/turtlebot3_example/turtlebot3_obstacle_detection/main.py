@@ -17,6 +17,7 @@
 # Authors: Ryan Shim, Gilbert
 
 import rclpy
+
 from turtlebot3_example.turtlebot3_obstacle_detection.turtlebot3_obstacle_detection \
     import Turtlebot3ObstacleDetection
 
