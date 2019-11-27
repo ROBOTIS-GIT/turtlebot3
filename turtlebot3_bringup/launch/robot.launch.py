@@ -32,13 +32,14 @@ def generate_launch_description():
     TURTLEBOT3_MODEL = os.environ['TURTLEBOT3_MODEL']
 
     usb_port = LaunchConfiguration('usb_port', default='/dev/ttyACM0')
+    namespace = LaunchConfiguration('namespace', default='')
 
     tb3_param_dir = LaunchConfiguration(
         'tb3_param_dir',
         default=os.path.join(
             get_package_share_directory('turtlebot3_bringup'),
             'param',
-            TURTLEBOT3_MODEL + '.yaml'))
+            'robot1_' + TURTLEBOT3_MODEL + '.yaml'))
 
     lidar_pkg_dir = LaunchConfiguration(
         'lidar_pkg_dir',
@@ -53,6 +54,10 @@ def generate_launch_description():
            description='Use simulation (Gazebo) clock if true'),
 
         DeclareLaunchArgument(
+            'namespace', default_value='',
+            description='Top-level namespace'),
+
+        DeclareLaunchArgument(
             'usb_port',
             default_value=usb_port,
             description='Connected USB port with OpenCR'),
@@ -65,18 +70,23 @@ def generate_launch_description():
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 [ThisLaunchFileDir(), '/turtlebot3_state_publisher.launch.py']),
-            launch_arguments={'use_sim_time': use_sim_time}.items(),
+            launch_arguments={'use_sim_time': use_sim_time, 'namespace': namespace}.items(),
         ),
 
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource([lidar_pkg_dir, '/hlds_laser.launch.py']),
-            launch_arguments={'port': '/dev/ttyUSB0', 'frame_id': 'base_scan'}.items(),
+            launch_arguments={'port': '/dev/ttyUSB0', 'frame_id': 'base_scan', 'namespace': namespace}.items(),
         ),
 
         Node(
             package='turtlebot3_node',
             node_executable='turtlebot3_ros',
+            node_namespace = namespace,
             parameters=[tb3_param_dir],
+            remappings=[((namespace, '/tf'), '/tf'),
+                        ((namespace, '/tf_static'), '/tf_static'),
+                        ('/tf', 'tf'),
+                        ('/tf_static', 'tf_static')],
             arguments=['-i', usb_port],
             output='screen'),
     ])
