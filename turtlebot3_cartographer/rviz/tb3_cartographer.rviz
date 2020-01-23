@@ -266,67 +266,6 @@ Visualization Manager:
           Value: true
       Enabled: false
       Name: Navigation
-    - Class: rviz_common/Group
-      Displays:
-        - Alpha: 1
-          Autocompute Intensity Bounds: true
-          Autocompute Value Bounds:
-            Max Value: 0.18203988671302795
-            Min Value: 0.18195410072803497
-            Value: true
-          Axis: Z
-          Channel Name: intensity
-          Class: rviz_default_plugins/PointCloud2
-          Color: 0; 255; 0
-          Color Transformer: FlatColor
-          Decay Time: 0
-          Enabled: true
-          Invert Rainbow: false
-          Max Color: 255; 255; 255
-          Max Intensity: 4096
-          Min Color: 0; 0; 0
-          Min Intensity: 0
-          Name: scan_matched_points2
-          Position Transformer: XYZ
-          Queue Size: 10
-          Selectable: true
-          Size (Pixels): 3
-          Size (m): 0.009999999776482582
-          Style: Points
-          Topic: /scan_matched_points2
-          Unreliable: true
-          Use Fixed Frame: true
-          Use rainbow: true
-          Value: true
-        - Class: rviz_default_plugins/MarkerArray
-          Enabled: false
-          Name: Trajectories
-          Namespaces:
-            {}
-          Queue Size: 10
-          Topic: /trajectory_node_list
-          Unreliable: true
-          Value: false
-        - Class: rviz_default_plugins/MarkerArray
-          Enabled: false
-          Name: Constraints
-          Namespaces:
-            {}
-          Queue Size: 10
-          Topic: /constraint_list
-          Unreliable: true
-          Value: false
-        - Class: rviz_default_plugins/MarkerArray
-          Enabled: false
-          Name: Landmark Poses
-          Namespaces:
-            {}
-          Queue Size: 10
-          Topic: /landmark_poses_list
-          Unreliable: true
-          Value: false
-      Enabled: true
-      Name: Cartographer
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
