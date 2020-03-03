@@ -2,6 +2,11 @@
 Changelog for package turtlebot3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.2.2 (2020-03-03)
+------------------
+* Updated inertial data in turtlebot3_waffle_for_open_manipulator.urdf.xacro, turtlebot3_waffle_pi_for_open_manipulator.urdf.xacro
+* Added turtlebot3_manipulation_slam.launch for TurtleBot3 SLAM with OpenMANIPULATOR
+
 1.2.1 (2019-08-20)
 ------------------
 * Fixed typo `#436 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/436>`_
