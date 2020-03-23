@@ -2,6 +2,10 @@
 Changelog for package turtlebot3_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.2.3 (2020-03-03)
+------------------
+* Updated inertial data in turtlebot3_waffle_for_open_manipulator.urdf.xacro, turtlebot3_waffle_pi_for_open_manipulator.urdf.xacro
+
 1.2.2 (2019-08-20)
 ------------------
 * none
