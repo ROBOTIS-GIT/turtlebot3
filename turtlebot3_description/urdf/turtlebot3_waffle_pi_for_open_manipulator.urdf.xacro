@@ -28,11 +28,14 @@
     </collision>
 
     <inertial>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
       <mass value="1.6329594e+00"/>
-      <inertia ixx="1.0418769e+05" ixy="1.7327248e+00" ixz="-8.1943898e-01"
-               iyy="1.6997442e+05" iyz="3.9896822e+00"
-               izz="2.2187284e+05" />
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+               iyy="1.0" iyz="0.0"
+               izz="1.0" />
+      <!-- <inertia ixx="8.7002718e-03" ixy="-4.7576583e-05" ixz="1.1160499e-04"
+               iyy="8.6195418e-03" iyz="-3.5422299e-06"
+               izz="1.4612727e-02" />                -->
     </inertial>
   </link>
 
