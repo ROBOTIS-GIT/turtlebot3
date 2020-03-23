@@ -2,6 +2,10 @@
 Changelog for package turtlebot3_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.2.2 (2020-03-03)
+------------------
+* none
+
 1.2.1 (2019-08-20)
 ------------------
 * Added turtlebot3_remote.launch to turtlebot3_model.launch `#389 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/389>`_

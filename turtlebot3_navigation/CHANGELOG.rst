@@ -2,6 +2,10 @@
 Changelog for package turtlebot3_navigation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.2.2 (2020-03-03)
+------------------
+* none
+
 1.2.1 (2019-08-20)
 ------------------
 * Deleted '/' to sync tf2 `#402 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/402>`_
