@@ -26,8 +26,8 @@
 #include <turtlebot3_msgs/VersionInfo.h>
 #include <string>
 
-#define SOFTWARE_VERSION "1.1.0"
-#define HARDWARE_VERSION "2017.05.30"
+#define SOFTWARE_VERSION "1.2.3"
+#define HARDWARE_VERSION "2020.03.16"
 #define FIRMWARE_VERSION_MAJOR_NUMBER 1
 #define FIRMWARE_VERSION_MINOR_NUMBER 2
 
