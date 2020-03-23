@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>turtlebot3</name>
-  <version>1.2.2</version>
+  <version>1.2.3</version>
   <description>
     ROS packages for the Turtlebot3 (meta package)
   </description>
