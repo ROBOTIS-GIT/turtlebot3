@@ -30,8 +30,10 @@
 import os
 import select
 import sys
-import termios
-import tty
+if os.name == 'nt':
+  import msvcrt
+else:
+  import termios, tty
 
 from geometry_msgs.msg import Twist
 import rclpy
@@ -70,6 +72,8 @@ Communications Failed
 
 
 def get_key(settings):
+    if os.name == 'nt':
+        return msvcrt.getch().decode('utf-8')
     tty.setraw(sys.stdin.fileno())
     rlist, _, _ = select.select([sys.stdin], [], [], 0.1)
     if rlist:
@@ -123,7 +127,9 @@ def check_angular_limit_velocity(velocity):
 
 
 def main():
-    settings = termios.tcgetattr(sys.stdin)
+    settings = None
+    if os.name != 'nt':
+        settings = termios.tcgetattr(sys.stdin)
 
     rclpy.init()
 
@@ -212,7 +218,8 @@ def main():
 
         pub.publish(twist)
 
-        termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
+        if os.name != 'nt':
+            termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
 
 if __name__ == '__main__':
     main()
