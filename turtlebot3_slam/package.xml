@@ -18,6 +18,7 @@
   <buildtool_depend>catkin</buildtool_depend>
   <depend>roscpp</depend>
   <depend>sensor_msgs</depend>
+  <depend>nav_msgs</depend>
   <exec_depend>turtlebot3_bringup</exec_depend>
   <!--  <exec_depend>slam_gmapping</exec_depend>
   <exec_depend>cartographer</exec_depend>
