@@ -1,4 +1,4 @@
-ISSUE TEMPLATE ver. 0.3.0
+ISSUE TEMPLATE ver. 0.4.0
 
 1. Which TurtleBot3 you have?
 
@@ -10,13 +10,16 @@ ISSUE TEMPLATE ver. 0.3.0
 
     - [ ] ROS 1 Kinetic Kame
     - [ ] ROS 1 Melodic Morenia
+    - [ ] ROS 1 Noetic Ninjemys
     - [ ] ROS 2 Dashing Diademata
     - [ ] ROS 2 Eloquent Elusor
+    - [ ] ROS 2 Foxy Fitzroy
     - [ ] etc (PLEASE, WRITE DOWN YOUR ROS VERSION HERE)
 
 3. Which SBC(Single Board Computer) is working on TurtleBot3?
 
     - [ ] Raspberry Pi 3
+    - [ ] Raspberry Pi 4
     - [ ] Intel Joule 570x
     - [ ] etc (PLEASE, WRITE DOWN YOUR SBC HERE)
 
@@ -25,12 +28,14 @@ ISSUE TEMPLATE ver. 0.3.0
     - [ ] Raspbian
     - [ ] Ubuntu MATE 16.04 or later
     - [ ] Ubuntu Server 18.04 or later
+    - [ ] Ubuntu Server 20.04 or later
     - [ ] etc (PLEASE, WRITE DOWN YOUR OS)
 
 5. Which OS you installed in Remote PC?
 
     - [ ] Ubuntu 16.04 LTS (Xenial Xerus)
     - [ ] Ubuntu 18.04 LTS (Bionic Beaver)
+    - [ ] Ubuntu 20.04 LTS (Focal Fossa)
     - [ ] Linux Mint 18.x
     - [ ] Linux Mint 19.x
     - [ ] etc (PLEASE, WRITE DOWN YOUR OS)
