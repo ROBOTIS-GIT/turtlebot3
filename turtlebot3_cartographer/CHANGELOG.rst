@@ -2,6 +2,12 @@
 Changelog for package turtlebot3_cartographer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.1.0 (2020-06-22)
+------------------
+* ROS 2 Foxy Fitzroy supported
+* ROS 2 Eloquent Elusor supported
+* Contributors: Ryan, Ashe
+
 2.0.1 (2019-09-05)
 ------------------
 * Updated the CHANGELOG and version to release binary packages
