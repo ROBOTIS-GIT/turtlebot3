@@ -1,0 +1,35 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Lint
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  pull_request:
+    branches: [ ros2, ros2-devel ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  ament_lint:
+    runs-on: ubuntu-18.04
+    strategy:
+      fail-fast: false
+      matrix:
+        linter: [copyright, cppcheck, cpplint, uncrustify, pep8, pep257, xmllint]
+        distribution: [dashing, eloquent, foxy]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ros-tooling/setup-ros@0.0.20
+      - uses: ros-tooling/action-ros-lint@0.0.6
+        with:
+          distribution: ${{ matrix.distribution }}
+          linter: ${{ matrix.linter }}
+          package-name: |
+            turtlebot3
+            turtlebot3_bringup
+            turtlebot3_cartographer
+            turtlebot3_description
+            turtlebot3_example
+            turtlebot3_navigation2
+            turtlebot3_node
+            turtlebot3_teleop
