@@ -159,7 +159,8 @@ class Turtlebot3PositionControl(Node):
     *******************************************************************************"""
     def euler_from_quaternion(self, quat):
         """
-        Converts quaternion (w in last place) to euler roll, pitch, yaw
+        Convert quaternion (w in last place) to euler roll, pitch, yaw.
+        
         quat = [x, y, z, w]
         """
         x = quat.x
