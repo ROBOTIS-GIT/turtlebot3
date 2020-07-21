@@ -1,20 +1,20 @@
 // Copyright 2019 ROBOTIS CO., LTD.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 //     http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
+//
 // to add more copyright holder names do not extend this file
 // instead create a separate package and register custom names as entry points
-// 
+//
 // Author: Darby Lim
 
 #include "turtlebot3_node/devices/sound.hpp"
@@ -34,21 +34,21 @@ devices::Sound::Sound(
     [this](
       const std::shared_ptr<turtlebot3_msgs::srv::Sound::Request> request,
       std::shared_ptr<turtlebot3_msgs::srv::Sound::Response> response) -> void
-      {
-        this->command(static_cast<void*>(request.get()), static_cast<void*>(response.get()));
-      }
-    );
+    {
+      this->command(static_cast<void *>(request.get()), static_cast<void *>(response.get()));
+    }
+  );
 }
 
 void devices::Sound::command(const void * request, void * response)
 {
-  turtlebot3_msgs::srv::Sound::Request req = *(turtlebot3_msgs::srv::Sound::Request*)request;
-  turtlebot3_msgs::srv::Sound::Response *res = (turtlebot3_msgs::srv::Sound::Response*)response;
+  turtlebot3_msgs::srv::Sound::Request req = *(turtlebot3_msgs::srv::Sound::Request *)request;
+  turtlebot3_msgs::srv::Sound::Response * res = (turtlebot3_msgs::srv::Sound::Response *)response;
 
   res->success = dxl_sdk_wrapper_->set_data_to_device(
     extern_control_table.sound.addr,
     extern_control_table.sound.length,
-    (uint8_t*)&req.value,
+    (uint8_t *)&req.value,
     &res->message);
 }
 

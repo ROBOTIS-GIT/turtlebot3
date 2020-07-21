@@ -1,20 +1,20 @@
 // Copyright 2019 ROBOTIS CO., LTD.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 //     http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
+//
 // to add more copyright holder names do not extend this file
 // instead create a separate package and register custom names as entry points
-// 
+//
 // Author: Darby Lim
 
 #ifndef TURTLEBOT3_NODE_ODOMETRY_HPP_
@@ -41,14 +41,14 @@ namespace turtlebot3
 {
 class Odometry
 {
- public:
+public:
   explicit Odometry(
     std::shared_ptr<rclcpp::Node> & nh,
     const double wheels_separation,
     const double wheels_radius);
-  virtual ~Odometry(){};
+  virtual ~Odometry() {}
 
- private:
+private:
   bool calculate_odometry(const rclcpp::Duration & duration);
 
   void update_imu(const std::shared_ptr<sensor_msgs::msg::Imu const> & imu);
@@ -73,8 +73,8 @@ class Odometry
   std::shared_ptr<message_filters::Subscriber<sensor_msgs::msg::Imu>> msg_ftr_imu_sub_;
 
   typedef message_filters::sync_policies::ApproximateTime<
-    sensor_msgs::msg::JointState,
-    sensor_msgs::msg::Imu> SyncPolicyJointStateImu;
+      sensor_msgs::msg::JointState,
+      sensor_msgs::msg::Imu> SyncPolicyJointStateImu;
   typedef message_filters::Synchronizer<SyncPolicyJointStateImu> SynchronizerJointStateImu;
 
   std::shared_ptr<SynchronizerJointStateImu> joint_state_imu_sync_;
@@ -91,8 +91,8 @@ class Odometry
   std::array<double, 2> diff_joint_positions_;
   double imu_angle_;
 
-  std::array<double,3> robot_pose_;
-  std::array<double,3> robot_vel_;
+  std::array<double, 3> robot_pose_;
+  std::array<double, 3> robot_vel_;
 };
 } // turtlebot3
 } // robotis

@@ -1,20 +1,20 @@
 // Copyright 2019 ROBOTIS CO., LTD.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 //     http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
+//
 // to add more copyright holder names do not extend this file
 // instead create a separate package and register custom names as entry points
-// 
+//
 // Author: Darby Lim
 
 #ifndef TURTLEBOT3_NODE_TURTLEBOT3_HPP_
@@ -59,7 +59,7 @@ namespace turtlebot3
 extern const ControlTable extern_control_table;
 class TurtleBot3 : public rclcpp::Node
 {
- public:
+public:
   typedef struct
   {
     float separation;
@@ -73,12 +73,12 @@ class TurtleBot3 : public rclcpp::Node
   } Motors;
 
   explicit TurtleBot3(const std::string & usb_port);
-  virtual ~TurtleBot3(){};
+  virtual ~TurtleBot3() {}
 
   Wheels * get_wheels();
   Motors * get_motors();
 
- private:
+private:
   void init_dynamixel_sdk_wrapper(const std::string & usb_port);
   void check_device_status();
 
@@ -100,8 +100,8 @@ class TurtleBot3 : public rclcpp::Node
 
   std::shared_ptr<DynamixelSDKWrapper> dxl_sdk_wrapper_;
 
-  std::list<sensors::Sensors*> sensors_;
-  std::map<std::string, devices::Devices*> devices_;
+  std::list<sensors::Sensors *> sensors_;
+  std::map<std::string, devices::Devices *> devices_;
 
   std::unique_ptr<Odometry> odom_;
 
