@@ -261,6 +261,7 @@ void TurtleBot3::parameter_event_callback()
     {
       for (const auto & changed_parameter : event->changed_parameters) {
         RCLCPP_DEBUG(
+          this->get_logger(),
           "changed parameter name : %s",
           changed_parameter.name.c_str());
 
@@ -297,8 +298,6 @@ void TurtleBot3::parameter_event_callback()
             motors_.profile_acceleration,
             sdk_msg.c_str());
         }
-
-        this->get_logger(),
       }
     };
 
