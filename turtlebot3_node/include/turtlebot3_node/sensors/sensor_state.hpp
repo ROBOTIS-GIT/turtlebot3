@@ -17,8 +17,11 @@
 //
 // Author: Darby Lim
 
-#ifndef TURTLEBOT3_NODE_SENSORS_SENSOR_STATE_HPP_
-#define TURTLEBOT3_NODE_SENSORS_SENSOR_STATE_HPP_
+#ifndef TURTLEBOT3_NODE__SENSORS__SENSOR_STATE_HPP_
+#define TURTLEBOT3_NODE__SENSORS__SENSOR_STATE_HPP_
+
+#include <memory>
+#include <string>
 
 #include <turtlebot3_msgs/msg/sensor_state.hpp>
 
@@ -55,7 +58,7 @@ private:
   bool sonar_;
   bool illumination_;
 };
-} // sensors
-} // turtlebot3
-} // robotis
-#endif // TURTLEBOT3_NODE_SENSORS_SENSOR_STATE_HPP_
+}  // namespace sensors
+}  // namespace turtlebot3
+}  // namespace robotis
+#endif  // TURTLEBOT3_NODE__SENSORS__SENSOR_STATE_HPP_

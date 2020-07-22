@@ -96,7 +96,7 @@ bool DynamixelSDKWrapper::set_data_to_device(
 bool DynamixelSDKWrapper::init_dynamixel_sdk_handlers()
 {
   portHandler_ = dynamixel::PortHandler::getPortHandler(device_.usb_port.c_str());
-  packetHandler_ = dynamixel::PacketHandler::getPacketHandler((int)device_.protocol_version);
+  packetHandler_ = dynamixel::PacketHandler::getPacketHandler(static_cast<int>(device_.protocol_version));
 
   if (portHandler_->openPort()) {
     LOG_INFO("DynamixelSDKWrapper", "Succeeded to open the port(%s)!", device_.usb_port.c_str());
@@ -105,7 +105,7 @@ bool DynamixelSDKWrapper::init_dynamixel_sdk_handlers()
     return false;
   }
 
-  if (portHandler_->setBaudRate((int)device_.baud_rate)) {
+  if (portHandler_->setBaudRate(static_cast<int>(device_.baud_rate))) {
     LOG_INFO("DynamixelSDKWrapper", "Succeeded to change the baudrate!");
   } else {
     LOG_ERROR("DynamixelSDKWrapper", "Failed to change the baudrate(%d)!", device_.baud_rate);

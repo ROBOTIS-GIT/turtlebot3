@@ -17,8 +17,11 @@
 //
 // Author: Darby Lim
 
-#ifndef TURTLEBOT3_NODE_DEVICES_RESET_HPP_
-#define TURTLEBOT3_NODE_DEVICES_RESET_HPP_
+#ifndef TURTLEBOT3_NODE__DEVICES__RESET_HPP_
+#define TURTLEBOT3_NODE__DEVICES__RESET_HPP_
+
+#include <memory>
+#include <string>
 
 #include <std_srvs/srv/trigger.hpp>
 
@@ -47,7 +50,7 @@ public:
 private:
   rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr srv_;
 };
-} // devices
-} // turtlebot3
-} // robotis
-#endif // TURTLEBOT3_NODE_DEVICES_SOUND_HPP_
+}  // namespace devices
+}  // namespace turtlebot3
+}  // namespace robotis
+#endif  // TURTLEBOT3_NODE__DEVICES__RESET_HPP_

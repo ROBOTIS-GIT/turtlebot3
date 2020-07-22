@@ -17,8 +17,8 @@
 //
 // Author: Darby Lim
 
-#ifndef TURTLEBOT3_NODE_CONTROL_TABLE_HPP_
-#define TURTLEBOT3_NODE_CONTROL_TABLE_HPP_
+#ifndef TURTLEBOT3_NODE__CONTROL_TABLE_HPP_
+#define TURTLEBOT3_NODE__CONTROL_TABLE_HPP_
 
 #include <stdlib.h>
 
@@ -111,7 +111,7 @@ typedef struct
 } ControlTable;
 
 const ControlTable extern_control_table;
-} // turtlebot3
-} // robotis
+}  // namespace turtlebot3
+}  // namespace robotis
 
-#endif // TURTLEBOT3_NODE_CONTROL_TABLE_HPP_
+#endif  // TURTLEBOT3_NODE__CONTROL_TABLE_HPP_

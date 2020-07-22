@@ -17,8 +17,11 @@
 //
 // Author: Darby Lim
 
-#ifndef TURTLEBOT3_NODE_DEVICES_SOUND_HPP_
-#define TURTLEBOT3_NODE_DEVICES_SOUND_HPP_
+#ifndef TURTLEBOT3_NODE__DEVICES__SOUND_HPP_
+#define TURTLEBOT3_NODE__DEVICES__SOUND_HPP_
+
+#include <memory>
+#include <string>
 
 #include <turtlebot3_msgs/srv/sound.hpp>
 
@@ -47,7 +50,7 @@ public:
 private:
   rclcpp::Service<turtlebot3_msgs::srv::Sound>::SharedPtr srv_;
 };
-} // devices
-} // turtlebot3
-} // robotis
-#endif // TURTLEBOT3_NODE_DEVICES_SOUND_HPP_
+}  // namespace devices
+}  // namespace turtlebot3
+}  // namespace robotis
+#endif  // TURTLEBOT3_NODE__DEVICES__SOUND_HPP_

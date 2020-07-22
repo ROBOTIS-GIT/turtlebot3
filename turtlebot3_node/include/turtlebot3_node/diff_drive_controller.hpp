@@ -17,8 +17,8 @@
 //
 // Author: Darby Lim
 
-#ifndef TURTLEBOT3_NODE_DIFF_DRIVE_CONTROLLER_HPP_
-#define TURTLEBOT3_NODE_DIFF_DRIVE_CONTROLLER_HPP_
+#ifndef TURTLEBOT3_NODE__DIFF_DRIVE_CONTROLLER_HPP_
+#define TURTLEBOT3_NODE__DIFF_DRIVE_CONTROLLER_HPP_
 
 #include <memory>
 
@@ -40,6 +40,6 @@ private:
   std::shared_ptr<rclcpp::Node> nh_;
   std::unique_ptr<Odometry> odometry_;
 };
-} // turtlebot3
-} // robotis
-#endif // TURTLEBOT3_NODE_DIFF_DRIVE_CONTROLLER_HPP_
+}  // namespace turtlebot3
+}  // namespace robotis
+#endif  // TURTLEBOT3_NODE__DIFF_DRIVE_CONTROLLER_HPP_

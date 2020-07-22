@@ -17,8 +17,8 @@
 //
 // Author: Darby Lim
 
-#ifndef TURTLEBOT3_NODE_SENSORS_SENSORS_HPP_
-#define TURTLEBOT3_NODE_SENSORS_SENSORS_HPP_
+#ifndef TURTLEBOT3_NODE__SENSORS__SENSORS_HPP_
+#define TURTLEBOT3_NODE__SENSORS__SENSORS_HPP_
 
 #include <memory>
 #include <string>
@@ -56,7 +56,7 @@ protected:
   std::string frame_id_;
   rclcpp::QoS qos_ = rclcpp::QoS(rclcpp::KeepLast(10));
 };
-} // sensors
-} // turtlebot3
-} // robotis
-#endif // TURTLEBOT3_NODE_SENSORS_SENSORS_HPP_
+}  // namespace sensors
+}  // namespace turtlebot3
+}  // namespace robotis
+#endif  // TURTLEBOT3_NODE__SENSORS__SENSORS_HPP_

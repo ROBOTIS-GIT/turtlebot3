@@ -17,12 +17,13 @@
 //
 // Author: Darby Lim
 
-#ifndef TURTLEBOT3_NODE_TURTLEBOT3_HPP_
-#define TURTLEBOT3_NODE_TURTLEBOT3_HPP_
+#ifndef TURTLEBOT3_NODE__TURTLEBOT3_HPP_
+#define TURTLEBOT3_NODE__TURTLEBOT3_HPP_
 
 #include <array>
 #include <chrono>
 #include <list>
+#include <map>
 #include <memory>
 #include <mutex>
 #include <string>
@@ -115,6 +116,6 @@ private:
   rclcpp::AsyncParametersClient::SharedPtr priv_parameters_client_;
   rclcpp::Subscription<rcl_interfaces::msg::ParameterEvent>::SharedPtr parameter_event_sub_;
 };
-} // turtlebot3
-} // robotis
-#endif // TURTLEBOT3_NODE_TURTLEBOT3_HPP_
+}  // namespace turtlebot3
+}  // namespace robotis
+#endif  // TURTLEBOT3_NODE__TURTLEBOT3_HPP_

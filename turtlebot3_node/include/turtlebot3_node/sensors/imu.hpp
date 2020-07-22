@@ -17,8 +17,11 @@
 //
 // Author: Darby Lim
 
-#ifndef TURTLEBOT3_NODE_SENSORS_IMU_HPP_
-#define TURTLEBOT3_NODE_SENSORS_IMU_HPP_
+#ifndef TURTLEBOT3_NODE__SENSORS__IMU_HPP_
+#define TURTLEBOT3_NODE__SENSORS__IMU_HPP_
+
+#include <memory>
+#include <string>
 
 #include <sensor_msgs/msg/imu.hpp>
 #include <sensor_msgs/msg/magnetic_field.hpp>
@@ -48,7 +51,7 @@ private:
   rclcpp::Publisher<sensor_msgs::msg::Imu>::SharedPtr imu_pub_;
   rclcpp::Publisher<sensor_msgs::msg::MagneticField>::SharedPtr mag_pub_;
 };
-} // sensors
-} // turtlebot3
-} // robotis
-#endif // TURTLEBOT3_NODE_SENSORS_IMU_HPP_
+}  // namespace sensors
+}  // namespace turtlebot3
+}  // namespace robotis
+#endif  // TURTLEBOT3_NODE__SENSORS__IMU_HPP_

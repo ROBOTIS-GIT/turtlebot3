@@ -17,8 +17,8 @@
 //
 // Author: Darby Lim
 
-#ifndef TURTLEBOT3_NODE_DYNAMIXEL_SDK_WRAPPER_HPP_
-#define TURTLEBOT3_NODE_DYNAMIXEL_SDK_WRAPPER_HPP_
+#ifndef TURTLEBOT3_NODE__DYNAMIXEL_SDK_WRAPPER_HPP_
+#define TURTLEBOT3_NODE__DYNAMIXEL_SDK_WRAPPER_HPP_
 
 #include <algorithm>
 #include <array>
@@ -64,7 +64,7 @@ public:
   DataByteT get_data_from_device(const uint16_t & addr, const uint16_t & length)
   {
     DataByteT data = 0;
-    uint8_t * p_data = (uint8_t *)&data;
+    uint8_t * p_data = reinterpret_cast<uint8_t *>(&data);
     uint16_t index = addr - read_memory_.start_addr;
 
     std::lock_guard<std::mutex> lock(read_data_mutex_);
@@ -142,6 +142,6 @@ private:
   std::mutex read_data_mutex_;
   std::mutex write_data_mutex_;
 };
-} // turtlebot3
-} // robotis
-#endif // TURTLEBOT3_NODE_DYNAMIXEL_SDK_WRAPPER_HPP_
+}  // namespace turtlebot3
+}  // namespace robotis
+#endif  // TURTLEBOT3_NODE__DYNAMIXEL_SDK_WRAPPER_HPP_

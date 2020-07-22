@@ -48,7 +48,7 @@ void devices::Sound::command(const void * request, void * response)
   res->success = dxl_sdk_wrapper_->set_data_to_device(
     extern_control_table.sound.addr,
     extern_control_table.sound.length,
-    (uint8_t *)&req.value,
+    reinterpret_cast<uint8_t *>(&req.value),
     &res->message);
 }
 

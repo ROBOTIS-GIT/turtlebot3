@@ -17,8 +17,11 @@
 //
 // Author: Darby Lim
 
-#ifndef TURTLEBOT3_NODE_SENSORS_JOINT_STATE_HPP_
-#define TURTLEBOT3_NODE_SENSORS_JOINT_STATE_HPP_
+#ifndef TURTLEBOT3_NODE__SENSORS__JOINT_STATE_HPP_
+#define TURTLEBOT3_NODE__SENSORS__JOINT_STATE_HPP_
+
+#include <memory>
+#include <string>
 
 #include <sensor_msgs/msg/joint_state.hpp>
 
@@ -53,7 +56,7 @@ public:
 private:
   rclcpp::Publisher<sensor_msgs::msg::JointState>::SharedPtr pub_;
 };
-} // sensors
-} // turtlebot3
-} // robotis
-#endif // TURTLEBOT3_NODE_SENSORS_JOINT_STATE_HPP_
+}  // namespace sensors
+}  // namespace turtlebot3
+}  // namespace robotis
+#endif  // TURTLEBOT3_NODE__SENSORS__JOINT_STATE_HPP_

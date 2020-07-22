@@ -17,12 +17,13 @@
 //
 // Author: Darby Lim
 
-#ifndef TURTLEBOT3_NODE_ODOMETRY_HPP_
-#define TURTLEBOT3_NODE_ODOMETRY_HPP_
+#ifndef TURTLEBOT3_NODE__ODOMETRY_HPP_
+#define TURTLEBOT3_NODE__ODOMETRY_HPP_
 
 #include <array>
 #include <chrono>
 #include <memory>
+#include <string>
 
 #include <geometry_msgs/msg/transform_stamped.hpp>
 #include <message_filters/subscriber.h>
@@ -94,6 +95,6 @@ private:
   std::array<double, 3> robot_pose_;
   std::array<double, 3> robot_vel_;
 };
-} // turtlebot3
-} // robotis
-#endif //TURTLEBOT3_NODE_ODOMETRY_HPP_
+}  // namespace turtlebot3
+}  // namespace robotis
+#endif  // TURTLEBOT3_NODE__ODOMETRY_HPP_
