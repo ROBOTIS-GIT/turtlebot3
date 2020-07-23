@@ -96,7 +96,8 @@ bool DynamixelSDKWrapper::set_data_to_device(
 bool DynamixelSDKWrapper::init_dynamixel_sdk_handlers()
 {
   portHandler_ = dynamixel::PortHandler::getPortHandler(device_.usb_port.c_str());
-  packetHandler_ = dynamixel::PacketHandler::getPacketHandler(static_cast<int>(device_.protocol_version));
+  packetHandler_ =
+    dynamixel::PacketHandler::getPacketHandler(static_cast<int>(device_.protocol_version));
 
   if (portHandler_->openPort()) {
     LOG_INFO("DynamixelSDKWrapper", "Succeeded to open the port(%s)!", device_.usb_port.c_str());

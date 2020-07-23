@@ -161,7 +161,7 @@ void Odometry::publish(const rclcpp::Time & now)
   odom_msg->twist.twist.linear.x = robot_vel_[0];
   odom_msg->twist.twist.angular.z = robot_vel_[2];
 
-  // TODO: Find more accurate covariance.
+  // TODO(Will Son): Find more accurate covariance.
   // odom_msg->pose.covariance[0] = 0.05;
   // odom_msg->pose.covariance[7] = 0.05;
   // odom_msg->pose.covariance[14] = 1.0e-9;

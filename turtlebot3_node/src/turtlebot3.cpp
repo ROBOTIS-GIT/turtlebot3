@@ -215,7 +215,7 @@ void TurtleBot3::publish_timer(const std::chrono::milliseconds timeout)
 
       dxl_sdk_wrapper_->read_data_set();
 
-      for (const auto & sensor:sensors_) {
+      for (const auto & sensor : sensors_) {
         sensor->publish(now, dxl_sdk_wrapper_);
       }
     }
