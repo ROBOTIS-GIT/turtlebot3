@@ -6,14 +6,13 @@
   <description>
     Teleoperation node using keyboard for TurtleBot3.
   </description>
-  <author email="thlim@robotis.com">Darby Lim</author>
-  <author email="pyo@robotis.com">Pyo</author>
   <maintainer email="willson@robotis.com">Will Son</maintainer>
   <license>Apache 2.0</license>
-  <url type="website">http://wiki.ros.org/turtlebot3_teleop</url>
-  <url type="emanual">http://turtlebot3.robotis.com</url>
+  <url type="website">http://turtlebot3.robotis.com</url>
   <url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3</url>
   <url type="bugtracker">https://github.com/ROBOTIS-GIT/turtlebot3/issues</url>
+  <author email="thlim@robotis.com">Darby Lim</author>
+  <author email="pyo@robotis.com">Pyo</author>
   <exec_depend>geometry_msgs</exec_depend>
   <exec_depend>rclpy</exec_depend>
   <export>
