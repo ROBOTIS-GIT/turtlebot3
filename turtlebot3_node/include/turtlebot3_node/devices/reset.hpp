@@ -20,10 +20,10 @@
 #ifndef TURTLEBOT3_NODE__DEVICES__RESET_HPP_
 #define TURTLEBOT3_NODE__DEVICES__RESET_HPP_
 
+#include <std_srvs/srv/trigger.hpp>
+
 #include <memory>
 #include <string>
-
-#include <std_srvs/srv/trigger.hpp>
 
 #include "turtlebot3_node/devices/devices.hpp"
 

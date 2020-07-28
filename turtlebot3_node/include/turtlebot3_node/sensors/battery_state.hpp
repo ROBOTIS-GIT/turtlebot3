@@ -20,10 +20,10 @@
 #ifndef TURTLEBOT3_NODE__SENSORS__BATTERY_STATE_HPP_
 #define TURTLEBOT3_NODE__SENSORS__BATTERY_STATE_HPP_
 
+#include <sensor_msgs/msg/battery_state.hpp>
+
 #include <memory>
 #include <string>
-
-#include <sensor_msgs/msg/battery_state.hpp>
 
 #include "turtlebot3_node/sensors/sensors.hpp"
 

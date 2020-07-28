@@ -20,6 +20,9 @@
 #ifndef TURTLEBOT3_NODE__DYNAMIXEL_SDK_WRAPPER_HPP_
 #define TURTLEBOT3_NODE__DYNAMIXEL_SDK_WRAPPER_HPP_
 
+#include <rcutils/logging_macros.h>
+#include <dynamixel_sdk/dynamixel_sdk.h>
+
 #include <algorithm>
 #include <array>
 #include <chrono>
@@ -29,9 +32,6 @@
 #include <string>
 #include <thread>
 #include <utility>
-
-#include <rcutils/logging_macros.h>
-#include <dynamixel_sdk/dynamixel_sdk.h>
 
 #define LOG_INFO RCUTILS_LOG_INFO_NAMED
 #define LOG_WARN RCUTILS_LOG_WARN_NAMED

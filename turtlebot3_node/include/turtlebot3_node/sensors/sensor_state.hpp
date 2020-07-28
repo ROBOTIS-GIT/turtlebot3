@@ -20,10 +20,10 @@
 #ifndef TURTLEBOT3_NODE__SENSORS__SENSOR_STATE_HPP_
 #define TURTLEBOT3_NODE__SENSORS__SENSOR_STATE_HPP_
 
+#include <turtlebot3_msgs/msg/sensor_state.hpp>
+
 #include <memory>
 #include <string>
-
-#include <turtlebot3_msgs/msg/sensor_state.hpp>
 
 #include "turtlebot3_node/sensors/sensors.hpp"
 
