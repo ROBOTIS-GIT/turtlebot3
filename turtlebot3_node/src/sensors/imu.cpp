@@ -23,10 +23,9 @@
 #include <string>
 #include <utility>
 
-using namespace robotis;
-using namespace turtlebot3;
+using robotis::turtlebot3::sensors::Imu;
 
-sensors::Imu::Imu(
+Imu::Imu(
   std::shared_ptr<rclcpp::Node> & nh,
   const std::string & imu_topic_name,
   const std::string & mag_topic_name,
@@ -39,7 +38,7 @@ sensors::Imu::Imu(
   RCLCPP_INFO(nh_->get_logger(), "Succeeded to create imu publisher");
 }
 
-void sensors::Imu::publish(
+void Imu::publish(
   const rclcpp::Time & now,
   std::shared_ptr<DynamixelSDKWrapper> & dxl_sdk_wrapper)
 {

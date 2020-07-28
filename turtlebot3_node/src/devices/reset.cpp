@@ -22,10 +22,9 @@
 #include <memory>
 #include <string>
 
-using namespace robotis;
-using namespace turtlebot3;
+using robotis::turtlebot3::devices::Reset;
 
-devices::Reset::Reset(
+Reset::Reset(
   std::shared_ptr<rclcpp::Node> & nh,
   std::shared_ptr<DynamixelSDKWrapper> & dxl_sdk_wrapper,
   const std::string & server_name)
@@ -43,7 +42,7 @@ devices::Reset::Reset(
   );
 }
 
-void devices::Reset::command(const void * request, void * response)
+void Reset::command(const void * request, void * response)
 {
   (void) request;
 
@@ -62,7 +61,7 @@ void devices::Reset::command(const void * request, void * response)
   RCLCPP_INFO(nh_->get_logger(), "Calibration End");
 }
 
-void devices::Reset::request(
+void Reset::request(
   rclcpp::Client<std_srvs::srv::Trigger>::SharedPtr client,
   std_srvs::srv::Trigger::Request req)
 {

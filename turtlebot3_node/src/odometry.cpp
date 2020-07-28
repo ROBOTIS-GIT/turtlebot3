@@ -23,9 +23,8 @@
 #include <string>
 #include <utility>
 
-using namespace robotis;
+using robotis::turtlebot3::Odometry;
 using namespace std::chrono_literals;
-using namespace turtlebot3;
 
 Odometry::Odometry(
   std::shared_ptr<rclcpp::Node> & nh,

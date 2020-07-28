@@ -22,10 +22,9 @@
 #include <memory>
 #include <string>
 
-using namespace robotis;
-using namespace turtlebot3;
+using robotis::turtlebot3::devices::MotorPower;
 
-devices::MotorPower::MotorPower(
+MotorPower::MotorPower(
   std::shared_ptr<rclcpp::Node> & nh,
   std::shared_ptr<DynamixelSDKWrapper> & dxl_sdk_wrapper,
   const std::string & server_name)
@@ -43,7 +42,7 @@ devices::MotorPower::MotorPower(
   );
 }
 
-void devices::MotorPower::command(const void * request, void * response)
+void MotorPower::command(const void * request, void * response)
 {
   std_srvs::srv::SetBool::Request req = *(std_srvs::srv::SetBool::Request *)request;
   std_srvs::srv::SetBool::Response * res = (std_srvs::srv::SetBool::Response *)response;
@@ -55,7 +54,7 @@ void devices::MotorPower::command(const void * request, void * response)
     &res->message);
 }
 
-void devices::MotorPower::request(
+void MotorPower::request(
   rclcpp::Client<std_srvs::srv::SetBool>::SharedPtr client,
   std_srvs::srv::SetBool::Request req)
 {

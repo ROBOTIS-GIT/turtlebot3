@@ -23,10 +23,9 @@
 #include <string>
 #include <utility>
 
-using namespace robotis;
-using namespace turtlebot3;
+using robotis::turtlebot3::sensors::SensorState;
 
-sensors::SensorState::SensorState(
+SensorState::SensorState(
   std::shared_ptr<rclcpp::Node> & nh,
   const std::string & topic_name,
   const bool & bumper_forward,
@@ -46,7 +45,7 @@ sensors::SensorState::SensorState(
   RCLCPP_INFO(nh_->get_logger(), "Succeeded to create sensor state publisher");
 }
 
-void sensors::SensorState::publish(
+void SensorState::publish(
   const rclcpp::Time & now,
   std::shared_ptr<DynamixelSDKWrapper> & dxl_sdk_wrapper)
 {

@@ -25,10 +25,9 @@
 
 #include "turtlebot3_node/sensors/joint_state.hpp"
 
-using namespace robotis;
-using namespace turtlebot3;
+using robotis::turtlebot3::sensors::JointState;
 
-sensors::JointState::JointState(
+JointState::JointState(
   std::shared_ptr<rclcpp::Node> & nh,
   const std::string & topic_name,
   const std::string & frame_id)
@@ -39,7 +38,7 @@ sensors::JointState::JointState(
   RCLCPP_INFO(nh_->get_logger(), "Succeeded to create joint state publisher");
 }
 
-void sensors::JointState::publish(
+void JointState::publish(
   const rclcpp::Time & now,
   std::shared_ptr<DynamixelSDKWrapper> & dxl_sdk_wrapper)
 {

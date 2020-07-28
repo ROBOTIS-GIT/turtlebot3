@@ -22,8 +22,7 @@
 #include <algorithm>
 #include <string>
 
-using namespace robotis;
-using namespace turtlebot3;
+using robotis::turtlebot3::DynamixelSDKWrapper;
 
 DynamixelSDKWrapper::DynamixelSDKWrapper(const Device & device)
 : device_(device)

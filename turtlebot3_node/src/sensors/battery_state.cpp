@@ -23,10 +23,9 @@
 #include <string>
 #include <utility>
 
-using namespace robotis;
-using namespace turtlebot3;
+using robotis::turtlebot3::sensors::BatteryState;
 
-sensors::BatteryState::BatteryState(
+BatteryState::BatteryState(
   std::shared_ptr<rclcpp::Node> & nh,
   const std::string & topic_name)
 : Sensors(nh)
@@ -36,7 +35,7 @@ sensors::BatteryState::BatteryState(
   RCLCPP_INFO(nh_->get_logger(), "Succeeded to create battery state publisher");
 }
 
-void sensors::BatteryState::publish(
+void BatteryState::publish(
   const rclcpp::Time & now,
   std::shared_ptr<DynamixelSDKWrapper> & dxl_sdk_wrapper)
 {

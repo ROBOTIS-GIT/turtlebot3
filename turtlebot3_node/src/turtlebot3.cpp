@@ -19,12 +19,11 @@
 
 #include "turtlebot3_node/turtlebot3.hpp"
 
-#include <string>
 #include <memory>
+#include <string>
 
-using namespace robotis;
+using robotis::turtlebot3::TurtleBot3;
 using namespace std::chrono_literals;
-using namespace turtlebot3;
 
 TurtleBot3::TurtleBot3(const std::string & usb_port)
 : Node("turtlebot3_node", rclcpp::NodeOptions().use_intra_process_comms(true))

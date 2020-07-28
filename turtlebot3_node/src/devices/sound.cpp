@@ -22,10 +22,9 @@
 #include <memory>
 #include <string>
 
-using namespace robotis;
-using namespace turtlebot3;
+using robotis::turtlebot3::devices::Sound;
 
-devices::Sound::Sound(
+Sound::Sound(
   std::shared_ptr<rclcpp::Node> & nh,
   std::shared_ptr<DynamixelSDKWrapper> & dxl_sdk_wrapper,
   const std::string & server_name)
@@ -43,7 +42,7 @@ devices::Sound::Sound(
   );
 }
 
-void devices::Sound::command(const void * request, void * response)
+void Sound::command(const void * request, void * response)
 {
   turtlebot3_msgs::srv::Sound::Request req = *(turtlebot3_msgs::srv::Sound::Request *)request;
   turtlebot3_msgs::srv::Sound::Response * res = (turtlebot3_msgs::srv::Sound::Response *)response;
@@ -55,7 +54,7 @@ void devices::Sound::command(const void * request, void * response)
     &res->message);
 }
 
-void devices::Sound::request(
+void Sound::request(
   rclcpp::Client<turtlebot3_msgs::srv::Sound>::SharedPtr client,
   turtlebot3_msgs::srv::Sound::Request req)
 {
