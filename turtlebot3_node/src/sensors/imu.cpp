@@ -19,6 +19,10 @@
 
 #include "turtlebot3_node/sensors/imu.hpp"
 
+#include <memory>
+#include <string>
+#include <utility>
+
 using namespace robotis;
 using namespace turtlebot3;
 

@@ -19,6 +19,9 @@
 
 #include "turtlebot3_node/devices/sound.hpp"
 
+#include <memory>
+#include <string>
+
 using namespace robotis;
 using namespace turtlebot3;
 

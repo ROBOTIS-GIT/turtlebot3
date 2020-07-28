@@ -19,6 +19,9 @@
 
 #include "turtlebot3_node/dynamixel_sdk_wrapper.hpp"
 
+#include <algorithm>
+#include <string>
+
 using namespace robotis;
 using namespace turtlebot3;
 

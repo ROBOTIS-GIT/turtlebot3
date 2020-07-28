@@ -19,6 +19,10 @@
 
 #include "turtlebot3_node/odometry.hpp"
 
+#include <memory>
+#include <string>
+#include <utility>
+
 using namespace robotis;
 using namespace std::chrono_literals;
 using namespace turtlebot3;

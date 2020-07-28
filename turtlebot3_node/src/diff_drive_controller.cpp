@@ -19,6 +19,8 @@
 
 #include "turtlebot3_node/diff_drive_controller.hpp"
 
+#include <memory>
+
 using namespace robotis;
 using namespace turtlebot3;
 

@@ -19,6 +19,10 @@
 
 #include <array>
 
+#include <memory>
+#include <string>
+#include <utility>
+
 #include "turtlebot3_node/sensors/joint_state.hpp"
 
 using namespace robotis;

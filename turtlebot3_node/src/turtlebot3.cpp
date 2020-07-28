@@ -19,6 +19,9 @@
 
 #include "turtlebot3_node/turtlebot3.hpp"
 
+#include <string>
+#include <memory>
+
 using namespace robotis;
 using namespace std::chrono_literals;
 using namespace turtlebot3;
