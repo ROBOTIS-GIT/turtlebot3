@@ -163,17 +163,20 @@ void TurtleBot3::add_sensors()
 
   bool is_connected_sonar = this->get_parameter("sensors.sonar").as_bool();
 
-  sensors_.push_back(new sensors::BatteryState(
+  sensors_.push_back(
+    new sensors::BatteryState(
       node_handle_,
       "battery_state"));
 
-  sensors_.push_back(new sensors::Imu(
+  sensors_.push_back(
+    new sensors::Imu(
       node_handle_,
       "imu",
       "magnetic_field",
       "imu_link"));
 
-  sensors_.push_back(new sensors::SensorState(
+  sensors_.push_back(
+    new sensors::SensorState(
       node_handle_,
       "sensor_state",
       is_connected_bumper_1,

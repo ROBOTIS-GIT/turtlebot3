@@ -95,7 +95,8 @@ Odometry::Odometry(
       1,
       rclcpp::Duration(15ms));
 
-    joint_state_imu_sync_->registerCallback(std::bind(
+    joint_state_imu_sync_->registerCallback(
+      std::bind(
         &Odometry::joint_state_and_imu_callback,
         this,
         std::placeholders::_1,
