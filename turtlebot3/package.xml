@@ -6,15 +6,14 @@
   <description>
     ROS 2 packages for TurtleBot3
   </description>
+  <maintainer email="willson@robotis.com">Will Son</maintainer>
   <license>Apache 2.0</license>
+  <url type="website">http://turtlebot3.robotis.com</url>
+  <url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3</url>
+  <url type="bugtracker">https://github.com/ROBOTIS-GIT/turtlebot3/issues</url>
   <author email="thlim@robotis.com">Darby Lim</author>
   <author email="jhshim@robotis.com">Ryan Shim</author>
   <author email="pyo@robotis.com">Pyo</author>
-  <maintainer email="willson@robotis.com">Will Son</maintainer>
-  <url type="website">http://wiki.ros.org/turtlebot3_description</url>
-  <url type="emanual">http://turtlebot3.robotis.com</url>
-  <url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3</url>
-  <url type="bugtracker">https://github.com/ROBOTIS-GIT/turtlebot3/issues</url>
   <buildtool_depend>ament_cmake</buildtool_depend>
   <exec_depend>turtlebot3_bringup</exec_depend>
   <exec_depend>turtlebot3_cartographer</exec_depend>
