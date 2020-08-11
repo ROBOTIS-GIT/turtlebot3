@@ -47,7 +47,7 @@ def generate_launch_description():
 
     rviz_config_dir = os.path.join(
         get_package_share_directory('nav2_bringup'),
-        'rviz',
+        'launch',
         'nav2_default_view.rviz')
 
     return LaunchDescription([
