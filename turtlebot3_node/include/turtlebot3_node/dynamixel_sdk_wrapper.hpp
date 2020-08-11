@@ -12,9 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// to add more copyright holder names do not extend this file
-// instead create a separate package and register custom names as entry points
-//
 // Author: Darby Lim
 
 #ifndef TURTLEBOT3_NODE__DYNAMIXEL_SDK_WRAPPER_HPP_

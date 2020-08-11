@@ -13,12 +13,12 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   ament_lint:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
       matrix:
         linter: [copyright, cppcheck, cpplint, uncrustify, pep8, pep257, xmllint]
-        distribution: [dashing, eloquent, foxy]
+        distribution: [foxy]
     steps:
       - uses: actions/checkout@v2
       - uses: ros-tooling/setup-ros@0.0.20
