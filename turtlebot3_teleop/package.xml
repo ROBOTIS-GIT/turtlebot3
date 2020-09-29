@@ -1,14 +1,15 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>turtlebot3_teleop</name>
-  <version>1.2.3</version>
+  <version>1.2.4</version>
   <description>
     Provides teleoperation using keyboard for TurtleBot3.
   </description>
   <license>BSD</license>
   <author>Melonee Wise</author>
   <author email="thlim@robotis.com">Darby Lim</author>
-  <maintainer email="pyo@robotis.com">Pyo</maintainer>
+  <author email="pyo@robotis.com">Pyo</author>
+  <maintainer email="willson@robotis.com">Will Son</maintainer>
   <url type="website">http://wiki.ros.org/turtlebot3_teleop</url>
   <url type="emanual">http://turtlebot3.robotis.com</url>
   <url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3</url>

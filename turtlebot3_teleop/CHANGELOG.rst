@@ -2,6 +2,11 @@
 Changelog for package turtlebot3_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.2.4 (2020-09-29)
+------------------
+* Package info updated
+* Contributors: Will Son
+
 1.2.3 (2020-03-03)
 ------------------
 * none
