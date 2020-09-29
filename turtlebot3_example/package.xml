@@ -1,13 +1,14 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>turtlebot3_example</name>
-  <version>1.2.3</version>
+  <version>1.2.4</version>
   <description>
     This package provides four TurtleBot3 basic example include move using interactive marker, move and stop using LDS, move to goal position, move to custom routes. The interactions node is that you can control the TurtleBot3 front and back side or rotate to goal position. The obstacle node is that when the robot meets an obstacle, it stops. The patrol node is that TurtleBot3 move to custom route. There are 3 route(square, triangle, circle) in this package. You can add your route and move the TurtleBot3. The pointop node is that you can insert goal position include distance x-axis, y-axis and angluar z-axis.  
   </description>
   <license>Apache 2.0</license>
   <author email="kkjong@robotis.com">Gilbert</author>
-  <maintainer email="pyo@robotis.com">Pyo</maintainer>
+  <author email="pyo@robotis.com">Pyo</author>
+  <maintainer email="willson@robotis.com">Will Son</maintainer>
   <url type="website">http://wiki.ros.org/turtlebot3_example</url>
   <url type="emanual">http://turtlebot3.robotis.com</url>
   <url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3</url>
