@@ -11,7 +11,7 @@ track_unknown_space: true
 
 plugins:
   - {name: static,           type: "costmap_2d::StaticLayer"}
-  - {name: explore_boundary, type: "frontier_exploration::BoundedExploreLayer"}
+  - {name: polygon_layer,    type: "polygon_layer::PolygonLayer"}
   - {name: sensor,           type: "costmap_2d::ObstacleLayer"}
   - {name: inflation,        type: "costmap_2d::InflationLayer"}
 
@@ -19,10 +19,8 @@ static:
   map_topic: /map
   subscribe_to_updates: true
 
-explore_boundary:
-  resize_to_boundary: false
-  frontier_travel_point: middle
-  explore_clear_space: false
+polygon_layer:
+  resize_to_polygon: true
 
 sensor:
   observation_sources: laser
