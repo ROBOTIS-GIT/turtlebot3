@@ -21,8 +21,8 @@ jobs:
         distribution: [dashing, eloquent, foxy]
     steps:
       - uses: actions/checkout@v2
-      - uses: ros-tooling/setup-ros@0.0.20
-      - uses: ros-tooling/action-ros-lint@0.0.6
+      - uses: ros-tooling/setup-ros@master
+      - uses: ros-tooling/action-ros-lint@master
         with:
           distribution: ${{ matrix.distribution }}
           linter: ${{ matrix.linter }}
