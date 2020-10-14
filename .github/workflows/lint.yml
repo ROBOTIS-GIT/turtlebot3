@@ -1,9 +1,6 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Lint
 
 # Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
 on:
   push:
     branches: [ ros2, ros2-devel, dashing-devel, eloquent-devel, foxy-devel ]
@@ -40,7 +37,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        linter: [copyright, cppcheck, cpplint, uncrustify, pep8, pep257, xmllint]
+        linter: [copyright, cppcheck, cpplint, uncrustify, pep257, xmllint] #todo : flake8 
         distribution: [foxy]
     steps:
       - uses: actions/checkout@v2
