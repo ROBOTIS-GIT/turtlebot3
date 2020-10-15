@@ -1,29 +1,30 @@
-/*******************************************************************************
-* Copyright 2019 ROBOTIS CO., LTD.
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*******************************************************************************/
-
-/* Author: Darby Lim */
+// Copyright 2019 ROBOTIS CO., LTD.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+// Author: Darby Lim
 
 #include "turtlebot3_node/odometry.hpp"
 
-using namespace robotis;
+#include <memory>
+#include <string>
+#include <utility>
+
+using robotis::turtlebot3::Odometry;
 using namespace std::chrono_literals;
-using namespace turtlebot3;
 
 Odometry::Odometry(
-  std::shared_ptr<rclcpp::Node> &nh,
+  std::shared_ptr<rclcpp::Node> & nh,
   const double wheels_separation,
   const double wheels_radius)
 : nh_(nh),
@@ -66,20 +67,19 @@ Odometry::Odometry(
 
   tf_broadcaster_ = std::make_unique<tf2_ros::TransformBroadcaster>(nh_);
 
-  if (use_imu_)
-  {
+  if (use_imu_) {
     uint32_t queue_size = 10;
     joint_state_imu_sync_ = std::make_shared<SynchronizerJointStateImu>(queue_size);
 
     msg_ftr_joint_state_sub_ =
       std::make_shared<message_filters::Subscriber<sensor_msgs::msg::JointState>>(
-        nh_,
-        "joint_states");
+      nh_,
+      "joint_states");
 
     msg_ftr_imu_sub_ =
       std::make_shared<message_filters::Subscriber<sensor_msgs::msg::Imu>>(
-        nh_,
-        "imu");
+      nh_,
+      "imu");
 
     // connect message filters to synchronizer
     joint_state_imu_sync_->connectInput(*msg_ftr_joint_state_sub_, *msg_ftr_imu_sub_);
@@ -92,14 +92,13 @@ Odometry::Odometry(
       1,
       rclcpp::Duration(15ms));
 
-    joint_state_imu_sync_->registerCallback(std::bind(
-      &Odometry::joint_state_and_imu_callback,
-      this,
-      std::placeholders::_1,
-      std::placeholders::_2));
-  }
-  else
-  {
+    joint_state_imu_sync_->registerCallback(
+      std::bind(
+        &Odometry::joint_state_and_imu_callback,
+        this,
+        std::placeholders::_1,
+        std::placeholders::_2));
+  } else {
     joint_state_sub_ = nh_->create_subscription<sensor_msgs::msg::JointState>(
       "joint_states",
       qos,
@@ -120,8 +119,8 @@ void Odometry::joint_state_callback(const sensor_msgs::msg::JointState::SharedPt
 }
 
 void Odometry::joint_state_and_imu_callback(
-  const std::shared_ptr<sensor_msgs::msg::JointState const> &joint_state_msg,
-  const std::shared_ptr<sensor_msgs::msg::Imu const> &imu_msg)
+  const std::shared_ptr<sensor_msgs::msg::JointState const> & joint_state_msg,
+  const std::shared_ptr<sensor_msgs::msg::Imu const> & imu_msg)
 {
   RCLCPP_DEBUG(
     nh_->get_logger(),
@@ -145,7 +144,7 @@ void Odometry::publish(const rclcpp::Time & now)
   auto odom_msg = std::make_unique<nav_msgs::msg::Odometry>();
 
   odom_msg->header.frame_id = frame_id_of_odometry_;
-  odom_msg->child_frame_id  = child_frame_id_of_odometry_;
+  odom_msg->child_frame_id = child_frame_id_of_odometry_;
   odom_msg->header.stamp = now;
 
   odom_msg->pose.pose.position.x = robot_pose_[0];
@@ -160,10 +159,10 @@ void Odometry::publish(const rclcpp::Time & now)
   odom_msg->pose.pose.orientation.z = q.z();
   odom_msg->pose.pose.orientation.w = q.w();
 
-  odom_msg->twist.twist.linear.x  = robot_vel_[0];
+  odom_msg->twist.twist.linear.x = robot_vel_[0];
   odom_msg->twist.twist.angular.z = robot_vel_[2];
 
-  // TODO: Find more accurate covariance.
+  // TODO(Will Son): Find more accurate covariance.
   // odom_msg->pose.covariance[0] = 0.05;
   // odom_msg->pose.covariance[7] = 0.05;
   // odom_msg->pose.covariance[14] = 1.0e-9;
@@ -183,7 +182,7 @@ void Odometry::publish(const rclcpp::Time & now)
   odom_tf.transform.translation.x = odom_msg->pose.pose.position.x;
   odom_tf.transform.translation.y = odom_msg->pose.pose.position.y;
   odom_tf.transform.translation.z = odom_msg->pose.pose.position.z;
-  odom_tf.transform.rotation      = odom_msg->pose.pose.orientation;
+  odom_tf.transform.rotation = odom_msg->pose.pose.orientation;
 
   odom_tf.header.frame_id = frame_id_of_odometry_;
   odom_tf.child_frame_id = child_frame_id_of_odometry_;
@@ -191,12 +190,13 @@ void Odometry::publish(const rclcpp::Time & now)
 
   odom_pub_->publish(std::move(odom_msg));
 
-  if (publish_tf_)
+  if (publish_tf_) {
     tf_broadcaster_->sendTransform(odom_tf);
+  }
 }
 
 void Odometry::update_joint_state(
-  const std::shared_ptr<sensor_msgs::msg::JointState const> &joint_state)
+  const std::shared_ptr<sensor_msgs::msg::JointState const> & joint_state)
 {
   static std::array<double, 2> last_joint_positions = {0.0f, 0.0f};
 
@@ -207,14 +207,14 @@ void Odometry::update_joint_state(
   last_joint_positions[1] = joint_state->position[1];
 }
 
-void Odometry::update_imu(const std::shared_ptr<sensor_msgs::msg::Imu const> &imu)
+void Odometry::update_imu(const std::shared_ptr<sensor_msgs::msg::Imu const> & imu)
 {
   imu_angle_ = atan2f(
-    imu->orientation.x*imu->orientation.y + imu->orientation.w*imu->orientation.z,
-    0.5f - imu->orientation.y*imu->orientation.y - imu->orientation.z*imu->orientation.z);
+    imu->orientation.x * imu->orientation.y + imu->orientation.w * imu->orientation.z,
+    0.5f - imu->orientation.y * imu->orientation.y - imu->orientation.z * imu->orientation.z);
 }
 
-bool Odometry::calculate_odometry(const rclcpp::Duration &duration)
+bool Odometry::calculate_odometry(const rclcpp::Duration & duration)
 {
   // rotation value of wheel [rad]
   double wheel_l = diff_joint_positions_[0];
@@ -233,24 +233,24 @@ bool Odometry::calculate_odometry(const rclcpp::Duration &duration)
 
   double step_time = duration.seconds();
 
-  if (step_time == 0.0)
+  if (step_time == 0.0) {
     return false;
+  }
 
-  if (std::isnan(wheel_l))
+  if (std::isnan(wheel_l)) {
     wheel_l = 0.0;
+  }
 
-  if (std::isnan(wheel_r))
+  if (std::isnan(wheel_r)) {
     wheel_r = 0.0;
+  }
 
   delta_s = wheels_radius_ * (wheel_r + wheel_l) / 2.0;
 
-  if (use_imu_)
-  {
+  if (use_imu_) {
     theta = imu_angle_;
     delta_theta = theta - last_theta;
-  }
-  else
-  {
+  } else {
     theta = wheels_radius_ * (wheel_r - wheel_l) / wheels_separation_;
     delta_theta = theta;
   }

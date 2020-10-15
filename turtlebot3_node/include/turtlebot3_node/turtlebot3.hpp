@@ -1,31 +1,21 @@
-/*******************************************************************************
-* Copyright 2019 ROBOTIS CO., LTD.
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*******************************************************************************/
+// Copyright 2019 ROBOTIS CO., LTD.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+// Author: Darby Lim
 
-/* Author: Darby Lim */
-
-#ifndef TURTLEBOT3_NODE_TURTLEBOT3_HPP_
-#define TURTLEBOT3_NODE_TURTLEBOT3_HPP_
-
-#include <array>
-#include <chrono>
-#include <list>
-#include <memory>
-#include <mutex>
-#include <string>
-#include <queue>
+#ifndef TURTLEBOT3_NODE__TURTLEBOT3_HPP_
+#define TURTLEBOT3_NODE__TURTLEBOT3_HPP_
 
 #include <geometry_msgs/msg/twist.hpp>
 #include <nav_msgs/msg/odometry.hpp>
@@ -35,6 +25,15 @@
 #include <sensor_msgs/msg/joint_state.hpp>
 #include <tf2_ros/transform_broadcaster.h>
 #include <turtlebot3_msgs/msg/sensor_state.hpp>
+
+#include <array>
+#include <chrono>
+#include <list>
+#include <map>
+#include <memory>
+#include <mutex>
+#include <string>
+#include <queue>
 
 #include "turtlebot3_node/control_table.hpp"
 #include "turtlebot3_node/dynamixel_sdk_wrapper.hpp"
@@ -58,7 +57,7 @@ namespace turtlebot3
 extern const ControlTable extern_control_table;
 class TurtleBot3 : public rclcpp::Node
 {
- public:
+public:
   typedef struct
   {
     float separation;
@@ -72,12 +71,12 @@ class TurtleBot3 : public rclcpp::Node
   } Motors;
 
   explicit TurtleBot3(const std::string & usb_port);
-  virtual ~TurtleBot3(){};
+  virtual ~TurtleBot3() {}
 
   Wheels * get_wheels();
   Motors * get_motors();
 
- private:
+private:
   void init_dynamixel_sdk_wrapper(const std::string & usb_port);
   void check_device_status();
 
@@ -99,8 +98,8 @@ class TurtleBot3 : public rclcpp::Node
 
   std::shared_ptr<DynamixelSDKWrapper> dxl_sdk_wrapper_;
 
-  std::list<sensors::Sensors*> sensors_;
-  std::map<std::string, devices::Devices*> devices_;
+  std::list<sensors::Sensors *> sensors_;
+  std::map<std::string, devices::Devices *> devices_;
 
   std::unique_ptr<Odometry> odom_;
 
@@ -114,6 +113,6 @@ class TurtleBot3 : public rclcpp::Node
   rclcpp::AsyncParametersClient::SharedPtr priv_parameters_client_;
   rclcpp::Subscription<rcl_interfaces::msg::ParameterEvent>::SharedPtr parameter_event_sub_;
 };
-} // turtlebot3
-} // robotis
-#endif // TURTLEBOT3_NODE_TURTLEBOT3_HPP_
+}  // namespace turtlebot3
+}  // namespace robotis
+#endif  // TURTLEBOT3_NODE__TURTLEBOT3_HPP_

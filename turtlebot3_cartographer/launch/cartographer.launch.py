@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+#
 # Author: Darby Lim
 
 import os
@@ -24,17 +24,20 @@ from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import ThisLaunchFileDir
 
+
 def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
     turtlebot3_cartographer_prefix = get_package_share_directory('turtlebot3_cartographer')
-    cartographer_config_dir = LaunchConfiguration('cartographer_config_dir', 
-                                                    default=os.path.join(turtlebot3_cartographer_prefix, 'config'))
-    configuration_basename = LaunchConfiguration('configuration_basename', default='turtlebot3_lds_2d.lua')
+    cartographer_config_dir = LaunchConfiguration('cartographer_config_dir', default=os.path.join(
+                                                  turtlebot3_cartographer_prefix, 'config'))
+    configuration_basename = LaunchConfiguration('configuration_basename',
+                                                 default='turtlebot3_lds_2d.lua')
 
     resolution = LaunchConfiguration('resolution', default='0.05')
     publish_period_sec = LaunchConfiguration('publish_period_sec', default='1.0')
 
-    rviz_config_dir = os.path.join(get_package_share_directory('turtlebot3_cartographer'), 'rviz', 'tb3_cartographer.rviz')
+    rviz_config_dir = os.path.join(get_package_share_directory('turtlebot3_cartographer'),
+                                   'rviz', 'tb3_cartographer.rviz')
 
     return LaunchDescription([
         DeclareLaunchArgument(
@@ -56,7 +59,8 @@ def generate_launch_description():
             node_name='cartographer_node',
             output='screen',
             parameters=[{'use_sim_time': use_sim_time}],
-            arguments=['-configuration_directory', cartographer_config_dir, '-configuration_basename', configuration_basename]),
+            arguments=['-configuration_directory', cartographer_config_dir,
+                       '-configuration_basename', configuration_basename]),
 
         DeclareLaunchArgument(
             'resolution',
@@ -70,7 +74,8 @@ def generate_launch_description():
 
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource([ThisLaunchFileDir(), '/occupancy_grid.launch.py']),
-            launch_arguments={'use_sim_time': use_sim_time, 'resolution': resolution, 'publish_period_sec': publish_period_sec}.items(),
+            launch_arguments={'use_sim_time': use_sim_time, 'resolution': resolution,
+                              'publish_period_sec': publish_period_sec}.items(),
         ),
 
         Node(

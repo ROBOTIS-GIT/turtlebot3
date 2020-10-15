@@ -1,43 +1,52 @@
+#!/usr/bin/env python
+#
 # Copyright (c) 2011, Willow Garage, Inc.
 # All rights reserved.
 #
+# Software License Agreement (BSD License 2.0)
+#
 # Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions are met:
+# modification, are permitted provided that the following conditions
+# are met:
 #
-#    * Redistributions of source code must retain the above copyright
-#      notice, this list of conditions and the following disclaimer.
-#    * Redistributions in binary form must reproduce the above copyright
-#      notice, this list of conditions and the following disclaimer in the
-#      documentation and/or other materials provided with the distribution.
-#    * Neither the name of the Willow Garage, Inc. nor the names of its
-#      contributors may be used to endorse or promote products derived from
-#       this software without specific prior written permission.
+#  * Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#  * Redistributions in binary form must reproduce the above
+#    copyright notice, this list of conditions and the following
+#    disclaimer in the documentation and/or other materials provided
+#    with the distribution.
+#  * Neither the name of {copyright_holder} nor the names of its
+#    contributors may be used to endorse or promote products derived
+#    from this software without specific prior written permission.
 #
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
-# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-# CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-# ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+# FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+# COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+# INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+# BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+# LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+# ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
-
+#
 # Author: Darby Lim
 
 import os
 import select
 import sys
-if os.name == 'nt':
-  import msvcrt
-else:
-  import termios, tty
+import rclpy
 
 from geometry_msgs.msg import Twist
-import rclpy
 from rclpy.qos import QoSProfile
+
+if os.name == 'nt':
+    import msvcrt
+else:
+    import termios
+    import tty
 
 BURGER_MAX_LIN_VEL = 0.22
 BURGER_MAX_ANG_VEL = 2.84
@@ -93,9 +102,9 @@ def print_vels(target_linear_velocity, target_angular_velocity):
 
 def make_simple_profile(output, input, slop):
     if input > output:
-        output = min( input, output + slop )
+        output = min(input, output + slop)
     elif input < output:
-        output = max( input, output - slop )
+        output = max(input, output - slop)
     else:
         output = input
 
@@ -119,6 +128,7 @@ def check_linear_limit_velocity(velocity):
     else:
         return constrain(velocity, -WAFFLE_MAX_LIN_VEL, WAFFLE_MAX_LIN_VEL)
 
+
 def check_angular_limit_velocity(velocity):
     if TURTLEBOT3_MODEL == 'burger':
         return constrain(velocity, -BURGER_MAX_ANG_VEL, BURGER_MAX_ANG_VEL)
@@ -138,46 +148,46 @@ def main():
     pub = node.create_publisher(Twist, 'cmd_vel', qos)
 
     status = 0
-    target_linear_velocity   = 0.0
-    target_angular_velocity  = 0.0
-    control_linear_velocity  = 0.0
+    target_linear_velocity = 0.0
+    target_angular_velocity = 0.0
+    control_linear_velocity = 0.0
     control_angular_velocity = 0.0
 
     try:
         print(msg)
         while(1):
             key = get_key(settings)
-            if key == 'w' :
+            if key == 'w':
                 target_linear_velocity =\
                     check_linear_limit_velocity(target_linear_velocity + LIN_VEL_STEP_SIZE)
                 status = status + 1
                 print_vels(target_linear_velocity, target_angular_velocity)
-            elif key == 'x' :
+            elif key == 'x':
                 target_linear_velocity =\
                     check_linear_limit_velocity(target_linear_velocity - LIN_VEL_STEP_SIZE)
                 status = status + 1
                 print_vels(target_linear_velocity, target_angular_velocity)
-            elif key == 'a' :
+            elif key == 'a':
                 target_angular_velocity =\
                     check_angular_limit_velocity(target_angular_velocity + ANG_VEL_STEP_SIZE)
                 status = status + 1
                 print_vels(target_linear_velocity, target_angular_velocity)
-            elif key == 'd' :
+            elif key == 'd':
                 target_angular_velocity =\
                     check_angular_limit_velocity(target_angular_velocity - ANG_VEL_STEP_SIZE)
                 status = status + 1
                 print_vels(target_linear_velocity, target_angular_velocity)
-            elif key == ' ' or key == 's' :
-                target_linear_velocity   = 0.0
-                control_linear_velocity  = 0.0
-                target_angular_velocity  = 0.0
+            elif key == ' ' or key == 's':
+                target_linear_velocity = 0.0
+                control_linear_velocity = 0.0
+                target_angular_velocity = 0.0
                 control_angular_velocity = 0.0
                 print_vels(target_linear_velocity, target_angular_velocity)
             else:
                 if (key == '\x03'):
                     break
 
-            if status == 20 :
+            if status == 20:
                 print(msg)
                 status = 0
 
@@ -186,7 +196,7 @@ def main():
             control_linear_velocity = make_simple_profile(
                 control_linear_velocity,
                 target_linear_velocity,
-                (LIN_VEL_STEP_SIZE/2.0))
+                (LIN_VEL_STEP_SIZE / 2.0))
 
             twist.linear.x = control_linear_velocity
             twist.linear.y = 0.0
@@ -195,7 +205,7 @@ def main():
             control_angular_velocity = make_simple_profile(
                 control_angular_velocity,
                 target_angular_velocity,
-                (ANG_VEL_STEP_SIZE/2.0))
+                (ANG_VEL_STEP_SIZE / 2.0))
 
             twist.angular.x = 0.0
             twist.angular.y = 0.0
@@ -220,6 +230,7 @@ def main():
 
         if os.name != 'nt':
             termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
+
 
 if __name__ == '__main__':
     main()

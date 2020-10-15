@@ -1,0 +1,57 @@
+name: Lint
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+on:
+  push:
+    branches: [ ros2, ros2-devel, dashing-devel, eloquent-devel, foxy-devel ]
+  pull_request:
+    branches: [ ros2, ros2-devel ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  ament_lint_bionic:
+    runs-on: ubuntu-18.04
+    strategy:
+      fail-fast: false
+      matrix:
+        linter: [copyright, cppcheck, cpplint, uncrustify, pep8, pep257, xmllint]
+        distribution: [dashing, eloquent]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ros-tooling/setup-ros@master
+      - uses: ros-tooling/action-ros-lint@master
+        with:
+          distribution: ${{ matrix.distribution }}
+          linter: ${{ matrix.linter }}
+          package-name: |
+            turtlebot3
+            turtlebot3_bringup
+            turtlebot3_cartographer
+            turtlebot3_description
+            turtlebot3_example
+            turtlebot3_navigation2
+            turtlebot3_node
+            turtlebot3_teleop
+  ament_lint_focal:
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      matrix:
+        linter: [copyright, cppcheck, cpplint, uncrustify, pep257, xmllint] #todo : flake8 
+        distribution: [foxy]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ros-tooling/setup-ros@master
+      - uses: ros-tooling/action-ros-lint@master
+        with:
+          distribution: ${{ matrix.distribution }}
+          linter: ${{ matrix.linter }}
+          package-name: |
+            turtlebot3
+            turtlebot3_bringup
+            turtlebot3_cartographer
+            turtlebot3_description
+            turtlebot3_example
+            turtlebot3_navigation2
+            turtlebot3_node
+            turtlebot3_teleop

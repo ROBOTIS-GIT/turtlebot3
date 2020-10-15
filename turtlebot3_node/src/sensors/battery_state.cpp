@@ -1,27 +1,28 @@
-/*******************************************************************************
-* Copyright 2019 ROBOTIS CO., LTD.
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*******************************************************************************/
-
-/* Author: Darby Lim */
+// Copyright 2019 ROBOTIS CO., LTD.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+// Author: Darby Lim
 
 #include "turtlebot3_node/sensors/battery_state.hpp"
 
-using namespace robotis;
-using namespace turtlebot3;
+#include <memory>
+#include <string>
+#include <utility>
 
-sensors::BatteryState::BatteryState(
+using robotis::turtlebot3::sensors::BatteryState;
+
+BatteryState::BatteryState(
   std::shared_ptr<rclcpp::Node> & nh,
   const std::string & topic_name)
 : Sensors(nh)
@@ -31,7 +32,7 @@ sensors::BatteryState::BatteryState(
   RCLCPP_INFO(nh_->get_logger(), "Succeeded to create battery state publisher");
 }
 
-void sensors::BatteryState::publish(
+void BatteryState::publish(
   const rclcpp::Time & now,
   std::shared_ptr<DynamixelSDKWrapper> & dxl_sdk_wrapper)
 {

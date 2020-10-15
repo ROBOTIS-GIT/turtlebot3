@@ -1,23 +1,24 @@
-/*******************************************************************************
-* Copyright 2019 ROBOTIS CO., LTD.
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*******************************************************************************/
+// Copyright 2019 ROBOTIS CO., LTD.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+// Author: Darby Lim
 
-/* Author: Darby Lim */
+#ifndef TURTLEBOT3_NODE__DYNAMIXEL_SDK_WRAPPER_HPP_
+#define TURTLEBOT3_NODE__DYNAMIXEL_SDK_WRAPPER_HPP_
 
-#ifndef TURTLEBOT3_NODE_DYNAMIXEL_SDK_WRAPPER_HPP_
-#define TURTLEBOT3_NODE_DYNAMIXEL_SDK_WRAPPER_HPP_
+#include <rcutils/logging_macros.h>
+#include <dynamixel_sdk/dynamixel_sdk.h>
 
 #include <algorithm>
 #include <array>
@@ -28,9 +29,6 @@
 #include <string>
 #include <thread>
 #include <utility>
-
-#include <rcutils/logging_macros.h>
-#include <dynamixel_sdk/dynamixel_sdk.h>
 
 #define LOG_INFO RCUTILS_LOG_INFO_NAMED
 #define LOG_WARN RCUTILS_LOG_WARN_NAMED
@@ -47,7 +45,7 @@ namespace turtlebot3
 
 class DynamixelSDKWrapper
 {
- public:
+public:
   typedef struct
   {
     std::string usb_port;
@@ -59,35 +57,34 @@ class DynamixelSDKWrapper
   explicit DynamixelSDKWrapper(const Device & device);
   virtual ~DynamixelSDKWrapper();
 
-  template <typename DataByteT>
+  template<typename DataByteT>
   DataByteT get_data_from_device(const uint16_t & addr, const uint16_t & length)
   {
     DataByteT data = 0;
-    uint8_t * p_data = (uint8_t*)&data;
+    uint8_t * p_data = reinterpret_cast<uint8_t *>(&data);
     uint16_t index = addr - read_memory_.start_addr;
 
     std::lock_guard<std::mutex> lock(read_data_mutex_);
-    switch (length)
-    {
+    switch (length) {
       case 1:
-        p_data[0] = read_memory_.data[index+0];
+        p_data[0] = read_memory_.data[index + 0];
         break;
 
       case 2:
-        p_data[0] = read_memory_.data[index+0];
-        p_data[1] = read_memory_.data[index+1];
+        p_data[0] = read_memory_.data[index + 0];
+        p_data[1] = read_memory_.data[index + 1];
         break;
 
       case 4:
-        p_data[0] = read_memory_.data[index+0];
-        p_data[1] = read_memory_.data[index+1];
-        p_data[2] = read_memory_.data[index+2];
-        p_data[3] = read_memory_.data[index+3];
+        p_data[0] = read_memory_.data[index + 0];
+        p_data[1] = read_memory_.data[index + 1];
+        p_data[2] = read_memory_.data[index + 2];
+        p_data[3] = read_memory_.data[index + 3];
         break;
 
       default:
-        p_data[0] = read_memory_.data[index+0];
-      break;
+        p_data[0] = read_memory_.data[index + 0];
+        break;
     }
 
     return data;
@@ -104,7 +101,7 @@ class DynamixelSDKWrapper
 
   bool is_connected_to_device();
 
- private:
+private:
   bool init_dynamixel_sdk_handlers();
 
   bool read_register(
@@ -142,6 +139,6 @@ class DynamixelSDKWrapper
   std::mutex read_data_mutex_;
   std::mutex write_data_mutex_;
 };
-} // turtlebot3
-} // robotis
-#endif // TURTLEBOT3_NODE_DYNAMIXEL_SDK_WRAPPER_HPP_
+}  // namespace turtlebot3
+}  // namespace robotis
+#endif  // TURTLEBOT3_NODE__DYNAMIXEL_SDK_WRAPPER_HPP_
