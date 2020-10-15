@@ -26,4 +26,4 @@ matrix:
   include:
     - script: .ros2ci/travis.bash dashing
     - script: .ros2ci/travis.bash eloquent
-    - script: .ros2ci/travis.bash nightly
+    - script: .ros2ci/travis.bash foxy

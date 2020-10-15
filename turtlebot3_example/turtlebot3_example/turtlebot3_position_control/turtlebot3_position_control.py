@@ -108,8 +108,8 @@ class Turtlebot3PositionControl(Node):
             # Step 1: Turn
             if self.step == 1:
                 path_theta = math.atan2(
-                    self.goal_pose_y-self.last_pose_y,
-                    self.goal_pose_x-self.last_pose_x)
+                    self.goal_pose_y - self.last_pose_y,
+                    self.goal_pose_x - self.last_pose_x)
                 angle = path_theta - self.last_pose_theta
                 angular_velocity = 0.1  # unit: rad/s
 
@@ -118,8 +118,8 @@ class Turtlebot3PositionControl(Node):
             # Step 2: Go Straight
             elif self.step == 2:
                 distance = math.sqrt(
-                    (self.goal_pose_x-self.last_pose_x)**2
-                    + (self.goal_pose_y-self.last_pose_y)**2)
+                    (self.goal_pose_x - self.last_pose_x)**2 +
+                    (self.goal_pose_y - self.last_pose_y)**2)
                 linear_velocity = 0.1  # unit: m/s
 
                 twist, self.step = Turtlebot3Path.go_straight(distance, linear_velocity, self.step)
@@ -159,7 +159,8 @@ class Turtlebot3PositionControl(Node):
     *******************************************************************************"""
     def euler_from_quaternion(self, quat):
         """
-        Converts quaternion (w in last place) to euler roll, pitch, yaw
+        Convert quaternion (w in last place) to euler roll, pitch, yaw.
+
         quat = [x, y, z, w]
         """
         x = quat.x
@@ -167,15 +168,15 @@ class Turtlebot3PositionControl(Node):
         z = quat.z
         w = quat.w
 
-        sinr_cosp = 2 * (w*x + y*z)
-        cosr_cosp = 1 - 2*(x*x + y*y)
+        sinr_cosp = 2 * (w * x + y * z)
+        cosr_cosp = 1 - 2 * (x * x + y * y)
         roll = numpy.arctan2(sinr_cosp, cosr_cosp)
 
-        sinp = 2 * (w*y - z*x)
+        sinp = 2 * (w * y - z * x)
         pitch = numpy.arcsin(sinp)
 
-        siny_cosp = 2 * (w*z + x*y)
-        cosy_cosp = 1 - 2 * (y*y + z*z)
+        siny_cosp = 2 * (w * z + x * y)
+        cosy_cosp = 1 - 2 * (y * y + z * z)
         yaw = numpy.arctan2(siny_cosp, cosy_cosp)
 
         return roll, pitch, yaw

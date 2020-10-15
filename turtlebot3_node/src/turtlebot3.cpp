@@ -1,29 +1,29 @@
-/*******************************************************************************
-* Copyright 2019 ROBOTIS CO., LTD.
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*******************************************************************************/
-
-/* Author: Darby Lim */
+// Copyright 2019 ROBOTIS CO., LTD.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+// Author: Darby Lim
 
 #include "turtlebot3_node/turtlebot3.hpp"
 
-using namespace robotis;
+#include <memory>
+#include <string>
+
+using robotis::turtlebot3::TurtleBot3;
 using namespace std::chrono_literals;
-using namespace turtlebot3;
 
 TurtleBot3::TurtleBot3(const std::string & usb_port)
-: Node("turtlebot3_node",rclcpp::NodeOptions().use_intra_process_comms(true))
+: Node("turtlebot3_node", rclcpp::NodeOptions().use_intra_process_comms(true))
 {
   RCLCPP_INFO(get_logger(), "Init TurtleBot3 Node Main");
   node_handle_ = std::shared_ptr<::rclcpp::Node>(this, [](::rclcpp::Node *) {});
@@ -39,12 +39,12 @@ TurtleBot3::TurtleBot3(const std::string & usb_port)
   run();
 }
 
-TurtleBot3::Wheels* TurtleBot3::get_wheels()
+TurtleBot3::Wheels * TurtleBot3::get_wheels()
 {
   return &wheels_;
 }
 
-TurtleBot3::Motors* TurtleBot3::get_motors()
+TurtleBot3::Motors * TurtleBot3::get_motors()
 {
   return &motors_;
 }
@@ -74,8 +74,7 @@ void TurtleBot3::init_dynamixel_sdk_wrapper(const std::string & usb_port)
 
 void TurtleBot3::check_device_status()
 {
-  if (dxl_sdk_wrapper_->is_connected_to_device())
-  {
+  if (dxl_sdk_wrapper_->is_connected_to_device()) {
     std::string sdk_msg;
     uint8_t reset = 1;
 
@@ -88,9 +87,7 @@ void TurtleBot3::check_device_status()
     RCLCPP_INFO(this->get_logger(), "Start Calibration of Gyro");
     rclcpp::sleep_for(std::chrono::seconds(5));
     RCLCPP_INFO(this->get_logger(), "Calibration End");
-  }
-  else
-  {
+  } else {
     RCLCPP_ERROR(this->get_logger(), "Failed connection with Devices");
     rclcpp::shutdown();
     return;
@@ -102,8 +99,7 @@ void TurtleBot3::check_device_status()
     extern_control_table.device_status.addr,
     extern_control_table.device_status.length);
 
-  switch (device_status)
-  {
+  switch (device_status) {
     case NOT_CONNECTED_MOTOR:
       RCLCPP_WARN(this->get_logger(), "Please double check your Dynamixels and Power");
       break;
@@ -164,24 +160,27 @@ void TurtleBot3::add_sensors()
 
   bool is_connected_sonar = this->get_parameter("sensors.sonar").as_bool();
 
-  sensors_.push_back(new sensors::BatteryState(
-    node_handle_,
-    "battery_state"));
+  sensors_.push_back(
+    new sensors::BatteryState(
+      node_handle_,
+      "battery_state"));
 
-  sensors_.push_back(new sensors::Imu(
-    node_handle_,
-    "imu",
-    "magnetic_field",
-    "imu_link"));
+  sensors_.push_back(
+    new sensors::Imu(
+      node_handle_,
+      "imu",
+      "magnetic_field",
+      "imu_link"));
 
-  sensors_.push_back(new sensors::SensorState(
-    node_handle_,
-    "sensor_state",
-    is_connected_bumper_1,
-    is_connected_bumper_2,
-    is_connected_illumination,
-    is_connected_ir,
-    is_connected_sonar));
+  sensors_.push_back(
+    new sensors::SensorState(
+      node_handle_,
+      "sensor_state",
+      is_connected_bumper_1,
+      is_connected_bumper_2,
+      is_connected_illumination,
+      is_connected_ir,
+      is_connected_sonar));
 
   sensors_.push_back(new sensors::JointState(node_handle_, "joint_states", "base_link"));
 }
@@ -213,17 +212,16 @@ void TurtleBot3::publish_timer(const std::chrono::milliseconds timeout)
   publish_timer_ = this->create_wall_timer(
     timeout,
     [this]() -> void
-      {
-        rclcpp::Time now = this->now();
+    {
+      rclcpp::Time now = this->now();
 
-        dxl_sdk_wrapper_->read_data_set();
+      dxl_sdk_wrapper_->read_data_set();
 
-        for (const auto &sensor:sensors_)
-        {
-          sensor->publish(now, dxl_sdk_wrapper_);
-        }
+      for (const auto & sensor : sensors_) {
+        sensor->publish(now, dxl_sdk_wrapper_);
       }
-    );
+    }
+  );
 }
 
 void TurtleBot3::heartbeat_timer(const std::chrono::milliseconds timeout)
@@ -231,30 +229,28 @@ void TurtleBot3::heartbeat_timer(const std::chrono::milliseconds timeout)
   heartbeat_timer_ = this->create_wall_timer(
     timeout,
     [this]() -> void
-      {
-        static uint8_t count = 0;
-        std::string msg;
+    {
+      static uint8_t count = 0;
+      std::string msg;
 
-        dxl_sdk_wrapper_->set_data_to_device(
-          extern_control_table.heartbeat.addr,
-          extern_control_table.heartbeat.length,
-          &count,
-          &msg);
+      dxl_sdk_wrapper_->set_data_to_device(
+        extern_control_table.heartbeat.addr,
+        extern_control_table.heartbeat.length,
+        &count,
+        &msg);
 
-        RCLCPP_DEBUG(this->get_logger(), "hearbeat count : %d, msg : %s", count, msg.c_str());
+      RCLCPP_DEBUG(this->get_logger(), "hearbeat count : %d, msg : %s", count, msg.c_str());
 
-        count++;
-      }
-    );
+      count++;
+    }
+  );
 }
 
 void TurtleBot3::parameter_event_callback()
 {
   priv_parameters_client_ = std::make_shared<rclcpp::AsyncParametersClient>(this);
-  while (!priv_parameters_client_->wait_for_service(std::chrono::seconds(1)))
-  {
-    if (!rclcpp::ok())
-    {
+  while (!priv_parameters_client_->wait_for_service(std::chrono::seconds(1))) {
+    if (!rclcpp::ok()) {
       RCLCPP_ERROR(this->get_logger(), "Interrupted while waiting for the service. Exiting.");
       return;
     }
@@ -264,51 +260,48 @@ void TurtleBot3::parameter_event_callback()
 
   auto param_event_callback =
     [this](const rcl_interfaces::msg::ParameterEvent::SharedPtr event) -> void
-  {
-    for (const auto & changed_parameter : event->changed_parameters)
     {
-      RCLCPP_DEBUG(
-        this->get_logger(),
-        "changed parameter name : %s",
-        changed_parameter.name.c_str());
-
-      if (changed_parameter.name == "motors.profile_acceleration")
-      {
-        std::string sdk_msg;
-
-        motors_.profile_acceleration =
-          rclcpp::Parameter::from_parameter_msg(changed_parameter).as_double();
-
-        motors_.profile_acceleration =
-          motors_.profile_acceleration / motors_.profile_acceleration_constant;
-
-        union Data
-        {
-          int32_t dword[2];
-          uint8_t byte[4*2];
-        } data;
-
-        data.dword[0] = static_cast<int32_t>(motors_.profile_acceleration);
-        data.dword[1] = static_cast<int32_t>(motors_.profile_acceleration);
-
-        uint16_t start_addr = extern_control_table.profile_acceleration_left.addr;
-        uint16_t addr_length =
-          (extern_control_table.profile_acceleration_right.addr -
-          extern_control_table.profile_acceleration_left.addr) +
-          extern_control_table.profile_acceleration_right.length;
-
-        uint8_t * p_data = &data.byte[0];
-
-        dxl_sdk_wrapper_->set_data_to_device(start_addr, addr_length, p_data, &sdk_msg);
-
-        RCLCPP_INFO(
+      for (const auto & changed_parameter : event->changed_parameters) {
+        RCLCPP_DEBUG(
           this->get_logger(),
-          "changed parameter value : %f [rev/min2] sdk_msg : %s",
-          motors_.profile_acceleration,
-          sdk_msg.c_str());
+          "changed parameter name : %s",
+          changed_parameter.name.c_str());
+
+        if (changed_parameter.name == "motors.profile_acceleration") {
+          std::string sdk_msg;
+
+          motors_.profile_acceleration =
+            rclcpp::Parameter::from_parameter_msg(changed_parameter).as_double();
+
+          motors_.profile_acceleration =
+            motors_.profile_acceleration / motors_.profile_acceleration_constant;
+
+          union Data {
+            int32_t dword[2];
+            uint8_t byte[4 * 2];
+          } data;
+
+          data.dword[0] = static_cast<int32_t>(motors_.profile_acceleration);
+          data.dword[1] = static_cast<int32_t>(motors_.profile_acceleration);
+
+          uint16_t start_addr = extern_control_table.profile_acceleration_left.addr;
+          uint16_t addr_length =
+            (extern_control_table.profile_acceleration_right.addr -
+            extern_control_table.profile_acceleration_left.addr) +
+            extern_control_table.profile_acceleration_right.length;
+
+          uint8_t * p_data = &data.byte[0];
+
+          dxl_sdk_wrapper_->set_data_to_device(start_addr, addr_length, p_data, &sdk_msg);
+
+          RCLCPP_INFO(
+            this->get_logger(),
+            "changed parameter value : %f [rev/min2] sdk_msg : %s",
+            motors_.profile_acceleration,
+            sdk_msg.c_str());
+        }
       }
-    }
-  };
+    };
 
   parameter_event_sub_ = priv_parameters_client_->on_parameter_event(param_event_callback);
 }
@@ -320,35 +313,34 @@ void TurtleBot3::cmd_vel_callback()
     "cmd_vel",
     qos,
     [this](const geometry_msgs::msg::Twist::SharedPtr msg) -> void
-      {
-        std::string sdk_msg;
+    {
+      std::string sdk_msg;
 
-        union Data
-        {
-          int32_t dword[6];
-          uint8_t byte[4*6];
-        } data;
+      union Data {
+        int32_t dword[6];
+        uint8_t byte[4 * 6];
+      } data;
 
-        data.dword[0] = static_cast<int32_t>(msg->linear.x * 100);
-        data.dword[1] = 0;
-        data.dword[2] = 0;
-        data.dword[3] = 0;
-        data.dword[4] = 0;
-        data.dword[5] = static_cast<int32_t>(msg->angular.z * 100);
+      data.dword[0] = static_cast<int32_t>(msg->linear.x * 100);
+      data.dword[1] = 0;
+      data.dword[2] = 0;
+      data.dword[3] = 0;
+      data.dword[4] = 0;
+      data.dword[5] = static_cast<int32_t>(msg->angular.z * 100);
 
-        uint16_t start_addr = extern_control_table.cmd_velocity_linear_x.addr;
-        uint16_t addr_length =
-          (extern_control_table.cmd_velocity_angular_z.addr -
-          extern_control_table.cmd_velocity_linear_x.addr) +
-          extern_control_table.cmd_velocity_angular_z.length;
+      uint16_t start_addr = extern_control_table.cmd_velocity_linear_x.addr;
+      uint16_t addr_length =
+      (extern_control_table.cmd_velocity_angular_z.addr -
+      extern_control_table.cmd_velocity_linear_x.addr) +
+      extern_control_table.cmd_velocity_angular_z.length;
 
-        uint8_t * p_data = &data.byte[0];
+      uint8_t * p_data = &data.byte[0];
 
-        dxl_sdk_wrapper_->set_data_to_device(start_addr, addr_length, p_data, &sdk_msg);
+      dxl_sdk_wrapper_->set_data_to_device(start_addr, addr_length, p_data, &sdk_msg);
 
-        RCLCPP_DEBUG(
-          this->get_logger(),
-          "lin_vel: %f ang_vel: %f msg : %s", msg->linear.x, msg->angular.z, sdk_msg.c_str());
-      }
-    );
+      RCLCPP_DEBUG(
+        this->get_logger(),
+        "lin_vel: %f ang_vel: %f msg : %s", msg->linear.x, msg->angular.z, sdk_msg.c_str());
+    }
+  );
 }

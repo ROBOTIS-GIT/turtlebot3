@@ -48,9 +48,9 @@ def generate_launch_description():
 
     return LaunchDescription([
         DeclareLaunchArgument(
-           'use_sim_time',
-           default_value=use_sim_time,
-           description='Use simulation (Gazebo) clock if true'),
+            'use_sim_time',
+            default_value=use_sim_time,
+            description='Use simulation (Gazebo) clock if true'),
 
         DeclareLaunchArgument(
             'usb_port',

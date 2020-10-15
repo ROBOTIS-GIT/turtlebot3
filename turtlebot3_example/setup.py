@@ -1,6 +1,3 @@
-import glob
-import os
-
 from setuptools import find_packages
 from setuptools import setup
 
@@ -14,11 +11,14 @@ setup(
         ('share/ament_index/resource_index/packages', ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
         # To be added
-        # ('share/' + package_name + '/launch', glob.glob(os.path.join('launch', 'turtlebot3_interactive_marker.launch.py'))),
-        # ('share/' + package_name + '/launch', glob.glob(os.path.join('launch', 'turtlebot3_obstacle_detection.launch.py'))),
-        # ('share/' + package_name + '/rviz', glob.glob(os.path.join('rviz', 'turtlebot3_interactive_marker.rviz'))),
+        # ('share/' + package_name + '/launch', glob.glob(os.path.join('launch',
+        #                                                 'turtlebot3_interactive_marker.launch.py'))),
+        # ('share/' + package_name + '/launch', glob.glob(os.path.join('launch',
+        #                                                 'turtlebot3_obstacle_detection.launch.py'))),
+        # ('share/' + package_name + '/rviz', glob.glob(os.path.join('rviz',
+        #                                               'turtlebot3_interactive_marker.rviz'))),
     ],
-    install_requires=['setuptools','launch'],
+    install_requires=['setuptools', 'launch'],
     zip_safe=True,
     author=['Ryan Shim', 'Gilbert'],
     author_email=['jhshim@robotis.com', 'kkjong@robotis.com'],
@@ -38,11 +38,16 @@ setup(
     entry_points={
         'console_scripts': [
             # To be added
-            # 'turtlebot3_interactive_marker = turtlebot3_example.turtlebot3_interactive_marker.main:main', 
-            'turtlebot3_obstacle_detection = turtlebot3_example.turtlebot3_obstacle_detection.main:main',
-            'turtlebot3_patrol_client = turtlebot3_example.turtlebot3_patrol_client.main:main',
-            'turtlebot3_patrol_server = turtlebot3_example.turtlebot3_patrol_server.main:main',
-            'turtlebot3_position_control = turtlebot3_example.turtlebot3_position_control.main:main',
+            # 'turtlebot3_interactive_marker = \
+            #   turtlebot3_example.turtlebot3_interactive_marker.main:main',
+            'turtlebot3_obstacle_detection = \
+                turtlebot3_example.turtlebot3_obstacle_detection.main:main',
+            'turtlebot3_patrol_client = \
+                turtlebot3_example.turtlebot3_patrol_client.main:main',
+            'turtlebot3_patrol_server = \
+                turtlebot3_example.turtlebot3_patrol_server.main:main',
+            'turtlebot3_position_control = \
+                turtlebot3_example.turtlebot3_position_control.main:main',
         ],
     },
 )
