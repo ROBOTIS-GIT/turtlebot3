@@ -6,14 +6,13 @@
   <description>
     This package provides four basic examples for TurtleBot3 (i.e., interactive marker, object detection, patrol and position control).
   </description>
-  <author email="jhshim@robotis.com">Ryan Shim</author>
-  <author email="kkjong@robotis.com">Gilbert</author>
   <maintainer email="willson@robotis.com">Will Son</maintainer>
   <license>Apache 2.0</license>
-  <url type="website">http://wiki.ros.org/turtlebot3_example</url>
-  <url type="emanual">http://turtlebot3.robotis.com</url>
+  <url type="website">http://turtlebot3.robotis.com</url>
   <url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3</url>
   <url type="bugtracker">https://github.com/ROBOTIS-GIT/turtlebot3/issues</url>
+  <author email="jhshim@robotis.com">Ryan Shim</author>
+  <author email="kkjong@robotis.com">Gilbert</author>
   <buildtool_depend>ament_cmake</buildtool_depend>
   <depend>geometry_msgs</depend>
   <depend>nav_msgs</depend>
