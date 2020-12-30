@@ -2,6 +2,10 @@
 Changelog for package turtlebot3_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.2.5 (2020-12-30)
+------------------
+* No Changes
+
 1.2.4 (2020-09-29)
 ------------------
 * Package info updated
