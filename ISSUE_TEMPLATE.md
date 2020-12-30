@@ -23,18 +23,20 @@ ISSUE TEMPLATE ver. 0.4.0
     - [ ] Raspberry Pi 4
     - [ ] etc (Please specify your SBC here)
 
-4. Which OS you installed in SBC?
+4. Which OS you installed on SBC?
 
     - [ ] Raspbian distributed by ROBOTIS
     - [ ] Ubuntu MATE (16.04/18.04/20.04)
     - [ ] Ubuntu preinstalled server (18.04/20.04)
     - [ ] etc (Please specify your OS here)
 
-5. Which OS you installed in Remote PC?
+5. Which OS you installed on Remote PC?
 
     - [ ] Ubuntu 16.04 LTS (Xenial Xerus)
     - [ ] Ubuntu 18.04 LTS (Bionic Beaver)
     - [ ] Ubuntu 20.04 LTS (Focal Fossa)
+    - [ ] Windows 10
+    - [ ] MAC OS X (Specify version)
     - [ ] etc (Please specify your OS here)
 
 6. Specify the software and firmware version(Can be found from Bringup messages)
@@ -42,7 +44,7 @@ ISSUE TEMPLATE ver. 0.4.0
     - Software version: [x.x.x]
     - Firmware version: [x.x.x]
 
-7. Specify the commands or instructions to replicate the issue.
+7. Specify the commands or instructions to reproduce the issue.
 
     - HERE
 

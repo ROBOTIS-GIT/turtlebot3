@@ -2,6 +2,11 @@
 Changelog for package turtlebot3_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.2.5 (2020-12-30)
+------------------
+* Python 2/3 compatibility fix
+* Contributors: Sean Yen
+
 1.2.4 (2020-09-29)
 ------------------
 * Package info updated

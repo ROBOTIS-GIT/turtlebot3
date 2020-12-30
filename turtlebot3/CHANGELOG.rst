@@ -2,6 +2,12 @@
 Changelog for package turtlebot3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.2.5 (2020-12-30)
+------------------
+* Python 2/3 compatibility fix
+* Rectify IMU update rate to 0 on Gazebo
+* Contributors: Sean Yen, PinkDraconian
+
 1.2.4 (2020-09-29)
 ------------------
 * Package info updated
