@@ -20,13 +20,15 @@ env:
   matrix:
     - ROS_DISTRO=kinetic ROS_REPO=ros-shadow-fixed UPSTREAM_WORKSPACE=debian OS_NAME=ubuntu OS_CODE_NAME=xenial
     - ROS_DISTRO=melodic ROS_REPO=ros-shadow-fixed UPSTREAM_WORKSPACE=debian OS_NAME=ubuntu OS_CODE_NAME=bionic
-    - ROS_DISTRO=melodic ROS_REPO=ros-shadow-fixed UPSTREAM_WORKSPACE=debian OS_NAME=debian OS_CODE_NAME=stretch
+    - ROS_DISTRO=noetic ROS_REPO=ros-shadow-fixed UPSTREAM_WORKSPACE=debian OS_NAME=ubuntu OS_CODE_NAME=focal
 branches:
   only:
     - master
     - develop
     - kinetic-devel
     - melodic-devel
+    - noetic-devel
+    
 install:
   - git clone https://github.com/ros-industrial/industrial_ci.git .ci_config
 script:

@@ -66,7 +66,10 @@ Communications Failed
 
 def getKey():
     if os.name == 'nt':
-      return msvcrt.getch()
+      if sys.version_info[0] >= 3:
+        return msvcrt.getch().decode()
+      else:
+        return msvcrt.getch()
 
     tty.setraw(sys.stdin.fileno())
     rlist, _, _ = select.select([sys.stdin], [], [], 0.1)
