@@ -5,7 +5,7 @@ package_name = 'turtlebot3_teleop'
 
 setup(
     name=package_name,
-    version='2.0.1',
+    version='2.1.1',
     packages=find_packages(exclude=[]),
     data_files=[
         ('share/ament_index/resource_index/packages', ['resource/' + package_name]),
@@ -17,8 +17,8 @@ setup(
     zip_safe=True,
     author='Darby Lim',
     author_email='thlim@robotis.com',
-    maintainer='Pyo',
-    maintainer_email='pyo@robotis.com',
+    maintainer='Will Son',
+    maintainer_email='willson@robotis.com',
     keywords=['ROS'],
     classifiers=[
         'Intended Audience :: Developers',
