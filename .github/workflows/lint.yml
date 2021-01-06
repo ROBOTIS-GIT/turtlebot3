@@ -3,7 +3,7 @@ name: Lint
 # Controls when the action will run. Triggers the workflow on push or pull request
 on:
   push:
-    branches: [ ros2, ros2-devel, dashing-devel, eloquent-devel, foxy-devel ]
+    branches: [ ros2, ros2-devel, dashing-devel, foxy-devel ]
   pull_request:
     branches: [ ros2, ros2-devel ]
 
@@ -15,7 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         linter: [copyright, cppcheck, cpplint, uncrustify, pep8, pep257, xmllint]
-        distribution: [dashing, eloquent]
+        distribution: [dashing]
     steps:
       - uses: actions/checkout@v2
       - uses: ros-tooling/setup-ros@master
