@@ -16,7 +16,6 @@ branches:
     - ros2
     - ros2-devel
     - dashing-devel
-    - eloquent-devel
     - foxy-devel
 
 install:
@@ -25,5 +24,4 @@ install:
 matrix:
   include:
     - script: .ros2ci/travis.bash dashing
-    - script: .ros2ci/travis.bash eloquent
     - script: .ros2ci/travis.bash foxy
