@@ -5,7 +5,7 @@ package_name = 'turtlebot3_example'
 
 setup(
     name=package_name,
-    version='2.0.1',
+    version='2.1.1',
     packages=find_packages(),
     data_files=[
         ('share/ament_index/resource_index/packages', ['resource/' + package_name]),
@@ -22,8 +22,8 @@ setup(
     zip_safe=True,
     author=['Ryan Shim', 'Gilbert'],
     author_email=['jhshim@robotis.com', 'kkjong@robotis.com'],
-    maintainer='Pyo',
-    maintainer_email='pyo@robotis.com',
+    maintainer='Will Son',
+    maintainer_email='willson@robotis.com',
     keywords=['ROS', 'ROS2', 'examples', 'rclpy'],
     classifiers=[
         'Intended Audience :: Developers',

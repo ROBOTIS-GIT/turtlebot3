@@ -2,6 +2,13 @@
 Changelog for package turtlebot3_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.1.1 (2021-01-06)
+------------------
+* turtlebot3.repos updated to target correct distro
+* galactic-devel branch created
+* Eloquent EOL
+* Contributors: Ashe Kim, Will Son
+
 2.1.0 (2020-06-22)
 ------------------
 * ROS 2 Foxy Fitzroy supported
