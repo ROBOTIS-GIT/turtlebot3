@@ -1,0 +1,38 @@
+<launch>
+  <!-- Arguments -->
+  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]"/>
+  <arg name="configuration_basename" default="turtlebot3_lds_2d.lua"/>
+  <arg name="set_base_frame" default="base_footprint"/>
+  <arg name="set_odom_frame" default="odom"/>
+  <arg name="set_map_frame"  default="map"/>
+
+  <!-- RTAB-Map -->
+  <group ns="rtabmap">
+    <node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen" args="--delete_db_on_start">
+      <param name="database_path"       type="string" value="~/.ros/rtabmap.db"/>
+      <param name="frame_id"            type="string" value="$(arg set_base_frame)"/>
+      <param name="map_frame_id"        type="string" value="$(arg set_map_frame)"/>
+      <param     if="$(eval model=='waffle')" name="subscribe_rgb" type="bool" value="true"/>
+      <param unless="$(eval model=='waffle')" name="subscribe_rgb" type="bool" value="false"/>
+      <param     if="$(eval model=='waffle')" name="subscribe_depth" type="bool" value="true"/>
+      <param unless="$(eval model=='waffle')" name="subscribe_depth" type="bool" value="false"/>
+      <param name="subscribe_scan"      type="bool"   value="true"/>
+      <param name="approx_sync"         type="bool"   value="true"/>
+  
+      <!-- inputs -->
+      <remap from="scan"            to="/scan"/>
+      <remap from="odom"            to="/odom"/>
+      <remap from="rgb/image"       to="/camera/rgb/image_raw"/>
+      <remap from="depth/image"     to="/camera/depth/image_raw"/>
+      <remap from="rgb/camera_info" to="/camera/rgb/camera_info"/>
+
+      <!-- output -->
+      <remap from="grid_map" to="/map"/>
+  
+      <!-- RTAB-Map's parameters -->
+      <param name="Reg/Strategy"                 type="string" value="1"/>
+      <param name="Reg/Force3DoF"                type="string" value="true"/>
+      <param name="GridGlobal/MinSize"           type="string" value="20"/>
+    </node>
+  </group>
+</launch>

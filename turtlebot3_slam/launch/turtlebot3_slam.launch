@@ -1,7 +1,7 @@
 <launch>
   <!-- Arguments -->
   <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]"/>
-  <arg name="slam_methods" default="gmapping" doc="slam type [gmapping, cartographer, hector, karto, frontier_exploration]"/>
+  <arg name="slam_methods" default="gmapping" doc="slam type [gmapping, cartographer, hector, karto, frontier_exploration, rtabmap]"/>
   <arg name="configuration_basename" default="turtlebot3_lds_2d.lua"/>
   <arg name="open_rviz" default="true"/>
 
