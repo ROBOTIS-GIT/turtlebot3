@@ -38,9 +38,9 @@ public:
     const std::string & topic_name = "sensor_state",
     const bool & bumper_forward = false,
     const bool & bumper_backward = false,
+    const bool & illumination = false,
     const bool & cliff = false,
-    const bool & sonar = false,
-    const bool & illumination = false);
+    const bool & sonar = false);
 
   void publish(
     const rclcpp::Time & now,
