@@ -26,64 +26,36 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare # Substitution
 
-# def generate_launch_description():
-#     TURTLEBOT3_MODEL = os.environ['TURTLEBOT3_MODEL']
-
-#     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
-#     urdf_file_name = 'turtlebot3_' + TURTLEBOT3_MODEL + '.urdf' 
-
-#     print("urdf_file_name : {}".format(urdf_file_name))
-
-#     urdf = os.path.join(
-#         get_package_share_directory('turtlebot3_description'),
-#         'urdf',
-#         urdf_file_name)
-
-#     return LaunchDescription([
-#         DeclareLaunchArgument(
-#             'use_sim_time',
-#             default_value='false',
-#             description='Use simulation (Gazebo) clock if true'),
-
-#         Node(
-#             package='robot_state_publisher',
-#             executable='robot_state_publisher',
-#             name='robot_state_publisher',
-#             output='screen',
-#             parameters=[{'use_sim_time': use_sim_time}],
-#             arguments=[urdf]),
-#     ])
-
-
 def generate_launch_description():
-    
     TURTLEBOT3_MODEL = os.environ['TURTLEBOT3_MODEL']
-    
+
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
     urdf_file_name = 'turtlebot3_' + TURTLEBOT3_MODEL + '.urdf'
-    
+
     print("urdf_file_name : {}".format(urdf_file_name))
 
-    urdf = os.path.join(get_package_share_directory('turtlebot3_description'),
-                        'urdf', urdf_file_name)
+    urdf = os.path.join(
+        get_package_share_directory('turtlebot3_description'),
+        'urdf',
+        urdf_file_name)
 
-    with open(urdf, 'r') as infp:  
-        robot_desc = infp.read() # Dummy to use parameter instead of using argument=[urdf] in Node. Reference page: https://github.com/ros2/demos/pull/426/commits/a35a25732159e4c8b5655755ce31ec4c3e6e7975
+    # Major refactor of the robot_state_publisher
+    # Reference page: https://github.com/ros2/demos/pull/426
+    with open(urdf, 'r') as infp:
+        robot_desc = infp.read()
 
     rsp_params = {'robot_description': robot_desc}
-    
-    # print (robot_desc) # Printing urdf information.  
+
+    # print (robot_desc) # Printing urdf information.
 
     return LaunchDescription([
-        
         DeclareLaunchArgument(
             'use_sim_time',
             default_value='false',
             description='Use simulation (Gazebo) clock if true'),
-        
         Node(
-            package='robot_state_publisher', 
+            package='robot_state_publisher',
             executable='robot_state_publisher',
-            output='screen', 
-            parameters=[rsp_params,{'use_sim_time': use_sim_time}]),
+            output='screen',
+            parameters=[rsp_params,{'use_sim_time': use_sim_time}])
     ])

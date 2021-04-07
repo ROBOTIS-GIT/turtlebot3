@@ -6,7 +6,8 @@ Changelog for package turtlebot3
 ------------------
 * fix SensorState msg
 * rename nav2 params
-* Contributors: jhbirdchoi, Will Son
+* modify robot_state_publisher
+* Contributors: jhbirdchoi, David Park, Will Son
 
 2.1.1 (2021-01-06)
 ------------------
