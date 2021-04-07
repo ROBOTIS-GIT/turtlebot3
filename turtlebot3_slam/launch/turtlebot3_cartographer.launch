@@ -43,4 +43,12 @@
     <remap from="imu_in" to="/imu" />
     <remap from="imu_out" to="/flat_imu" />
   </node>
+
+  <!-- flat_world_odom_node -->
+  <node pkg="turtlebot3_slam" type="flat_world_odom_node" name="flat_world_odom_node" output="screen">
+    <remap from="odom_in" to="/odom" />
+    <remap from="odom_out" to="/odom_imu" />
+  </node>
+
+
 </launch>

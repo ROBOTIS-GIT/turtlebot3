@@ -10,6 +10,7 @@ project(turtlebot3_slam)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   sensor_msgs
+  nav_msgs
 )
 
 ################################################################################
@@ -29,7 +30,8 @@ find_package(catkin REQUIRED COMPONENTS
 ################################################################################
 catkin_package(
   INCLUDE_DIRS include
-  CATKIN_DEPENDS roscpp sensor_msgs  
+  CATKIN_DEPENDS roscpp sensor_msgs
+  CATKIN_DEPENDS roscpp nav_msgs   
 )
 
 ################################################################################
@@ -44,6 +46,10 @@ add_executable(flat_world_imu_node src/flat_world_imu_node.cpp)
 add_dependencies(flat_world_imu_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(flat_world_imu_node ${catkin_LIBRARIES})
 
+add_executable(flat_world_odom_node src/flat_world_odom_node.cpp)
+add_dependencies(flat_world_odom_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(flat_world_odom_node ${catkin_LIBRARIES})
+
 ################################################################################
 # Install
 ################################################################################
@@ -53,6 +59,10 @@ install(TARGETS flat_world_imu_node
 
 install(DIRECTORY include/${PROJECT_NAME}/
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+)
+
+install(TARGETS flat_world_odom_node
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
 install(DIRECTORY bag config launch rviz
