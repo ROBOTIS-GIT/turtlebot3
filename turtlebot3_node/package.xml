@@ -2,7 +2,7 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>turtlebot3_node</name>
-  <version>2.1.1</version>
+  <version>2.1.2</version>
   <description>
     TurtleBot3 driver node that include diff drive controller, odometry and tf node
   </description> 
