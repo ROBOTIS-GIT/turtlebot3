@@ -2,6 +2,10 @@
 Changelog for package turtlebot3_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.1.2 (2021-04-07)
+------------------
+* None
+
 2.1.1 (2021-01-06)
 ------------------
 * turtlebot3.repos updated to target correct distro

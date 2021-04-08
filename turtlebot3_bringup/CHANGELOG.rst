@@ -2,6 +2,12 @@
 Changelog for package turtlebot3_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.1.2 (2021-04-07)
+------------------
+* rename nav2 params
+* modify robot_state_publisher
+* Contributors: David Park, Will Son
+
 2.1.1 (2021-01-06)
 ------------------
 * turtlebot3.repos updated to target correct distro
