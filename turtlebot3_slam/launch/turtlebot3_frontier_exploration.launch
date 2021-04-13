@@ -5,6 +5,10 @@
   <arg name="sensor_range" default="1.0"/>
   <arg name="cmd_vel_topic" default="/cmd_vel" />
   <arg name="odom_topic" default="odom" />
+  <arg name="plugin" default="exploration_server::ExamplePlugin"/>
+  <param name="plugin_name" value="$(arg plugin)"/>
+  <arg name="blacklist_box_size" default="0.5"/>
+  <param name="blacklist_box_size" value="$(arg blacklist_box_size)"/>
 
   <!-- TurtleBot3 and Gmapping -->
   <include file="$(find turtlebot3_slam)/launch/turtlebot3_gmapping.launch">
@@ -28,8 +32,9 @@
   </node>
 
   <!-- frontier_exploration -->
-  <node pkg="frontier_exploration" type="explore_client" name="explore_client" output="screen"/>
-  <node pkg="frontier_exploration" type="explore_server" name="explore_server" output="screen" >
+<node pkg="exploration_server" type="plugin_client" name="plugin_client" output="screen"></node>
+  <node pkg="exploration_server" type="exploration_server_node" name="exploration_server_node" output="screen" >
+    <rosparam param="points" ns="explore_costmap" file="$(find exploration_server)/config/points.yaml" command="load"/>
     <param name="frequency" type="double" value="1.0"/>
     <param name="goal_aliasing" type="double" value="$(arg sensor_range)"/>
     <rosparam file="$(find turtlebot3_navigation)/param/costmap_common_params_$(arg model).yaml" command="load" ns="explore_costmap" />
