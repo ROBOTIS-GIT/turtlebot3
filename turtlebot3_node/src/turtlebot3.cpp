@@ -53,9 +53,9 @@ void TurtleBot3::init_dynamixel_sdk_wrapper(const std::string & usb_port)
 {
   DynamixelSDKWrapper::Device opencr = {usb_port, 200, 1000000, 2.0f};
 
-  this->declare_parameter("opencr.id");
-  this->declare_parameter("opencr.baud_rate");
-  this->declare_parameter("opencr.protocol_version");
+  this->declare_parameter<uint8_t>("opencr.id");
+  this->declare_parameter<uint32_t>("opencr.baud_rate");
+  this->declare_parameter<float>("opencr.protocol_version");
 
   this->get_parameter_or<uint8_t>("opencr.id", opencr.id, 200);
   this->get_parameter_or<uint32_t>("opencr.baud_rate", opencr.baud_rate, 1000000);
@@ -113,8 +113,8 @@ void TurtleBot3::add_motors()
 {
   RCLCPP_INFO(this->get_logger(), "Add Motors");
 
-  this->declare_parameter("motors.profile_acceleration_constant");
-  this->declare_parameter("motors.profile_acceleration");
+  this->declare_parameter<float>("motors.profile_acceleration_constant");
+  this->declare_parameter<float>("motors.profile_acceleration");
 
   this->get_parameter_or<float>(
     "motors.profile_acceleration_constant",
@@ -131,8 +131,8 @@ void TurtleBot3::add_wheels()
 {
   RCLCPP_INFO(this->get_logger(), "Add Wheels");
 
-  this->declare_parameter("wheels.separation");
-  this->declare_parameter("wheels.radius");
+  this->declare_parameter<float>("wheels.separation");
+  this->declare_parameter<float>("wheels.radius");
 
   this->get_parameter_or<float>("wheels.separation", wheels_.separation, 0.160);
   this->get_parameter_or<float>("wheels.radius", wheels_.radius, 0.033);
@@ -142,14 +142,14 @@ void TurtleBot3::add_sensors()
 {
   RCLCPP_INFO(this->get_logger(), "Add Sensors");
 
-  this->declare_parameter("sensors.bumper_1");
-  this->declare_parameter("sensors.bumper_2");
+  this->declare_parameter<uint8_t>("sensors.bumper_1");
+  this->declare_parameter<uint8_t>("sensors.bumper_2");
 
-  this->declare_parameter("sensors.illumination");
+  this->declare_parameter<float>("sensors.illumination");
 
-  this->declare_parameter("sensors.ir");
+  this->declare_parameter<float>("sensors.ir");
 
-  this->declare_parameter("sensors.sonar");
+  this->declare_parameter<float>("sensors.sonar");
 
   bool is_connected_bumper_1 = this->get_parameter("sensors.bumper_1").as_bool();
   bool is_connected_bumper_2 = this->get_parameter("sensors.bumper_2").as_bool();
