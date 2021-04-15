@@ -16,7 +16,7 @@ jobs:
       matrix:
         ros_distribution:
           # - dashing
-          - foxy
+          # - foxy
           # - galactic
           - rolling
         include:
@@ -25,9 +25,9 @@ jobs:
           #   ros_distribution: dashing
           #   ros_version: 2
             # Foxy Fitzroy (June 2020 - May 2023)
-          - docker_image: ubuntu:focal
-            ros_distribution: foxy
-            ros_version: 2
+          # - docker_image: ubuntu:focal
+          #   ros_distribution: foxy
+          #   ros_version: 2
             # Galactic Geochelone (May 2021)
           # - docker_image: ubuntu:focal
           #   ros_distribution: galactic

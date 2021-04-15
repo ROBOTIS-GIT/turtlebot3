@@ -4,6 +4,7 @@ Changelog for package turtlebot3
 
 2.1.2 (2021-04-07)
 ------------------
+* use static param types for Galactic
 * fix SensorState msg
 * rename nav2 params
 * modify robot_state_publisher

@@ -36,11 +36,11 @@ Odometry::Odometry(
 {
   RCLCPP_INFO(nh_->get_logger(), "Init Odometry");
 
-  nh_->declare_parameter("odometry.frame_id");
-  nh_->declare_parameter("odometry.child_frame_id");
+  nh_->declare_parameter<std::string>("odometry.frame_id");
+  nh_->declare_parameter<std::string>("odometry.child_frame_id");
 
-  nh_->declare_parameter("odometry.use_imu");
-  nh_->declare_parameter("odometry.publish_tf");
+  nh_->declare_parameter<bool>("odometry.use_imu");
+  nh_->declare_parameter<bool>("odometry.publish_tf");
 
   nh_->get_parameter_or<bool>(
     "odometry.use_imu",
