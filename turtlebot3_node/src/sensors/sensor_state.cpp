@@ -27,15 +27,15 @@ SensorState::SensorState(
   const std::string & topic_name,
   const bool & bumper_forward,
   const bool & bumper_backward,
+  const bool & illumination,
   const bool & cliff,
-  const bool & sonar,
-  const bool & illumination)
+  const bool & sonar)
 : Sensors(nh),
   bumper_forward_(bumper_forward),
   bumper_backward_(bumper_backward),
+  illumination_(illumination),
   cliff_(cliff),
-  sonar_(sonar),
-  illumination_(illumination)
+  sonar_(sonar)
 {
   pub_ = nh->create_publisher<turtlebot3_msgs::msg::SensorState>(topic_name, this->qos_);
 
@@ -95,34 +95,25 @@ void SensorState::publish(
     msg->illumination = 0.0f;
   }
 
+  // update button state
+  uint8_t button_push_state;
+  uint8_t button_0_state;
+  uint8_t button_1_state;
 
-  if (sonar_) {
-    msg->sonar = dxl_sdk_wrapper->get_data_from_device<float>(
-      extern_control_table.sonar.addr,
-      extern_control_table.sonar.length);
-  } else {
-    msg->sonar = 0.0f;
-  }
+  button_0_state = dxl_sdk_wrapper->get_data_from_device<uint8_t>(
+    extern_control_table.button_1.addr,
+    extern_control_table.button_1.length);
 
-  {
-    uint8_t button_push_state;
-    uint8_t button_0_state;
-    uint8_t button_1_state;
+  button_1_state = dxl_sdk_wrapper->get_data_from_device<uint8_t>(
+    extern_control_table.button_2.addr,
+    extern_control_table.button_2.length);
 
-    button_0_state = dxl_sdk_wrapper->get_data_from_device<uint8_t>(
-      extern_control_table.button_1.addr,
-      extern_control_table.button_1.length);
+  button_push_state = button_0_state << 0;
+  button_push_state |= button_1_state << 1;
 
-    button_1_state = dxl_sdk_wrapper->get_data_from_device<uint8_t>(
-      extern_control_table.button_2.addr,
-      extern_control_table.button_2.length);
+  msg->button = button_push_state;
 
-    button_push_state = button_0_state << 0;
-    button_push_state |= button_1_state << 1;
-
-    msg->button = button_push_state;
-  }
-
+  // update torque enable state
   msg->torque = dxl_sdk_wrapper->get_data_from_device<bool>(
     extern_control_table.motor_torque_enable.addr,
     extern_control_table.motor_torque_enable.length);

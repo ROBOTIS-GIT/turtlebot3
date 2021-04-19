@@ -2,6 +2,12 @@
 Changelog for package turtlebot3_node
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.1.2 (2021-04-07)
+------------------
+* use static param types for Galactic
+* fix SensorState msg
+* Contributors: jhbirdchoi, Will Son
+
 2.1.1 (2021-01-06)
 ------------------
 * turtlebot3.repos updated to target correct distro
