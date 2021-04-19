@@ -1,15 +1,15 @@
-name: ros-ci
+name: ros2-devel
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 on:
   push:
-    branches: [ ros2 ]
+    branches: [ ros2-devel ]
   pull_request:
-    branches: [ ros2 ]
+    branches: [ ros2-devel ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  ros2-ci:
+  ros2-devel-ci:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
