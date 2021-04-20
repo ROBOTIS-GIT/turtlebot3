@@ -51,9 +51,9 @@ private:
 
   bool bumper_forward_;
   bool bumper_backward_;
+  bool illumination_;
   bool cliff_;
   bool sonar_;
-  bool illumination_;
 };
 }  // namespace sensors
 }  // namespace turtlebot3
