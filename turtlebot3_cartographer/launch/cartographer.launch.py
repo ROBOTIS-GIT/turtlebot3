@@ -55,8 +55,8 @@ def generate_launch_description():
 
         Node(
             package='cartographer_ros',
-            node_executable='cartographer_node',
-            node_name='cartographer_node',
+            executable='cartographer_node',
+            name='cartographer_node',
             output='screen',
             parameters=[{'use_sim_time': use_sim_time}],
             arguments=['-configuration_directory', cartographer_config_dir,
@@ -80,8 +80,8 @@ def generate_launch_description():
 
         Node(
             package='rviz2',
-            node_executable='rviz2',
-            node_name='rviz2',
+            executable='rviz2',
+            name='rviz2',
             arguments=['-d', rviz_config_dir],
             parameters=[{'use_sim_time': use_sim_time}],
             output='screen'),

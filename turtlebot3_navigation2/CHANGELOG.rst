@@ -2,6 +2,11 @@
 Changelog for package turtlebot3_navigation2
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.1.2 (2021-04-07)
+------------------
+* rename nav2 params
+* Contributors: Will Son
+
 2.1.1 (2021-01-06)
 ------------------
 * Nav2 prefix filename removed

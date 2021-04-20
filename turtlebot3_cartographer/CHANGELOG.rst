@@ -2,6 +2,11 @@
 Changelog for package turtlebot3_cartographer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.1.2 (2021-04-07)
+------------------
+* rename nav2 params
+* Contributors: Will Son
+
 2.1.1 (2021-01-06)
 ------------------
 * turtlebot3.repos updated to target correct distro
