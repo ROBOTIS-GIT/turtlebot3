@@ -1,41 +1,41 @@
-name: ros2
+name: foxy-devel
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 on:
   push:
-    branches: [ ros2 ]
+    branches: [ foxy-devel ]
   pull_request:
-    branches: [ ros2 ]
+    branches: [ foxy-devel ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  ros2-ci:
+  foxy-devel-ci:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         ros_distribution:
           # - dashing
-          # - foxy
+          - foxy
           # - galactic
-          - rolling
+          # - rolling
         include:
             # Dashing Diademata (May 2019 - May 2021)
           # - docker_image: ubuntu:bionic
           #   ros_distribution: dashing
           #   ros_version: 2
             # Foxy Fitzroy (June 2020 - May 2023)
-          # - docker_image: ubuntu:focal
-          #   ros_distribution: foxy
-          #   ros_version: 2
+          - docker_image: ubuntu:focal
+            ros_distribution: foxy
+            ros_version: 2
             # Galactic Geochelone (May 2021)
           # - docker_image: ubuntu:focal
           #   ros_distribution: galactic
           #   ros_version: 2
             # Rolling
-          - docker_image: ubuntu:focal
-            ros_distribution: rolling
-            ros_version: 2
+          # - docker_image: ubuntu:focal
+          #   ros_distribution: rolling
+          #   ros_version: 2
     container:
       image: ${{ matrix.docker_image }}
     steps:
@@ -54,4 +54,4 @@ jobs:
         with:
           package-name: turtlebot3
           target-ros2-distro: ${{ matrix.ros_distribution }}
-          vcs-repo-file-url: "https://raw.githubusercontent.com/ROBOTIS-GIT/turtlebot3/ros2-devel/turtlebot3_ci.repos"
+          vcs-repo-file-url: "https://raw.githubusercontent.com/ROBOTIS-GIT/turtlebot3/foxy-devel/turtlebot3_ci.repos"
