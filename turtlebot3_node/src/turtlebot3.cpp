@@ -54,7 +54,7 @@ void TurtleBot3::init_dynamixel_sdk_wrapper(const std::string & usb_port)
   DynamixelSDKWrapper::Device opencr = {usb_port, 200, 1000000, 2.0f};
 
   this->declare_parameter<uint8_t>("opencr.id");
-  this->declare_parameter<uint32_t>("opencr.baud_rate");
+  this->declare_parameter<int64_t>("opencr.baud_rate");
   this->declare_parameter<float>("opencr.protocol_version");
 
   this->get_parameter_or<uint8_t>("opencr.id", opencr.id, 200);
@@ -142,14 +142,14 @@ void TurtleBot3::add_sensors()
 {
   RCLCPP_INFO(this->get_logger(), "Add Sensors");
 
-  this->declare_parameter<uint8_t>("sensors.bumper_1");
-  this->declare_parameter<uint8_t>("sensors.bumper_2");
+  this->declare_parameter<bool>("sensors.bumper_1");
+  this->declare_parameter<bool>("sensors.bumper_2");
 
-  this->declare_parameter<float>("sensors.illumination");
+  this->declare_parameter<bool>("sensors.illumination");
 
-  this->declare_parameter<float>("sensors.ir");
+  this->declare_parameter<bool>("sensors.ir");
 
-  this->declare_parameter<float>("sensors.sonar");
+  this->declare_parameter<bool>("sensors.sonar");
 
   bool is_connected_bumper_1 = this->get_parameter("sensors.bumper_1").as_bool();
   bool is_connected_bumper_2 = this->get_parameter("sensors.bumper_2").as_bool();
