@@ -2,10 +2,10 @@
 Changelog for package turtlebot3_navigation2
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-2.1.2 (2021-04-07)
+2.1.2 (2021-06-17)
 ------------------
-* rename nav2 params
-* Contributors: Will Son
+* rename and update nav2 params
+* Contributors: Ashe Kim, Will Son
 
 2.1.1 (2021-01-06)
 ------------------
