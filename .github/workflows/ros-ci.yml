@@ -54,4 +54,4 @@ jobs:
         with:
           package-name: turtlebot3
           target-ros2-distro: ${{ matrix.ros_distribution }}
-          vcs-repo-file-url: "https://raw.githubusercontent.com/ROBOTIS-GIT/turtlebot3/galactic-devel/turtlebot3_ci.repos"
+          vcs-repo-file-url: "https://raw.githubusercontent.com/ROBOTIS-GIT/turtlebot3/ros2-devel/turtlebot3_ci.repos"
