@@ -2,6 +2,12 @@
 Changelog for package turtlebot3_cartographer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.1.3 (2021-09-02)
+------------------
+* ROS 2 Rolling Ridley supported
+* fix RViz2 Cartographer default config
+* Contributors: Will Son
+
 2.1.2 (2021-04-07)
 ------------------
 * rename nav2 params

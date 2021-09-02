@@ -2,6 +2,11 @@
 Changelog for package turtlebot3_example
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.1.3 (2021-09-02)
+------------------
+* ROS 2 Rolling Ridley supported
+* Contributors: Will Son
+
 2.1.2 (2021-04-07)
 ------------------
 * None

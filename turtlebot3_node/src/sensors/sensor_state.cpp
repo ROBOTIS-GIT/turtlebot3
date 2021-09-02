@@ -25,11 +25,11 @@ using robotis::turtlebot3::sensors::SensorState;
 SensorState::SensorState(
   std::shared_ptr<rclcpp::Node> & nh,
   const std::string & topic_name,
-  const bool & bumper_forward,
-  const bool & bumper_backward,
-  const bool & illumination,
-  const bool & cliff,
-  const bool & sonar)
+  const uint8_t & bumper_forward,
+  const uint8_t & bumper_backward,
+  const uint8_t & illumination,
+  const uint8_t & cliff,
+  const uint8_t & sonar)
 : Sensors(nh),
   bumper_forward_(bumper_forward),
   bumper_backward_(bumper_backward),

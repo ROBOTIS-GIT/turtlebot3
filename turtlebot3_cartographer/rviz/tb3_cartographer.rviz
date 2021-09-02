@@ -4,10 +4,7 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /Global Options1
         - /TF1/Frames1
-        - /LaserScan1
-        - /Cartographer1
       Splitter Ratio: 0.5794117450714111
     Tree Height: 785
   - Class: rviz_common/Selection
@@ -356,8 +353,8 @@ Visualization Manager:
           Position Transformer: XYZ
           Selectable: true
           Size (Pixels): 3
-          Size (m): 0.009999999776482582
-          Style: Points
+          Size (m): 0.03
+          Style: Tiles
           Topic:
             Depth: 5
             Durability Policy: Volatile
@@ -445,26 +442,21 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Class: rviz_default_plugins/Orbit
-      Distance: 6.2725830078125
+      Angle: -1.5707999467849731
+      Class: rviz_default_plugins/TopDownOrtho
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
-      Focal Point:
-        X: 1.4347907304763794
-        Y: 0.42844799160957336
-        Z: 0.801936149597168
-      Focal Shape Fixed Size: true
-      Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.17479735612869263
+      Scale: 86.12762451171875
       Target Frame: <Fixed Frame>
-      Value: Orbit (rviz)
-      Yaw: 3.795415163040161
+      Value: TopDownOrtho (rviz_default_plugins)
+      X: 1.165248990058899
+      Y: 0.4727824032306671
     Saved: ~
 Window Geometry:
   Displays:

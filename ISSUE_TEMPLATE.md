@@ -10,26 +10,27 @@ ISSUE TEMPLATE ver. 0.4.1
 2. Which SBC(Single Board Computer) is installed on TurtleBot3?
 
     - [ ] Raspberry Pi 3
-    - [ ] Raspberry Pi 4
-    - [ ] Jetson Nano (specify RAM size: 2/4/8GB)
+    - [ ] Raspberry Pi 4 (specify RAM size: 2/4/8GB)
+    - [ ] Jetson Nano
     - [ ] other (PLEASE, WRITE DOWN YOUR SBC HERE)
 
 3. Which OS is installed on the TurtleBot3 SBC?
 
     - [ ] Raspberry Pi recovery image (Provided by ROBOTIS via eManual)
-    - [ ] Ubuntu preinstalled server 18.04 or later
-    - [ ] Ubuntu preinstalled server 20.04 or later
+    - [ ] Ubuntu preinstalled server 18.04
+    - [ ] Ubuntu preinstalled server 20.04
     - [ ] other (PLEASE, WRITE DOWN YOUR OS)
 
 4. Which ROS version is running on TurtleBot3?
 
-    - [ ] ROS 1 Kinetic Kame (EOL)
-    - [ ] ROS 1 Melodic Morenia
-    - [ ] ROS 1 Noetic Ninjemys
+    - [ ] ROS Kinetic Kame (EOL)
+    - [ ] ROS Melodic Morenia
+    - [ ] ROS Noetic Ninjemys
     - [ ] ROS 2 Dashing Diademata (EOL)
     - [ ] ROS 2 Eloquent Elusor (EOL)
     - [ ] ROS 2 Foxy Fitzroy
     - [ ] ROS 2 Galactic Geochelone
+    - [ ] ROS 2 Rolling Ridley
 
 5. Which OS is installed on Remote PC?
 

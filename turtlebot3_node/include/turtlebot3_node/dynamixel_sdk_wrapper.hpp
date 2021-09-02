@@ -50,7 +50,7 @@ public:
   {
     std::string usb_port;
     uint8_t id;
-    uint32_t baud_rate;
+    int baud_rate;
     float protocol_version;
   } Device;
 

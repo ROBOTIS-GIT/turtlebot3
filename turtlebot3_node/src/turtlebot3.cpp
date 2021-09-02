@@ -54,11 +54,11 @@ void TurtleBot3::init_dynamixel_sdk_wrapper(const std::string & usb_port)
   DynamixelSDKWrapper::Device opencr = {usb_port, 200, 1000000, 2.0f};
 
   this->declare_parameter<uint8_t>("opencr.id");
-  this->declare_parameter<uint32_t>("opencr.baud_rate");
+  this->declare_parameter<int>("opencr.baud_rate");
   this->declare_parameter<float>("opencr.protocol_version");
 
   this->get_parameter_or<uint8_t>("opencr.id", opencr.id, 200);
-  this->get_parameter_or<uint32_t>("opencr.baud_rate", opencr.baud_rate, 1000000);
+  this->get_parameter_or<int>("opencr.baud_rate", opencr.baud_rate, 1000000);
   this->get_parameter_or<float>("opencr.protocol_version", opencr.protocol_version, 2.0f);
 
   RCLCPP_INFO(this->get_logger(), "Init DynamixelSDKWrapper");
@@ -142,23 +142,38 @@ void TurtleBot3::add_sensors()
 {
   RCLCPP_INFO(this->get_logger(), "Add Sensors");
 
+  uint8_t is_connected_bumper_1 = 0;
+  uint8_t is_connected_bumper_2 = 0;
+  uint8_t is_connected_illumination = 0;
+  uint8_t is_connected_ir = 0;
+  uint8_t is_connected_sonar = 0;
+
   this->declare_parameter<uint8_t>("sensors.bumper_1");
   this->declare_parameter<uint8_t>("sensors.bumper_2");
+  this->declare_parameter<uint8_t>("sensors.illumination");
+  this->declare_parameter<uint8_t>("sensors.ir");
+  this->declare_parameter<uint8_t>("sensors.sonar");
 
-  this->declare_parameter<float>("sensors.illumination");
-
-  this->declare_parameter<float>("sensors.ir");
-
-  this->declare_parameter<float>("sensors.sonar");
-
-  bool is_connected_bumper_1 = this->get_parameter("sensors.bumper_1").as_bool();
-  bool is_connected_bumper_2 = this->get_parameter("sensors.bumper_2").as_bool();
-
-  bool is_connected_illumination = this->get_parameter("sensors.illumination").as_bool();
-
-  bool is_connected_ir = this->get_parameter("sensors.ir").as_bool();
-
-  bool is_connected_sonar = this->get_parameter("sensors.sonar").as_bool();
+  this->get_parameter_or<uint8_t>(
+                        "sensors.bumper_1",
+                        is_connected_bumper_1,
+                        0);
+  this->get_parameter_or<uint8_t>(
+                        "sensors.bumper_2",
+                        is_connected_bumper_2,
+                        0);
+  this->get_parameter_or<uint8_t>(
+                        "sensors.illumination",
+                        is_connected_illumination,
+                        0);
+  this->get_parameter_or<uint8_t>(
+                        "sensors.ir",
+                        is_connected_ir,
+                        0);
+  this->get_parameter_or<uint8_t>(
+                        "sensors.sonar",
+                        is_connected_sonar,
+                        0);
 
   sensors_.push_back(
     new sensors::BatteryState(
