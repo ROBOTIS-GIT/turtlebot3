@@ -3,9 +3,9 @@ name: ros2
 # Controls when the action will run. Triggers the workflow on push or pull request
 on:
   push:
-    branches: [ ros2 ]
+    branches: [ ros2, ros2-devel ]
   pull_request:
-    branches: [ ros2 ]
+    branches: [ ros2, ros2-devel ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -46,7 +46,7 @@ jobs:
         with:
           path: ros_ws/src
       - name: Setup ROS environment
-        uses: ros-tooling/setup-ros@0.1.2
+        uses: ros-tooling/setup-ros@0.2.1
         with:
           required-ros-distributions: ${{ matrix.ros_distribution }}
       - name: Build and Test

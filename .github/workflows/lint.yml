@@ -9,39 +9,16 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  ament_lint_bionic:
-    runs-on: ubuntu-18.04
-    strategy:
-      fail-fast: false
-      matrix:
-        linter: [copyright, cppcheck, cpplint, uncrustify, pep8, pep257, xmllint]
-        distribution: [dashing]
-    steps:
-      - uses: actions/checkout@v2
-      - uses: ros-tooling/setup-ros@0.1.2
-      - uses: ros-tooling/action-ros-lint@0.0.6
-        with:
-          distribution: ${{ matrix.distribution }}
-          linter: ${{ matrix.linter }}
-          package-name: |
-            turtlebot3
-            turtlebot3_bringup
-            turtlebot3_cartographer
-            turtlebot3_description
-            turtlebot3_example
-            turtlebot3_navigation2
-            turtlebot3_node
-            turtlebot3_teleop
   ament_lint_focal:
     runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
       matrix:
         linter: [copyright, cppcheck, cpplint, uncrustify, pep257, xmllint] #todo : flake8 
-        distribution: [foxy]
+        distribution: [foxy, galactic, rolling]
     steps:
       - uses: actions/checkout@v2
-      - uses: ros-tooling/setup-ros@0.1.2
+      - uses: ros-tooling/setup-ros@0.2.1
       - uses: ros-tooling/action-ros-lint@0.0.6
         with:
           distribution: ${{ matrix.distribution }}

@@ -18,14 +18,11 @@ turtlebot3_node:
       profile_acceleration: 0.0
 
     sensors:
-      bumper_1: false
-      bumper_2: false
-
-      illumination: false
-
-      ir: false
-
-      sonar: false
+      bumper_1: 0
+      bumper_2: 0
+      illumination: 0
+      ir: 0
+      sonar: 0
 
 diff_drive_controller:
   ros__parameters:
