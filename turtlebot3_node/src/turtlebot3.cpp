@@ -155,25 +155,25 @@ void TurtleBot3::add_sensors()
   this->declare_parameter<uint8_t>("sensors.sonar");
 
   this->get_parameter_or<uint8_t>(
-                        "sensors.bumper_1",
-                        is_connected_bumper_1,
-                        0);
+    "sensors.bumper_1",
+    is_connected_bumper_1,
+    0);
   this->get_parameter_or<uint8_t>(
-                        "sensors.bumper_2",
-                        is_connected_bumper_2,
-                        0);
+    "sensors.bumper_2",
+    is_connected_bumper_2,
+    0);
   this->get_parameter_or<uint8_t>(
-                        "sensors.illumination",
-                        is_connected_illumination,
-                        0);
+    "sensors.illumination",
+    is_connected_illumination,
+    0);
   this->get_parameter_or<uint8_t>(
-                        "sensors.ir",
-                        is_connected_ir,
-                        0);
+    "sensors.ir",
+    is_connected_ir,
+    0);
   this->get_parameter_or<uint8_t>(
-                        "sensors.sonar",
-                        is_connected_sonar,
-                        0);
+    "sensors.sonar",
+    is_connected_sonar,
+    0);
 
   sensors_.push_back(
     new sensors::BatteryState(
