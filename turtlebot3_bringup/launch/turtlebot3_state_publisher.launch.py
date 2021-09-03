@@ -34,16 +34,10 @@ def generate_launch_description():
 
     print("urdf_file_name : {}".format(urdf_file_name))
 
-    urdf = os.path.join(get_package_share_directory('turtlebot3_description'),
-                        'urdf', urdf_file_name)
-
-    with open(urdf, 'r') as infp:
-        # Dummy to use parameter instead of using argument=[urdf] in Node.
-        robot_desc = infp.read()
-
-    rsp_params = {'robot_description': robot_desc}
-
-    # print (robot_desc)  # Printing urdf information.
+    urdf = os.path.join(
+        get_package_share_directory('turtlebot3_description'),
+        'urdf',
+        urdf_file_name)
 
     # Major refactor of the robot_state_publisher
     # Reference page: https://github.com/ros2/demos/pull/426
