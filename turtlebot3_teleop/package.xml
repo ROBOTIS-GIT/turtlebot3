@@ -3,7 +3,7 @@
   <name>turtlebot3_teleop</name>
   <version>1.2.5</version>
   <description>
-    Provides teleoperation using keyboard for TurtleBot3.
+    Provides teleoperation using camera recognite hand for TurtleBot3.
   </description>
   <license>BSD</license>
   <author>Melonee Wise</author>
