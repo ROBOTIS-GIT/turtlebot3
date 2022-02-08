@@ -30,6 +30,8 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
     TURTLEBOT3_MODEL = os.environ['TURTLEBOT3_MODEL']
+    LDS_MODEL = os.environ['LDS_MODEL']
+    LDS_LAUNCH_FILE = '/hlds_laser.launch.py'
 
     usb_port = LaunchConfiguration('usb_port', default='/dev/ttyACM0')
 
@@ -40,9 +42,19 @@ def generate_launch_description():
             'param',
             TURTLEBOT3_MODEL + '.yaml'))
 
-    lidar_pkg_dir = LaunchConfiguration(
-        'lidar_pkg_dir',
-        default=os.path.join(get_package_share_directory('hls_lfcd_lds_driver'), 'launch'))
+    if LDS_MODEL == 'LDS-01':
+        lidar_pkg_dir = LaunchConfiguration(
+            'lidar_pkg_dir',
+            default=os.path.join(get_package_share_directory('hls_lfcd_lds_driver'), 'launch'))
+    elif LDS_MODEL == 'LDS-02':
+        lidar_pkg_dir = LaunchConfiguration(
+            'lidar_pkg_dir',
+            default=os.path.join(get_package_share_directory('ld08_driver'), 'launch'))
+        LDS_LAUNCH_FILE = '/ld08.launch.py'
+    else:
+        lidar_pkg_dir = LaunchConfiguration(
+            'lidar_pkg_dir',
+            default=os.path.join(get_package_share_directory('hls_lfcd_lds_driver'), 'launch'))
 
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
 
@@ -69,7 +81,7 @@ def generate_launch_description():
         ),
 
         IncludeLaunchDescription(
-            PythonLaunchDescriptionSource([lidar_pkg_dir, '/hlds_laser.launch.py']),
+            PythonLaunchDescriptionSource([lidar_pkg_dir, LDS_LAUNCH_FILE]),
             launch_arguments={'port': '/dev/ttyUSB0', 'frame_id': 'base_scan'}.items(),
         ),
 

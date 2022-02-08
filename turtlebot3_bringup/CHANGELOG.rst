@@ -2,7 +2,11 @@
 Changelog for package turtlebot3_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-2.1.2 (2021-06-17)
+2.1.4 (2022-02-08)
+------------------
+* add LDS-02 support
+
+2.1.3 (2021-09-02)
 ------------------
 * rename and update nav2 params
 * modify robot_state_publisher
