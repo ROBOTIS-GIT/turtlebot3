@@ -2,6 +2,10 @@
 Changelog for package turtlebot3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.2.6 (2022-02-07)
+------------------
+* add LDS-02 support
+
 1.2.5 (2020-12-30)
 ------------------
 * Python 2/3 compatibility fix
