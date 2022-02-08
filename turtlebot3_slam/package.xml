@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>turtlebot3_slam</name>
-  <version>1.2.5</version>
+  <version>1.2.6</version>
   <description>
     The turtlebot3_slam package provides roslaunch scripts for starting the SLAM
   </description>
