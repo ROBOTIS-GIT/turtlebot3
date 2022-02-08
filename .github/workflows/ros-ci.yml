@@ -44,8 +44,9 @@ jobs:
         uses: ros-tooling/setup-ros@0.2.1
         with:
           required-ros-distributions: ${{ matrix.ros_distribution }}
-      - name: Build and Test
+      - name: Setuptools workaround
         run: export SETUPTOOLS_USE_DISTUTILS=stdlib
+      - name: Build and Test
         uses: ros-tooling/action-ros-ci@v0.2
         with:
           package-name: turtlebot3
