@@ -2,6 +2,10 @@
 Changelog for package turtlebot3_node
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.1.4 (2022-02-08)
+------------------
+* none
+
 2.1.3 (2021-09-02)
 ------------------
 * ROS 2 Rolling Ridley supported
