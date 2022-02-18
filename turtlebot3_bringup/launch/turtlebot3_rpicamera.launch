@@ -1,8 +1,8 @@
 <launch>
   <node pkg="cv_camera" type="cv_camera_node" name="cv_camera" output="screen">
     <param name="camera_info_url" value="package://turtlebot3_bringup/camera_info/turtlebot3_rpicamera.yaml"/>
-    <param name="image_width" value="320"/>
-    <param name="image_height" value="240"/>
+    <param name="image_width" value="640"/>
+    <param name="image_height" value="480"/>
     <param name="rate" value="30"/>
     <param name="frame_id" value="camera"/>    
     <remap from="/cv_camera/set_camera_info" to="/camera/set_camera_info" />
