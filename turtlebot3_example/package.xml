@@ -8,6 +8,7 @@
   <license>Apache 2.0</license>
   <author email="kkjong@robotis.com">Gilbert</author>
   <author email="pyo@robotis.com">Pyo</author>
+  <author email="ashekim@robotis.com">Ashe Kim</author>
   <maintainer email="willson@robotis.com">Will Son</maintainer>
   <url type="website">http://wiki.ros.org/turtlebot3_example</url>
   <url type="emanual">http://turtlebot3.robotis.com</url>
