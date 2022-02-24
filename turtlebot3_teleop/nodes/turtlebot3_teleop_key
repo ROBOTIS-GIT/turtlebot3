@@ -31,7 +31,7 @@ import rospy
 from geometry_msgs.msg import Twist
 import sys, select, os
 if os.name == 'nt':
-  import msvcrt
+  import msvcrt, time
 else:
   import tty, termios
 
@@ -66,10 +66,16 @@ Communications Failed
 
 def getKey():
     if os.name == 'nt':
-      if sys.version_info[0] >= 3:
-        return msvcrt.getch().decode()
-      else:
-        return msvcrt.getch()
+        timeout = 0.1
+        startTime = time.time()
+        while(1):
+            if msvcrt.kbhit():
+                if sys.version_info[0] >= 3:
+                    return msvcrt.getch().decode()
+                else:
+                    return msvcrt.getch()
+            elif time.time() - startTime > timeout:
+                return ''
 
     tty.setraw(sys.stdin.fileno())
     rlist, _, _ = select.select([sys.stdin], [], [], 0.1)
@@ -141,7 +147,7 @@ if __name__=="__main__":
 
     try:
         print(msg)
-        while(1):
+        while not rospy.is_shutdown():
             key = getKey()
             if key == 'w' :
                 target_linear_vel = checkLinearLimitVelocity(target_linear_vel + LIN_VEL_STEP_SIZE)
