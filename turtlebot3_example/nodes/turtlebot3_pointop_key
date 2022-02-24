@@ -124,7 +124,7 @@ class GotoPoint():
         self.cmd_vel.publish(Twist())
 
     def getkey(self):
-        x, y, z = raw_input("| x | y | z |\n").split()
+        x, y, z = input("| x | y | z |\n").split()
         if x == 's':
             self.shutdown()
         x, y, z = [float(x), float(y), float(z)]
