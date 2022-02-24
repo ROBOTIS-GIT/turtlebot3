@@ -4,7 +4,8 @@ Changelog for package turtlebot3_teleop
 
 1.2.6 (2022-02-24)
 ------------------
-* No Changes
+* Fix teleop_key on Windows 10
+* Contributors: Rushikesh Kamalapurkar
 
 1.2.5 (2020-12-30)
 ------------------

@@ -6,6 +6,8 @@ Changelog for package turtlebot3
 ------------------
 * add LDS-02 support
 * Use OpenCV for Picam(Noetic only)
+* Fix teleop_key on Windows 10
+* Contributors: Rushikesh Kamalapurkar, Ashe Kim, Will Son
 
 1.2.5 (2020-12-30)
 ------------------
