@@ -8,5 +8,8 @@ message: >-
   metadata from this file.
 type: software
 authors:
-  - given-names: ROBOTIS
-    affiliation: ROTOTIS
+  - affiliation: ROBOTIS
+repository-code: 'https://github.com/ROBOTIS-GIT/turtlebot3'
+url: >-
+  https://emanual.robotis.com/docs/en/platform/turtlebot3/overview/
+license: Apache-2.0
