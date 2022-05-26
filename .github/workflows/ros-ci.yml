@@ -50,7 +50,7 @@ jobs:
         with:
           required-ros-distributions: ${{ matrix.ros_distribution }}
       - name: Build and Test
-        uses: ros-tooling/action-ros-ci@v0.2.5
+        uses: ros-tooling/action-ros-ci@0.2.5
         with:
           package-name: turtlebot3
           target-ros2-distro: ${{ matrix.ros_distribution }}
