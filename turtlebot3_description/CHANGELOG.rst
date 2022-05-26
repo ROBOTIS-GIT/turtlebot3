@@ -2,6 +2,10 @@
 Changelog for package turtlebot3_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.1.5 (2202-05-26)
+------------------
+* ROS2 Humble Hawksbill supported
+
 2.1.4 (2022-02-08)
 ------------------
 * none

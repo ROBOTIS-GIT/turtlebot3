@@ -2,6 +2,11 @@
 Changelog for package turtlebot3_cartographer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.1.5 (2202-05-26)
+------------------
+* ROS2 Humble Hawksbill supported
+* revise ROS2 Cartographer excutable & name
+
 2.1.4 (2022-02-08)
 ------------------
 * none

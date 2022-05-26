@@ -4,6 +4,10 @@
 cmake_minimum_required(VERSION 3.5)
 project(turtlebot3_cartographer)
 
+if(NOT CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD 17)
+endif()
+
 ################################################################################
 # Find ament packages and libraries for ament and system dependencies
 ################################################################################
