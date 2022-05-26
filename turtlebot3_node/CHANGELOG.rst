@@ -17,7 +17,8 @@ Changelog for package turtlebot3_node
 ------------------
 * use static param types for Galactic
 * fix SensorState msg
-* Contributors: jhbirdchoi, Will Son
+* fix odometry bug
+* Contributors: jhbirdchoi, Ashe Kim, Will Son
 
 2.1.1 (2021-01-06)
 ------------------

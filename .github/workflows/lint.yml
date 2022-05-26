@@ -3,19 +3,19 @@ name: Lint
 # Controls when the action will run. Triggers the workflow on push or pull request
 on:
   push:
-    branches: [ ros2 ]
+    branches: [ ros2-devel ]
   pull_request:
-    branches: [ ros2 ]
+    branches: [ ros2-devel ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  ament_lint_focal:
-    runs-on: ubuntu-20.04
+  ament_lint_jammy:
+    runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
         linter: [copyright, cppcheck, cpplint, uncrustify, pep257, xmllint] #todo : flake8 
-        distribution: [foxy, galactic, rolling]
+        distribution: [rolling]
     steps:
       - uses: actions/checkout@v2
       - uses: ros-tooling/setup-ros@0.2.1
