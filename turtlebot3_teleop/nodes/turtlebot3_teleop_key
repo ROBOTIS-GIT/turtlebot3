@@ -30,6 +30,10 @@
 import rospy
 from geometry_msgs.msg import Twist
 import sys, select, os
+
+import moveit_commander
+import moveit_msgs.msg
+
 if os.name == 'nt':
   import msvcrt, time
 else:
@@ -48,15 +52,18 @@ msg = """
 Control Your TurtleBot3!
 ---------------------------
 Moving around:
-        w
-   a    s    d
-        x
+        8
+   4    5    6
+        2
+        
+1 -> home pose
+0 -> extend arm
+f -> gripper open
+g -> gripper close
 
 w/x : increase/decrease linear velocity (Burger : ~ 0.22, Waffle and Waffle Pi : ~ 0.26)
 a/d : increase/decrease angular velocity (Burger : ~ 2.84, Waffle and Waffle Pi : ~ 1.82)
-
 space key, s : force stop
-
 CTRL-C to quit
 """
 
@@ -89,6 +96,9 @@ def getKey():
 
 def vels(target_linear_vel, target_angular_vel):
     return "currently:\tlinear vel %s\t angular vel %s " % (target_linear_vel,target_angular_vel)
+ 
+def jnts(j1, j2,j3,j4):
+    return "currently:\tjoint1 %s\t joint2 %s\t joint3 %s\t joint3 %s " % (j1,j2,j3,j4)
 
 def makeSimpleProfile(output, input, slop):
     if input > output:
@@ -134,8 +144,21 @@ if __name__=="__main__":
     if os.name != 'nt':
         settings = termios.tcgetattr(sys.stdin)
 
+    moveit_commander.roscpp_initialize(sys.argv) # initialize moveit commander
+    robot = moveit_commander.RobotCommander() # Instantiate a RobotCommander object. 
+    #Provides information such as the robot’s kinematic model and the robot’s current joint states
+    gripper = moveit_commander.MoveGroupCommander('gripper') #name of movegroup 2 is “gripper
+    arm = moveit_commander.MoveGroupCommander('arm') # name of movegroup 1 is “arm”
+    arm.set_planning_time(2)
+    
     rospy.init_node('turtlebot3_teleop')
     pub = rospy.Publisher('cmd_vel', Twist, queue_size=10)
+    
+    display_trajectory_publisher = rospy.Publisher(
+    "/move_group/display_planned_path",
+    moveit_msgs.msg.DisplayTrajectory,
+    queue_size=20,
+)
 
     turtlebot3_model = rospy.get_param("model", "burger")
 
@@ -144,35 +167,88 @@ if __name__=="__main__":
     target_angular_vel  = 0.0
     control_linear_vel  = 0.0
     control_angular_vel = 0.0
+    
+    joint_values = arm.get_current_joint_values() #How to get joint states
+    joint_gripper = gripper.get_current_joint_values() # gripper value
+    joint_gripper[0] = 0.010
+    joint_values[0] = 0.0
+    joint_values[1] = 0.0
+    joint_values[2] = 0.0
+    joint_values[3] = 0.0
 
     try:
         print(msg)
         while not rospy.is_shutdown():
             key = getKey()
-            if key == 'w' :
+            if key == '8' :
                 target_linear_vel = checkLinearLimitVelocity(target_linear_vel + LIN_VEL_STEP_SIZE)
                 status = status + 1
                 print(vels(target_linear_vel,target_angular_vel))
-            elif key == 'x' :
+            elif key == '2' :
                 target_linear_vel = checkLinearLimitVelocity(target_linear_vel - LIN_VEL_STEP_SIZE)
                 status = status + 1
                 print(vels(target_linear_vel,target_angular_vel))
-            elif key == 'a' :
+            elif key == '4' :
                 target_angular_vel = checkAngularLimitVelocity(target_angular_vel + ANG_VEL_STEP_SIZE)
                 status = status + 1
                 print(vels(target_linear_vel,target_angular_vel))
-            elif key == 'd' :
+            elif key == '6' :
                 target_angular_vel = checkAngularLimitVelocity(target_angular_vel - ANG_VEL_STEP_SIZE)
                 status = status + 1
                 print(vels(target_linear_vel,target_angular_vel))
-            elif key == ' ' or key == 's' :
+            elif key == '5' :
                 target_linear_vel   = 0.0
                 control_linear_vel  = 0.0
                 target_angular_vel  = 0.0
                 control_angular_vel = 0.0
                 print(vels(target_linear_vel, target_angular_vel))
+            elif key == 'g':
+                joint_gripper = gripper.get_current_joint_values()
+                joint_gripper[0] = 0.010
+                gripper.go(joints=joint_gripper, wait=True)
+                rospy.sleep(5)
+                arm.stop()
+                print("Gripper opened")
+                #Please call this if you are getting jerky movements -tip from TA
+                gripper.clear_pose_targets()
+                #gripper open
+            elif key == 'f':
+                joint_gripper = gripper.get_current_joint_values()
+                joint_gripper[0] = -0.010
+                gripper.go(joints=joint_gripper, wait=True)
+                rospy.sleep(5)
+                arm.stop()
+                print("Gripper closed")
+                #Please call this if you are getting jerky movements -tip from TA
+                gripper.clear_pose_targets()
+                #gripper close
+            elif key == '0':
+                joint_values = arm.get_current_joint_values()
+                joint_values[1] = 0.125
+                joint_values[2] = 0.257
+                joint_values[3] = 0.357
+                arm.go(joints=joint_values, wait=True)
+                rospy.sleep(5)
+                arm.stop()
+                print(jnts(joint_values[0], joint_values[1], joint_values[2], joint_values[3]))
+                #Please call this if you are getting jerky movements -tip from TA
+                #arm.clear_pose_targets()
+                #extend arm forward
+            elif key == '1':
+                joint_values = arm.get_current_joint_values()
+                joint_values[0] = 0.0
+                joint_values[1] = -1.0
+                joint_values[2] = 0.3
+                joint_values[3] = 0.7
+                arm.go(joints=joint_values, wait=True)
+                rospy.sleep(5)
+                arm.stop()
+                print(jnts(joint_values[0], joint_values[1], joint_values[2], joint_values[3]))
+                #Please call this if you are getting jerky movements -tip from TA
+                #arm.clear_pose_targets()
+                #home pose
             else:
-                if (key == '\x03'):
+                if (key == 'q'):
                     break
 
             if status == 20 :
