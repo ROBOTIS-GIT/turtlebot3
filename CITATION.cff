@@ -1,0 +1,15 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: TurtleBot 3
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - affiliation: ROBOTIS
+repository-code: 'https://github.com/ROBOTIS-GIT/turtlebot3'
+url: >-
+  https://emanual.robotis.com/docs/en/platform/turtlebot3/overview/
+license: Apache-2.0
