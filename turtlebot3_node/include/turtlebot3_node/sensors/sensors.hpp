@@ -17,11 +17,11 @@
 #ifndef TURTLEBOT3_NODE__SENSORS__SENSORS_HPP_
 #define TURTLEBOT3_NODE__SENSORS__SENSORS_HPP_
 
-#include <rclcpp/rclcpp.hpp>
-
 #include <memory>
 #include <string>
 #include <utility>
+
+#include <rclcpp/rclcpp.hpp>
 
 #include "turtlebot3_node/control_table.hpp"
 #include "turtlebot3_node/dynamixel_sdk_wrapper.hpp"

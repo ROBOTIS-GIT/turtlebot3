@@ -17,11 +17,11 @@
 #ifndef TURTLEBOT3_NODE__SENSORS__IMU_HPP_
 #define TURTLEBOT3_NODE__SENSORS__IMU_HPP_
 
-#include <sensor_msgs/msg/imu.hpp>
-#include <sensor_msgs/msg/magnetic_field.hpp>
-
 #include <memory>
 #include <string>
+
+#include <sensor_msgs/msg/imu.hpp>
+#include <sensor_msgs/msg/magnetic_field.hpp>
 
 #include "turtlebot3_node/sensors/sensors.hpp"
 

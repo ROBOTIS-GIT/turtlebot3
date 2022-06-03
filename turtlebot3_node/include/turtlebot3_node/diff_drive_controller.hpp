@@ -17,9 +17,9 @@
 #ifndef TURTLEBOT3_NODE__DIFF_DRIVE_CONTROLLER_HPP_
 #define TURTLEBOT3_NODE__DIFF_DRIVE_CONTROLLER_HPP_
 
-#include <rclcpp/rclcpp.hpp>
-
 #include <memory>
+
+#include <rclcpp/rclcpp.hpp>
 
 #include "turtlebot3_node/odometry.hpp"
 
