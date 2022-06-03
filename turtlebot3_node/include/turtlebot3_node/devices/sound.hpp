@@ -18,10 +18,8 @@
 #define TURTLEBOT3_NODE__DEVICES__SOUND_HPP_
 
 #include <turtlebot3_msgs/srv/sound.hpp>
-
 #include <memory>
 #include <string>
-
 #include "turtlebot3_node/devices/devices.hpp"
 
 namespace robotis

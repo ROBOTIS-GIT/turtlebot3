@@ -18,10 +18,8 @@
 #define TURTLEBOT3_NODE__DEVICES__RESET_HPP_
 
 #include <std_srvs/srv/trigger.hpp>
-
 #include <memory>
 #include <string>
-
 #include "turtlebot3_node/devices/devices.hpp"
 
 namespace robotis

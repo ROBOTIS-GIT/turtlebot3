@@ -18,10 +18,8 @@
 #define TURTLEBOT3_NODE__DEVICES__MOTOR_POWER_HPP_
 
 #include <std_srvs/srv/set_bool.hpp>
-
 #include <memory>
 #include <string>
-
 #include "turtlebot3_node/devices/devices.hpp"
 
 namespace robotis
