@@ -37,17 +37,17 @@ jobs:
       - name: Setup directories
         run: mkdir -p ros_ws/src
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: ros_ws/src
       - name: Setup ROS environment
-        uses: ros-tooling/setup-ros@0.2.2
+        uses: ros-tooling/setup-ros@0.3.3
         with:
           required-ros-distributions: ${{ matrix.ros_distribution }}
       - name: Setuptools workaround
         run: export SETUPTOOLS_USE_DISTUTILS=stdlib
       - name: Build and Test
-        uses: ros-tooling/action-ros-ci@v0.2
+        uses: ros-tooling/action-ros-ci@0.2.5
         with:
           package-name: turtlebot3
           target-ros1-distro: ${{ matrix.ros_distribution }}
