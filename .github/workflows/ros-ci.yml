@@ -1,15 +1,15 @@
-name: ros2-devel
+name: humble-devel
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 on:
   push:
-    branches: [ ros2, ros2-devel ]
+    branches: [ humble-devel ]
   pull_request:
-    branches: [ ros2, ros2-devel ]
+    branches: [ humble-devel ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  ros2-devel-ci:
+  humble-devel:
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
@@ -18,7 +18,8 @@ jobs:
           # - dashing
           # - foxy
           # - galactic
-          - rolling
+          - humble
+          # - rolling
         include:
             # Dashing Diademata (May 2019 - May 2021)
           # - docker_image: ubuntu:bionic
@@ -32,6 +33,10 @@ jobs:
           # - docker_image: ubuntu:focal
           #   ros_distribution: galactic
           #   ros_version: 2
+            # Humble Hawksbill (May 2027)
+          - docker_image: ubuntu:jammy
+            ros_distribution: humble
+            ros_version: 2
             # Rolling
           - docker_image: ubuntu:jammy
             ros_distribution: rolling
@@ -54,4 +59,4 @@ jobs:
         with:
           package-name: turtlebot3
           target-ros2-distro: ${{ matrix.ros_distribution }}
-          vcs-repo-file-url: "https://raw.githubusercontent.com/ROBOTIS-GIT/turtlebot3/ros2-devel/turtlebot3_ci.repos"
+          vcs-repo-file-url: "https://raw.githubusercontent.com/ROBOTIS-GIT/turtlebot3/humble-devel/turtlebot3_ci.repos"
