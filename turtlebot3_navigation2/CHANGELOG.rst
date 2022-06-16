@@ -2,7 +2,7 @@
 Changelog for package turtlebot3_navigation2
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-2.1.5 (2202-05-26)
+2.1.5 (2022-05-26)
 ------------------
 * ROS2 Humble Hawksbill supported
 
