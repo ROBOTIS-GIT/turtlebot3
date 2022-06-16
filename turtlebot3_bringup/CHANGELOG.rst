@@ -14,17 +14,9 @@ Changelog for package turtlebot3_bringup
 ------------------
 * ROS 2 Rolling Ridley supported
 * fix ambiguous ParameterValue calls (#748, #736)
-* Contributors: m2-farzan, Will Son
-
-2.1.2 (2021-04-07)
-------------------
-* add LDS-02 support
-
-2.1.3 (2021-09-02)
-------------------
 * rename and update nav2 params
 * modify robot_state_publisher
-* Contributors: David Park, Ashe Kim, Will Son
+* Contributors: m2-farzan, David Park, Ashe Kim, Will Son
 
 2.1.1 (2021-01-06)
 ------------------
