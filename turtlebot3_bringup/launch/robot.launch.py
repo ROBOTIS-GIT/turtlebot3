@@ -26,6 +26,7 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from launch.substitutions import ThisLaunchFileDir
 from launch_ros.actions import Node
+from launch.conditions import IfCondition
 
 
 def generate_launch_description():
@@ -58,6 +59,11 @@ def generate_launch_description():
 
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
 
+    launch_camera = LaunchConfiguration('launch_camera')
+    camera_default = 'false'
+    if TURTLEBOT3_MODEL == 'waffle_pi':
+        camera_default = 'true'
+
     return LaunchDescription([
         DeclareLaunchArgument(
             'use_sim_time',
@@ -74,10 +80,19 @@ def generate_launch_description():
             default_value=tb3_param_dir,
             description='Full path to turtlebot3 parameter file to load'),
 
+        DeclareLaunchArgument('launch_camera', default_value=camera_default,
+                              description='Determines if raspberry pi camera is launched.'),
+
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 [ThisLaunchFileDir(), '/turtlebot3_state_publisher.launch.py']),
             launch_arguments={'use_sim_time': use_sim_time}.items(),
+        ),
+
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(
+                [ThisLaunchFileDir(), '/rpicamera.launch.py']),
+                condition=IfCondition(launch_camera)
         ),
 
         IncludeLaunchDescription(
