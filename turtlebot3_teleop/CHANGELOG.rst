@@ -2,6 +2,11 @@
 Changelog for package turtlebot3_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.3.1 (2022-07-15)
+------------------
+* update bringup launchers for pizza model
+* update teleop for pizza model
+
 1.2.6 (2022-02-24)
 ------------------
 * Fix teleop_key on Windows 10

@@ -2,6 +2,12 @@
 Changelog for package turtlebot3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.3.1 (2022-07-15)
+------------------
+* update bringup launchers for pizza model
+* add 3d model to urdf folder
+* update teleop for pizza model
+
 1.2.6 (2022-02-24)
 ------------------
 * add LDS-02 support

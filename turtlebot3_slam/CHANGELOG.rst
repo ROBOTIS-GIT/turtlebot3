@@ -2,6 +2,10 @@
 Changelog for package turtlebot3_slam
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.3.1 (2022-07-15)
+------------------
+* update bringup launchers for pizza model
+
 1.2.6 (2022-02-24)
 ------------------
 * No Changes
