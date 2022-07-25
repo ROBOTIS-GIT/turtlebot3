@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # Copyright (c) 2011, Willow Garage, Inc.
 # All rights reserved.
@@ -41,6 +41,9 @@ BURGER_MAX_ANG_VEL = 2.84
 WAFFLE_MAX_LIN_VEL = 0.26
 WAFFLE_MAX_ANG_VEL = 1.82
 
+PIZZA_MAX_LIN_VEL = 0.49340807
+PIZZA_MAX_ANG_VEL = 2.84
+
 LIN_VEL_STEP_SIZE = 0.01
 ANG_VEL_STEP_SIZE = 0.1
 
@@ -52,8 +55,8 @@ Moving around:
    a    s    d
         x
 
-w/x : increase/decrease linear velocity (Burger : ~ 0.22, Waffle and Waffle Pi : ~ 0.26)
-a/d : increase/decrease angular velocity (Burger : ~ 2.84, Waffle and Waffle Pi : ~ 1.82)
+w/x : increase/decrease linear velocity (Burger : ~ 0.22, Waffle and Waffle Pi : ~ 0.26, Pizza : ~ 0.49)
+a/d : increase/decrease angular velocity (Burger : ~ 2.84, Waffle and Waffle Pi : ~ 1.82, Pizza : ~ 2.84)
 
 space key, s : force stop
 
@@ -115,6 +118,8 @@ def checkLinearLimitVelocity(vel):
       vel = constrain(vel, -BURGER_MAX_LIN_VEL, BURGER_MAX_LIN_VEL)
     elif turtlebot3_model == "waffle" or turtlebot3_model == "waffle_pi":
       vel = constrain(vel, -WAFFLE_MAX_LIN_VEL, WAFFLE_MAX_LIN_VEL)
+    elif turtlebot3_model == "pizza":
+      vel = constrain(vel, -PIZZA_MAX_LIN_VEL, PIZZA_MAX_LIN_VEL)
     else:
       vel = constrain(vel, -BURGER_MAX_LIN_VEL, BURGER_MAX_LIN_VEL)
 
@@ -125,6 +130,8 @@ def checkAngularLimitVelocity(vel):
       vel = constrain(vel, -BURGER_MAX_ANG_VEL, BURGER_MAX_ANG_VEL)
     elif turtlebot3_model == "waffle" or turtlebot3_model == "waffle_pi":
       vel = constrain(vel, -WAFFLE_MAX_ANG_VEL, WAFFLE_MAX_ANG_VEL)
+    elif turtlebot3_model == "pizza":
+      vel = constrain(vel, -PIZZA_MAX_ANG_VEL, PIZZA_MAX_ANG_VEL)
     else:
       vel = constrain(vel, -BURGER_MAX_ANG_VEL, BURGER_MAX_ANG_VEL)
 
