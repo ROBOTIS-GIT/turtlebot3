@@ -1,5 +1,5 @@
 <launch>
-  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi, pizza]"/>
+  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi, pizza, big_wheel]"/>
   <arg name="multi_robot_name" default=""/>
 
   <include file="$(find turtlebot3_bringup)/launch/turtlebot3_remote.launch">
