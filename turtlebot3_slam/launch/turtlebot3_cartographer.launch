@@ -16,7 +16,7 @@
 
 <launch>
   <!-- Arguments -->
-  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi, pizza]"/>
+  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi, pizza, big_wheel]"/>
   <arg name="configuration_basename" default="turtlebot3_lds_2d.lua"/>
 
   <!-- move_base -->

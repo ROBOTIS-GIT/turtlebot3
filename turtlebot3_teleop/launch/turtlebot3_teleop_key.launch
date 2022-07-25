@@ -1,5 +1,5 @@
 <launch>
-  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi, pizza]"/>
+  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi, pizza, big_wheel]"/>
   <param name="model" value="$(arg model)"/>
 
   <!-- turtlebot3_teleop_key already has its own built in velocity smoother -->
