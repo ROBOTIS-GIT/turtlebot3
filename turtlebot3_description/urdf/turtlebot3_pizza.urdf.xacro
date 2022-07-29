@@ -4,9 +4,10 @@
   <xacro:include filename="$(find turtlebot3_description)/urdf/turtlebot3_pizza.gazebo.xacro"/>
 
   <xacro:include filename="$(find sick_tim)/urdf/sick_tim.urdf.xacro" />
+
   <xacro:include filename="$(find realsense2_description)/urdf/_d435.urdf.xacro" />
 
-  <xacro:arg name="use_nominal_extrinsics" default="false"/>
+  <xacro:arg name="use_nominal_extrinsics" default="true"/>
   <xacro:arg name="add_plug" default="false" />
   <xacro:arg name="use_mesh" default="true" />
 
@@ -29,7 +30,7 @@
     <visual>
       <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://turtlebot3_description/meshes/bases/big_base.obj"/>
+        <mesh filename="package://turtlebot3_description/meshes/bases/pizza_base.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <!-- <material name="light_black"/> -->
     </visual>
@@ -62,7 +63,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://turtlebot3_description/meshes/wheels/big_tire.dae"/>
+        <mesh filename="package://turtlebot3_description/meshes/wheels/pizza_tire.dae"/>
       </geometry>
       <!-- <material name="dark"/> -->
     </visual>
@@ -70,7 +71,7 @@
     <collision>
       <origin xyz="0.0 0.0 0" rpy="0 0 0"/>
       <geometry>
-        <cylinder length="0.02425" radius="0.0605"/>
+        <cylinder length="0.02425" radius="0.06225"/>
       </geometry>
     </collision>
 
@@ -95,7 +96,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://turtlebot3_description/meshes/wheels/big_tire.dae"/>
+        <mesh filename="package://turtlebot3_description/meshes/wheels/pizza_tire.dae"/>
       </geometry>
       <!-- <material name="dark"/> -->
     </visual>
@@ -103,7 +104,7 @@
     <collision>
       <origin xyz="0.0 0.0 0" rpy="0 0 0"/>
       <geometry>
-        <cylinder length="0.02425" radius="0.0605"/>
+        <cylinder length="0.02425" radius="0.06225"/>
       </geometry>
     </collision>
 
@@ -177,7 +178,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://turtlebot3_description/meshes/joints/big_tire_joint.dae"/>
+        <mesh filename="package://turtlebot3_description/meshes/joints/pizza_tire_joint.dae"/>
       </geometry>
       <!-- <material name="dark"/> -->
     </visual>
@@ -202,7 +203,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://turtlebot3_description/meshes/joints/big_tire_joint.dae"/>
+        <mesh filename="package://turtlebot3_description/meshes/joints/pizza_tire_joint.dae"/>
       </geometry>
       <!-- <material name="dark"/> -->
     </visual>
@@ -227,7 +228,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://turtlebot3_description/meshes/wheels/big_caster.dae"/>
+        <mesh filename="package://turtlebot3_description/meshes/wheels/pizza_caster.dae"/>
       </geometry>
       <!-- <material name="dark"/> -->
     </visual>
@@ -261,7 +262,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://turtlebot3_description/meshes/wheels/big_caster.dae"/>
+        <mesh filename="package://turtlebot3_description/meshes/wheels/pizza_caster.dae"/>
       </geometry>
       <!-- <material name="dark"/> -->
     </visual>
@@ -295,7 +296,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://turtlebot3_description/meshes/joints/big_caster_joint.dae"/>
+        <mesh filename="package://turtlebot3_description/meshes/joints/pizza_caster_joint.dae"/>
       </geometry>
       <!-- <material name="dark"/> -->
     </visual>
@@ -320,7 +321,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://turtlebot3_description/meshes/joints/big_caster_joint.dae"/>
+        <mesh filename="package://turtlebot3_description/meshes/joints/pizza_caster_joint.dae"/>
       </geometry>
       <!-- <material name="dark"/> -->
     </visual>
@@ -342,38 +343,50 @@
 
   <link name="imu_link"/>
 
-  <!-- <xacro:sick_tim551 name="laser" ros_topic="scan" > -->
 
-  <joint name="scan_joint" type="fixed">
+  <joint name="laser_mount_joint" type="fixed">
     <parent link="base_link"/>
-    <child link="base_scan"/>
-    <origin xyz="0.09596655 0.0 0.1375" rpy="0 0 ${PI/2}"/>
+    <child link="laser_mount_link"/>
+    <origin xyz="0.09496655 0.0 0.1375" rpy="0 0 0"/>
   </joint>
+  <xacro:sick_tim310 name="laser" ros_topic="scan" />
 
-  <link name="base_scan">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <mesh filename="package://turtlebot3_description/meshes/sensors/tim571.stl" scale="0.001 0.001 0.001"/>
-      </geometry>
-      <material name="dark"/>
-    </visual>
-
-    <collision>
-      <origin xyz="0.015 0 -0.0065" rpy="0 0 0"/>
-      <geometry>
-        <cylinder length="0.0315" radius="0.055"/>
-      </geometry>
-    </collision>
-
+  <!-- z_offset: distance between base plate and laser center (= center of mesh) -->
+  <!-- <link name="laser_mount_link">
     <inertial>
-      <mass value="0.114" />
+      <mass value="0.001" />
       <origin xyz="0 0 0" />
-      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
-               iyy="0.001" iyz="0.0"
-               izz="0.001" />
+      <inertia ixx="0.000001" ixy="0.0" ixz="0.0"
+        iyy="0.000001" iyz="0.0" izz="0.000001" />
     </inertial>
   </link>
+
+  <joint name="laser_joint" type="fixed">
+    <parent link="laser_mount_link" />
+    <child link="laser" />
+    <origin rpy="0 0 0" xyz="0 0 0.06296"/>
+  </joint>
+
+  <link name="laser">
+    <visual>
+      <geometry>
+        <mesh filename="package://sick_tim/meshes/sick_tim551.stl" />
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://sick_tim/meshes/sick_tim551.stl" />
+      </geometry>
+    </collision>
+    there are some problems with inertial parameters of the laser
+    <inertial>
+      <origin xyz="0 0 -0.026" />
+      <inertia ixx="${0.0833333 * 0.250 * (0.06 * 0.06 + 0.086 * 0.086)}" ixy="0.0" ixz="0.0"
+        iyy="${0.0833333 * 0.250 * (0.06 * 0.06 + 0.086 * 0.086)}" iyz="0.0"
+        izz="${0.0833333 * 0.250 * (0.06 * 0.06 + 0.06 * 0.06)}" />
+    </inertial>
+  </link> -->
+
 
   <xacro:sensor_d435 parent="base_link" use_nominal_extrinsics="$(arg use_nominal_extrinsics)" add_plug="$(arg add_plug)" use_mesh="$(arg use_mesh)">
     <origin xyz="0.23495003 0.0 0.1490935" rpy="0 0 0"/>
