@@ -35,14 +35,26 @@ if os.name == 'nt':
 else:
   import tty, termios
 
+# WHEEL_RADIUS                     (BURGER : 0.033[m], WAFFLE : 0.033[m], PIZZA : 0.06225[m], BIG_WHEEL : 0.06225[m])
+# WHEEL_SEPARATION                 (BURGER : 0.160[m], WAFFLE : 0.287[m], PIZZA : 0.46485[m], BIG_WHEEL : 0.29405[m])
+# TURNING_RADIUS                   (BURGER : 0.080[m], WAFFLE : 0.1435[m], PIZZA : 0.232425[m], BIG_WHEEL : 0.147025[m])
+# ROBOT_RADIUS                     (BURGER : 0.105[m], WAFFLE : 0.220[m], PIZZA : 0.355778[m], BIG_WHEEL : 0.220[m])
+# ROBOT_RPM                        (BURGER : 61[rpm], WAFFLE : 77[rpm], PIZZA : 53[rpm], BIG_WHEEL : 77[rpm])
+
+# MAX_LINEAR_VELOCITY              (WHEEL_RADIUS * 2 * 3.14159265359 * ROBOT_RPM / 60) [m/s] 
+# MAX_ANGULAR_VELOCITY             (MAX_LINEAR_VELOCITY / TURNING_RADIUS)[rad/s]
+
 BURGER_MAX_LIN_VEL = 0.22
 BURGER_MAX_ANG_VEL = 2.84
 
 WAFFLE_MAX_LIN_VEL = 0.26
 WAFFLE_MAX_ANG_VEL = 1.82
 
-PIZZA_MAX_LIN_VEL = 0.49340807
-PIZZA_MAX_ANG_VEL = 2.84
+PIZZA_MAX_LIN_VEL = 0.35
+PIZZA_MAX_ANG_VEL = 1.49
+
+BIG_WHEEL_MAX_LIN_VEL = 0.50
+BIG_WHEEL_MAX_ANG_VEL = 3.41
 
 LIN_VEL_STEP_SIZE = 0.01
 ANG_VEL_STEP_SIZE = 0.1
@@ -120,6 +132,8 @@ def checkLinearLimitVelocity(vel):
       vel = constrain(vel, -WAFFLE_MAX_LIN_VEL, WAFFLE_MAX_LIN_VEL)
     elif turtlebot3_model == "pizza":
       vel = constrain(vel, -PIZZA_MAX_LIN_VEL, PIZZA_MAX_LIN_VEL)
+    elif turtlebot3_model == "big_wheel":
+      vel = constrain(vel, -BIG_WHEEL_MAX_LIN_VEL, BIG_WHEEL_MAX_LIN_VEL)
     else:
       vel = constrain(vel, -BURGER_MAX_LIN_VEL, BURGER_MAX_LIN_VEL)
 
@@ -132,6 +146,8 @@ def checkAngularLimitVelocity(vel):
       vel = constrain(vel, -WAFFLE_MAX_ANG_VEL, WAFFLE_MAX_ANG_VEL)
     elif turtlebot3_model == "pizza":
       vel = constrain(vel, -PIZZA_MAX_ANG_VEL, PIZZA_MAX_ANG_VEL)
+    elif turtlebot3_model == "big_wheel":
+      vel = constrain(vel, -BIG_WHEEL_MAX_ANG_VEL, BIG_WHEEL_MAX_ANG_VEL)
     else:
       vel = constrain(vel, -BURGER_MAX_ANG_VEL, BURGER_MAX_ANG_VEL)
 
