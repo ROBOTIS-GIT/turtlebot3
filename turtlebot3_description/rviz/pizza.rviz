@@ -114,7 +114,7 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        caster_back_link:
+        wheel_left_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -124,7 +124,12 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        wheel_right_link:
+        caster_back_left_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        caster_back_right_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -146,8 +151,6 @@ Visualization Manager:
           Value: true
         base_scan:
           Value: true
-        caster_back_link:
-          Value: true
         imu_link:
           Value: true
         odom:
@@ -155,6 +158,16 @@ Visualization Manager:
         wheel_left_link:
           Value: true
         wheel_right_link:
+          Value: true
+        caster_back_left_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        caster_back_right_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
           Value: true
       Marker Scale: 0.4000000059604645
       Name: TF
@@ -167,13 +180,15 @@ Visualization Manager:
             base_link:
               base_scan:
                 {}
-              caster_back_link:
-                {}
               imu_link:
                 {}
               wheel_left_link:
                 {}
               wheel_right_link:
+                {}
+              caster_back_left_link:
+                {}
+              caster_back_right_link:
                 {}
       Update Interval: 0
       Value: true

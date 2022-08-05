@@ -53,7 +53,7 @@
     <kd>100.0</kd>
     <minDepth>0.001</minDepth>
     <maxVel>1.0</maxVel>
-    <!-- <material>Gazebo/FlatBlack</material> -->
+    <material>Gazebo/FlatBlack</material>
   </gazebo>
 
   <gazebo reference="caster_back_right_link">
@@ -63,11 +63,11 @@
     <kd>100.0</kd>
     <minDepth>0.001</minDepth>
     <maxVel>1.0</maxVel>
-    <!-- <material>Gazebo/FlatBlack</material> -->
+    <material>Gazebo/FlatBlack</material>
   </gazebo>
 
 
-  <gazebo reference="caster_back_right_conn_link">
+  <gazebo reference="caster_back_left_conn_link">
     <!-- <material>Gazebo/DarkGrey</material> -->
   </gazebo>
 
@@ -100,7 +100,7 @@
       <leftJoint>wheel_left_joint</leftJoint>
       <rightJoint>wheel_right_joint</rightJoint>
       <wheelSeparation>0.46485</wheelSeparation>
-      <wheelDiameter>0.121</wheelDiameter>
+      <wheelDiameter>0.1245</wheelDiameter>
       <wheelAcceleration>1</wheelAcceleration>
       <wheelTorque>10</wheelTorque>
       <rosDebugLevel>na</rosDebugLevel>
@@ -136,7 +136,7 @@
     </plugin>
   </gazebo>
 
-  <gazebo reference="base_scan">
+  <!-- <gazebo reference="base_scan">
     <material>Gazebo/FlatBlack</material>
     <sensor type="ray" name="lds_lfcd_sensor">
       <pose>0 0 0 0 0 0</pose>
@@ -167,9 +167,9 @@
         <frameName>base_scan</frameName>
       </plugin>
     </sensor>
-  </gazebo>
+  </gazebo> -->
 
-  <gazebo reference="camera_rgb_frame">
+  <!-- <gazebo reference="camera_rgb_frame">
     <sensor type="depth" name="realsense_R200">
       <always_on>true</always_on>
       <visualize>$(arg camera_visual)</visualize>
@@ -211,6 +211,6 @@
         <hackBaseline>0</hackBaseline>
       </plugin>
     </sensor>
-  </gazebo>
+  </gazebo> -->
 
 </robot>
