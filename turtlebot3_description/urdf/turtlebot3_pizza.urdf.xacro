@@ -217,7 +217,7 @@
   </link>
 
 
-  <joint name="caster_back_left_joint" type="continuous">
+  <joint name="caster_back_left_joint" type="fixed">
     <parent link="base_link"/>
     <child link="caster_back_left_link"/>
     <origin xyz="-0.13016029 0.23242569 -0.009" rpy="${-PI/2} 0 0"/>
@@ -230,7 +230,7 @@
       <geometry>
         <mesh filename="package://turtlebot3_description/meshes/wheels/pizza_caster.dae"/>
       </geometry>
-      <!-- <material name="dark"/> -->
+      <material name="dark"/>
     </visual>
 
     <collision>
@@ -246,12 +246,11 @@
       <inertia ixx="0.001" ixy="0.0" ixz="0.0"
                iyy="0.001" iyz="0.0"
                izz="0.001" />
-      <!-- <inertia ixx="0.000001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.000001"/> -->
     </inertial>
   </link>
 
 
-  <joint name="caster_back_right_joint" type="continuous">
+  <joint name="caster_back_right_joint" type="fixed">
     <parent link="base_link"/>
     <child link="caster_back_right_link"/>
     <origin xyz="-0.13016029 -0.23242569 -0.009" rpy="${PI/2} 0 ${PI}"/>
@@ -264,7 +263,7 @@
       <geometry>
         <mesh filename="package://turtlebot3_description/meshes/wheels/pizza_caster.dae"/>
       </geometry>
-      <!-- <material name="dark"/> -->
+      <material name="dark"/>
     </visual>
 
     <collision>
@@ -280,7 +279,6 @@
       <inertia ixx="0.001" ixy="0.0" ixz="0.0"
                iyy="0.001" iyz="0.0"
                izz="0.001" />
-      <!-- <inertia ixx="0.000001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.000001"/> -->
     </inertial>
   </link>
 

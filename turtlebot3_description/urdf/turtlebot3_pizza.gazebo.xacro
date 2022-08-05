@@ -53,7 +53,7 @@
     <kd>100.0</kd>
     <minDepth>0.001</minDepth>
     <maxVel>1.0</maxVel>
-    <!-- <material>Gazebo/FlatBlack</material> -->
+    <material>Gazebo/FlatBlack</material>
   </gazebo>
 
   <gazebo reference="caster_back_right_link">
@@ -63,11 +63,11 @@
     <kd>100.0</kd>
     <minDepth>0.001</minDepth>
     <maxVel>1.0</maxVel>
-    <!-- <material>Gazebo/FlatBlack</material> -->
+    <material>Gazebo/FlatBlack</material>
   </gazebo>
 
 
-  <gazebo reference="caster_back_right_conn_link">
+  <gazebo reference="caster_back_left_conn_link">
     <!-- <material>Gazebo/DarkGrey</material> -->
   </gazebo>
 
