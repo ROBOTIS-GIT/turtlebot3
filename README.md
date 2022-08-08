@@ -40,7 +40,7 @@ Accelerometer 3 Axis |
 | 電力アダプタ | Input : 100-240V, AC 50/60Hz, 1.5A @max, Output : 12V DC, 5A | Input : 100-240V, AC 50/60Hz, 1.5A @max, Output : 12V DC, 5A |
 
 ## ソフトウェア関係
-### ラウンチ実行
+### launchファイルの実行
 ### 選定デバイスの変更方法
 
 
