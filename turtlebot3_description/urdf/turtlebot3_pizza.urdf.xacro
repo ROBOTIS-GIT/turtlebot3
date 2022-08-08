@@ -347,7 +347,7 @@
     <child link="laser_mount_link"/>
     <origin xyz="0.09496655 0.0 0.1375" rpy="0 0 0"/>
   </joint>
-  <xacro:sick_tim310 name="laser" ros_topic="scan" />
+  <xacro:sick_tim571 name="laser" ros_topic="scan" />
 
   <!-- z_offset: distance between base plate and laser center (= center of mesh) -->
   <!-- <link name="laser_mount_link">
