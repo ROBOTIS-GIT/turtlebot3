@@ -1,6 +1,7 @@
 <launch>
   <!-- Arguments -->
   <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi, pizza, big_wheel]"/>
+  <arg name="lds_model" default="$(env LDS_MODEL)" doc="LDS MODEL [LDS-01, LDS-02]"/>
   <arg name="configuration_basename" default="turtlebot3_lds_2d.lua"/>
   <arg name="odom_frame" default="odom"/>
   <arg name="base_frame" default="base_footprint"/>
@@ -40,7 +41,8 @@
     <param name="laser_z_min_value"          value= "-0.1" />
     <param name="laser_z_max_value"          value= "0.1" />
     <param name="laser_min_dist"             value="0.12" />
-    <param name="laser_max_dist"             value="3.5" />
+    <param if="$(eval lds_model == 'LDS-01')" name="laser_max_dist" value="3.5" />
+    <param if="$(eval lds_model == 'LDS-02')" name="laser_max_dist" value="8.0" />
 
     <!-- Advertising config -->
     <param name="advertise_map_service"      value="true"/> 
