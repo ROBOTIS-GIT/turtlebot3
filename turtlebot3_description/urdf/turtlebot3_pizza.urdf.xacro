@@ -32,7 +32,7 @@
       <geometry>
         <mesh filename="package://turtlebot3_description/meshes/bases/pizza_base.stl" scale="0.001 0.001 0.001"/>
       </geometry>
-      <!-- <material name="light_black"/> -->
+      <material name="light_grey"/>
     </visual>
 
     <collision>
@@ -347,7 +347,7 @@
     <child link="laser_mount_link"/>
     <origin xyz="0.09496655 0.0 0.1375" rpy="0 0 0"/>
   </joint>
-  <xacro:sick_tim571 name="laser" ros_topic="scan" />
+  <xacro:sick_tim571 name="laser" ros_topic="scan"/>
 
   <!-- z_offset: distance between base plate and laser center (= center of mesh) -->
   <!-- <link name="laser_mount_link">
@@ -385,6 +385,22 @@
     </inertial>
   </link> -->
 
+
+  <joint name="camera_mount_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="camera_mount_link"/>
+    <origin xyz="0.210 0.0 0.15148333" rpy="0 0 ${-PI/2}"/>
+  </joint>
+
+  <link name="camera_mount_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://turtlebot3_description/meshes/joints/pizza_camera_joint.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="dark"/>
+    </visual>
+  </link>
 
   <xacro:sensor_d435 parent="base_link" use_nominal_extrinsics="$(arg use_nominal_extrinsics)" add_plug="$(arg add_plug)" use_mesh="$(arg use_mesh)">
     <origin xyz="0.23495003 0.0 0.1490935" rpy="0 0 0"/>
