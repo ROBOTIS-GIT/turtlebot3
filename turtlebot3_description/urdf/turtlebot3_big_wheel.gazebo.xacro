@@ -1,8 +1,10 @@
 <?xml version="1.0"?>
-<robot name="turtlebot3_waffle_pi_sim" xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:arg name="laser_visual"  default="false"/>
+<robot name="turtlebot3_big_wheel_sim" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:arg name="laser_visual"  default="true"/>
   <xacro:arg name="camera_visual" default="false"/>
   <xacro:arg name="imu_visual"    default="false"/>
+  <!-- <xacro:arg name="lds_model" default="$(env LDS_MODEL)"/> -->
+  <xacro:property name="lds_model" value="$(env LDS_MODEL)"/>
 
   <gazebo reference="base_link">
     <material>Gazebo/DarkGrey</material>
@@ -59,7 +61,7 @@
   </gazebo>
 
   <gazebo>
-    <plugin name="turtlebot3_waffle_pi_controller" filename="libgazebo_ros_diff_drive.so">
+    <plugin name="turtlebot3_big_wheel_controller" filename="libgazebo_ros_diff_drive.so">
       <commandTopic>cmd_vel</commandTopic>
       <odometryTopic>odom</odometryTopic>
       <odometryFrame>odom</odometryFrame>
@@ -110,38 +112,75 @@
     </plugin>
   </gazebo>
 
-  <gazebo reference="base_scan">
-    <material>Gazebo/FlatBlack</material>
-    <sensor type="ray" name="lds_lfcd_sensor">
-      <pose>0 0 0 0 0 0</pose>
-      <visualize>$(arg laser_visual)</visualize>
-      <update_rate>5</update_rate>
-      <ray>
-        <scan>
-          <horizontal>
-            <samples>360</samples>
-            <resolution>1</resolution>
-            <min_angle>0.0</min_angle>
-            <max_angle>6.28319</max_angle>
-          </horizontal>
-        </scan>
-        <range>
-          <min>0.120</min>
-          <max>3.5</max>
-          <resolution>0.015</resolution>
-        </range>
-        <noise>
-          <type>gaussian</type>
-          <mean>0.0</mean>
-          <stddev>0.01</stddev>
-        </noise>
-      </ray>
-      <plugin name="gazebo_ros_lds_lfcd_controller" filename="libgazebo_ros_laser.so">
-        <topicName>scan</topicName>
-        <frameName>base_scan</frameName>
-      </plugin>
-    </sensor>
-  </gazebo>
+  <xacro:if value="${lds_model=='LDS-01'}">
+    <gazebo reference="base_scan">
+      <material>Gazebo/FlatBlack</material>
+      <sensor type="ray" name="lds_lfcd_sensor">
+        <pose>0 0 0 0 0 0</pose>
+        <visualize>$(arg laser_visual)</visualize>
+        <update_rate>5</update_rate>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>360</samples>
+              <resolution>1</resolution>
+              <min_angle>0.0</min_angle>
+              <max_angle>6.28319</max_angle>
+            </horizontal>
+          </scan>
+          <range>
+            <min>0.150</min>
+            <max>3.5</max>
+            <resolution>0.015</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.01</stddev>
+          </noise>
+        </ray>
+        <plugin name="gazebo_ros_lds_lfcd_controller" filename="libgazebo_ros_laser.so">
+          <topicName>scan</topicName>
+          <frameName>base_scan</frameName>
+        </plugin>
+      </sensor>
+    </gazebo>
+  </xacro:if>
+
+  <xacro:if value="${lds_model=='LDS-02'}">
+    <gazebo reference="base_scan">
+      <material>Gazebo/FlatBlack</material>
+      <sensor type="ray" name="lds_lfcd_sensor">
+        <pose>0 0 0 0 0 0</pose>
+        <visualize>$(arg laser_visual)</visualize>
+        <update_rate>5</update_rate>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>360</samples>
+              <resolution>1</resolution>
+              <min_angle>0.0</min_angle>
+              <max_angle>6.28319</max_angle>
+            </horizontal>
+          </scan>
+          <range>
+            <min>0.20</min>
+            <max>8.0</max>
+            <resolution>0.015</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.01</stddev>
+          </noise>
+        </ray>
+        <plugin name="gazebo_ros_lds_lfcd_controller" filename="libgazebo_ros_laser.so">
+          <topicName>scan</topicName>
+          <frameName>base_scan</frameName>
+        </plugin>
+      </sensor>
+    </gazebo>
+  </xacro:if>
 
   <gazebo reference="base_camera_link">
     <material>Gazebo/DarkGrey</material>
