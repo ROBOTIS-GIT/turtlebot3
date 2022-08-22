@@ -2,8 +2,8 @@
 <COLLADA version="1.4.1" xmlns="http://www.collada.org/2005/11/COLLADASchema">
 
   <asset>
-    <created>2022-07-25T11:22:28</created>
-    <modified>2022-07-25T11:22:28</modified>
+    <created>2022-08-22T05:59:51</created>
+    <modified>2022-08-22T05:59:51</modified>
     <unit meter="1" name="meters"/>
     <up_axis>Z_UP</up_axis>
   </asset>
@@ -133,9 +133,9 @@
 
   <library_visual_scenes>
     <visual_scene id="ID1">
-      <node id="ID2" name="Assembly 1">
+      <node id="ID2" name="Wheel_Assembly">
         <node>
-          <matrix>1 0 0 0 0 1 0 -5.97015e-19 0 0 1 -0.012125 0 0 0 1</matrix>
+          <matrix>1 0 0 0 0 1 0 -8.67362e-19 0 0 1 -0.012125 0 0 0 1</matrix>
           <instance_node url="#ID3"/>
         </node>
         <node>
