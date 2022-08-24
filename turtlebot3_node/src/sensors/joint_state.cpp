@@ -81,6 +81,20 @@ void JointState::publish(
 
   // msg->effort.push_back(current[0]);
   // msg->effort.push_back(current[1]);
+  
+  // https://stackoverflow.com/questions/65928723/exception-thrown-read-access-violation-it-was-0xfdfdfdfd
+  // https://www.reddit.com/r/learnprogramming/comments/1boksy/c_access_violation_reading_location_0xfdfdfdfd/
+  // https://social.msdn.microsoft.com/Forums/vstudio/en-US/e6e1d2a0-70e3-4a91-bc84-e634b5bbda98/what-is-this-memory-location?forum=vclanguage
+  // TODO: dxl_sdk_wrapper->get_data_from_device returns memory access exception, which is not handled and therefore odometry value is calculated 
+  // with exception value (0xFDFDFDFD), which cause huge position change.
+  // Visualisation of this issue can be seen here: https://github.com/ros-planning/navigation2/issues/3117
+  // This is just a temporary workaround to make it Manwork. Exception should be corectly handled
+
+  static constexpr auto NoMansLand = static_cast<std::int32_t>(0xFDFDFDFD);
+  if (position[0] == NoMansLand || position[1] == NoMansLand)
+  {
+    return;
+  }
 
   last_diff_position[0] += (position[0] - last_position[0]);
   last_diff_position[1] += (position[1] - last_position[1]);
