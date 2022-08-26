@@ -174,21 +174,21 @@ $ cd ~/catkin_ws
 $ cakin_make
 ```
 
-> **note**
+> **Note**
 > [sick_tim](https://github.com/uos/sick_tim)の公式GitHubとの差分はTim571のシミュレーション環境にも対応しています。
 
 そして、LANケーブルでNUCに繋げるので、IPの設定も行います。
 
 まず、Ubuntuの方の設定について、次の手順になります。
 1. LiDARのIPを確認し、メモしててください
-> **note**
+> **Note**
 > デフォルトでIPは「192.168.0.1」になっていますが、別のIPアドレスを設定する必要な場合は、SICK公式サイトにて、IPの更新方法を確認してください。
 2. Ubuntuで「Settings／設定」のプログラムを開きます。
 1. 「Network／ネットワーク」に移動して、「Wired／有線」の一覧を確認します。
 1. その最初の箱にあるマスミのイコンを押します。
 1. IPv4に移動して、「IPv4 Method」はデフォルトで「Automatic (DHCP)」になっているところ、「Manual」を選択します。
 1. 「Address」の中に、「Address」を「192.168.X.XXX」に、「Netmask」を「255.255.255.0」に、Gateway「192.168.X.1」にします。
-> **note**
+> **Note**
 > LiDARのIPに応じて、「X」の部分を更新します。そして、「XXX」の部分は、LiDARのIPと一致してはなりません。例えば、LiDARのIPは「192.168.0.1」の場合、「1」以外に「0~255」の間に番後を選択してください。
 
 次に、「sick_tim571_2050101.launch」(~/catkin_ws/src/sick?tim)のlaunchファイルをつぎのように書き換えます。
@@ -212,11 +212,21 @@ $ cakin_make
          <param name="port" type="string" value="2112" />
          <param name="timelimit" type="int" value="5" />
 ```
-> **note**
+> **Note**
 > `value="192.168.X.XXX`の「X」の文字をLiDARのIPに応じて、更新します。例えば、デフォルトでLiDARのIPは「192.168.0.1」の場合、`value="192.168.0.1"`のままで大丈夫です。（別のIPアドレスを設定する必要な場合は、SICK公式サイトにて、IPの更新方法を確認してください。）
 
 ### 動かしてみよう！
-この時点に付いたら、環境のセットアップは完了となります。これから、Turtlebot3 Pizzaモデルを実際に動かしてみましょう。
+この時点に付いたら、環境のセットアップは完了となります。これから、Turtlebot3 Pizzaモデルを実際に動かしてみましょう。動作方法は、E-manualの「[Bring-Up](https://emanual.robotis.com/docs/en/platform/turtlebot3/bringup/)」のままで進めば大丈夫です。
+
+> **Note**
+> sshよりNUCに繋ぐとき、NUCのIPアドレス（192.168.X.XXX）を使用することになります。
+
+そして、新しいターミナルを開くたびに、Turtlebot3のモデルも指定してください。
+```code 
+$ export TURTLEBOT3_MODEL=pizza
+```
+
+
 
 
 
