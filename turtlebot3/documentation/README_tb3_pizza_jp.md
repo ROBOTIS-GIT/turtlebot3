@@ -1,17 +1,17 @@
 [日本語](/turtlebot3/documentation/README_tb3_pizza_jp.md) | [English](/turtlebot3/documentation/README_tb3_pizza_en.md)
 
 # TurtleBot3 Friends: Pizza
-<img src="/turtlebot3/documentation/tb3_pizza.png" width="300">
+![TB3 Pizza](/turtlebot3/documentation/tb3_pizza_bg.png)
 
 ## セットアップ手順（Quick Start Guide）
 ### 1. 環境設定
 Turtlebot3の新FriendsモデルのPizzaを利用するには、まずTurtlebot3の基本的な設定を行います。そのため、Turtlebot3のE-manualの「[Quick Start Guide](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/)」を従って、セットアップを行ってください。ただし、以下の変更点に注意してください。
 
-- [1.1 PC Setup](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/#pc-setup)について
+- [1.1. PC Setup](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/#pc-setup)について
 
 Pizzaモデルに関して、Raspberry PIの代わりにNUC11を使います。そして、現時点では、ROS Noeticに対応していますので、「[Quick Start Guide](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/)」の「Noetic」ブランチを選択してください。
 
-- [1.1.4 Install TurtleBot3 Packages](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/#install-turtlebot3-packages)の変更点
+- [1.1.4. Install TurtleBot3 Packages](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/#install-turtlebot3-packages)の変更点
 
 この部分では必要なROSパッケージをインストールしますが、今回はDebianのバイナルパッケージを使わずに、Robotis日本支店の公式GitHubからダウンロードします。以下の手順通りセットアップを進めてください。
 
@@ -28,7 +28,7 @@ $ cd ~/catkin_ws && catkin_make
 $ echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
 ```
 
-- [SBC Setup](https://emanual.robotis.com/docs/en/platform/turtlebot3/sbc_setup/#sbc-setup)について
+- [3.2. SBC Setup](https://emanual.robotis.com/docs/en/platform/turtlebot3/sbc_setup/#sbc-setup)について
 
 今回はRaspberry PIの代わりにNUC11を使いますので、E-manualに書いてあるステップを飛ばします。しかし、次のような手順でセットアップを行います。
 
@@ -46,13 +46,13 @@ $ rm -r turtlebot3_description/ turtlebot3_teleop/ turtlebot3_navigation/ turtle
 $ cd ~/catkin_ws && catkin_make
 ```
 
-- [3.3 OpenCR Setup](https://emanual.robotis.com/docs/en/platform/turtlebot3/opencr_setup)の変更点(更新！！！)
+- [3.3. OpenCR Setup](https://emanual.robotis.com/docs/en/platform/turtlebot3/opencr_setup)の変更点(更新！！！)
 
 OpenCRを設定するには、NUCを通して、セットアップを行います。
 
 1. [OpenCR](https://emanual.robotis.com/docs/en/parts/controller/opencr10/)をmicro USBケーブル経由でNUCに繋げてください。
 
-1. OpenCRにファームウェアをアップロードするには、NUCに必要なDebianパッケージをインストールします。
+2. OpenCRにファームウェアをアップロードするには、NUCに必要なDebianパッケージをインストールします。
 ```code
 $ sudo dpkg --add-architecture armhf
 $ sudo apt-get update
@@ -82,10 +82,10 @@ $ ./update.sh $OPENCR_PORT $OPENCR_MODEL.opencr
 ![OpenCR Success Output](https://myoctocat.com/assets/images/base-octocat.svg)
 
 
-### ネットワーク設定
+### 2. ネットワーク設定
 今までのTurtleBot3のモデルの中で、分散処理のためRaspberry PIが使われてきました。しかし、今回はその代わりにNUCを`master pc`として、そして別のPCをリモートパソコンとして用意することになりますので、以下のように設定してください。
 
-- NUC（master PC）側
+- **NUC（master PC）側**
 1. NUC PCが繋がれたWIFIのIPアドレスを取得します。
 ```code
 $ ifconfig
@@ -112,7 +112,7 @@ export ROS_HOSTNAME=192.168.X.XXX
 $ source ~/.bashrc
 ```
 
-- リモートPC（remote PC）側
+- **リモートPC（remote PC）側**
 
 1. 前のNUC PCのIPアドレスを確認し、メモしておきます。（192.168.X.XXX）
 1. リモートPC側のIPアドレスを`ifconfig`のコマンドで確認して、メモしておきます。（192.168.X.YYY）
@@ -134,12 +134,12 @@ export ROS_HOSTNAME=192.168.X.YYY
 $ source ~/.bashrc
 ```
 
-### 追加レポジトリの設定
+### 3. 追加レポジトリの設定
 Turtlebot3のPizzaモデルには、デフォルトとして「Realsense D435」のデプスカメラと「Sick Tim571」のLiDARが付けてあります。それそれのレポジトリのセットアップ手順を説明します。
 > **Warning**
 > 以下の手順はリモートPC側に行われます。
 
-1. カメラ設定（要確認！！！）
+1. **カメラ設定（要確認！！！）**
 
 まず、必要なパッケージをインストールします。
 - ROS Wrapper for Intel® RealSense™ Devices（公式サイトより）
@@ -162,7 +162,7 @@ $ catkin_make
 ```
 
 
-1. LiDAR設定
+1. **LiDAR設定**
 
 Sick Timのudev rulesの追加とともに、レポジトリをコンパイルします。
 
@@ -195,7 +195,7 @@ $ cakin_make
 
 次に、「sick_tim571_2050101.launch」(~/catkin_ws/src/sick?tim)のlaunchファイルをつぎのように書き換えます。
 
-- 更新前
+- **更新前**
 
 ```code
     <!-- Uncomment this to enable TCP instead of USB connection; 'hostname' is the host name or IP address of the laser scanner
@@ -206,7 +206,7 @@ $ cakin_make
     -->
 ```
 
-- 更新後
+- **更新後**
 ```code
     <!-- Uncomment this to enable TCP instead of USB connection; 'hostname' is the host name or IP address of the laser scanner
     In cases where a race condition exists and the computer boots up before the TIM is ready, increase 'timelimit.' -->
@@ -218,9 +218,19 @@ $ cakin_make
 > `value="192.168.X.XXX`の「X」の文字をLiDARのIPに応じて、更新します。例えば、デフォルトでLiDARのIPは「192.168.0.1」の場合、`value="192.168.0.1"`のままで大丈夫です。（別のIPアドレスを設定する必要な場合は、SICK公式サイトにて、IPの更新方法を確認してください。）
 
 
-## ソフトウェア関係
+## シミュレーション環境（Gazebo）
+TurtleBot3 PizzaにはGazeboという物理演算を考慮したシミュレーション環境も備えています。基本的に、シミュレーションのパッケージをダウンロードするだけで、すぐに使えます。
 
-### 動かしてみよう！
+```code
+$ cd ~/catkin_ws/src/
+$ git clone -b noetic-devel https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_simulations_jp_custom
+$ cd ~/catkin_ws && catkin_make
+```
+
+
+## 動かしてみましょう！
+
+### 実機
 この時点に付いたら、環境のセットアップは完了となります。これから、Turtlebot3 Pizzaモデルを実際に動かしてみましょう。動作方法は、E-manualの「[Bring-Up](https://emanual.robotis.com/docs/en/platform/turtlebot3/bringup/)」のままで進めば大丈夫です。
 
 > **Note**
@@ -230,6 +240,20 @@ $ cakin_make
 ```code 
 $ export TURTLEBOT3_MODEL=pizza
 ```
+> **Note**
+> `pizza`以外にも、`burger`, `waffle_pi`, `big_wheel`というモデルもあります。
+
+
+### シミュレーション
+動作方法は、E-manualの「[`1.1.2. Launch Simulation World`](https://emanual.robotis.com/docs/en/platform/turtlebot3/simulation/#launch-simulation-world)」の項目ままで進めば大丈夫です。
+
+
+```code 
+$ export TURTLEBOT3_MODEL=pizza
+$ roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
+```
+> **Note**
+> `empty_world`以外にも、`house`, `simulation`, `stage_1`などという環境もあります。
 
 
 ## ハードウェア関係
@@ -293,9 +317,8 @@ $ export TURTLEBOT3_MODEL=pizza
 | アクチュエータ | XM540-W150 | XM430-W210 |
 | LiDAR | SICK TiM571 | 360 Laser Distance Sensor LDS-01 or LDS-02 |
 | カメラ | Realsense D435 | Realsense D435 |
-| IMU | Gyroscope 3 Axis
-Accelerometer 3 Axis | Gyroscope 3 Axis
-Accelerometer 3 Axis |
+| IMU | Gyroscope 3 Axis | Gyroscope 3 Axis |
+|     | Accelerometer 3 Axis | Accelerometer 3 Axis |
 | 供給入力端子 |  | 3.3V / 800mA, 5V / 4A, 12V / 1A |
 | I/Oピン |  | GPIO 18 pins, Arduino 32 pin |
 | 周辺機器 |  | UART x3, CAN x1, SPI x1, I2C x1, ADC x5, 5pin OLLO x4 |
@@ -310,10 +333,10 @@ Accelerometer 3 Axis |
 | 電力アダプタ | Input : 100-240V, AC 50/60Hz, 1.5A @max, Output : 12V DC, 5A | Input : 100-240V, AC 50/60Hz, 1.5A @max, Output : 12V DC, 5A |
 
 
-## ROBOTIS e-Manual for TurtleBot3
+## TurtleBot3のROBOTIS e-Manual 
 - [ROBOTIS e-Manual for TurtleBot3](http://turtlebot3.robotis.com/)
 
-## Open Source related to TurtleBot3
+## TurtleBot3に関するオープンソース関連 
 - [turtlebot3](https://github.com/ROBOTIS-GIT/turtlebot3)
 - [turtlebot3_jp_custom](https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_jp_custom)
 - [turtlebot3_msgs](https://github.com/ROBOTIS-GIT/turtlebot3_msgs)
@@ -323,7 +346,7 @@ Accelerometer 3 Axis |
 - [OpenCR-Hardware](https://github.com/ROBOTIS-GIT/OpenCR-Hardware)
 - [OpenCR](https://github.com/ROBOTIS-GIT/OpenCR)
 
-## Documents and Videos related to TurtleBot3
+## TurtleBot3に関するドキュメントと動画 
 - [ROBOTIS e-Manual for TurtleBot3](http://turtlebot3.robotis.com/)
 - [ROBOTIS e-Manual for Dynamixel SDK](http://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_sdk/overview/)
 - [Website for TurtleBot Series](http://www.turtlebot.com/)
