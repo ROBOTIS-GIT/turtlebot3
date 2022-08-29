@@ -1,6 +1,6 @@
 [日本語](README.md) | [English](README_en.md)
 
-# TurtleBot3 Japan Custom
+# TurtleBot3 ROBITIS Japan
 <img src="https://github.com/ROBOTIS-GIT/emanual/blob/master/assets/images/platform/turtlebot3/logo_turtlebot3.png" width="300">
 
 [![kinetic-devel Status](https://github.com/ROBOTIS-GIT/turtlebot3/workflows/kinetic-devel/badge.svg)](https://github.com/ROBOTIS-GIT/turtlebot3/tree/kinetic-devel)
@@ -16,13 +16,13 @@
 [![galactic-devel Status](https://github.com/ROBOTIS-GIT/turtlebot3/workflows/galactic-devel/badge.svg)](https://github.com/ROBOTIS-GIT/turtlebot3/tree/galactic-devel)
 
 
-## TurtleBot3 Friends: Models
+## TurtleBot3 Friends: Custom Models
 <center>
 
 | TB3 Pizza | TB3 Big Wheel | TB3 Big Wheel with OM |
 |:---:|:---:|:---:|
 | ![TB3 Pizza](turtlebot3/documentation/tb3_pizza.png) | ![TB3 Big Wheel](turtlebot3/documentation/tb3_big_wheel.png) | Coming Soon |
-| [マニュアル](README_tb3_pizza_en.md) | [マニュアル](README_tb3_big_wheel_en.md) | [マニュアル](http://turtlebot3.robotis.com/) |
+| [Manual](README_tb3_pizza_en.md) | [Manual](README_tb3_big_wheel_en.md) | [Manual](http://turtlebot3.robotis.com/) |
 
 </center>
 
