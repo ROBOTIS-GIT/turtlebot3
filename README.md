@@ -1,20 +1,7 @@
+[日本語](README.md) | [English](README_en.md)
+
 # TurtleBot3 Japan Custom
 <img src="https://github.com/ROBOTIS-GIT/emanual/blob/master/assets/images/platform/turtlebot3/logo_turtlebot3.png" width="300">
-
-## TurtleBot3 Friends: モデル提示
-<center>
-
-| TB3 Pizza | TB3 Big Wheel | TB3 Big Wheel with OM |
-|:---:|:---:|:---:|
-| ![TB3 Pizza](turtlebot3/documentation/tb3_pizza.png) | ![TB3 Big Wheel](turtlebot3/documentation/tb3_big_wheel.png) | Coming Soon |
-| [マニュアル](README_tb3_pizza_jp.md) | [マニュアル](README_tb3_big_wheel_jp.md) | [マニュアル](http://turtlebot3.robotis.com/) |
-
-</center>
-
-## ソフトウェア関係
-### launchファイルの実行
-### 選定デバイスの変更方法
-
 
 [![kinetic-devel Status](https://github.com/ROBOTIS-GIT/turtlebot3/workflows/kinetic-devel/badge.svg)](https://github.com/ROBOTIS-GIT/turtlebot3/tree/kinetic-devel)
 
@@ -27,6 +14,17 @@
 [![foxy-devel Status](https://github.com/ROBOTIS-GIT/turtlebot3/workflows/foxy-devel/badge.svg)](https://github.com/ROBOTIS-GIT/turtlebot3/tree/foxy-devel)
 
 [![galactic-devel Status](https://github.com/ROBOTIS-GIT/turtlebot3/workflows/galactic-devel/badge.svg)](https://github.com/ROBOTIS-GIT/turtlebot3/tree/galactic-devel)
+
+
+## TurtleBot3 Friends: モデル提示
+<center>
+
+| TB3 Pizza | TB3 Big Wheel | TB3 Big Wheel with OM |
+|:---:|:---:|:---:|
+| ![TB3 Pizza](turtlebot3/documentation/tb3_pizza.png) | ![TB3 Big Wheel](turtlebot3/documentation/tb3_big_wheel.png) | Coming Soon |
+| [マニュアル](README_tb3_pizza_jp.md) | [マニュアル](README_tb3_big_wheel_jp.md) | [マニュアル](http://turtlebot3.robotis.com/) |
+
+</center>
 
 ## ROBOTIS e-Manual for TurtleBot3
 - [ROBOTIS e-Manual for TurtleBot3](http://turtlebot3.robotis.com/)
