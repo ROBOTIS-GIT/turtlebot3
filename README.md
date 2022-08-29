@@ -21,8 +21,8 @@
 
 | TB3 Pizza | TB3 Big Wheel | TB3 Big Wheel with OM |
 |:---:|:---:|:---:|
-| ![TB3 Pizza](turtlebot3/documentation/tb3_pizza.png) | ![TB3 Big Wheel](turtlebot3/documentation/tb3_big_wheel.png) | Coming Soon |
-| [マニュアル](README_tb3_pizza_jp.md) | [マニュアル](README_tb3_big_wheel_jp.md) | [マニュアル](http://turtlebot3.robotis.com/) |
+| ![TB3 Pizza](/turtlebot3/documentation/tb3_pizza.png) | ![TB3 Big Wheel](/turtlebot3/documentation/tb3_big_wheel.png) | Coming Soon |
+| [マニュアル](/turtlebot3/documentation//README_tb3_pizza_jp.md) | [マニュアル](/turtlebot3/documentation/README_tb3_big_wheel_jp.md) | [マニュアル](http://turtlebot3.robotis.com/) |
 
 </center>
 
