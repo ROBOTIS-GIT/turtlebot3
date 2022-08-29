@@ -1,10 +1,14 @@
 <launch>
   <!-- Arguments -->
   <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi, pizza, big_wheel]"/>
+  <arg name="lds_model" default="$(env LDS_MODEL)" doc="LDS MODEL [LDS-01, LDS-02]"/>
   <arg name="configuration_basename" default="turtlebot3_lds_2d.lua"/>
 
   <!-- slam_karto -->
   <node pkg="slam_karto" type="slam_karto" name="slam_karto" output="screen">
     <rosparam command="load" file="$(find turtlebot3_slam)/config/karto_mapper_params.yaml" />
+    <param if="$(eval lds_model == 'LDS-02')" name="scan_buffer_maximum_scan_distance" value="8.0" />
+    <param if="$(eval lds_model == 'LDS-02')" name="link_scan_maximum_distance" value="8.0" />
+    <param if="$(eval lds_model == 'LDS-02')" name="loop_search_maximum_distance" value="8.0" />
   </node>
 </launch>

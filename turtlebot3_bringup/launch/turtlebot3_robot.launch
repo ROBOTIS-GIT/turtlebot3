@@ -6,9 +6,43 @@
   <include file="$(find turtlebot3_bringup)/launch/turtlebot3_core.launch">
     <arg name="multi_robot_name" value="$(arg multi_robot_name)"/>
   </include>
-  <include file="$(find turtlebot3_bringup)/launch/turtlebot3_lidar.launch">
-    <arg name="set_frame_id" value="$(arg set_lidar_frame_id)"/>
-  </include>
+
+  <group if = "$(eval model != 'pizza')">
+    <include file="$(find turtlebot3_bringup)/launch/turtlebot3_lidar.launch">
+      <arg name="set_frame_id" value="$(arg set_lidar_frame_id)"/>
+    </include>
+  </group>
+
+  <group if = "$(eval model == 'pizza')">
+    <node name="sick_tim571_2050101" pkg="sick_tim" type="sick_tim551_2050001" respawn="false" output="screen">
+      <!-- default values: -->
+      <!--
+        <param name="min_ang" type="double" value="-2.35619449019" />
+        <param name="max_ang" type="double" value="2.35619449019" />
+        <param name="intensity" type="bool" value="True" />
+        <param name="skip" type="int" value="0" />
+        <param name="frame_id" type="str" value="laser" />
+        <param name="time_offset" type="double" value="-0.001" />
+        <param name="publish_datagram" type="bool" value="False" />
+        <param name="subscribe_datagram" type="bool" value="false" />
+        <param name="device_number" type="int" value="0" />
+        <param name="range_min" type="double" value="0.05" />
+      -->
+      <param name="range_max" type="double" value="25.0" />
+  
+      <!-- Older versions of the scanner firmware report an incorrect time_increment.
+           If you get a warning about time_increment, uncomment this. -->
+      <!-- <param name="time_increment" type="double" value="0.000061722" /> -->
+  
+      <!-- Uncomment this to enable TCP instead of USB connection; 'hostname' is the host name or IP address of the laser scanner
+      In cases where a race condition exists and the computer boots up before the TIM is ready, increase 'timelimit.' -->
+           <param name="hostname" type="string" value="192.168.1.175" />
+           <param name="port" type="string" value="2112" />
+           <param name="timelimit" type="int" value="5" />
+     
+    </node>
+  </group>
+
   <node pkg="turtlebot3_bringup" type="turtlebot3_diagnostics" name="turtlebot3_diagnostics" output="screen"/>
 
   <group if = "$(eval model == 'waffle_pi')">

@@ -1,6 +1,7 @@
 <launch>
   <!-- Arguments -->
   <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi, pizza, big_wheel]"/>
+  <arg name="lds_model" default="$(env LDS_MODEL)" doc="LDS MODEL [LDS-01, LDS-02]"/>
   <arg name="configuration_basename" default="turtlebot3_lds_2d.lua"/>
   <arg name="set_base_frame" default="base_footprint"/>
   <arg name="set_odom_frame" default="odom"/>
@@ -12,5 +13,7 @@
     <param name="odom_frame" value="$(arg set_odom_frame)"/>
     <param name="map_frame"  value="$(arg set_map_frame)"/>
     <rosparam command="load" file="$(find turtlebot3_slam)/config/gmapping_params.yaml" />
+    <param if="$(eval lds_model == 'LDS-02')" name="maxUrange" value="8.0" />
+    <param if="$(eval model == 'pizza')" name="maxUrange" value="30.0" />
   </node>
 </launch>
