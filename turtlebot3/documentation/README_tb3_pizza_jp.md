@@ -20,7 +20,7 @@
 |![TB3 Pizza BACK](/turtlebot3/documentation/gif/tb3_pizza_nav_1_x5.gif) |
 
 | Gazebo環境① + Rviz① | 
-|:---:|:
+|:---:|
 |![TB3 Pizza BACK](/turtlebot3/documentation/gif/tb3_pizza_nav_2_x5.gif) |
 
 ## セットアップ手順（Quick Start Guide）
@@ -159,7 +159,7 @@ Turtlebot3のPizzaモデルには、デフォルトとして「Realsense D435」
 > **Warning**
 > 以下の手順はリモートPC側に行われます。
 
-1. **カメラ設定（要確認！！！）**
+- **カメラ設定（要確認！！！）**
 
 まず、必要なパッケージをインストールします。
 - ROS Wrapper for Intel® RealSense™ Devices（公式サイトより）
@@ -182,7 +182,7 @@ $ catkin_make
 ```
 
 
-1. **LiDAR設定**
+- **LiDAR設定**
 
 Sick Timのudev rulesの追加とともに、レポジトリをコンパイルします。
 
@@ -256,12 +256,29 @@ $ cd ~/catkin_ws && catkin_make
 > **Note**
 > sshよりNUCに繋ぐとき、NUCのIPアドレス（192.168.X.XXX）を使用することになります。
 
-そして、新しいターミナルを開くたびに、Turtlebot3のモデルも指定してください。
+0. Turtlebot3のモデルを選択します
 ```code 
 $ export TURTLEBOT3_MODEL=pizza
 ```
 > **Note**
-> `pizza`以外にも、`burger`, `waffle_pi`, `big_wheel`というモデルもあります。
+> 新しい端末をたちが得るたびに、以上のコマンドを実行する必要があります。そして、`pizza`以外にも、`burger`, `waffle_pi`, `big_wheel`というモデルもあります。
+
+1. まず**リモートPC側**にROSを立てます。
+```code
+$ roscore
+```
+2. **NUC側**にTurtlebot3 Pizzaのbring-upコマンドで実行します。
+```code
+$ roslaunch turtlebot3_bringup turtlebot3_robot.launch
+```
+3. 必要であれば、**リモートPC側**にTeleOPを実行します。
+```code
+$ roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
+```
+
+- **SLAM (地図生成) + Navigation**
+
+本来のTurtlebot3と同じ手順で実行できますので、公式のE-manualの「[SLAM](https://emanual.robotis.com/docs/en/platform/turtlebot3/slam/)」や「[Navigation](https://emanual.robotis.com/docs/en/platform/turtlebot3/navigation/)」のままで進めば大丈夫です。
 
 
 ### シミュレーション
@@ -273,7 +290,7 @@ $ export TURTLEBOT3_MODEL=pizza
 $ roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
 ```
 > **Note**
-> `empty_world`以外にも、`house`, `simulation`, `stage_1`などという環境もあります。
+> `empty_world`以外にも、`house`, `simulation`, `stage_1`などという環境もあります。そして、ROBOTIS日本支店カスタムのワルドもあります。その中には、`turtlebot3_jp_world_empty`, `turtlebot3_jp_world_static`, `turtlebot3_jp_world_dynamic`が有ります。
 
 
 ## ハードウェア関係
