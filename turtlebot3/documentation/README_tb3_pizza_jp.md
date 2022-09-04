@@ -7,7 +7,7 @@
 
 | 実環境① | Rviz① |
 |:---:|:---:|
-| <img src="file://turtlebot3/documentation/gif/tb3_pizza_go_top_x2.gif"  alt="TB3 Pizza GO" width="200"> | ![TB3 Pizza GO rv](/turtlebot3/documentation/gif/tb3_pizza_go_rv_x2.gif) | 
+| ![TB3 Pizza GO](/turtlebot3/documentation/gif/tb3_pizza_go_top_x2.gif) | ![TB3 Pizza GO rv](/turtlebot3/documentation/gif/tb3_pizza_go_rv_x2.gif) | 
 
 |実環境① | Rviz① |
 |:---:|:---:|
