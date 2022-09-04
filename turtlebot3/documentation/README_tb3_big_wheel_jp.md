@@ -5,11 +5,11 @@
 
 ## セットアップ手順（Quick Start Guide）
 ### 1. 環境設定
-Turtlebot3の新FriendsモデルのBig Wheelを利用するには、まずTurtlebot3の基本的な設定を行う必要があります。そのため、TurtleBot3のe-Manualの「[Quick Start Guide](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/)」を従って、セットアップを行ってください。ただし、以下の変更点に注意してください。
+Turtlebot3の新FriendsモデルのBig Wheelを利用するには、まずTurtlebot3の基本的な設定を行う必要があります。そのため、TurtleBot3のe-Manualの「[Quick Start Guide](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/)」に従って、セットアップを行ってください。ただし、以下の変更点に注意してください。
 
 - [1.1. PC Setup](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/#pc-setup)について
 
-Pizzaモデルに関して、Raspberry PIの代わりにNUC11を使います。そして、現時点では、ROS Noeticに対応していますので、「[Quick Start Guide](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/)」の「Noetic」ブランチを選択してください。
+Big WheelモデルではSBCとして、Raspberry Pi 4BもしくはNUC11を使います。現時点で、ROS Noeticに対応していますので、「[Quick Start Guide](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/)」の「Noetic」ブランチを選択してください。
 
 - [1.1.4. Install TurtleBot3 Packages](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/#install-turtlebot3-packages)の変更点
 
@@ -30,7 +30,8 @@ $ echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
 
 - [3.2. SBC Setup](https://emanual.robotis.com/docs/en/platform/turtlebot3/sbc_setup/#sbc-setup)について
 
-今回はRaspberry PIの代わりにNUC11を使いますので、E-manualに書いてあるステップを飛ばします。しかし、次のような手順でセットアップを行います。
+Raspberry Pi 4BをBig WheelのSBCとして使用する場合は、e-Manualに記載されているセットアップ手順と同じになります。
+NUC11をBig WheelのSBCとして使う場合には、e-Manualに記載されているセットアップ手順は実行せずに、次のような手順でセットアップを行います。
 
 1. NUCにUbuntu 20.04をインストールします。
 
@@ -48,7 +49,7 @@ $ cd ~/catkin_ws && catkin_make
 
 - [3.3. OpenCR Setup](https://emanual.robotis.com/docs/en/platform/turtlebot3/opencr_setup)の変更点(更新！！！)
 
-OpenCRを設定するには、NUCを通して、セットアップを行います。
+OpenCRを設定するには、Raspberry Pi 4B or NUC（使用しているSBC）を通して、セットアップを行います。
 
 1. [OpenCR](https://emanual.robotis.com/docs/en/parts/controller/opencr10/)をmicro USBケーブル経由でNUCに繋げてください。
 
@@ -59,10 +60,10 @@ $ sudo apt-get update
 $ sudo apt-get install libc6:armhf
 ```
 
-3. OPENCR_MODELに```pizza```と書きます。
+3. OPENCR_MODELに```big_wheel```と書きます。
 ```code
 $ export OPENCR_PORT=/dev/ttyACM0
-$ export OPENCR_MODEL=pizza_noetic
+$ export OPENCR_MODEL=big_wheel_noetic
 $ rm -rf ./opencr_update.tar.bz2
 ```
 
@@ -78,12 +79,12 @@ $ cd ./opencr_update
 $ ./update.sh $OPENCR_PORT $OPENCR_MODEL.opencr
 ```
 
-6. Turtlebot3 Pizzaのファームウェアが正しくアップロードされたら、以下のようなメッセージが出力されます。
+6. Turtlebot3 Big Wheelのファームウェアが正しくアップロードされたら、以下のようなメッセージが出力されます。
 ![OpenCR Success Output](https://myoctocat.com/assets/images/base-octocat.svg)
 
 
 ### 2. ネットワーク設定
-今までのTurtleBot3のモデルの中で、分散処理のためRaspberry PIが使われてきました。しかし、今回はその代わりにNUCを`master pc`として、そして別のPCをリモートパソコンとして用意することになりますので、以下のように設定してください。
+今までのTurtleBot3のモデルの中で、分散処理のためRaspberry Piが使われてきました。しかし、今回はその代わりにNUCを`master pc`として、そして別のPCをリモートパソコンとして用意することになりますので、以下のように設定してください。
 
 - **NUC（master PC）側**
 1. NUC PCが繋がれたWIFIのIPアドレスを取得します。
@@ -135,7 +136,7 @@ $ source ~/.bashrc
 ```
 
 ### 3. 追加レポジトリの設定
-Turtlebot3のPizzaモデルには、デフォルトとして「Realsense D435」のデプスカメラと「Sick Tim571」のLiDARが付けてあります。それそれのレポジトリのセットアップ手順を説明します。
+Turtlebot3のBig Wheelモデルには、デフォルトとして「Realsense D435」のデプスカメラと「Sick Tim571」のLiDARが付けてあります。それそれのレポジトリのセットアップ手順を説明します。
 > **Warning**
 > 以下の手順はリモートPC側に行われます。
 
