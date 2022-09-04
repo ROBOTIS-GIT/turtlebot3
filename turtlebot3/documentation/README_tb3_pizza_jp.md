@@ -3,6 +3,26 @@
 # TurtleBot3 Friends: Pizza
 ![TB3 Pizza](/turtlebot3/documentation/tb3_pizza_bg.png)
 
+## 実環境での動作検証
+
+| 実環境① | Rviz① |
+|:---:|:---:|
+| ![TB3 Pizza GO](/turtlebot3/documentation/gif/tb3_pizza_go_top_x2.gif) | ![TB3 Pizza GO rv](/turtlebot3/documentation/gif/tb3_pizza_go_rv_x2.gif) | 
+
+|実環境① | Rviz① |
+|:---:|:---:|
+|![TB3 Pizza BACK](/turtlebot3/documentation/gif/tb3_pizza_back_top_x2.gif) | ![TB3 Pizza BACK rv](/turtlebot3/documentation/gif/tb3_pizza_back_rv_x2.gif) |
+
+## Gazebo環境での動作検証
+
+| Gazebo環境① + Rviz① | 
+|:---:|
+|![TB3 Pizza BACK](/turtlebot3/documentation/gif/tb3_pizza_nav_1_x5.gif) |
+
+| Gazebo環境① + Rviz① | 
+|:---:|:
+|![TB3 Pizza BACK](/turtlebot3/documentation/gif/tb3_pizza_nav_2_x5.gif) |
+
 ## セットアップ手順（Quick Start Guide）
 ### 1. 環境設定
 Turtlebot3の新FriendsモデルのPizzaを利用するには、まずTurtlebot3の基本的な設定を行います。そのため、Turtlebot3のE-manualの「[Quick Start Guide](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/)」を従って、セットアップを行ってください。ただし、以下の変更点に注意してください。
