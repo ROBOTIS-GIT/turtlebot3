@@ -5,7 +5,7 @@
 
 ## セットアップ手順（Quick Start Guide）
 ### 1. 環境設定
-Turtlebot3の新FriendsモデルのPizzaを利用するには、まずTurtlebot3の基本的な設定を行います。そのため、Turtlebot3のE-manualの「[Quick Start Guide](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/)」を従って、セットアップを行ってください。ただし、以下の変更点に注意してください。
+Turtlebot3の新FriendsモデルのBig Wheelを利用するには、まずTurtlebot3の基本的な設定を行う必要があります。そのため、TurtleBot3のe-Manualの「[Quick Start Guide](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/)」を従って、セットアップを行ってください。ただし、以下の変更点に注意してください。
 
 - [1.1. PC Setup](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/#pc-setup)について
 
