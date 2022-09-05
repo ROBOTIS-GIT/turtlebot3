@@ -159,14 +159,14 @@ Turtlebot3のPizzaモデルには、デフォルトとして「Realsense D435」
 > **Warning**
 > 以下の手順はリモートPC側に行われます。
 
-- **カメラ設定（要確認！！！）**
+- **カメラ設定**
 
 まず、必要なパッケージをインストールします。
 - ROS Wrapper for Intel® RealSense™ Devices（公式サイトより）
 ```code
 $ sudo apt-get install ros-$ROS_DISTRO-realsense2-camera
 $ cd ~/catkin_ws/src
-$ git clone https://github.com/IntelRealSense/realsense-ros
+$ git clone https://github.com/ROBOTIS-JAPAN-GIT/realsense-ros_jp_custom
 $ cd ~/catkin_ws
 $ catkin_make
 ```
