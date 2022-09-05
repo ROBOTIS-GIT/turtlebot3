@@ -33,7 +33,7 @@ Pizzaは現時点で、ROS Noeticに対応していますので、「[Quick Star
 
 - [1.1.4. Install TurtleBot3 Packages](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/#install-turtlebot3-packages)の変更点
 
-この部分では必要なROSパッケージをインストールしますが、今回はDebianのバイナルパッケージを使わずに、ROBOTIS日本支店の公式GitHubからダウンロードします。以下の手順通りにセットアップを進めてください。
+ここでは、必要なROSパッケージをインストールしますが、今回はDebianのバイナリパッケージを使わずに、ROBOTIS日本支店の公式GitHubからダウンロードします。以下の手順通りにセットアップを進めてください。
 
 ```code
 $ sudo apt remove ros-noetic-dynamixel-sdk
