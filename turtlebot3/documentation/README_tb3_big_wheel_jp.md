@@ -3,6 +3,27 @@
 # TurtleBot3 Friends: Big Wheel
 ![TB3 Big Wheel](/turtlebot3/documentation/tb3_big_wheel_bg.png)
 
+## 実環境での動作検証
+
+| 実環境 | Rviz |
+|:---:|:---:|
+| ![TB3 Big Wheel GO](/turtlebot3/documentation/gif/tb3_big_wheel_go_top.gif) | ![TB3 Big Wheel GO rv](/turtlebot3/documentation/gif/tb3_big_wheel_go_rv.gif) | 
+
+|実環境 | Rviz |
+|:---:|:---:|
+|![TB3 Big Wheel BACK1](/turtlebot3/documentation/gif/tb3_big_wheel_back_1_top.gif) | ![TB3 Big Wheel BACK rv](/turtlebot3/documentation/gif/tb3_big_wheel_back_1_rv.gif) |
+
+|実環境 | Rviz |
+|:---:|:---:|
+|![TB3 Big Wheel BACK2](/turtlebot3/documentation/gif/tb3_big_wheel_back_2_top.gif) | ![TB3 Big Wheel BACK2 rv](/turtlebot3/documentation/gif/tb3_big_wheel_back_2_rv.gif) |
+
+## Gazebo環境での動作検証
+
+| Gazebo環境 + Rviz | 
+|:---:|
+|![TB3 Big Wheel BACK](/turtlebot3/documentation/gif/tb3_big_wheel_nav_x5.gif) |
+
+
 ## セットアップ手順（Quick Start Guide）
 ### 1. 環境設定
 Turtlebot3の新FriendsモデルのBig Wheelを利用するには、まずTurtlebot3の基本的な設定を行う必要があります。そのため、TurtleBot3のe-Manualの「[Quick Start Guide](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/)」に従って、セットアップを行ってください。ただし、以下の変更点に注意してください。
@@ -47,7 +68,7 @@ $ rm -r turtlebot3_description/ turtlebot3_teleop/ turtlebot3_navigation/ turtle
 $ cd ~/catkin_ws && catkin_make
 ```
 
-- [3.3. OpenCR Setup](https://emanual.robotis.com/docs/en/platform/turtlebot3/opencr_setup)の変更点(更新！！！)
+- [3.3. OpenCR Setup](https://emanual.robotis.com/docs/en/platform/turtlebot3/opencr_setup)の変更点
 
 OpenCRを設定するには、Raspberry Pi 4B or NUC（使用しているSBC）を通して、セットアップを行います。
 
@@ -69,8 +90,8 @@ $ rm -rf ./opencr_update.tar.bz2
 
 4. ファームウェアをダウンロードして、解凍します。
 ```code
-$ wget https://github.com/ROBOTIS-JAPAN-GIT/OpenCR-Binaries/raw/master/turtlebot3/ROS1/latest/opencr_update.tar.bz2 
-$ tar -xvf opencr_update.tar.bz2 
+$ wget https://github.com/ROBOTIS-JAPAN-GIT/OpenCR_jp_custom/releases/download/v1.0.0/opencr_update_jp_custom.tar.bz2
+$ tar -xvf opencr_update_jp_custom.tar.bz2 
 ```
 
 5. OpenCRにファームウェアをアップロードします。
@@ -80,7 +101,7 @@ $ ./update.sh $OPENCR_PORT $OPENCR_MODEL.opencr
 ```
 
 6. Turtlebot3 Big Wheelのファームウェアが正しくアップロードされたら、以下のようなメッセージが出力されます。
-![OpenCR Success Output](https://myoctocat.com/assets/images/base-octocat.svg)
+![TB3 Big Wheel OpenCR Success Output](/turtlebot3/documentation/tb3_big_wheel_opencr.png)
 
 
 ### 2. ネットワーク設定
@@ -140,14 +161,14 @@ Turtlebot3のBig Wheelモデルには、デフォルトとして「Realsense D43
 > **Warning**
 > 以下の手順はリモートPC側に行われます。
 
-1. **カメラ設定（要確認！！！）**
+1. **カメラ設定**
 
 まず、必要なパッケージをインストールします。
 - ROS Wrapper for Intel® RealSense™ Devices（公式サイトより）
 ```code
 $ sudo apt-get install ros-$ROS_DISTRO-realsense2-camera
 $ cd ~/catkin_ws/src
-$ git clone https://github.com/IntelRealSense/realsense-ros
+$ git clone https://github.com/ROBOTIS-JAPAN-GIT/realsense-ros_jp_custom
 $ cd ~/catkin_ws
 $ catkin_make
 ```
@@ -298,8 +319,8 @@ $ roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
 | --- | --- | --- | [here]() |
 
 
-### 3Dモデルの参照 (update link!!!)
-詳細なパーツのリストとモデルの設計は、[Turtlebot3 Friends: Pizza](https://cad.onshape.com/documents/9d6a0395dffef67a3c72e937/w/9be45b8110f1eab640d1cdfd/e/9a65db04c65f7adb980422c1)のOnShapeドキュメントで確認できます。
+### 3Dモデルの参照
+詳細なパーツのリストとモデルの設計は、[Turtlebot3 Friends: Big Wheel](https://cad.onshape.com/documents/7daf195495224735934e7007/w/169d3bbd6522bfb5c32193c2/e/39cd43d7a31a1c83661df9da?renderMode=0&uiState=63156a1b6310686ce43b53e0)のOnShapeドキュメントで確認できます。
 
 ### モデルの特徴
 | 項目 | Pizza | Big Wheel |

@@ -5,21 +5,21 @@
 
 ## 実環境での動作検証
 
-| 実環境① | Rviz① |
+| 実環境 | Rviz |
 |:---:|:---:|
 | ![TB3 Pizza GO](/turtlebot3/documentation/gif/tb3_pizza_go_top_x2.gif) | ![TB3 Pizza GO rv](/turtlebot3/documentation/gif/tb3_pizza_go_rv_x2.gif) | 
 
-|実環境① | Rviz① |
+|実環境 | Rviz |
 |:---:|:---:|
 |![TB3 Pizza BACK](/turtlebot3/documentation/gif/tb3_pizza_back_top_x2.gif) | ![TB3 Pizza BACK rv](/turtlebot3/documentation/gif/tb3_pizza_back_rv_x2.gif) |
 
 ## Gazebo環境での動作検証
 
-| Gazebo環境① + Rviz① | 
+| Gazebo環境 + Rviz | 
 |:---:|
 |![TB3 Pizza BACK](/turtlebot3/documentation/gif/tb3_pizza_nav_1_x5.gif) |
 
-| Gazebo環境① + Rviz① | 
+| Gazebo環境 + Rviz | 
 |:---:|
 |![TB3 Pizza BACK](/turtlebot3/documentation/gif/tb3_pizza_nav_2_x5.gif) |
 
@@ -88,8 +88,8 @@ $ rm -rf ./opencr_update.tar.bz2
 
 4. ファームウェアをダウンロードして、解凍します。
 ```code
-$ wget https://github.com/ROBOTIS-JAPAN-GIT/OpenCR-Binaries/raw/master/turtlebot3/ROS1/latest/opencr_update.tar.bz2 
-$ tar -xvf opencr_update.tar.bz2 
+$ wget https://github.com/ROBOTIS-JAPAN-GIT/OpenCR_jp_custom/releases/download/v1.0.0/opencr_update_jp_custom.tar.bz2
+$ tar -xvf opencr_update_jp_custom.tar.bz2 
 ```
 
 5. OpenCRにファームウェアをアップロードします。
@@ -99,7 +99,7 @@ $ ./update.sh $OPENCR_PORT $OPENCR_MODEL.opencr
 ```
 
 6. Turtlebot3 Pizzaのファームウェアが正しくアップロードされたら、以下のようなメッセージが出力されます。
-![OpenCR Success Output](https://myoctocat.com/assets/images/base-octocat.svg)
+![TB3 Pizza OpenCR Success Output](/turtlebot3/documentation/tb3_pizza_opencr.png)
 
 
 ### 2. ネットワーク設定
@@ -161,14 +161,14 @@ Turtlebot3のPizzaモデルには、デフォルトとして「Realsense D435」
 > **Warning**
 > 以下の手順はリモートPC側に行われます。
 
-- **カメラ設定（要確認！！！）**
+- **カメラ設定**
 
 まず、必要なパッケージをインストールします。
 - ROS Wrapper for Intel® RealSense™ Devices（公式サイトより）
 ```code
 $ sudo apt-get install ros-$ROS_DISTRO-realsense2-camera
 $ cd ~/catkin_ws/src
-$ git clone https://github.com/IntelRealSense/realsense-ros
+$ git clone https://github.com/ROBOTIS-JAPAN-GIT/realsense-ros_jp_custom
 $ cd ~/catkin_ws
 $ catkin_make
 ```
@@ -336,7 +336,7 @@ $ roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
 | --- | --- | --- | [here]() |
 
 
-### 3Dモデルの参照 (update link!!!)
+### 3Dモデルの参照
 詳細なパーツのリストとモデルの設計は、[Turtlebot3 Friends: Pizza](https://cad.onshape.com/documents/9d6a0395dffef67a3c72e937/w/9be45b8110f1eab640d1cdfd/e/9a65db04c65f7adb980422c1)のOnShapeドキュメントで確認できます。
 
 ### モデルの特徴
