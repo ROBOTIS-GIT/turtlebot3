@@ -21,11 +21,7 @@
 
 | Gazebo環境 + Rviz | 
 |:---:|
-|![TB3 Big Wheel BACK](/turtlebot3/documentation/gif/tb3_big_wheel_nav_1_x5.gif) |
-
-| Gazebo環境 + Rviz | 
-|:---:|
-|![TB3 Big Wheel BACK](/turtlebot3/documentation/gif/tb3_big_wheel_nav_2_x5.gif) |
+|![TB3 Big Wheel BACK](/turtlebot3/documentation/gif/tb3_big_wheel_nav_x5.gif) |
 
 
 ## セットアップ手順（Quick Start Guide）
