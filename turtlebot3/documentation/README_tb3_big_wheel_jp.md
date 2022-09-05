@@ -70,7 +70,7 @@ $ cd ~/catkin_ws && catkin_make
 
 - [3.3. OpenCR Setup](https://emanual.robotis.com/docs/en/platform/turtlebot3/opencr_setup)の変更点
 
-OpenCRを設定するには、Raspberry Pi 4B or NUC（使用しているSBC）を通して、セットアップを行います。
+OpenCRを設定するには、Raspberry Pi 4BもしくはNUC（使用しているSBC）を通して、セットアップを行います。
 
 1. [OpenCR](https://emanual.robotis.com/docs/en/parts/controller/opencr10/)をmicro USBケーブル経由でNUCに繋げてください。
 
@@ -106,6 +106,8 @@ $ ./update.sh $OPENCR_PORT $OPENCR_MODEL.opencr
 
 ### 2. ネットワーク設定
 今までのTurtleBot3のモデルの中で、分散処理のためRaspberry Piが使われてきました。しかし、今回はその代わりにNUCを`master pc`として、そして別のPCをリモートパソコンとして用意することになりますので、以下のように設定してください。
+> **Note**
+> Raspberry Pi 4Bを用いる場合は、e-Manualを参考に通常のTurtleBot3と同様のセットアップ手順によりネットワークの設定を行ってください。
 
 - **NUC（master PC）側**
 1. NUC PCが繋がれたWIFIのIPアドレスを取得します。
@@ -157,7 +159,7 @@ $ source ~/.bashrc
 ```
 
 ### 3. 追加レポジトリの設定
-Turtlebot3のBig Wheelモデルには、デフォルトとして「Realsense D435」のデプスカメラと「Sick Tim571」のLiDARが付けてあります。それそれのレポジトリのセットアップ手順を説明します。
+Turtlebot3のBig Wheelモデルには、デフォルトとして「Realsense D435」のデプスカメラが搭載されています。ここでは、レポジトリのセットアップ手順を説明します。
 > **Warning**
 > 以下の手順はリモートPC側に行われます。
 
@@ -186,62 +188,11 @@ $ catkin_make
 
 1. **LiDAR設定**
 
-Sick Timのudev rulesの追加とともに、レポジトリをコンパイルします。
-
-```code
-$ cd ~/catkin_ws/src
-$ git clone https://github.com/ROBOTIS-JAPAN-GIT/sick_tim
-$ cd sick_tim
-$ sudo cp debian/udev /etc/udev/rules.d/81-sick-tim3xx.rules
-$ sudo udevadm control --reload-rules
-$ cd ~/catkin_ws
-$ cakin_make
-```
-
-> **Note**
-> [sick_tim](https://github.com/uos/sick_tim)の公式GitHubとの差分はTim571のシミュレーション環境にも対応しています。
-
-そして、LANケーブルでNUCに繋げるので、IPの設定も行います。
-
-まず、Ubuntuの方の設定について、次の手順になります。
-1. LiDARのIPを確認し、メモしててください
-> **Note**
-> デフォルトでIPは「192.168.0.1」になっていますが、別のIPアドレスを設定する必要な場合は、SICK公式サイトにて、IPの更新方法を確認してください。
-2. Ubuntuで「Settings／設定」のプログラムを開きます。
-1. 「Network／ネットワーク」に移動して、「Wired／有線」の一覧を確認します。
-1. その最初の箱にあるマスミのイコンを押します。
-1. IPv4に移動して、「IPv4 Method」はデフォルトで「Automatic (DHCP)」になっているところ、「Manual」を選択します。
-1. 「Address」の中に、「Address」を「192.168.X.XXX」に、「Netmask」を「255.255.255.0」に、Gateway「192.168.X.1」にします。
-> **Note**
-> LiDARのIPに応じて、「X」の部分を更新します。そして、「XXX」の部分は、LiDARのIPと一致してはなりません。例えば、LiDARのIPは「192.168.0.1」の場合、「1」以外に「0~255」の間に番後を選択してください。
-
-次に、「sick_tim571_2050101.launch」(~/catkin_ws/src/sick?tim)のlaunchファイルをつぎのように書き換えます。
-
-- **更新前**
-
-```code
-    <!-- Uncomment this to enable TCP instead of USB connection; 'hostname' is the host name or IP address of the laser scanner
-    In cases where a race condition exists and the computer boots up before the TIM is ready, increase 'timelimit.'
-         <param name="hostname" type="string" value="192.168.0.1" />
-         <param name="port" type="string" value="2112" />
-         <param name="timelimit" type="int" value="5" />
-    -->
-```
-
-- **更新後**
-```code
-    <!-- Uncomment this to enable TCP instead of USB connection; 'hostname' is the host name or IP address of the laser scanner
-    In cases where a race condition exists and the computer boots up before the TIM is ready, increase 'timelimit.' -->
-         <param name="hostname" type="string" value="192.168.X.XXX" />
-         <param name="port" type="string" value="2112" />
-         <param name="timelimit" type="int" value="5" />
-```
-> **Note**
-> `value="192.168.X.XXX`の「X」の文字をLiDARのIPに応じて、更新します。例えば、デフォルトでLiDARのIPは「192.168.0.1」の場合、`value="192.168.0.1"`のままで大丈夫です。（別のIPアドレスを設定する必要な場合は、SICK公式サイトにて、IPの更新方法を確認してください。）
+TurtleBot3 Big Wheelでは、通常のTurtleBot3と同じくLDS-01もしくはLDS-02を使用します。そのため、e-Manualと同様の手順でセットアップを行ってください。
 
 
 ## シミュレーション環境（Gazebo）
-TurtleBot3 PizzaにはGazeboという物理演算を考慮したシミュレーション環境も備えています。基本的に、シミュレーションのパッケージをダウンロードするだけで、すぐに使えます。
+TurtleBot3 Big WheelにはGazeboという物理演算を考慮したシミュレーション環境も備えています。基本的に、シミュレーションのパッケージをダウンロードするだけで、すぐに使うことができます。
 
 ```code
 $ cd ~/catkin_ws/src/
@@ -253,7 +204,7 @@ $ cd ~/catkin_ws && catkin_make
 ## 動かしてみましょう！
 
 ### 実機
-この時点に付いたら、環境のセットアップは完了となります。これから、Turtlebot3 Pizzaモデルを実際に動かしてみましょう。動作方法は、E-manualの「[Bring-Up](https://emanual.robotis.com/docs/en/platform/turtlebot3/bringup/)」のままで進めば大丈夫です。
+この時点に付いたら、環境のセットアップは完了となります。これから、Turtlebot3 Big Wheelモデルを実際に動かしてみましょう。動作方法は、e-Manualの「[Bring-Up](https://emanual.robotis.com/docs/en/platform/turtlebot3/bringup/)」のままで進めば大丈夫です。
 
 > **Note**
 > sshよりNUCに繋ぐとき、NUCのIPアドレス（192.168.X.XXX）を使用することになります。
@@ -263,15 +214,15 @@ $ cd ~/catkin_ws && catkin_make
 $ export TURTLEBOT3_MODEL=pizza
 ```
 > **Note**
-> `pizza`以外にも、`burger`, `waffle_pi`, `big_wheel`というモデルもあります。
+> `big_wheel`以外にも、`burger`, `waffle_pi`, `pizza`というモデルもあります。
 
 
 ### シミュレーション
-動作方法は、E-manualの「[1.1.2. Launch Simulation World](https://emanual.robotis.com/docs/en/platform/turtlebot3/simulation/#launch-simulation-world)」の項目ままで進めば大丈夫です。
+動作方法は、e-Manualの「[1.1.2. Launch Simulation World](https://emanual.robotis.com/docs/en/platform/turtlebot3/simulation/#launch-simulation-world)」の項目ままで進めば大丈夫です。
 
 
 ```code 
-$ export TURTLEBOT3_MODEL=pizza
+$ export TURTLEBOT3_MODEL=big_wheel
 $ roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
 ```
 > **Note**
@@ -280,6 +231,7 @@ $ roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
 
 ## ハードウェア関係
 ### 部品リスト（BOM）
+
 | 部品名 | 型番 | 個数 | 購入リンク |
 |---|---|---|---|
 | Dynamixel xm540-w150-r | 902-0134-000 | 2 | [here](https://e-shop.robotis.co.jp/product.php?id=42) |
