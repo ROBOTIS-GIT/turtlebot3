@@ -14,6 +14,7 @@
   </group>
 
   <group if = "$(eval model == 'pizza')">
+    <include file="$(find realsense2_camera)/launch/rs_camera.launch"/>
     <node name="sick_tim571_2050101" pkg="sick_tim" type="sick_tim551_2050001" respawn="false" output="screen">
       <!-- default values: -->
       <!--
