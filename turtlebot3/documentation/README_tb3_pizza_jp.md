@@ -5,21 +5,21 @@
 
 ## 実環境での動作検証
 
-| 実環境① | Rviz① |
+| 実環境 | Rviz |
 |:---:|:---:|
 | ![TB3 Pizza GO](/turtlebot3/documentation/gif/tb3_pizza_go_top_x2.gif) | ![TB3 Pizza GO rv](/turtlebot3/documentation/gif/tb3_pizza_go_rv_x2.gif) | 
 
-|実環境① | Rviz① |
+|実環境 | Rviz |
 |:---:|:---:|
 |![TB3 Pizza BACK](/turtlebot3/documentation/gif/tb3_pizza_back_top_x2.gif) | ![TB3 Pizza BACK rv](/turtlebot3/documentation/gif/tb3_pizza_back_rv_x2.gif) |
 
 ## Gazebo環境での動作検証
 
-| Gazebo環境① + Rviz① | 
+| Gazebo環境 + Rviz | 
 |:---:|
 |![TB3 Pizza BACK](/turtlebot3/documentation/gif/tb3_pizza_nav_1_x5.gif) |
 
-| Gazebo環境① + Rviz① | 
+| Gazebo環境 + Rviz | 
 |:---:|
 |![TB3 Pizza BACK](/turtlebot3/documentation/gif/tb3_pizza_nav_2_x5.gif) |
 

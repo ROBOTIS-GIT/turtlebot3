@@ -68,7 +68,7 @@ $ rm -r turtlebot3_description/ turtlebot3_teleop/ turtlebot3_navigation/ turtle
 $ cd ~/catkin_ws && catkin_make
 ```
 
-- [3.3. OpenCR Setup](https://emanual.robotis.com/docs/en/platform/turtlebot3/opencr_setup)の変更点(更新！！！)
+- [3.3. OpenCR Setup](https://emanual.robotis.com/docs/en/platform/turtlebot3/opencr_setup)の変更点
 
 OpenCRを設定するには、Raspberry Pi 4B or NUC（使用しているSBC）を通して、セットアップを行います。
 
@@ -90,8 +90,8 @@ $ rm -rf ./opencr_update.tar.bz2
 
 4. ファームウェアをダウンロードして、解凍します。
 ```code
-$ wget https://github.com/ROBOTIS-JAPAN-GIT/OpenCR-Binaries/raw/master/turtlebot3/ROS1/latest/opencr_update.tar.bz2 
-$ tar -xvf opencr_update.tar.bz2 
+$ wget https://github.com/ROBOTIS-JAPAN-GIT/OpenCR_jp_custom/releases/download/v1.0.0/opencr_update_jp_custom.tar.bz2
+$ tar -xvf opencr_update_jp_custom.tar.bz2 
 ```
 
 5. OpenCRにファームウェアをアップロードします。
