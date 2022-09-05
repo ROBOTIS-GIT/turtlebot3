@@ -25,15 +25,15 @@
 
 ## セットアップ手順（Quick Start Guide）
 ### 1. 環境設定
-Turtlebot3の新FriendsモデルのPizzaを利用するには、まずTurtlebot3の基本的な設定を行います。そのため、Turtlebot3のE-manualの「[Quick Start Guide](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/)」を従って、セットアップを行ってください。ただし、以下の変更点に注意してください。
+Turtlebot3の新FriendsモデルのPizzaを利用するためには、まずTurtleBot3の基本的な設定を行う必要があります。そのため、TurtleBot3のe-Manualの「[Quick Start Guide](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/)」に従って、セットアップを行ってください。ただし、以下の変更点に注意してください。
 
 - [1.1. PC Setup](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/#pc-setup)について
 
-Pizzaモデルに関して、Raspberry PIの代わりにNUC11を使います。そして、現時点では、ROS Noeticに対応していますので、「[Quick Start Guide](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/)」の「Noetic」ブランチを選択してください。
+Pizzaは現時点で、ROS Noeticに対応していますので、「[Quick Start Guide](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/)」の「Noetic」ブランチを選択してください。
 
 - [1.1.4. Install TurtleBot3 Packages](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/#install-turtlebot3-packages)の変更点
 
-この部分では必要なROSパッケージをインストールしますが、今回はDebianのバイナルパッケージを使わずに、Robotis日本支店の公式GitHubからダウンロードします。以下の手順通りセットアップを進めてください。
+この部分では必要なROSパッケージをインストールしますが、今回はDebianのバイナルパッケージを使わずに、ROBOTIS日本支店の公式GitHubからダウンロードします。以下の手順通りにセットアップを進めてください。
 
 ```code
 $ sudo apt remove ros-noetic-dynamixel-sdk
@@ -50,7 +50,7 @@ $ echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
 
 - [3.2. SBC Setup](https://emanual.robotis.com/docs/en/platform/turtlebot3/sbc_setup/#sbc-setup)について
 
-今回はRaspberry PIの代わりにNUC11を使いますので、E-manualに書いてあるステップを飛ばします。しかし、次のような手順でセットアップを行います。
+Pizzaモデルでは、Raspberry Pi 4Bの代わりにNUC11を使いますので、e-Manualに書いてあるステップを省略し、以下のような手順でセットアップを行います。
 
 1. NUCにUbuntu 20.04をインストールします。
 
@@ -68,18 +68,18 @@ $ cd ~/catkin_ws && catkin_make
 
 - [3.3. OpenCR Setup](https://emanual.robotis.com/docs/en/platform/turtlebot3/opencr_setup)の変更点(更新！！！)
 
-OpenCRを設定するには、NUCを通して、セットアップを行います。
+OpenCRのセットアップは、NUCを通して行います。
 
 1. [OpenCR](https://emanual.robotis.com/docs/en/parts/controller/opencr10/)をmicro USBケーブル経由でNUCに繋げてください。
 
-2. OpenCRにファームウェアをアップロードするには、NUCに必要なDebianパッケージをインストールします。
+2. OpenCRにファームウェアをアップロードするために、NUCに必要なDebianパッケージをインストールします。
 ```code
 $ sudo dpkg --add-architecture armhf
 $ sudo apt-get update
 $ sudo apt-get install libc6:armhf
 ```
 
-3. OPENCR_MODELに```pizza```と書きます。
+3. OPENCR_MODELを```pizza_noetic```に指定します。
 ```code
 $ export OPENCR_PORT=/dev/ttyACM0
 $ export OPENCR_MODEL=pizza_noetic
@@ -103,7 +103,9 @@ $ ./update.sh $OPENCR_PORT $OPENCR_MODEL.opencr
 
 
 ### 2. ネットワーク設定
-今までのTurtleBot3のモデルの中で、分散処理のためRaspberry PIが使われてきました。しかし、今回はその代わりにNUCを`master pc`として、そして別のPCをリモートパソコンとして用意することになりますので、以下のように設定してください。
+通常のTurtleBot3では、分散処理を前提としているため、SBCであるRaspberry Piを`master pc`には設定していませんでした。ですが、PizzaではNUCを`master pc`とし、SSH経由でのコマンド実行およびRVizでの描画を行うためのリモートPCを用意することになりますので、以下のように設定してください。
+> **Note**
+> NUCはRaspberry Piに比べて処理能力が高いため、TB3のSBC側でメイン処理（SLAMやNavigation）を行うような構成になっています。
 
 - **NUC（master PC）側**
 1. NUC PCが繋がれたWIFIのIPアドレスを取得します。
@@ -251,7 +253,7 @@ $ cd ~/catkin_ws && catkin_make
 ## 動かしてみましょう！
 
 ### 実機
-この時点に付いたら、環境のセットアップは完了となります。これから、Turtlebot3 Pizzaモデルを実際に動かしてみましょう。動作方法は、E-manualの「[Bring-Up](https://emanual.robotis.com/docs/en/platform/turtlebot3/bringup/)」のままで進めば大丈夫です。
+ここまでで環境のセットアップは完了となります。これから、TurtleBot3 Pizzaモデルを実際に動かしてみましょう。動作手順は、e-Manualの「[Bring-Up](https://emanual.robotis.com/docs/en/platform/turtlebot3/bringup/)」と同じになります。
 
 > **Note**
 > sshよりNUCに繋ぐとき、NUCのIPアドレス（192.168.X.XXX）を使用することになります。
@@ -278,11 +280,11 @@ $ roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
 
 - **SLAM (地図生成) + Navigation**
 
-本来のTurtlebot3と同じ手順で実行できますので、公式のE-manualの「[SLAM](https://emanual.robotis.com/docs/en/platform/turtlebot3/slam/)」や「[Navigation](https://emanual.robotis.com/docs/en/platform/turtlebot3/navigation/)」のままで進めば大丈夫です。
+通常のTurtleBot3と同じ手順で実行できますので、公式のe-Manualの「[SLAM](https://emanual.robotis.com/docs/en/platform/turtlebot3/slam/)」や「[Navigation](https://emanual.robotis.com/docs/en/platform/turtlebot3/navigation/)」に従って進めてください。
 
 
 ### シミュレーション
-動作方法は、E-manualの「[1.1.2. Launch Simulation World](https://emanual.robotis.com/docs/en/platform/turtlebot3/simulation/#launch-simulation-world)」の項目ままで進めば大丈夫です。
+シミュレーションも通常のTurtleBot3と同じ手順で実行できますので、e-Manualの「[1.1.2. Launch Simulation World](https://emanual.robotis.com/docs/en/platform/turtlebot3/simulation/#launch-simulation-world)」に従って進めてください。
 
 
 ```code 
@@ -290,7 +292,7 @@ $ export TURTLEBOT3_MODEL=pizza
 $ roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
 ```
 > **Note**
-> `empty_world`以外にも、`house`, `simulation`, `stage_1`などという環境もあります。そして、ROBOTIS日本支店カスタムのワルドもあります。その中には、`turtlebot3_jp_world_empty`, `turtlebot3_jp_world_static`, `turtlebot3_jp_world_dynamic`が有ります。
+> `empty_world`以外にも、`house`, `simulation`, `stage_1`などという環境もあります。そして、ROBOTIS日本支店カスタムのワールドもあります。現時点では、`turtlebot3_jp_world_empty`, `turtlebot3_jp_world_static`, `turtlebot3_jp_world_dynamic`の3種類のワールドを用意しています。
 
 
 ## ハードウェア関係
