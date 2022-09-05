@@ -101,7 +101,7 @@ $ ./update.sh $OPENCR_PORT $OPENCR_MODEL.opencr
 ```
 
 6. Turtlebot3 Big Wheelのファームウェアが正しくアップロードされたら、以下のようなメッセージが出力されます。
-![OpenCR Success Output](https://myoctocat.com/assets/images/base-octocat.svg)
+![TB3 Big Wheel OpenCR Success Output](/turtlebot3/documentation/tb3_big_wheel_opencr.png)
 
 
 ### 2. ネットワーク設定

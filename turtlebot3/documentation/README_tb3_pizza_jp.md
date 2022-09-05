@@ -88,8 +88,8 @@ $ rm -rf ./opencr_update.tar.bz2
 
 4. ファームウェアをダウンロードして、解凍します。
 ```code
-$ wget https://github.com/ROBOTIS-JAPAN-GIT/OpenCR-Binaries/raw/master/turtlebot3/ROS1/latest/opencr_update.tar.bz2 
-$ tar -xvf opencr_update.tar.bz2 
+$ wget https://github.com/ROBOTIS-JAPAN-GIT/OpenCR_jp_custom/releases/download/v1.0.0/opencr_update_jp_custom.tar.bz2
+$ tar -xvf opencr_update_jp_custom.tar.bz2 
 ```
 
 5. OpenCRにファームウェアをアップロードします。
@@ -99,7 +99,7 @@ $ ./update.sh $OPENCR_PORT $OPENCR_MODEL.opencr
 ```
 
 6. Turtlebot3 Pizzaのファームウェアが正しくアップロードされたら、以下のようなメッセージが出力されます。
-![OpenCR Success Output](https://myoctocat.com/assets/images/base-octocat.svg)
+![TB3 Pizza OpenCR Success Output](/turtlebot3/documentation/tb3_pizza_opencr.png)
 
 
 ### 2. ネットワーク設定
