@@ -3,6 +3,31 @@
 # TurtleBot3 Friends: Big Wheel
 ![TB3 Big Wheel](/turtlebot3/documentation/tb3_big_wheel_bg.png)
 
+## 実環境での動作検証
+
+| 実環境 | Rviz |
+|:---:|:---:|
+| ![TB3 Big Wheel GO](/turtlebot3/documentation/gif/tb3_big_wheel_go_top.gif) | ![TB3 Big Wheel GO rv](/turtlebot3/documentation/gif/tb3_big_wheel_go_rv.gif) | 
+
+|実環境 | Rviz |
+|:---:|:---:|
+|![TB3 Big Wheel BACK1](/turtlebot3/documentation/gif/tb3_big_wheel_back_1_top.gif) | ![TB3 Big Wheel BACK rv](/turtlebot3/documentation/gif/tb3_big_wheel_back_1_rv.gif) |
+
+|実環境 | Rviz |
+|:---:|:---:|
+|![TB3 Big Wheel BACK2](/turtlebot3/documentation/gif/tb3_big_wheel_back_2_top.gif) | ![TB3 Big Wheel BACK2 rv](/turtlebot3/documentation/gif/tb3_big_wheel_back_2_rv.gif) |
+
+## Gazebo環境での動作検証
+
+| Gazebo環境 + Rviz | 
+|:---:|
+|![TB3 Big Wheel BACK](/turtlebot3/documentation/gif/tb3_big_wheel_nav_1_x5.gif) |
+
+| Gazebo環境 + Rviz | 
+|:---:|
+|![TB3 Big Wheel BACK](/turtlebot3/documentation/gif/tb3_big_wheel_nav_2_x5.gif) |
+
+
 ## セットアップ手順（Quick Start Guide）
 ### 1. 環境設定
 Turtlebot3の新FriendsモデルのBig Wheelを利用するには、まずTurtlebot3の基本的な設定を行う必要があります。そのため、TurtleBot3のe-Manualの「[Quick Start Guide](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/)」に従って、セットアップを行ってください。ただし、以下の変更点に注意してください。
