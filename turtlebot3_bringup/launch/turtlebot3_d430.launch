@@ -1,0 +1,3 @@
+<launch>
+  <include file="$(find realsense2_camera)/launch/rs_d435_camera_with_model.launch"/>
+</launch>

@@ -1,4 +1,6 @@
-# TurtleBot3
+[日本語](/README.md) | [English](/README_en.md)
+
+# TurtleBot3 ROBOTIS日本支店
 <img src="https://github.com/ROBOTIS-GIT/emanual/blob/master/assets/images/platform/turtlebot3/logo_turtlebot3.png" width="300">
 
 [![kinetic-devel Status](https://github.com/ROBOTIS-GIT/turtlebot3/workflows/kinetic-devel/badge.svg)](https://github.com/ROBOTIS-GIT/turtlebot3/tree/kinetic-devel)
@@ -13,10 +15,21 @@
 
 [![galactic-devel Status](https://github.com/ROBOTIS-GIT/turtlebot3/workflows/galactic-devel/badge.svg)](https://github.com/ROBOTIS-GIT/turtlebot3/tree/galactic-devel)
 
-## ROBOTIS e-Manual for TurtleBot3
+
+## TurtleBot3 Friends: カスタムモデル提示
+<center>
+
+| TB3 Pizza | TB3 Big Wheel | TB3 Big Wheel with OM |
+|:---:|:---:|:---:|
+| ![TB3 Pizza](/turtlebot3/documentation/tb3_pizza.png) | ![TB3 Big Wheel](/turtlebot3/documentation/tb3_big_wheel.png) | Coming Soon |
+| [マニュアル](/turtlebot3/documentation//README_tb3_pizza_jp.md) | [マニュアル](/turtlebot3/documentation/README_tb3_big_wheel_jp.md) | [マニュアル](http://turtlebot3.robotis.com/) |
+
+</center>
+
+## TurtleBot3のROBOTIS e-Manual
 - [ROBOTIS e-Manual for TurtleBot3](http://turtlebot3.robotis.com/)
 
-## Wiki for turtlebot3 Packages
+## Turtlebot3パッケージのWiki
 - http://wiki.ros.org/turtlebot3 (metapackage)
 - http://wiki.ros.org/turtlebot3_bringup
 - http://wiki.ros.org/turtlebot3_description
@@ -25,10 +38,12 @@
 - http://wiki.ros.org/turtlebot3_slam
 - http://wiki.ros.org/turtlebot3_teleop
 
-## Open Source related to TurtleBot3
+## TurtleBot3に関するオープンソース関連
 - [turtlebot3](https://github.com/ROBOTIS-GIT/turtlebot3)
+- [turtlebot3_jp_custom](https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_jp_custom)
 - [turtlebot3_msgs](https://github.com/ROBOTIS-GIT/turtlebot3_msgs)
 - [turtlebot3_simulations](https://github.com/ROBOTIS-GIT/turtlebot3_simulations)
+- [turtlebot3_simulations_jp_custom](https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_simulations_jp_custom)
 - [turtlebot3_applications_msgs](https://github.com/ROBOTIS-GIT/turtlebot3_applications_msgs)
 - [turtlebot3_applications](https://github.com/ROBOTIS-GIT/turtlebot3_applications)
 - [turtlebot3_autorace](https://github.com/ROBOTIS-GIT/turtlebot3_autorace)
@@ -44,7 +59,7 @@
 - [OpenCR-Hardware](https://github.com/ROBOTIS-GIT/OpenCR-Hardware)
 - [OpenCR](https://github.com/ROBOTIS-GIT/OpenCR)
 
-## Documents and Videos related to TurtleBot3
+## TurtleBot3に関するドキュメントと動画
 - [ROBOTIS e-Manual for TurtleBot3](http://turtlebot3.robotis.com/)
 - [ROBOTIS e-Manual for OpenManipulator](http://emanual.robotis.com/docs/en/platform/openmanipulator/)
 - [ROBOTIS e-Manual for Dynamixel SDK](http://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_sdk/overview/)
