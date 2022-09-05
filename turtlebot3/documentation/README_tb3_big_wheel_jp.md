@@ -319,8 +319,8 @@ $ roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
 | --- | --- | --- | [here]() |
 
 
-### 3Dモデルの参照 (update link!!!)
-詳細なパーツのリストとモデルの設計は、[Turtlebot3 Friends: Pizza](https://cad.onshape.com/documents/9d6a0395dffef67a3c72e937/w/9be45b8110f1eab640d1cdfd/e/9a65db04c65f7adb980422c1)のOnShapeドキュメントで確認できます。
+### 3Dモデルの参照
+詳細なパーツのリストとモデルの設計は、[Turtlebot3 Friends: Big Wheel](https://cad.onshape.com/documents/7daf195495224735934e7007/w/169d3bbd6522bfb5c32193c2/e/39cd43d7a31a1c83661df9da?renderMode=0&uiState=63156a1b6310686ce43b53e0)のOnShapeドキュメントで確認できます。
 
 ### モデルの特徴
 | 項目 | Pizza | Big Wheel |
