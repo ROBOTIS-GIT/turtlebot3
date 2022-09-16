@@ -9,19 +9,19 @@
 |:---:|:---:|
 | ![TB3 Big Wheel GO](/turtlebot3/documentation/gif/tb3_big_wheel_go_top.gif) | ![TB3 Big Wheel GO rv](/turtlebot3/documentation/gif/tb3_big_wheel_go_rv.gif) | 
 
-|実環境 | Rviz |
+| 実環境 | Rviz |
 |:---:|:---:|
-|![TB3 Big Wheel BACK1](/turtlebot3/documentation/gif/tb3_big_wheel_back_1_top.gif) | ![TB3 Big Wheel BACK rv](/turtlebot3/documentation/gif/tb3_big_wheel_back_1_rv.gif) |
+| ![TB3 Big Wheel BACK1](/turtlebot3/documentation/gif/tb3_big_wheel_back_1_top.gif) | ![TB3 Big Wheel BACK rv](/turtlebot3/documentation/gif/tb3_big_wheel_back_1_rv.gif) |
 
 |実環境 | Rviz |
 |:---:|:---:|
-|![TB3 Big Wheel BACK2](/turtlebot3/documentation/gif/tb3_big_wheel_back_2_top.gif) | ![TB3 Big Wheel BACK2 rv](/turtlebot3/documentation/gif/tb3_big_wheel_back_2_rv.gif) |
+| ![TB3 Big Wheel BACK2](/turtlebot3/documentation/gif/tb3_big_wheel_back_2_top.gif) | ![TB3 Big Wheel BACK2 rv](/turtlebot3/documentation/gif/tb3_big_wheel_back_2_rv.gif) |
 
 ## Gazebo環境での動作検証
 
 | Gazebo環境 + Rviz | 
 |:---:|
-|![TB3 Big Wheel BACK](/turtlebot3/documentation/gif/tb3_big_wheel_nav_x5.gif) |
+| ![TB3 Big Wheel BACK](/turtlebot3/documentation/gif/tb3_big_wheel_nav_x5.gif) |
 
 
 ## セットアップ手順（Quick Start Guide）
@@ -51,8 +51,10 @@ $ echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
 
 - [3.2. SBC Setup](https://emanual.robotis.com/docs/en/platform/turtlebot3/sbc_setup/#sbc-setup)について
 
-Raspberry Pi 4BをBig WheelのSBCとして使用する場合は、e-Manualに記載されているセットアップ手順と同じになります。
 NUC11をBig WheelのSBCとして使う場合には、e-Manualに記載されているセットアップ手順は実行せずに、次のような手順でセットアップを行います。
+
+> **Note**
+> Raspberry Pi 4Bを用いる場合は、e-Manualを参考に通常のTurtleBot3と同様のセットアップ手順によりネットワークの設定を行ってください。
 
 1. NUCにUbuntu 20.04をインストールします。
 
@@ -61,11 +63,16 @@ NUC11をBig WheelのSBCとして使う場合には、e-Manualに記載されて�
 3. Turtlebot3の必要なパッケージをインストールします。
 
 ```code
+$ sudo apt remove ros-noetic-dynamixel-sdk
+$ sudo apt remove ros-noetic-turtlebot3-msgs
+$ sudo apt remove ros-noetic-turtlebot3
+$ mkdir -p ~/catkin_ws/src
 $ cd ~/catkin_ws/src/
+$ git clone -b noetic-devel https://github.com/ROBOTIS-GIT/DynamixelSDK.git
+$ git clone -b noetic-devel https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git
 $ git clone -b noetic-jp-devel https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_jp_custom
-$ cd turtlebot3_jp_custom
-$ rm -r turtlebot3_description/ turtlebot3_teleop/ turtlebot3_navigation/ turtlebot3_slam/ turtlebot3_example/
 $ cd ~/catkin_ws && catkin_make
+$ echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
 ```
 
 - [3.3. OpenCR Setup](https://emanual.robotis.com/docs/en/platform/turtlebot3/opencr_setup)の変更点
@@ -211,10 +218,28 @@ $ cd ~/catkin_ws && catkin_make
 
 そして、新しいターミナルを開くたびに、Turtlebot3のモデルも指定してください。
 ```code 
-$ export TURTLEBOT3_MODEL=pizza
+$ export TURTLEBOT3_MODEL=big_wheel
 ```
+
 > **Note**
-> `big_wheel`以外にも、`burger`, `waffle_pi`, `pizza`というモデルもあります。
+> 新しい端末をたちが得るたびに、以上のコマンドを実行する必要があります。そして、`big_wheel`以外にも、`burger`, `waffle_pi`, `pizza`というモデルもあります。
+
+1. まず**NUC側**でroscoreを起動します。
+```code
+$ roscore
+```
+2. **NUC側**でTurtlebot3 Big Wheelのbring-upコマンドを実行します。
+```code
+$ roslaunch turtlebot3_bringup turtlebot3_robot.launch
+```
+3. 必要であれば、**リモートPC側**でTeleOPを実行します。
+```code
+$ roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
+```
+
+- **SLAM (地図生成) + Navigation**
+
+通常のTurtleBot3と同じ手順で実行できますので、公式のe-Manualの「[SLAM](https://emanual.robotis.com/docs/en/platform/turtlebot3/slam/)」や「[Navigation](https://emanual.robotis.com/docs/en/platform/turtlebot3/navigation/)」に従って進めてください。
 
 
 ### シミュレーション
