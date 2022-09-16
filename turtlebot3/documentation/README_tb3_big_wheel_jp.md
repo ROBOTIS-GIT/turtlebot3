@@ -245,7 +245,6 @@ $ roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
 | Realsense d435 | --- | 1 | [here](https://www.intelrealsense.com/depth-camera-d435/) |
 | 車輪(5inch) | --- | 2 | [here]() |
 | --- | --- | --- | [here]() |
-| --- | --- | --- | [here]() |
 
 
 ### 3Dモデルの参照
@@ -278,7 +277,7 @@ $ roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
 | LED使用可能 | User LED x 4 | User LED x 4 |
 | LEDステータス | Board status LED x 1, Arduino LED x 1, Power LED x 1 | Board status LED x 1, Arduino LED x 1, Power LED x 1 |
 | ボタンとスイッチ | Push buttons x 2, Reset button x 1, Dip switch x 2 | Push buttons x 2, Reset button x 1, Dip switch x 2 |
-| バッテリ | Makita BL1040B 10.8V 4.0Ah | Lithium polymer 11.1V 1800mAh / 19.98Wh 5C |
+| バッテリ | マキタ互換バッテリー BL1490 14.4v 9Ah | Lithium polymer 11.1V 1800mAh / 19.98Wh 5C |
 | PC接続 | USB | USB |
 | ファームウェア更新 | USB経由, JTAG経由 | USB経由, JTAG経由 |
 | 電力アダプタ | Input : 100-240V, AC 50/60Hz, 1.5A @max, Output : 12V DC, 5A | Input : 100-240V, AC 50/60Hz, 1.5A @max, Output : 12V DC, 5A |
