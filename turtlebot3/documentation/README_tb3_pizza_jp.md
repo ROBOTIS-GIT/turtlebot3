@@ -66,18 +66,13 @@ $ rm -r turtlebot3_description/ turtlebot3_teleop/ turtlebot3_navigation/ turtle
 $ cd ~/catkin_ws && catkin_make
 ```
 
-- [3.3. OpenCR Setup](https://emanual.robotis.com/docs/en/platform/turtlebot3/opencr_setup)の変更点(更新！！！)
+- [3.3. OpenCR Setup](https://emanual.robotis.com/docs/en/platform/turtlebot3/opencr_setup)の変更点
 
 OpenCRのセットアップは、NUCを通して行います。
 
 1. [OpenCR](https://emanual.robotis.com/docs/en/parts/controller/opencr10/)をmicro USBケーブル経由でNUCに繋げてください。
 
-2. OpenCRにファームウェアをアップロードするために、NUCに必要なDebianパッケージをインストールします。
-```code
-$ sudo dpkg --add-architecture armhf
-$ sudo apt-get update
-$ sudo apt-get install libc6:armhf
-```
+2. Debianパッケージをインストールするステップを飛ばします。（NUCにはarmではなくamdなので、大丈夫です）
 
 3. OPENCR_MODELを```pizza_noetic```に指定します。
 ```code
