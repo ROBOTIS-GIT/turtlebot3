@@ -9,9 +9,9 @@
 |:---:|:---:|
 | ![TB3 Pizza GO](/turtlebot3/documentation/gif/tb3_pizza_go_top_x2.gif) | ![TB3 Pizza GO rv](/turtlebot3/documentation/gif/tb3_pizza_go_rv_x2.gif) | 
 
-|実環境 | Rviz |
+| 実環境 | Rviz |
 |:---:|:---:|
-|![TB3 Pizza BACK](/turtlebot3/documentation/gif/tb3_pizza_back_top_x2.gif) | ![TB3 Pizza BACK rv](/turtlebot3/documentation/gif/tb3_pizza_back_rv_x2.gif) |
+| ![TB3 Pizza BACK](/turtlebot3/documentation/gif/tb3_pizza_back_top_x2.gif) | ![TB3 Pizza BACK rv](/turtlebot3/documentation/gif/tb3_pizza_back_rv_x2.gif) |
 
 ## Gazebo環境での動作検証
 
@@ -21,7 +21,7 @@
 
 | Gazebo環境 + Rviz | 
 |:---:|
-|![TB3 Pizza BACK](/turtlebot3/documentation/gif/tb3_pizza_nav_2_x5.gif) |
+| ![TB3 Pizza BACK](/turtlebot3/documentation/gif/tb3_pizza_nav_2_x5.gif) |
 
 ## セットアップ手順（Quick Start Guide）
 ### 1. 環境設定
@@ -59,10 +59,16 @@ Pizzaモデルでは、Raspberry Pi 4Bの代わりにNUC11を使いますので�
 3. Turtlebot3の必要なパッケージをインストールします。
 
 ```code
+$ sudo apt remove ros-noetic-dynamixel-sdk
+$ sudo apt remove ros-noetic-turtlebot3-msgs
+$ sudo apt remove ros-noetic-turtlebot3
+$ mkdir -p ~/catkin_ws/src
 $ cd ~/catkin_ws/src/
+$ git clone -b noetic-devel https://github.com/ROBOTIS-GIT/DynamixelSDK.git
+$ git clone -b noetic-devel https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git
 $ git clone -b noetic-jp-devel https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_jp_custom
-$ cd turtlebot3_jp_custom
 $ cd ~/catkin_ws && catkin_make
+$ echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
 ```
 
 - [3.3. OpenCR Setup](https://emanual.robotis.com/docs/en/platform/turtlebot3/opencr_setup)の変更点
@@ -153,7 +159,7 @@ $ source ~/.bashrc
 ### 3. 追加レポジトリの設定
 Turtlebot3のPizzaモデルには、デフォルトとして「Realsense D435」のデプスカメラと「Sick Tim571」のLiDARが付けてあります。それそれのレポジトリのセットアップ手順を説明します。
 > **Warning**
-> 以下の手順はリモートPC側に行われます。
+> 以下の手順はNUC側に行われます。
 
 - **カメラ設定**
 
