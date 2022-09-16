@@ -240,39 +240,10 @@ $ roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
 
 | 部品名 | 型番 | 個数 | 購入リンク |
 |---|---|---|---|
-| Dynamixel xm540-w150-r | 902-0134-000 | 2 | [here](https://e-shop.robotis.co.jp/product.php?id=42) |
-| OpenCR1.0 | 903-0257-000 | 1 | [here](https://e-shop.robotis.co.jp/product.php?id=155) |
+| TurtleBot3 Waffle Pi | --- | 1 | [here](https://e-shop.robotis.co.jp/product.php?id=351) |
 | NUC 11 Pro Kit NUC11TNHv7 | BNUC11TNHV70000 | 1 | [here](https://www.ark-pc.co.jp/i/31400996/) |
-| TiM571-2050101 | 1075091 | 1 | [here](https://www.sick.com/jp/ja/detection-and-ranging-solutions/2d-lidar/tim/tim571-2050101/p/p412444) |
 | Realsense d435 | --- | 1 | [here](https://www.intelrealsense.com/depth-camera-d435/) |
 | 車輪(5inch) | --- | 2 | [here]() |
-| なめらかオムニホイール（Φ55mm） | 4571398310089 | 2 | [here](https://www.vstone.co.jp/robotshop/index.php?main_page=product_info&products_id=4394) |
-| アルミフレーム | CAF5-2020-400 | 4 | [here](https://jp.misumi-ec.com/vona2/detail/110302683830/?PNSearch=CAF5-2020-400&HissuCode=CAF5-2020-400&searchFlow=suggest2products&Keyword=CAF5-2020-400) |
-| アルミフレーム | CAF5-2020-360 | 6 | [here](https://jp.misumi-ec.com/vona2/detail/110302683830/?PNSearch=CAF5-2020-360&HissuCode=CAF5-2020-360&searchFlow=suggest2products&Keyword=CAF5-2020-360) |
-| アルミフレーム | CAF5-2020-170 | 4 | [here](https://jp.misumi-ec.com/vona2/detail/110302683830/?PNSearch=CAF5-2020-170&HissuCode=CAF5-2020-170&searchFlow=suggest2products&Keyword=CAF5-2020-170) |
-| アルミフレーム | CAF5-2020-100 | 5 | [here](https://jp.misumi-ec.com/vona2/detail/110302683830/?PNSearch=CAF5-2020-100&HissuCode=CAF5-2020-100&searchFlow=suggest2products&Keyword=CAF5-2020-100) |
-| 回り止付ハードブラケットSS | SFK-N58T | 52 | [here](https://jp.misumi-ec.com/vona2/detail/221005427845/?PNSearch=SFK-N58T&HissuCode=SFK-N58T&searchFlow=suggest2products&Keyword=SFK-N58T) |
-| Li-ionバッテリ 14.4V 9.0Ah 129.6Wh| BL1490 | 1 | [here](https://www.amazon.co.jp/dp/B08MHWMZ7C) |
-| バッテリー18 vドック | B08X73Z7RP | 1 | [here](https://www.amazon.co.jp/dp/B08X73Z7RP) |
-| スラスト針状ころ軸受 | BA0821 | 4 | [here](https://jp.misumi-ec.com/vona2/detail/110300117970/?PNSearch=BA0821&HissuCode=BA0821&searchFlow=suggest2products&Keyword=BA0821) |
-| シェル形ニードルベアリング | TLA810Z | 2 | [here](https://jp.misumi-ec.com/vona2/detail/221005155382/?PNSearch=TLA810Z&HissuCode=TLA810Z&searchFlow=suggest2products&Keyword=TLA810Z) |
-| 金属ワッシャ | TWSSS16-4-1  | 4 | [here](https://jp.misumi-ec.com/vona2/detail/110302677010/?PNSearch=TWSSS16-4-1&HissuCode=TWSSS16-4-1&searchFlow=suggest2products&Keyword=TWSSS16-4-1) |
-| 黄銅スペーサー | BRB-435CE | 2 | [here](https://jp.misumi-ec.com/vona2/detail/221006202724/?PNSearch=BRB-435CE&HissuCode=BRB-435CE&searchFlow=suggest2products&Keyword=BRB-435CE) |
-| 六角穴付きボルト | CSH-SUS-M5-10 | 6 | [here](https://jp.misumi-ec.com/vona2/detail/221000551286/?PNSearch=CSH-SUS-M5-10&HissuCode=CSH-SUS-M5-10&searchFlow=suggest2products&Keyword=CSH-SUS-M5-10) |
-| 六角穴付きボルト | CSH-SUS-M4-16 | 2 | [here](https://jp.misumi-ec.com/vona2/detail/221000551286/?PNSearch=CSH-SUS-M4-16&HissuCode=CSH-SUS-M4-16&searchFlow=suggest2products&Keyword=CSH-SUS-M4-16) |
-| 六角穴付きボルト | SBCB3-8 | 2 | [here](https://jp.misumi-ec.com/vona2/detail/110302280450/?PNSearch=SBCB3-8&HissuCode=SBCB3-8&searchFlow=suggest2products&Keyword=SBCB3-8) |
-| 六角穴付きボルト | CSH-SUS-M2.5-20 | 8 | [here](https://jp.misumi-ec.com/vona2/detail/221000551286/?PNSearch=CSH-SUS-M2.5-20&HissuCode=CSH-SUS-M2.5-20&searchFlow=suggest2products&Keyword=CSH-SUS-M2.5-20) |
-| 六角穴付きボルト | CSH-SUS-M2.5-12 | 8 | [here](https://jp.misumi-ec.com/vona2/detail/221000551286/?PNSearch=CSH-SUS-M2.5-12&HissuCode=CSH-SUS-M2.5-12&searchFlow=suggest2products&Keyword=CSH-SUS-M2.5-12) |
-| 六角穴付ボルト UNC | CSH-SUS-UNC1/4-7/16 | 8 | [here](https://jp.misumi-ec.com/vona2/detail/221000551343/?PNSearch=CSH-SUS-UNC1%2F4-7%2F16&HissuCode=CSH-SUS-UNC1%2F4-7%2F16&searchFlow=suggest2products&Keyword=CSH-SUS-UNC1%2F4-7%2F16) |
-| 六角穴付き皿ボルト | CSHCS-BR-M4-10 | 21 | [here](https://jp.misumi-ec.com/vona2/detail/221000551376/?PNSearch=CSHCS-BR-M4-10&HissuCode=CSHCS-BR-M4-10&searchFlow=suggest2products&Keyword=CSHCS-BR-M4-10) |
-| 六角穴付き皿ボルト | CSHCS-BR-M4-8 | 5 | [here](https://jp.misumi-ec.com/vona2/detail/221000551376/?PNSearch=CSHCS-BR-M4-8&HissuCode=CSHCS-BR-M4-8&searchFlow=suggest2products&Keyword=CSHCS-BR-M4-8) |
-| 六角穴付き皿ボルト | CSHCS-ST-M2.5-8 | 16 | [here](https://jp.misumi-ec.com/vona2/detail/221000551376/?PNSearch=CSHCS-ST-M2.5-8&HissuCode=CSHCS-ST-M2.5-8&searchFlow=suggest2products&Keyword=CSHCS-ST-M2.5-8) |
-| 六角穴付き皿ボルト | SHFBS3-10 | 2 | [here](https://jp.misumi-ec.com/vona2/detail/110300463610/?PNSearch=SHFBS3-10&HissuCode=SHFBS3-10&searchFlow=suggest2products&Keyword=SHFBS3-10) |
-| ナット | LBNR4 | 4 | [here](https://jp.misumi-ec.com/vona2/detail/110300250540/?PNSearch=LBNR4&HissuCode=LBNR4&searchFlow=suggest2products&Keyword=LBNR4) |
-| ナット | LBNR2.5 | 8 | [here](https://jp.misumi-ec.com/vona2/detail/110300250540/?PNSearch=LBNR2.5&HissuCode=LBNR2.5&searchFlow=suggest2products&Keyword=LBNR2.5) |
-| 黄銅 ローレットツマミ | NB-310EA-N | 4 | [here](https://jp.misumi-ec.com/vona2/detail/221006307382/?PNSearch=NB-310EA-N&HissuCode=NB-310EA-N&searchFlow=suggest2products&Keyword=NB-310EA-N) |
-| SF20 TナットSS（先入れ） | SFB-012  | 26 | [here](https://jp.misumi-ec.com/vona2/detail/221005423144/?PNSearch=SFB-012&HissuCode=SFB-012&searchFlow=suggest2products&Keyword=SFB-012) |
-| クッションコーナーガード | EA983FE-72 | 4 | [here](https://jp.misumi-ec.com/vona2/detail/223007688859/?PNSearch=EA983FE-72&HissuCode=EA983FE-72&searchFlow=suggest2products&Keyword=EA983FE-72) |
 | --- | --- | --- | [here]() |
 | --- | --- | --- | [here]() |
 
