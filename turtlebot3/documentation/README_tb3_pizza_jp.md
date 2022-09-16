@@ -62,7 +62,6 @@ Pizzaモデルでは、Raspberry Pi 4Bの代わりにNUC11を使いますので�
 $ cd ~/catkin_ws/src/
 $ git clone -b noetic-jp-devel https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_jp_custom
 $ cd turtlebot3_jp_custom
-$ rm -r turtlebot3_description/ turtlebot3_teleop/ turtlebot3_navigation/ turtlebot3_slam/ turtlebot3_example/
 $ cd ~/catkin_ws && catkin_make
 ```
 
@@ -260,15 +259,15 @@ $ export TURTLEBOT3_MODEL=pizza
 > **Note**
 > 新しい端末をたちが得るたびに、以上のコマンドを実行する必要があります。そして、`pizza`以外にも、`burger`, `waffle_pi`, `big_wheel`というモデルもあります。
 
-1. まず**リモートPC側**にROSを立てます。
+1. まず**NUC側**でroscoreを起動します。
 ```code
 $ roscore
 ```
-2. **NUC側**にTurtlebot3 Pizzaのbring-upコマンドで実行します。
+2. **NUC側**でTurtlebot3 Pizzaのbring-upコマンドを実行します。
 ```code
 $ roslaunch turtlebot3_bringup turtlebot3_robot.launch
 ```
-3. 必要であれば、**リモートPC側**にTeleOPを実行します。
+3. 必要であれば、**リモートPC側**でTeleOPを実行します。
 ```code
 $ roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
 ```
