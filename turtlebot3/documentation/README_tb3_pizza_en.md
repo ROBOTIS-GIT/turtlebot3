@@ -27,7 +27,7 @@
 
 ## Setup Manual（Quick Start Guide）
 ### 1. Environment Setup
-Few configurations from TubleBot3 are required in order to use and test the new Pizza model from the Turtlebot3 Friends family. To do so, please follow the official TurtleBot3 e-Manual 「[Quick Start Guide](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/)」. However, take note of the following changes that are pointed out.
+Few configurations from TurtleBot3 are required in order to use and test the new Pizza model from the TurtleBot3 Friends family. To do so, please follow the official TurtleBot3 e-Manual 「[Quick Start Guide](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/)」. However, take note of the following changes that are pointed out.
 
 - About [1.1. PC Setup](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/#pc-setup)
 
@@ -58,7 +58,7 @@ In the new Pizza model, NUC11 is used as main processing computer, instead the R
 
 2. Install ROS Noetic.
 
-3. Install Turtlebot3 required packages as it follows
+3. Install TurtleBot3 required packages as it follows
 
 ```code
 $ sudo apt remove ros-noetic-dynamixel-sdk
@@ -100,7 +100,7 @@ $ cd ./opencr_update
 $ ./update.sh $OPENCR_PORT $OPENCR_MODEL.opencr
 ```
 
-6. If the firmware for the Turtlebot3 Pizza has been successfully burnt into the OpenCR, the following message will appear.
+6. If the firmware for the TurtleBot3 Pizza has been successfully burnt into the OpenCR, the following message will appear.
 ![TB3 Pizza OpenCR Success Output](/turtlebot3/documentation/tb3_pizza_opencr.png)
 
 
@@ -167,7 +167,7 @@ $ source ~/.bashrc
 ```
 
 ### 3. Additional repositories setup
-In the new Turtlebot3 Pizza model, 「Realsense D435」 is used as defaut camera and 「Sick Tim571」 as default LiDAr sensor. Here, we will explain about its setup.
+In the new TurtleBot3 Pizza model, 「Realsense D435」 is used as defaut camera and 「Sick Tim571」 as default LiDAR sensor. Here, we will explain about its setup.
 
 > **Warning**
 > The following steps are conducted in the NUC.
@@ -272,7 +272,7 @@ Congratulations! You have been able to setup your developing environment. Now, l
 > **Note**
 > When connecting to the NUC thorugh ssh, do not forget to use the NUC IP address (192.168.X.XXX).
 
-0. Select the Turtlebot3 model.
+0. Select the TurtleBot3 model.
 ```code 
 $ export TURTLEBOT3_MODEL=pizza
 ```
@@ -357,7 +357,7 @@ $ roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
 
 
 ### 3D Model reference
-If you want to know more in detail about the 3D model parts, please have a look in the [Turtlebot3 Friends: Pizza](https://cad.onshape.com/documents/9d6a0395dffef67a3c72e937/w/9be45b8110f1eab640d1cdfd/e/9a65db04c65f7adb980422c1) OnShape document.
+If you want to know more in detail about the 3D model parts, please have a look in the [TurtleBot3 Friends: Pizza](https://cad.onshape.com/documents/9d6a0395dffef67a3c72e937/w/9be45b8110f1eab640d1cdfd/e/9a65db04c65f7adb980422c1) OnShape document.
 
 ### Model Characteristics
 | Items | Pizza | Big Wheel |
