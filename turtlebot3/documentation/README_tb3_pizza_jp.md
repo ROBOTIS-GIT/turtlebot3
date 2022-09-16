@@ -292,7 +292,7 @@ $ roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
 
 | モデル名 | 画像 |
 |:---:|:---:|
-| turtlebot3_jp_world_static | ![TB3 static](/turtlebot3/documentation/gif/turtlebot3_jp_world_static.gif) | 
+| turtlebot3_jp_world_static | ![TB3 static](/turtlebot3/documentation/gif/turtlebot3_jp_world_static.png) | 
 | turtlebot3_jp_world_dynamic | ![TB3 dynamic](/turtlebot3/documentation/gif/turtlebot3_jp_world_dynamic.gif) |
 
 
