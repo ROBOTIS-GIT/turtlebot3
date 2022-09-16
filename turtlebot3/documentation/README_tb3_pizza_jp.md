@@ -190,7 +190,7 @@ Sick Timのudev rulesの追加とともに、レポジトリをコンパイル�
 
 ```code
 $ cd ~/catkin_ws/src
-$ git clone https://github.com/ROBOTIS-JAPAN-GIT/sick_tim
+$ git clone https://github.com/ROBOTIS-JAPAN-GIT/sick_tim_jp_custom
 $ cd sick_tim
 $ sudo cp debian/udev /etc/udev/rules.d/81-sick-tim3xx.rules
 $ sudo udevadm control --reload-rules
@@ -215,7 +215,7 @@ $ cakin_make
 > **Note**
 > LiDARのIPに応じて、「X」の部分を更新します。そして、「XXX」の部分は、LiDARのIPと一致してはなりません。例えば、LiDARのIPは「192.168.0.1」の場合、「1」以外に「0~255」の間に番後を選択してください。
 
-次に、「sick_tim571_2050101.launch」(~/catkin_ws/src/sick?tim)のlaunchファイルをつぎのように書き換えます。
+次に、「sick_tim571_2050101.launch」(~/catkin_ws/src/sick_tim)のlaunchファイルをつぎのように書き換えます。
 
 - **更新前**
 
@@ -245,7 +245,7 @@ TurtleBot3 PizzaにはGazeboという物理演算を考慮したシミュレー�
 
 ```code
 $ cd ~/catkin_ws/src/
-$ git clone -b noetic-devel https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_simulations_jp_custom
+$ git clone -b noetic-jp-devel https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_simulations_jp_custom
 $ cd ~/catkin_ws && catkin_make
 ```
 
@@ -366,7 +366,7 @@ $ roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
 | LED使用可能 | User LED x 4 | User LED x 4 |
 | LEDステータス | Board status LED x 1, Arduino LED x 1, Power LED x 1 | Board status LED x 1, Arduino LED x 1, Power LED x 1 |
 | ボタンとスイッチ | Push buttons x 2, Reset button x 1, Dip switch x 2 | Push buttons x 2, Reset button x 1, Dip switch x 2 |
-| バッテリ | Makita BL1040B 10.8V 4.0Ah | Lithium polymer 11.1V 1800mAh / 19.98Wh 5C |
+| バッテリ | マキタ互換バッテリー BL1490 BL1040B 14.4v 9Ah | Lithium polymer 11.1V 1800mAh / 19.98Wh 5C |
 | PC接続 | USB | USB |
 | ファームウェア更新 | USB経由, JTAG経由 | USB経由, JTAG経由 |
 | 電力アダプタ | Input : 100-240V, AC 50/60Hz, 1.5A @max, Output : 12V DC, 5A | Input : 100-240V, AC 50/60Hz, 1.5A @max, Output : 12V DC, 5A |
