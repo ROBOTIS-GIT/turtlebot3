@@ -53,7 +53,6 @@ $ echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
 
 - About [3.2. SBC Setup](https://emanual.robotis.com/docs/en/platform/turtlebot3/sbc_setup/#sbc-setup)
 
-Raspberry Pi 4BをBig WheelのSBCとして使用する場合は、e-Manualに記載されているセットアップ手順と同じになります。
 In the new Big Wheel model, NUC11 is used as main processing computer, instead the Raspbery Pi 4B that has being used in `Buger` or `Waffle Pi` models. We will omit the usual SBC setup setup. Please follow the next steps in your NUC.
 
 > **Note**
@@ -171,7 +170,7 @@ export ROS_HOSTNAME=192.168.X.YYY
 $ source ~/.bashrc
 ```
 
-### 3. 追加レポジトリの設定
+### 3. Additional packages setup
 In the new TurtleBot3 Big Wheel model, 「Realsense D435」 is used as defaut camera and 「LDS-series」 as default LiDAR sensor. Here, we will explain about its setup.
 
 > **Warning**
@@ -278,8 +277,8 @@ $ roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
 | --- | --- | --- | [here]() |
 
 
-### 3Dモデルの参照
-If you want to know more in detail about the 3D model parts, please have a look in the  [Turtlebot3 Friends: Big Wheel](https://cad.onshape.com/documents/7daf195495224735934e7007/w/169d3bbd6522bfb5c32193c2/e/39cd43d7a31a1c83661df9da?renderMode=0&uiState=63156a1b6310686ce43b53e0)OnShape document.
+### 3D Model Reference
+If you want to know more in detail about the 3D model parts, please have a look in the  [Turtlebot3 Friends: Big Wheel](https://cad.onshape.com/documents/7daf195495224735934e7007/w/169d3bbd6522bfb5c32193c2/e/39cd43d7a31a1c83661df9da?renderMode=0&uiState=63156a1b6310686ce43b53e0) OnShape document.
 
 
 ### Model Characteristics
