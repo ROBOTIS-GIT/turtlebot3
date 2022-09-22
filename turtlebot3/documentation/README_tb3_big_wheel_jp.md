@@ -9,19 +9,19 @@
 |:---:|:---:|
 | ![TB3 Big Wheel GO](/turtlebot3/documentation/gif/tb3_big_wheel_go_top.gif) | ![TB3 Big Wheel GO rv](/turtlebot3/documentation/gif/tb3_big_wheel_go_rv.gif) | 
 
-|実環境 | Rviz |
+| 実環境 | Rviz |
 |:---:|:---:|
-|![TB3 Big Wheel BACK1](/turtlebot3/documentation/gif/tb3_big_wheel_back_1_top.gif) | ![TB3 Big Wheel BACK rv](/turtlebot3/documentation/gif/tb3_big_wheel_back_1_rv.gif) |
+| ![TB3 Big Wheel BACK1](/turtlebot3/documentation/gif/tb3_big_wheel_back_1_top.gif) | ![TB3 Big Wheel BACK rv](/turtlebot3/documentation/gif/tb3_big_wheel_back_1_rv.gif) |
 
 |実環境 | Rviz |
 |:---:|:---:|
-|![TB3 Big Wheel BACK2](/turtlebot3/documentation/gif/tb3_big_wheel_back_2_top.gif) | ![TB3 Big Wheel BACK2 rv](/turtlebot3/documentation/gif/tb3_big_wheel_back_2_rv.gif) |
+| ![TB3 Big Wheel BACK2](/turtlebot3/documentation/gif/tb3_big_wheel_back_2_top.gif) | ![TB3 Big Wheel BACK2 rv](/turtlebot3/documentation/gif/tb3_big_wheel_back_2_rv.gif) |
 
 ## Gazebo環境での動作検証
 
 | Gazebo環境 + Rviz | 
 |:---:|
-|![TB3 Big Wheel BACK](/turtlebot3/documentation/gif/tb3_big_wheel_nav_x5.gif) |
+| ![TB3 Big Wheel BACK](/turtlebot3/documentation/gif/tb3_big_wheel_nav_x5.gif) |
 
 
 ## セットアップ手順（Quick Start Guide）
@@ -51,8 +51,10 @@ $ echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
 
 - [3.2. SBC Setup](https://emanual.robotis.com/docs/en/platform/turtlebot3/sbc_setup/#sbc-setup)について
 
-Raspberry Pi 4BをBig WheelのSBCとして使用する場合は、e-Manualに記載されているセットアップ手順と同じになります。
 NUC11をBig WheelのSBCとして使う場合には、e-Manualに記載されているセットアップ手順は実行せずに、次のような手順でセットアップを行います。
+
+> **Note**
+> Raspberry Pi 4Bを用いる場合は、e-Manualを参考に通常のTurtleBot3と同様のセットアップ手順によりネットワークの設定を行ってください。
 
 1. NUCにUbuntu 20.04をインストールします。
 
@@ -61,11 +63,16 @@ NUC11をBig WheelのSBCとして使う場合には、e-Manualに記載されて�
 3. Turtlebot3の必要なパッケージをインストールします。
 
 ```code
+$ sudo apt remove ros-noetic-dynamixel-sdk
+$ sudo apt remove ros-noetic-turtlebot3-msgs
+$ sudo apt remove ros-noetic-turtlebot3
+$ mkdir -p ~/catkin_ws/src
 $ cd ~/catkin_ws/src/
+$ git clone -b noetic-devel https://github.com/ROBOTIS-GIT/DynamixelSDK.git
+$ git clone -b noetic-devel https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git
 $ git clone -b noetic-jp-devel https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_jp_custom
-$ cd turtlebot3_jp_custom
-$ rm -r turtlebot3_description/ turtlebot3_teleop/ turtlebot3_navigation/ turtlebot3_slam/ turtlebot3_example/
 $ cd ~/catkin_ws && catkin_make
+$ echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
 ```
 
 - [3.3. OpenCR Setup](https://emanual.robotis.com/docs/en/platform/turtlebot3/opencr_setup)の変更点
@@ -211,10 +218,28 @@ $ cd ~/catkin_ws && catkin_make
 
 そして、新しいターミナルを開くたびに、Turtlebot3のモデルも指定してください。
 ```code 
-$ export TURTLEBOT3_MODEL=pizza
+$ export TURTLEBOT3_MODEL=big_wheel
 ```
+
 > **Note**
-> `big_wheel`以外にも、`burger`, `waffle_pi`, `pizza`というモデルもあります。
+> 新しい端末をたちが得るたびに、以上のコマンドを実行する必要があります。そして、`big_wheel`以外にも、`burger`, `waffle_pi`, `pizza`というモデルもあります。
+
+1. まず**NUC側**でroscoreを起動します。
+```code
+$ roscore
+```
+2. **NUC側**でTurtlebot3 Big Wheelのbring-upコマンドを実行します。
+```code
+$ roslaunch turtlebot3_bringup turtlebot3_robot.launch
+```
+3. 必要であれば、**リモートPC側**でTeleOPを実行します。
+```code
+$ roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
+```
+
+- **SLAM (地図生成) + Navigation**
+
+通常のTurtleBot3と同じ手順で実行できますので、公式のe-Manualの「[SLAM](https://emanual.robotis.com/docs/en/platform/turtlebot3/slam/)」や「[Navigation](https://emanual.robotis.com/docs/en/platform/turtlebot3/navigation/)」に従って進めてください。
 
 
 ### シミュレーション
@@ -226,7 +251,13 @@ $ export TURTLEBOT3_MODEL=big_wheel
 $ roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
 ```
 > **Note**
-> `empty_world`以外にも、`house`, `simulation`, `stage_1`などという環境もあります。
+> `empty_world`以外にも、`house`, `simulation`, `stage_1`などという環境もあります。そして、ROBOTIS日本支店カスタムのワールドもあります。現時点では、`turtlebot3_jp_world_empty`, `turtlebot3_jp_world_static`, `turtlebot3_jp_world_dynamic`の3種類のワールドを用意しています。
+
+
+| モデル名 | 画像 |
+|:---:|:---:|
+| turtlebot3_jp_world_static | ![TB3 static](/turtlebot3/documentation/gif/turtlebot3_jp_world_static.png) | 
+| turtlebot3_jp_world_dynamic | ![TB3 dynamic](/turtlebot3/documentation/gif/turtlebot3_jp_world_dynamic.gif) |
 
 
 ## ハードウェア関係
@@ -234,40 +265,10 @@ $ roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
 
 | 部品名 | 型番 | 個数 | 購入リンク |
 |---|---|---|---|
-| Dynamixel xm540-w150-r | 902-0134-000 | 2 | [here](https://e-shop.robotis.co.jp/product.php?id=42) |
-| OpenCR1.0 | 903-0257-000 | 1 | [here](https://e-shop.robotis.co.jp/product.php?id=155) |
+| TurtleBot3 Waffle Pi | --- | 1 | [here](https://e-shop.robotis.co.jp/product.php?id=351) |
 | NUC 11 Pro Kit NUC11TNHv7 | BNUC11TNHV70000 | 1 | [here](https://www.ark-pc.co.jp/i/31400996/) |
-| TiM571-2050101 | 1075091 | 1 | [here](https://www.sick.com/jp/ja/detection-and-ranging-solutions/2d-lidar/tim/tim571-2050101/p/p412444) |
 | Realsense d435 | --- | 1 | [here](https://www.intelrealsense.com/depth-camera-d435/) |
 | 車輪(5inch) | --- | 2 | [here]() |
-| なめらかオムニホイール（Φ55mm） | 4571398310089 | 2 | [here](https://www.vstone.co.jp/robotshop/index.php?main_page=product_info&products_id=4394) |
-| アルミフレーム | CAF5-2020-400 | 4 | [here](https://jp.misumi-ec.com/vona2/detail/110302683830/?PNSearch=CAF5-2020-400&HissuCode=CAF5-2020-400&searchFlow=suggest2products&Keyword=CAF5-2020-400) |
-| アルミフレーム | CAF5-2020-360 | 6 | [here](https://jp.misumi-ec.com/vona2/detail/110302683830/?PNSearch=CAF5-2020-360&HissuCode=CAF5-2020-360&searchFlow=suggest2products&Keyword=CAF5-2020-360) |
-| アルミフレーム | CAF5-2020-170 | 4 | [here](https://jp.misumi-ec.com/vona2/detail/110302683830/?PNSearch=CAF5-2020-170&HissuCode=CAF5-2020-170&searchFlow=suggest2products&Keyword=CAF5-2020-170) |
-| アルミフレーム | CAF5-2020-100 | 5 | [here](https://jp.misumi-ec.com/vona2/detail/110302683830/?PNSearch=CAF5-2020-100&HissuCode=CAF5-2020-100&searchFlow=suggest2products&Keyword=CAF5-2020-100) |
-| 回り止付ハードブラケットSS | SFK-N58T | 52 | [here](https://jp.misumi-ec.com/vona2/detail/221005427845/?PNSearch=SFK-N58T&HissuCode=SFK-N58T&searchFlow=suggest2products&Keyword=SFK-N58T) |
-| Li-ionバッテリ 14.4V 9.0Ah 129.6Wh| BL1490 | 1 | [here](https://www.amazon.co.jp/dp/B08MHWMZ7C) |
-| バッテリー18 vドック | B08X73Z7RP | 1 | [here](https://www.amazon.co.jp/dp/B08X73Z7RP) |
-| スラスト針状ころ軸受 | BA0821 | 4 | [here](https://jp.misumi-ec.com/vona2/detail/110300117970/?PNSearch=BA0821&HissuCode=BA0821&searchFlow=suggest2products&Keyword=BA0821) |
-| シェル形ニードルベアリング | TLA810Z | 2 | [here](https://jp.misumi-ec.com/vona2/detail/221005155382/?PNSearch=TLA810Z&HissuCode=TLA810Z&searchFlow=suggest2products&Keyword=TLA810Z) |
-| 金属ワッシャ | TWSSS16-4-1  | 4 | [here](https://jp.misumi-ec.com/vona2/detail/110302677010/?PNSearch=TWSSS16-4-1&HissuCode=TWSSS16-4-1&searchFlow=suggest2products&Keyword=TWSSS16-4-1) |
-| 黄銅スペーサー | BRB-435CE | 2 | [here](https://jp.misumi-ec.com/vona2/detail/221006202724/?PNSearch=BRB-435CE&HissuCode=BRB-435CE&searchFlow=suggest2products&Keyword=BRB-435CE) |
-| 六角穴付きボルト | CSH-SUS-M5-10 | 6 | [here](https://jp.misumi-ec.com/vona2/detail/221000551286/?PNSearch=CSH-SUS-M5-10&HissuCode=CSH-SUS-M5-10&searchFlow=suggest2products&Keyword=CSH-SUS-M5-10) |
-| 六角穴付きボルト | CSH-SUS-M4-16 | 2 | [here](https://jp.misumi-ec.com/vona2/detail/221000551286/?PNSearch=CSH-SUS-M4-16&HissuCode=CSH-SUS-M4-16&searchFlow=suggest2products&Keyword=CSH-SUS-M4-16) |
-| 六角穴付きボルト | SBCB3-8 | 2 | [here](https://jp.misumi-ec.com/vona2/detail/110302280450/?PNSearch=SBCB3-8&HissuCode=SBCB3-8&searchFlow=suggest2products&Keyword=SBCB3-8) |
-| 六角穴付きボルト | CSH-SUS-M2.5-20 | 8 | [here](https://jp.misumi-ec.com/vona2/detail/221000551286/?PNSearch=CSH-SUS-M2.5-20&HissuCode=CSH-SUS-M2.5-20&searchFlow=suggest2products&Keyword=CSH-SUS-M2.5-20) |
-| 六角穴付きボルト | CSH-SUS-M2.5-12 | 8 | [here](https://jp.misumi-ec.com/vona2/detail/221000551286/?PNSearch=CSH-SUS-M2.5-12&HissuCode=CSH-SUS-M2.5-12&searchFlow=suggest2products&Keyword=CSH-SUS-M2.5-12) |
-| 六角穴付ボルト UNC | CSH-SUS-UNC1/4-7/16 | 8 | [here](https://jp.misumi-ec.com/vona2/detail/221000551343/?PNSearch=CSH-SUS-UNC1%2F4-7%2F16&HissuCode=CSH-SUS-UNC1%2F4-7%2F16&searchFlow=suggest2products&Keyword=CSH-SUS-UNC1%2F4-7%2F16) |
-| 六角穴付き皿ボルト | CSHCS-BR-M4-10 | 21 | [here](https://jp.misumi-ec.com/vona2/detail/221000551376/?PNSearch=CSHCS-BR-M4-10&HissuCode=CSHCS-BR-M4-10&searchFlow=suggest2products&Keyword=CSHCS-BR-M4-10) |
-| 六角穴付き皿ボルト | CSHCS-BR-M4-8 | 5 | [here](https://jp.misumi-ec.com/vona2/detail/221000551376/?PNSearch=CSHCS-BR-M4-8&HissuCode=CSHCS-BR-M4-8&searchFlow=suggest2products&Keyword=CSHCS-BR-M4-8) |
-| 六角穴付き皿ボルト | CSHCS-ST-M2.5-8 | 16 | [here](https://jp.misumi-ec.com/vona2/detail/221000551376/?PNSearch=CSHCS-ST-M2.5-8&HissuCode=CSHCS-ST-M2.5-8&searchFlow=suggest2products&Keyword=CSHCS-ST-M2.5-8) |
-| 六角穴付き皿ボルト | SHFBS3-10 | 2 | [here](https://jp.misumi-ec.com/vona2/detail/110300463610/?PNSearch=SHFBS3-10&HissuCode=SHFBS3-10&searchFlow=suggest2products&Keyword=SHFBS3-10) |
-| ナット | LBNR4 | 4 | [here](https://jp.misumi-ec.com/vona2/detail/110300250540/?PNSearch=LBNR4&HissuCode=LBNR4&searchFlow=suggest2products&Keyword=LBNR4) |
-| ナット | LBNR2.5 | 8 | [here](https://jp.misumi-ec.com/vona2/detail/110300250540/?PNSearch=LBNR2.5&HissuCode=LBNR2.5&searchFlow=suggest2products&Keyword=LBNR2.5) |
-| 黄銅 ローレットツマミ | NB-310EA-N | 4 | [here](https://jp.misumi-ec.com/vona2/detail/221006307382/?PNSearch=NB-310EA-N&HissuCode=NB-310EA-N&searchFlow=suggest2products&Keyword=NB-310EA-N) |
-| SF20 TナットSS（先入れ） | SFB-012  | 26 | [here](https://jp.misumi-ec.com/vona2/detail/221005423144/?PNSearch=SFB-012&HissuCode=SFB-012&searchFlow=suggest2products&Keyword=SFB-012) |
-| クッションコーナーガード | EA983FE-72 | 4 | [here](https://jp.misumi-ec.com/vona2/detail/223007688859/?PNSearch=EA983FE-72&HissuCode=EA983FE-72&searchFlow=suggest2products&Keyword=EA983FE-72) |
-| --- | --- | --- | [here]() |
 | --- | --- | --- | [here]() |
 
 
@@ -301,7 +302,7 @@ $ roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
 | LED使用可能 | User LED x 4 | User LED x 4 |
 | LEDステータス | Board status LED x 1, Arduino LED x 1, Power LED x 1 | Board status LED x 1, Arduino LED x 1, Power LED x 1 |
 | ボタンとスイッチ | Push buttons x 2, Reset button x 1, Dip switch x 2 | Push buttons x 2, Reset button x 1, Dip switch x 2 |
-| バッテリ | Makita BL1040B 10.8V 4.0Ah | Lithium polymer 11.1V 1800mAh / 19.98Wh 5C |
+| バッテリ | マキタ互換バッテリー BL1490 14.4v 9Ah | Lithium polymer 11.1V 1800mAh / 19.98Wh 5C |
 | PC接続 | USB | USB |
 | ファームウェア更新 | USB経由, JTAG経由 | USB経由, JTAG経由 |
 | 電力アダプタ | Input : 100-240V, AC 50/60Hz, 1.5A @max, Output : 12V DC, 5A | Input : 100-240V, AC 50/60Hz, 1.5A @max, Output : 12V DC, 5A |

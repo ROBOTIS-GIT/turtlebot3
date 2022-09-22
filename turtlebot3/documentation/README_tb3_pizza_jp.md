@@ -9,9 +9,9 @@
 |:---:|:---:|
 | ![TB3 Pizza GO](/turtlebot3/documentation/gif/tb3_pizza_go_top_x2.gif) | ![TB3 Pizza GO rv](/turtlebot3/documentation/gif/tb3_pizza_go_rv_x2.gif) | 
 
-|実環境 | Rviz |
+| 実環境 | Rviz |
 |:---:|:---:|
-|![TB3 Pizza BACK](/turtlebot3/documentation/gif/tb3_pizza_back_top_x2.gif) | ![TB3 Pizza BACK rv](/turtlebot3/documentation/gif/tb3_pizza_back_rv_x2.gif) |
+| ![TB3 Pizza BACK](/turtlebot3/documentation/gif/tb3_pizza_back_top_x2.gif) | ![TB3 Pizza BACK rv](/turtlebot3/documentation/gif/tb3_pizza_back_rv_x2.gif) |
 
 ## Gazebo環境での動作検証
 
@@ -21,7 +21,7 @@
 
 | Gazebo環境 + Rviz | 
 |:---:|
-|![TB3 Pizza BACK](/turtlebot3/documentation/gif/tb3_pizza_nav_2_x5.gif) |
+| ![TB3 Pizza BACK](/turtlebot3/documentation/gif/tb3_pizza_nav_2_x5.gif) |
 
 ## セットアップ手順（Quick Start Guide）
 ### 1. 環境設定
@@ -59,25 +59,25 @@ Pizzaモデルでは、Raspberry Pi 4Bの代わりにNUC11を使いますので�
 3. Turtlebot3の必要なパッケージをインストールします。
 
 ```code
+$ sudo apt remove ros-noetic-dynamixel-sdk
+$ sudo apt remove ros-noetic-turtlebot3-msgs
+$ sudo apt remove ros-noetic-turtlebot3
+$ mkdir -p ~/catkin_ws/src
 $ cd ~/catkin_ws/src/
+$ git clone -b noetic-devel https://github.com/ROBOTIS-GIT/DynamixelSDK.git
+$ git clone -b noetic-devel https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git
 $ git clone -b noetic-jp-devel https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_jp_custom
-$ cd turtlebot3_jp_custom
-$ rm -r turtlebot3_description/ turtlebot3_teleop/ turtlebot3_navigation/ turtlebot3_slam/ turtlebot3_example/
 $ cd ~/catkin_ws && catkin_make
+$ echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
 ```
 
-- [3.3. OpenCR Setup](https://emanual.robotis.com/docs/en/platform/turtlebot3/opencr_setup)の変更点(更新！！！)
+- [3.3. OpenCR Setup](https://emanual.robotis.com/docs/en/platform/turtlebot3/opencr_setup)の変更点
 
 OpenCRのセットアップは、NUCを通して行います。
 
 1. [OpenCR](https://emanual.robotis.com/docs/en/parts/controller/opencr10/)をmicro USBケーブル経由でNUCに繋げてください。
 
-2. OpenCRにファームウェアをアップロードするために、NUCに必要なDebianパッケージをインストールします。
-```code
-$ sudo dpkg --add-architecture armhf
-$ sudo apt-get update
-$ sudo apt-get install libc6:armhf
-```
+2. Debianパッケージをインストールするステップを飛ばします。（NUCにはarmではなくamdなので、大丈夫です）
 
 3. OPENCR_MODELを```pizza_noetic```に指定します。
 ```code
@@ -159,7 +159,7 @@ $ source ~/.bashrc
 ### 3. 追加レポジトリの設定
 Turtlebot3のPizzaモデルには、デフォルトとして「Realsense D435」のデプスカメラと「Sick Tim571」のLiDARが付けてあります。それそれのレポジトリのセットアップ手順を説明します。
 > **Warning**
-> 以下の手順はリモートPC側に行われます。
+> 以下の手順はNUC側に行われます。
 
 - **カメラ設定**
 
@@ -190,7 +190,7 @@ Sick Timのudev rulesの追加とともに、レポジトリをコンパイル�
 
 ```code
 $ cd ~/catkin_ws/src
-$ git clone https://github.com/ROBOTIS-JAPAN-GIT/sick_tim
+$ git clone https://github.com/ROBOTIS-JAPAN-GIT/sick_tim_jp_custom
 $ cd sick_tim
 $ sudo cp debian/udev /etc/udev/rules.d/81-sick-tim3xx.rules
 $ sudo udevadm control --reload-rules
@@ -215,7 +215,7 @@ $ cakin_make
 > **Note**
 > LiDARのIPに応じて、「X」の部分を更新します。そして、「XXX」の部分は、LiDARのIPと一致してはなりません。例えば、LiDARのIPは「192.168.0.1」の場合、「1」以外に「0~255」の間に番後を選択してください。
 
-次に、「sick_tim571_2050101.launch」(~/catkin_ws/src/sick?tim)のlaunchファイルをつぎのように書き換えます。
+次に、「sick_tim571_2050101.launch」(~/catkin_ws/src/sick_tim)のlaunchファイルをつぎのように書き換えます。
 
 - **更新前**
 
@@ -245,7 +245,7 @@ TurtleBot3 PizzaにはGazeboという物理演算を考慮したシミュレー�
 
 ```code
 $ cd ~/catkin_ws/src/
-$ git clone -b noetic-devel https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_simulations_jp_custom
+$ git clone -b noetic-jp-devel https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_simulations_jp_custom
 $ cd ~/catkin_ws && catkin_make
 ```
 
@@ -265,15 +265,15 @@ $ export TURTLEBOT3_MODEL=pizza
 > **Note**
 > 新しい端末をたちが得るたびに、以上のコマンドを実行する必要があります。そして、`pizza`以外にも、`burger`, `waffle_pi`, `big_wheel`というモデルもあります。
 
-1. まず**リモートPC側**にROSを立てます。
+1. まず**NUC側**でroscoreを起動します。
 ```code
 $ roscore
 ```
-2. **NUC側**にTurtlebot3 Pizzaのbring-upコマンドで実行します。
+2. **NUC側**でTurtlebot3 Pizzaのbring-upコマンドを実行します。
 ```code
 $ roslaunch turtlebot3_bringup turtlebot3_robot.launch
 ```
-3. 必要であれば、**リモートPC側**にTeleOPを実行します。
+3. 必要であれば、**リモートPC側**でTeleOPを実行します。
 ```code
 $ roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
 ```
@@ -291,8 +291,15 @@ $ roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
 $ export TURTLEBOT3_MODEL=pizza
 $ roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
 ```
+
 > **Note**
 > `empty_world`以外にも、`house`, `simulation`, `stage_1`などという環境もあります。そして、ROBOTIS日本支店カスタムのワールドもあります。現時点では、`turtlebot3_jp_world_empty`, `turtlebot3_jp_world_static`, `turtlebot3_jp_world_dynamic`の3種類のワールドを用意しています。
+
+
+| モデル名 | 画像 |
+|:---:|:---:|
+| turtlebot3_jp_world_static | ![TB3 static](/turtlebot3/documentation/gif/turtlebot3_jp_world_static.png) | 
+| turtlebot3_jp_world_dynamic | ![TB3 dynamic](/turtlebot3/documentation/gif/turtlebot3_jp_world_dynamic.gif) |
 
 
 ## ハードウェア関係
@@ -311,7 +318,7 @@ $ roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
 | アルミフレーム | CAF5-2020-170 | 4 | [here](https://jp.misumi-ec.com/vona2/detail/110302683830/?PNSearch=CAF5-2020-170&HissuCode=CAF5-2020-170&searchFlow=suggest2products&Keyword=CAF5-2020-170) |
 | アルミフレーム | CAF5-2020-100 | 5 | [here](https://jp.misumi-ec.com/vona2/detail/110302683830/?PNSearch=CAF5-2020-100&HissuCode=CAF5-2020-100&searchFlow=suggest2products&Keyword=CAF5-2020-100) |
 | 回り止付ハードブラケットSS | SFK-N58T | 52 | [here](https://jp.misumi-ec.com/vona2/detail/221005427845/?PNSearch=SFK-N58T&HissuCode=SFK-N58T&searchFlow=suggest2products&Keyword=SFK-N58T) |
-| Li-ionバッテリ 14.4V 9.0Ah 129.6Wh| BL1490 | 1 | [here](https://www.amazon.co.jp/dp/B08MHWMZ7C) |
+| マキタ互換バッテリー BL1490 14.4v 9Ah | BL1490 | 1 | [here](https://www.amazon.co.jp/dp/B08MHWMZ7C) |
 | バッテリー18 vドック | B08X73Z7RP | 1 | [here](https://www.amazon.co.jp/dp/B08X73Z7RP) |
 | スラスト針状ころ軸受 | BA0821 | 4 | [here](https://jp.misumi-ec.com/vona2/detail/110300117970/?PNSearch=BA0821&HissuCode=BA0821&searchFlow=suggest2products&Keyword=BA0821) |
 | シェル形ニードルベアリング | TLA810Z | 2 | [here](https://jp.misumi-ec.com/vona2/detail/221005155382/?PNSearch=TLA810Z&HissuCode=TLA810Z&searchFlow=suggest2products&Keyword=TLA810Z) |
@@ -366,7 +373,7 @@ $ roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
 | LED使用可能 | User LED x 4 | User LED x 4 |
 | LEDステータス | Board status LED x 1, Arduino LED x 1, Power LED x 1 | Board status LED x 1, Arduino LED x 1, Power LED x 1 |
 | ボタンとスイッチ | Push buttons x 2, Reset button x 1, Dip switch x 2 | Push buttons x 2, Reset button x 1, Dip switch x 2 |
-| バッテリ | Makita BL1040B 10.8V 4.0Ah | Lithium polymer 11.1V 1800mAh / 19.98Wh 5C |
+| バッテリ | マキタ互換バッテリー BL1490 14.4v 9Ah | Lithium polymer 11.1V 1800mAh / 19.98Wh 5C |
 | PC接続 | USB | USB |
 | ファームウェア更新 | USB経由, JTAG経由 | USB経由, JTAG経由 |
 | 電力アダプタ | Input : 100-240V, AC 50/60Hz, 1.5A @max, Output : 12V DC, 5A | Input : 100-240V, AC 50/60Hz, 1.5A @max, Output : 12V DC, 5A |
