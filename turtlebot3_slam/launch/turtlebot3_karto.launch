@@ -1,6 +1,6 @@
 <launch>
   <!-- Arguments -->
-  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi, pizza, big_wheel]"/>
+  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi, pizza, big_wheel, big_wheel_3rs]"/>
   <arg name="lds_model" default="$(env LDS_MODEL)" doc="LDS MODEL [LDS-01, LDS-02]"/>
   <arg name="configuration_basename" default="turtlebot3_lds_2d.lua"/>
 
