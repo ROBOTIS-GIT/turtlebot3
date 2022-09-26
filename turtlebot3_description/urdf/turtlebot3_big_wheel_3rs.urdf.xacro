@@ -9,7 +9,11 @@
   <xacro:arg name="publish_pointcloud" default="false" />
   <xacro:include filename="$(find realsense2_description)/urdf/_d435.urdf.xacro" />
 
+  <xacro:property name="M_PI" value="3.14159265358979"/>
+
+
   <link name="base_footprint"/>
+
 
   <joint name="base_joint" type="fixed">
     <parent link="base_footprint"/>
@@ -41,6 +45,7 @@
                izz="1.4612727e-02" />
     </inertial>
   </link>
+
 
   <joint name="wheel_left_joint" type="continuous">
     <parent link="base_link"/>
@@ -74,6 +79,7 @@
       </inertial>
   </link>
 
+
   <joint name="wheel_right_joint" type="continuous">
     <parent link="base_link"/>
     <child link="wheel_right_link"/>
@@ -106,6 +112,7 @@
       </inertial>
   </link>
 
+
   <joint name="caster_back_right_joint" type="fixed">
     <parent link="base_link"/>
     <child link="caster_back_right_link"/>
@@ -135,6 +142,7 @@
                izz="0.001" />
     </inertial>
   </link>
+
 
   <joint name="caster_back_left_joint" type="fixed">
     <parent link="base_link"/>
@@ -166,6 +174,7 @@
     </inertial>
   </link>
 
+
   <joint name="imu_joint" type="fixed">
     <parent link="base_link"/>
     <child link="imu_link"/>
@@ -173,6 +182,7 @@
   </joint>
 
   <link name="imu_link"/>
+
 
   <joint name="scan_joint" type="fixed">
     <parent link="base_link"/>
@@ -205,17 +215,18 @@
     </inertial>
   </link>
 
-  <joint name="base_camera_joint" type="fixed">
+
+  <joint name="camera_base_front_joint" type="fixed">
     <parent link="base_link"/>
-    <child link="base_camera_link"/>
-    <origin xyz="0.039 -0.02958054 0.0915" rpy="0 0 0"/>
+    <child link="camera_base_front_link"/>
+    <origin xyz="0.033 -0.036 0.0915" rpy="0 0 0"/>
   </joint>
 
-  <link name="base_camera_link">
+  <link name="camera_base_front_link">
     <visual>
-      <origin xyz="0 0 0.0" rpy="0 0 1.57"/>
+      <origin xyz="0 0 0" rpy="0 0 ${M_PI/2}"/>
       <geometry>
-        <mesh filename="package://turtlebot3_description/meshes/joints/d435_base_camera.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://turtlebot3_description/meshes/joints/d435_camera_base.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="light_black"/>
     </visual>
@@ -228,8 +239,65 @@
     </collision> -->
   </link>
 
-  <xacro:sensor_d435 parent="base_camera_link" use_nominal_extrinsics="$(arg use_nominal_extrinsics)" add_plug="$(arg add_plug)" use_mesh="$(arg use_mesh)">
-    <origin xyz="0.016 0.03 0.0" rpy="0 0 0"/>
+
+  <joint name="camera_base_left_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="camera_base_left_link"/>
+    <origin xyz="0.028 0.058 0.0915" rpy="0 0 0"/>
+  </joint>
+
+  <link name="camera_base_left_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 ${M_PI-0.47560222}"/>
+      <geometry>
+        <mesh filename="package://turtlebot3_description/meshes/joints/d435_camera_base.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="light_black"/>
+    </visual>
+
+    <!-- <collision>
+      <origin xyz="0.015 0 -0.0065" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.0315" radius="0.055"/>
+      </geometry>
+    </collision> -->
+  </link>
+
+
+  <joint name="camera_base_right_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="camera_base_right_link"/>
+    <origin xyz="-0.036 -0.091 0.0915" rpy="0 0 0"/>
+  </joint>
+
+  <link name="camera_base_right_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0.47560222"/>
+      <geometry>
+        <mesh filename="package://turtlebot3_description/meshes/joints/d435_camera_base.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="light_black"/>
+    </visual>
+
+    <!-- <collision>
+      <origin xyz="0.015 0 -0.0065" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.0315" radius="0.055"/>
+      </geometry>
+    </collision> -->
+  </link>
+
+
+  <xacro:sensor_d435 parent="camera_base_front_link" name="camera_front" use_nominal_extrinsics="$(arg use_nominal_extrinsics)" add_plug="$(arg add_plug)" use_mesh="$(arg use_mesh)" topics_ns="camera_front">
+    <origin xyz="0.016 0.036 0.0" rpy="0 0 0"/>
+  </xacro:sensor_d435>
+
+  <xacro:sensor_d435 parent="camera_base_left_link" name="camera_left" use_nominal_extrinsics="$(arg use_nominal_extrinsics)" add_plug="$(arg add_plug)" use_mesh="$(arg use_mesh)" topics_ns="camera_left">
+    <origin xyz="-0.02467 0.03070 0.0" rpy="0 0 ${M_PI/2-0.47560222}"/>
+  </xacro:sensor_d435>
+
+  <xacro:sensor_d435 parent="camera_base_right_link" name="camera_right" use_nominal_extrinsics="$(arg use_nominal_extrinsics)" add_plug="$(arg add_plug)" use_mesh="$(arg use_mesh)" topics_ns="camera_right">
+    <origin xyz="0.03933 0.00225 0.0" rpy="0 0 ${-M_PI/2+0.47560222}"/>
   </xacro:sensor_d435>
 
   <!-- <joint name="camera_joint" type="fixed">
