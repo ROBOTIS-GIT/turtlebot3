@@ -386,7 +386,7 @@ If you want to know more in detail about the 3D model parts, please have a look 
 | Programmable LEDs | User LED x 4 | User LED x 4 |
 | Status LEDs | Board status LED x 1, Arduino LED x 1, Power LED x 1 | Board status LED x 1, Arduino LED x 1, Power LED x 1 |
 | Buttons and Switches | Push buttons x 2, Reset button x 1, Dip switch x 2 | Push buttons x 2, Reset button x 1, Dip switch x 2 |
-| Battery | マキタ互換バッテリー BL1490 14.4v 9Ah | Lithium polymer 11.1V 1800mAh / 19.98Wh 5C |
+| Battery | Makita BL1490 14.4V 9.0Ah | Lithium polymer 11.1V 1800mAh / 19.98Wh 5C |
 | PC connection | USB | USB |
 | Firmware upgrade | via USB, via JTAG | via USB, via JTAG |
 | Power adapter (SMPS) | Input : 100-240V, AC 50/60Hz, 1.5A @max, Output : 12V DC, 5A | Input : 100-240V, AC 50/60Hz, 1.5A @max, Output : 12V DC, 5A |
