@@ -213,6 +213,10 @@ TurtleBot3 Pizza counts with Gazebo support, a simulation environment which take
 ```code
 $ cd ~/catkin_ws/src/
 $ git clone -b noetic-devel https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_simulations_jp_custom
+$ git clone https://github.com/robotics-upo/lightsfm
+$ cd lightsfm
+$ make
+$ sudo make install
 $ cd ~/catkin_ws && catkin_make
 ```
 
