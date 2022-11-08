@@ -1,8 +1,16 @@
 <launch>
-  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]"/>
+  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi, mecanum]"/>
   <param name="model" value="$(arg model)"/>
 
+  <group if = "$(eval model == 'mecanum')">
+    <node pkg="turtlebot3_teleop" type="turtlebot3_teleop_mecanum_key" name="turtlebot3_teleop_keyboard"  output="screen">
+    </node>
+  </group>
+
   <!-- turtlebot3_teleop_key already has its own built in velocity smoother -->
-  <node pkg="turtlebot3_teleop" type="turtlebot3_teleop_key" name="turtlebot3_teleop_keyboard"  output="screen">
-  </node>
+  <group if = "$(eval model != 'mecanum')">
+    <node pkg="turtlebot3_teleop" type="turtlebot3_teleop_key" name="turtlebot3_teleop_keyboard"  output="screen">
+    </node>
+  </group>
+  
 </launch>

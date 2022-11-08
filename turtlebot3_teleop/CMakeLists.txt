@@ -41,6 +41,7 @@ catkin_package(
 ################################################################################
 catkin_install_python(PROGRAMS
   nodes/turtlebot3_teleop_key
+  nodes/turtlebot3_teleop_mecanum_key
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
