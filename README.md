@@ -1,6 +1,6 @@
-# IDMNIER custom TurtleBot3 Mecanum
+# IDMINER custom TurtleBot3 Mecanum
 
-### 1.環境設定
+### 1. 環境設定
 
 ```code
 $ sudo apt remove ros-noetic-turltebot3-mgs
