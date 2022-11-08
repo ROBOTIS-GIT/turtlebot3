@@ -1,6 +1,6 @@
-# IDMINER CUSTOM - TurtleBot3 Mecanum
-
-### PC環境設定
+# IDMINER CUSTOM ITEM
+## New Model : Mecanum
+- PC setup
 
 ```code
 $ sudo apt remove ros-noetic-turltebot3-mgs
