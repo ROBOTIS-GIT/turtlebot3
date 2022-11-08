@@ -7,8 +7,8 @@ $ sudo apt remove ros-noetic-turltebot3-mgs
 $ sudo apt remove ros-noetic-trutlebto3
 $ mkdir -p ~/catkin_ws/src
 $ cd ~/catkin_ws/src
-$ git clone https://gihtub.com/zhl017/turtlebot3_idminer_custom
-$ git clone https://gtihub.com/zhl017/turtlebot3_msgs_idminer_custom
+$ git clone https://gituhb.com/zhl017/turtlebot3_idminer_custom
+$ git clone https://github.com/zhl017/turtlebot3_msgs_idminer_custom
 $ cd ~/catkin_ws && catkin_make
 $ echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
 $ echo "export TURTLEBOT3_MODEL=mecanum" >> ~/.bashrc
