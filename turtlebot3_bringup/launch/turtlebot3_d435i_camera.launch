@@ -1,5 +1,5 @@
 <launch>
-  <arg name="iamge_input" default="camera/color/image_raw"/>
+  <arg name="image_input" default="camera/color/image_raw"/>
   
   <include file="$(find realsense2_camera)/launch/rs_camera.launch"/>
   
