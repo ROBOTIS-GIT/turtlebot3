@@ -1,0 +1,4 @@
+<launch>
+  <node pkg="turtlebot3_example" type="turtlebot3_goal_key" name="turtlebot3_goal_key" output="screen">
+  </node>
+</launch>

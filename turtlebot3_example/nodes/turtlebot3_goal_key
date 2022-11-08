@@ -1,0 +1,109 @@
+#!/usr/bin/env python3
+
+import rospy
+from sensor_msgs.msg import JointState
+from geometry_msgs.msg import Twist
+
+RAD2TICK = (180 / 3.14 / 0.087890625)
+DEG2RAD = 0.01745329252
+
+# max linear vel : 0.4
+# max ang vel : 1.4
+
+msg = """
+--------------------------------------
+Insert xyz - coordinate.
+x : position x (m)
+y : position y (m)
+z : orientation z (degree: -180 ~ 180) 
+s : close
+--------------------------------------
+"""
+
+class Process():
+    def __init__(self):
+        rospy.init_node('moving')
+        rospy.on_shutdown(self.shutdown)
+
+        self.cmd_vel = rospy.Publisher('/cmd_vel', Twist, queue_size=5)
+        rospy.Subscriber('/joint_states', JointState, self.cb, queue_size=5)
+
+        r = rospy.Rate(10)
+
+        saved_tick = JointState()
+        self.current_tick = JointState()
+
+        move_cmd = Twist()
+
+        moving = False
+
+        (goal_x, goal_y, goal_z) = self.getkey()
+        if goal_z > 180 or goal_z < -180:
+            print("input wrong z range.")
+            self.shutdown()
+        goal_z = goal_z * DEG2RAD
+
+        if goal_x != 0:
+            diff_encoder = abs(goal_x) / ( 0.314 / 4096 ) # 0.314
+            if moving == False:
+                saved_tick = self.current_tick
+                moving = True
+            while abs(saved_tick.position[0] - self.current_tick.position[0]) * RAD2TICK <= diff_encoder:
+                if goal_x > 0:
+                    move_cmd.linear.x = 0.03
+                else:
+                    move_cmd.linear.x = -0.03
+                self.cmd_vel.publish(move_cmd)
+                r.sleep()
+
+        if goal_y != 0:
+            diff_encoder = abs(goal_y) / ( 0.314 / 4096 ) # 0.314
+            if moving == False:
+                saved_tick = self.current_tick
+                moving = True
+            while abs(saved_tick.position[0] - self.current_tick.position[0]) * RAD2TICK <= diff_encoder:
+                if goal_y > 0:
+                    move_cmd.linear.y = 0.03
+                else:
+                    move_cmd.linear.y = -0.03
+                self.cmd_vel.publish(move_cmd)
+                r.sleep()
+
+        if goal_z != 0:
+            diff_encoder = abs( goal_z * 0.23 ) / ( 0.314 / 4096 ) # 0.314
+            if moving == False:
+                saved_tick = self.current_tick
+                moving = True
+            while abs(saved_tick.position[0] - self.current_tick.position[0]) * RAD2TICK <= diff_encoder:
+                if goal_z > 0:
+                    move_cmd.angular.z = -0.70
+                else:
+                    move_cmd.angular.z = 0.70
+                self.cmd_vel.publish(move_cmd)
+                r.sleep()
+
+        rospy.loginfo('stopping the robot...')
+        goal_x = goal_y = goal_z = 0.0
+        self.cmd_vel.publish(Twist())
+
+
+    def cb(self, msg):
+        self.current_tick = msg
+
+    def getkey(self):
+        x, y, z = input("| x | y | z |\n").split()
+        if x == 's':
+            self.shutdown()
+        x, y, z = [float(x), float(y), float(z)]
+        return x, y, z
+
+    def shutdown(self):
+        self.cmd_vel.publish(Twist())
+
+if __name__ == '__main__':
+    try:
+        while not rospy.is_shutdown():
+            print(msg)
+            Process()
+    except:
+        rospy.loginfo("shutdown.")
