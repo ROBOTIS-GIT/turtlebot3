@@ -1,3 +1,20 @@
+# IDMNIER custom TurtleBot3 Mecanum
+
+### 1.環境設定
+
+```code
+$ sudo apt remove ros-noetic-turltebot3-mgs
+$ sudo apt remove ros-noetic-trutlebto3
+$ mkdir -p ~/catkin_ws/src
+$ cd ~/catkin_ws/src
+$ git clone https://gihtub.com/zhl017/turtlebot3_idminer_custom
+$ git clone https://gtihub.com/zhl017/turtlebot3_msgs_idminer_custom
+$ cd ~/catkin_ws && catkin_make
+$ echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
+$ echo "export TURTLEBOT3_MODEL=mecanum" >> ~/.bashrc
+$ source ~/.bashrc
+```
+
 # TurtleBot3
 <img src="https://github.com/ROBOTIS-GIT/emanual/blob/master/assets/images/platform/turtlebot3/logo_turtlebot3.png" width="300">
 
