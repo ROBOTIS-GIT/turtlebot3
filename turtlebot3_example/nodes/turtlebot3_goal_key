@@ -76,9 +76,9 @@ class Process():
                 moving = True
             while abs(saved_tick.position[0] - self.current_tick.position[0]) * RAD2TICK <= diff_encoder:
                 if goal_z > 0:
-                    move_cmd.angular.z = -0.70
-                else:
                     move_cmd.angular.z = 0.70
+                else:
+                    move_cmd.angular.z = -0.70
                 self.cmd_vel.publish(move_cmd)
                 r.sleep()
 
