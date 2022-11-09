@@ -1,5 +1,5 @@
 # IDMINER CUSTOM ITEM
-## New Model : Mecanum ( lin : 0.4 / ang : 1.4 )
+## New Model : Mecanum ( lin : 0.4 / ang : 2.0 )
 
 ### PC setup
 
