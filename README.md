@@ -1,6 +1,14 @@
 # IDMINER CUSTOM ITEM
 ## New Model : Mecanum ( lin : 0.4 / ang : 1.4 )
-- PC setup
+
+### PC setup
+
+- Install ROS Noetic please follow [Noetic] branch from the [Quick Start Guide](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/).
+
+- Changes in [1.1.4. Install TurtelBot3 Packages](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/#install-turtlebot3-packages)
+
+Once ROS Noetic is already installed, we will install some required ROS packages from custom github site. Introduce the following cmomands in your terminal.
+
 
 ```code
 $ sudo apt remove ros-noetic-turltebot3-mgs
@@ -14,6 +22,46 @@ $ echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
 $ echo "export TURTLEBOT3_MODEL=mecanum" >> ~/.bashrc
 $ source ~/.bashrc
 ```
+
+### Network Environment
+
+We uses Raspberry Pi 4B WiFi hostpot.
+- ssid : TurtleBot3
+- password : turtlebot
+
+### How to bringup TurtleBot3 Mecanum
+
+1. Check the IP address the remote PC is connected to.
+```
+$ ifconfig
+```
+you will find an ip similar to ```10.42.0.XXX```. Please, take a note of it.
+
+2. Write the ROS IP inside your [~/.bashrc] file.
+```
+$ nano ~/.bashrc
+```
+Move until the last line ```alt+/``` of the document and write down the following lines.
+```
+export ROS_MASTER_URI=http://10.42.0.1:11311
+export ROS_HOSTNAME=10.42.0.XXX
+```
+3. Once, it has been already added to the file, press ```ctrl+s``` to save and then, ```ctrl+x``` to go back.
+4. Lastly, apply the changes of ROS IP to take them into effect.
+```
+$ source ~/.bashrc
+```
+5. Open a new terminal from remote PC with ```ctrl+alt+t``` and connect to Raspberry Pi with its IP address.
+> default password is turtlebot
+```
+$ ssh ubuntu@10.42.0.1
+```
+6. Start TurtleBot3 Mecanum applications.
+```
+$ robot
+```
+
+
 
 # TurtleBot3
 <img src="https://github.com/ROBOTIS-GIT/emanual/blob/master/assets/images/platform/turtlebot3/logo_turtlebot3.png" width="300">
