@@ -25,11 +25,9 @@ $ source ~/.bashrc
 
 ### Network Environment
 
-We uses Raspberry Pi 4B WiFi hostpot.
+We uses Raspberry Pi 4B WiFi hostpot, please connect it.
 - ssid : TurtleBot3
 - password : turtlebot
-
-### How to bringup TurtleBot3 Mecanum
 
 1. Check the IP address the remote PC is connected to.
 ```
@@ -51,12 +49,15 @@ export ROS_HOSTNAME=10.42.0.XXX
 ```
 $ source ~/.bashrc
 ```
-5. Open a new terminal from remote PC with ```ctrl+alt+t``` and connect to Raspberry Pi with its IP address.
+
+### Bringup the TurtleBot3 Mecanum
+
+1. Open a new terminal from remote PC with ```ctrl+alt+t``` and connect to Raspberry Pi with its IP address.
 > default password is turtlebot
 ```
 $ ssh ubuntu@10.42.0.1
 ```
-6. Start TurtleBot3 Mecanum applications.
+2. Start TurtleBot3 Mecanum applications.
 ```
 $ robot
 ```
