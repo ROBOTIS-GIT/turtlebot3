@@ -1,4 +1,4 @@
-# TurtleBot3 Friends : Mecanum (idminer custom project)
+# TurtleBot3 Friends : Mecanum
 ## New Model : Mecanum ( lin : 0.4 / ang : 2.0 )
 
 ### PC setup
