@@ -81,13 +81,13 @@ $ roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
 ```
 
 - **SLAM (mapping)**
-1. In the remote PC, launch the slam.
+1. In the **remote PC**, launch the slam.
 ```
 $ roslaunch turtlebot3_slam turtlebot3_slam.launch
 ```
 
 - **Navigation**
-`. In the remote PC, launch the navigation.
+1. In the **remote PC**, launch the navigation.
 ```
 $ roslaunch turtlebot3_navigation turtlebot3_navigation.launch
 ```
