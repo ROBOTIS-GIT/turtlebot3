@@ -14,8 +14,6 @@
     <node pkg="turtlebot3_bringup" type="turtlebot3_diagnostics" name="turtlebot3_diagnostics" output="screen"/>
   </group>
 
-  <node pkg="turtlebot3_bringup" type="turtlebot3_diagnostics" name="turtlebot3_diagnostics" output="screen"/>
-
   <group if = "$(eval model == 'waffle_pi')">
     <include file="$(find turtlebot3_bringup)/launch/turtlebot3_rpicamera.launch"/>
   </group>
