@@ -48,10 +48,18 @@ add_executable(turtlebot3_diagnostics src/turtlebot3_diagnostics.cpp)
 add_dependencies(turtlebot3_diagnostics ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(turtlebot3_diagnostics ${catkin_LIBRARIES})
 
+add_executable(turtlebot3_diagnostics_mecanum src/turtlebot3_diagnostics_mecanum.cpp)
+add_dependencies(turtlebot3_diagnostics_mecanum ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(turtlebot3_diagnostics_mecanum ${catkin_LIBRARIES})
+
 ################################################################################
 # Install
 ################################################################################
 install(TARGETS turtlebot3_diagnostics
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
+install(TARGETS turtlebot3_diagnostics_mecanum
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
