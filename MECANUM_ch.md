@@ -7,7 +7,7 @@ linear : 0.4 / angular : 2.0
 為了測試TurtleBot Friends系列的mecanum模型，需要一些配置。  
 因此，請遵照TurtleBot3官方電子手冊「[快速入門指南](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/)」進行安裝並留意下列步驟更改事項。
 
-- [1.1. PC Setup](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/#pc-setup)，mecanum使用Raspberry Pi 4B作為車體主機，目前僅於ROS Noetic版本運行，因此請於「[快速入門指南](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/)」中上排工具列選擇**「Noetic分支」**進行安裝。
+- [1.1. PC Setup](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/#pc-setup)，mecanum使用Raspberry Pi 4B作為車體主機，目前僅於ROS Noetic版本運行，請於「[快速入門指南](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/)」中上排工具列選擇「**Noetic分支**」進行安裝。
 
 - 更改步驟 [1.1.4. Install TurtelBot3 Packages](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/#install-turtlebot3-packages)
 
