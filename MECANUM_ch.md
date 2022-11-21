@@ -11,7 +11,7 @@ linear : 0.4 / angular : 2.0
 
 - 更改步驟 [1.1.4. Install TurtelBot3 Packages](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/#install-turtlebot3-packages)
 
-安裝玩ROS Noetic後，請輸入下列指令安裝mecanum相關ROS packages。
+安裝完ROS Noetic後，請輸入下列指令安裝mecanum相關ROS packages。
 ```code
 $ sudo apt remove ros-noetic-turltebot3-mgs
 $ sudo apt remove ros-noetic-trutlebto3
