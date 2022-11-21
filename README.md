@@ -1,8 +1,7 @@
 # IDMiner Custom Project
 
-- [English Manual](MECANUM_en.md) | [中文手冊](MECANUM_ch.md)  
-![TurtleBot3 Friends : Mecanum](TurtleBot3_Friends_Mecanum.png)
-
+- [English](MECANUM_en.md)  /  [中文](MECANUM_ch.md)
+![mecanum](TurtleBot3_Friends_Mecanum.png)
 
 
 # TurtleBot3
