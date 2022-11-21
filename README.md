@@ -1,5 +1,5 @@
 # IDMiner Custom Project
-- [TurtleBot3 Friends : Mecanum](MECANUM_en.md)
+- [TurtleBot3 Friends : Mecanum](MECANUM_en.md) | [中文手冊](MECANUM_ch.md)
 
 # TurtleBot3
 <img src="https://github.com/ROBOTIS-GIT/emanual/blob/master/assets/images/platform/turtlebot3/logo_turtlebot3.png" width="300">
