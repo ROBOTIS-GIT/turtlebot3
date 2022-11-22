@@ -22,7 +22,7 @@ $ source ~/.bashrc
 ```
 - Changes in [3.2.2. Download TurtleBot3 SBC Image](https://emanual.robotis.com/docs/en/platform/turtlebot3/sbc_setup/#download-turtlebot3-sbc-image-2)
 We provide custom image for mecanum.
-> [**Download** `Raspberry Pi 4B (2GB of 4GB)` ROS Noetic image](https://mega.nz/file/UIVHSRAQ#6_NMDIB5F_Q3auEe8o50p8UnbW1L5KX9ikzbhf7vYwE)  
+> [**Download** `Raspberry Pi 4B (2GB of 4GB)` ROS Noetic image](https://mega.nz/file/MI0HXSjS#9mXlbcwk5lk_4uTEhls1XlHFqCEaI_y4SBJ7SBCc1x8)
 >   
 > Please note that this image may not compatible with Raspberry Pi 4B with 8GM RAM.
 - Changes in [3.3. OpenCR Setup](https://emanual.robotis.com/docs/en/platform/turtlebot3/opencr_setup/)
