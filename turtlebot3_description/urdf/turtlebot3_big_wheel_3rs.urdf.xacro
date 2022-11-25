@@ -50,7 +50,7 @@
   <joint name="wheel_left_joint" type="continuous">
     <parent link="base_link"/>
     <child link="wheel_left_link"/>
-    <origin xyz="0.0 0.144 0.023" rpy="-1.57 0 0"/>
+    <origin xyz="0.0 0.144 0.023" rpy="-${M_PI/2} 0 0"/>
     <axis xyz="0 0 1"/>
   </joint>
 
@@ -83,7 +83,7 @@
   <joint name="wheel_right_joint" type="continuous">
     <parent link="base_link"/>
     <child link="wheel_right_link"/>
-    <origin xyz="0.0 -0.144 0.023" rpy="-1.57 0 0"/>
+    <origin xyz="0.0 -0.144 0.023" rpy="-${M_PI/2} 0 0"/>
     <axis xyz="0 0 1"/>
   </joint>
 
@@ -116,19 +116,19 @@
   <joint name="caster_back_right_joint" type="fixed">
     <parent link="base_link"/>
     <child link="caster_back_right_link"/>
-    <origin xyz="-0.177 -0.064 0.0" rpy="-1.57 0 0"/>
+    <origin xyz="-0.177 -0.064 0.0" rpy="-${M_PI/2} 0 0"/>
   </joint>
 
   <link name="caster_back_right_link">
     <visual>
-      <origin xyz="0 0.00175 0" rpy="1.57 0 0"/>
+      <origin xyz="0 0.00175 0" rpy="${M_PI/2} 0 0"/>
       <geometry>
         <mesh filename="package://turtlebot3_description/meshes/joints/big_wheel_caster_joint.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="dark"/>
     </visual>
     <collision>
-      <origin xyz="0 ${0.039/2} 0" rpy="1.57 0 0"/>
+      <origin xyz="0 ${0.039/2} 0" rpy="${M_PI/2} 0 0"/>
       <geometry>
         <box size="0.030 0.009 0.039"/>
       </geometry>
@@ -147,19 +147,19 @@
   <joint name="caster_back_left_joint" type="fixed">
     <parent link="base_link"/>
     <child link="caster_back_left_link"/>
-    <origin xyz="-0.177 0.064 0.0" rpy="-1.57 0 0"/>
+    <origin xyz="-0.177 0.064 0.0" rpy="-${M_PI/2} 0 0"/>
   </joint>
 
   <link name="caster_back_left_link">
     <visual>
-      <origin xyz="0 0.00175 0" rpy="1.57 0 0"/>
+      <origin xyz="0 0.00175 0" rpy="${M_PI/2} 0 0"/>
       <geometry>
         <mesh filename="package://turtlebot3_description/meshes/joints/big_wheel_caster_joint.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="dark"/>
     </visual>
     <collision>
-      <origin xyz="0 ${0.039/2} 0" rpy="1.57 0 0"/>
+      <origin xyz="0 ${0.039/2} 0" rpy="${M_PI/2} 0 0"/>
       <geometry>
         <box size="0.030 0.009 0.039"/>
       </geometry>
@@ -323,7 +323,7 @@
   <link name="camera_rgb_frame"/>
 
   <joint name="camera_rgb_optical_joint" type="fixed">
-    <origin xyz="0 0 0" rpy="-1.57 0 -1.57"/>
+    <origin xyz="0 0 0" rpy="-${M_PI/2} 0 -${M_PI/2}"/>
     <parent link="camera_rgb_frame"/>
     <child link="camera_rgb_optical_frame"/>
   </joint>
