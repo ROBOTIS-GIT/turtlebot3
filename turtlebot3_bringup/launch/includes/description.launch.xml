@@ -1,5 +1,12 @@
 <launch>
   <arg name="model"/>
-  <arg name="urdf_file" default="$(find xacro)/xacro --inorder '$(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro'" />
-  <param name="robot_description" command="$(arg urdf_file)" />
+  <arg name="platform" default="$(env TURTLEBOT3_PLAT)" doc="model with platform [true, false]"/>
+
+  <group unless="$(arg platform)">
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro'" />
+  </group>
+  <group if="$(arg platform)">
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find tb3mm_6dof)/urdf/tb3_$(arg model)_sara.urdf.xacro'" />
+  </group>
+  
 </launch>
