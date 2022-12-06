@@ -16,7 +16,7 @@
 [![galactic-devel Status](https://github.com/ROBOTIS-GIT/turtlebot3/workflows/galactic-devel/badge.svg)](https://github.com/ROBOTIS-GIT/turtlebot3/tree/galactic-devel)
 
 
-## TurtleBot3 Friends: カスタムモデル提示
+## TurtleBot3 Friends: 日本支店カスタムモデル
 <center>
 
 | TB3 Pizza | TB3 Big Wheel | TB3 Big Wheel with OM |
