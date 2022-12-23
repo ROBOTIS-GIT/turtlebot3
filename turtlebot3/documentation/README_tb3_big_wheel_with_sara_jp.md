@@ -44,11 +44,22 @@ $ sudo apt remove ros-noetic-turtlebot3-msgs
 $ sudo apt remove ros-noetic-turtlebot3
 $ mkdir -p ~/catkin_ws/src
 $ cd ~/catkin_ws/src/
+
 # TB3 Big Wheel関係
 $ git clone -b noetic-devel https://github.com/ROBOTIS-GIT/DynamixelSDK.git
 $ git clone -b noetic-devel https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git
 $ git clone -b feature/bw_sara https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_jp_custom
-# OM SARA関係
+
+# OM関連のパッケージ
+$ sudo apt-get update
+$ sudo apt-get install ros-noetic-ros-controllers ros-noetic-gazebo* ros-noetic-moveit* ros-noetic-industrial-core
+$ sudo apt install ros-noetic-dynamixel-workbench* ros-noetic-robotis-manipulator
+$ git clone -b noetic-devel https://github.com/ROBOTIS-GIT/open_manipulator.git
+$ git clone -b noetic-devel https://github.com/ROBOTIS-GIT/open_manipulator_msgs.git
+$ git clone -b noetic-devel https://github.com/ROBOTIS-GIT/open_manipulator_simulations.git
+$ git clone https://github.com/ROBOTIS-GIT/open_manipulator_dependencies.git
+
+# OM in TB3関連のパッケージ
 $ git clone https://github.com/ROBOTIS-GIT/turtlebot3_manipulation.git
 $ git clone https://github.com/ROBOTIS-GIT/turtlebot3_manipulation_simulations.git
 $ git clone https://github.com/ROBOTIS-GIT/open_manipulator_dependencies.git
