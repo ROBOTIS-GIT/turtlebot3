@@ -203,7 +203,7 @@ TurtleBot3 Big WheelにはGazeboという物理演算を考慮したシミュレ
 
 ```code
 $ cd ~/catkin_ws/src/
-$ git clone -b noetic-devel https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_simulations_jp_custom
+$ git clone -b noetic-jp-devel https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_simulations_jp_custom
 $ git clone https://github.com/robotics-upo/lightsfm
 $ cd lightsfm
 $ make
