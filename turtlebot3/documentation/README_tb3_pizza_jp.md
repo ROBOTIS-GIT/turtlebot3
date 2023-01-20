@@ -265,9 +265,10 @@ $ cd ~/catkin_ws && catkin_make
 0. Turtlebot3のモデルを選択します
 ```code 
 $ export TURTLEBOT3_MODEL=pizza
+$ export TURTLEBOT3_PLAT=false
 ```
 > **Note**
-> 新しい端末をたちが得るたびに、以上のコマンドを実行する必要があります。そして、`pizza`以外にも、`burger`, `waffle_pi`, `big_wheel`というモデルもあります。
+> 新しい端末をたちが得るたびに、以上のコマンドを実行する必要があります。そして、`pizza`以外にも、`burger`, `waffle_pi`, `big_wheel`等というモデルもあります。
 
 1. まず**NUC側**でroscoreを起動します。
 ```code
@@ -293,6 +294,7 @@ $ roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
 
 ```code 
 $ export TURTLEBOT3_MODEL=pizza
+$ export TURTLEBOT3_PLAT=false
 $ roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
 ```
 

@@ -289,8 +289,8 @@ $ roslaunch tb3mm_6dof moveit_rviz.launch
 - MoveItと同時にマッピング
 ```code 
 # (0) ロボット名を指定する（端末ごと）
-$ export TURTLEBOT3_PLAT=”true”
-$ export TURTLEBOT3_MODEL=”big_wheel”
+$ export TURTLEBOT3_MODEL=big_wheel
+$ export TURTLEBOT3_PLAT=true
 # (1) Gazeboを立ち上げる
 $ roslaunch turtlebot3_gazebo turtlebot3_world.launch
 # (2) 「move_group」ノードを実行する．
