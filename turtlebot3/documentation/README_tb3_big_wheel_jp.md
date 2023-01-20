@@ -203,7 +203,7 @@ TurtleBot3 Big WheelにはGazeboという物理演算を考慮したシミュレ
 
 ```code
 $ cd ~/catkin_ws/src/
-$ git clone -b noetic-devel https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_simulations_jp_custom
+$ git clone -b noetic-jp-devel https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_simulations_jp_custom
 $ git clone https://github.com/robotics-upo/lightsfm
 $ cd lightsfm
 $ make
@@ -223,10 +223,11 @@ $ cd ~/catkin_ws && catkin_make
 そして、新しいターミナルを開くたびに、Turtlebot3のモデルも指定してください。
 ```code 
 $ export TURTLEBOT3_MODEL=big_wheel
+$ export TURTLEBOT3_PLAT=false
 ```
 
 > **Note**
-> 新しい端末をたちが得るたびに、以上のコマンドを実行する必要があります。そして、`big_wheel`以外にも、`burger`, `waffle_pi`, `pizza`というモデルもあります。
+> 新しい端末をたちが得るたびに、以上のコマンドを実行する必要があります。そして、`big_wheel`以外にも、`burger`, `waffle_pi`, `pizza`等というモデルもあります。
 
 1. まず**NUC側**でroscoreを起動します。
 ```code
@@ -252,6 +253,7 @@ $ roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
 
 ```code 
 $ export TURTLEBOT3_MODEL=big_wheel
+$ export TURTLEBOT3_PLAT=false
 $ roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
 ```
 > **Note**

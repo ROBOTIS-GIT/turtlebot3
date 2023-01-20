@@ -259,7 +259,7 @@ TurtleBot3 Pizza counts with Gazebo support, a simulation environment which take
 
 ```code
 $ cd ~/catkin_ws/src/
-$ git clone -b noetic-devel https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_simulations_jp_custom
+$ git clone -b noetic-jp-devel https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_simulations_jp_custom
 $ git clone https://github.com/robotics-upo/lightsfm
 $ cd lightsfm
 $ make
@@ -279,6 +279,7 @@ Congratulations! You have been able to setup your developing environment. Now, l
 0. Select the TurtleBot3 model.
 ```code 
 $ export TURTLEBOT3_MODEL=pizza
+$ export TURTLEBOT3_PLAT=false
 ```
 > **Note**
 > Everytime you open a new terminal, it is required to select the TurtleBot3 model, you would use. A part from `pizza`, you can slo try other models such as `burger`, `waffle_pi`, `big_wheel`.
@@ -306,6 +307,7 @@ In other to use the Gazebo simulation environment, please refer to the official 
 
 ```code 
 $ export TURTLEBOT3_MODEL=pizza
+$ export TURTLEBOT3_PLAT=false
 $ roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
 ```
 
