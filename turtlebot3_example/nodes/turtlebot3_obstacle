@@ -27,12 +27,11 @@ STOP_DISTANCE = 0.2
 LIDAR_ERROR = 0.05
 SAFE_STOP_DISTANCE = STOP_DISTANCE + LIDAR_ERROR
 
-
 class Obstacle():
     def __init__(self):
         self._cmd_pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
         self.obstacle()
-
+        
     def get_scan(self):
         scan = rospy.wait_for_message('scan', LaserScan)
         scan_filter = []
@@ -78,27 +77,13 @@ class Obstacle():
             lidar_distances = self.get_scan()
             min_distance = min(lidar_distances)
 
-            if min_distance < SAFE_STOP_DISTANCE:
-                if turtlebot_moving:
-                    twist.linear.x = 0.0
-                    twist.angular.z = 0.0
-                    self._cmd_pub.publish(twist)
-                    turtlebot_moving = False
-                    rospy.loginfo('Stop!')
-            else:
-                twist.linear.x = LINEAR_VEL
-                twist.angular.z = 0.0
-                self._cmd_pub.publish(twist)
-                turtlebot_moving = True
-                rospy.loginfo('Distance of the obstacle : %f', min_distance)
-
+            x
 def main():
     rospy.init_node('turtlebot3_obstacle')
     try:
         obstacle = Obstacle()
     except rospy.ROSInterruptException:
         pass
-
 
 if __name__ == '__main__':
     main()
