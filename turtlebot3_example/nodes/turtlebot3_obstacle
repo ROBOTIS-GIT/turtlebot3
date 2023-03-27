@@ -40,12 +40,12 @@ class Obstacle():
         samples = len(scan.ranges)  # The number of samples is defined in
         # turtlebot3_<model>.gazebo.xacro file,
         # the default is 360.
-        samples_view = 1            # 1 <= samples_view <= samples
+        samples_view = 3            # 1 <= samples_view <= samples
 
         if samples_view > samples:
             samples_view = samples
 
-        if samples_view is 90:
+        if samples_view is 1:
             scan_filter.append(scan.ranges[0])
 
         else:
