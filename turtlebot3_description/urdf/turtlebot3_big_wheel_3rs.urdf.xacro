@@ -116,7 +116,7 @@
   <joint name="caster_back_right_joint" type="fixed">
     <parent link="base_link"/>
     <child link="caster_back_right_link"/>
-    <origin xyz="-0.177 -0.064 0.0" rpy="-${M_PI/2} 0 0"/>
+    <origin xyz="-0.177 -0.064 0.002" rpy="-${M_PI/2} 0 0"/>
   </joint>
 
   <link name="caster_back_right_link">
@@ -147,7 +147,7 @@
   <joint name="caster_back_left_joint" type="fixed">
     <parent link="base_link"/>
     <child link="caster_back_left_link"/>
-    <origin xyz="-0.177 0.064 0.0" rpy="-${M_PI/2} 0 0"/>
+    <origin xyz="-0.177 0.064 0.002" rpy="-${M_PI/2} 0 0"/>
   </joint>
 
   <link name="caster_back_left_link">
@@ -331,6 +331,57 @@
       </geometry>
     </collision> -->
   </link>
+
+
+
+  <joint name="rpi_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="rpi_link"/>
+    <origin xyz="-0.13 0.0 0.05" rpy="0 0 0"/>
+  </joint>
+
+  <link name="rpi_link">
+    <visual>
+      <origin xyz="0 0.00175 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.055 0.040 0.02"/>
+      </geometry>
+    </visual>
+   
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="0.047"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+               iyy="0.001" iyz="0.0"
+               izz="0.001" />
+    </inertial>
+  </link>
+
+
+  <joint name="battery_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="battery_link"/>
+    <origin xyz="-0.13 0.0 0.02" rpy="0 0 0"/>
+  </joint>
+
+  <link name="battery_link">
+    <visual>
+      <origin xyz="0 0.00175 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.08 0.03 0.02"/>
+      </geometry>
+    </visual>
+   
+    <inertial>
+      <origin xyz="0 0 0" />
+      <mass value="0.10" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+               iyy="0.001" iyz="0.0"
+               izz="0.001" />
+    </inertial>
+  </link>
+
+
 
 
   <xacro:sensor_d435 parent="camera_base_front_link" name="camera_front" use_nominal_extrinsics="$(arg use_nominal_extrinsics)" add_plug="$(arg add_plug)" use_mesh="$(arg use_mesh)" topics_ns="camera_front">
