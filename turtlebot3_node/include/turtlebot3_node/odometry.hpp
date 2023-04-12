@@ -81,6 +81,8 @@ private:
 
   double wheels_separation_;
   double wheels_radius_;
+  uint32_t last_time_;
+
 
   std::string frame_id_of_odometry_;
   std::string child_frame_id_of_odometry_;
