@@ -23,7 +23,7 @@ from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import Twist
 
 LINEAR_VEL = -0.15
-STOP_DISTANCE = 0.50
+STOP_DISTANCE = 0.30
 LIDAR_ERROR = 0.05
 ANGLE = 90  # must be an even number
 SAFE_STOP_DISTANCE = STOP_DISTANCE + LIDAR_ERROR
@@ -80,12 +80,12 @@ class Obstacle():
 
             if min_distance_left < SAFE_STOP_DISTANCE:
                 twist.linear.x = 0.1
-                twist.angular.z = 0.1
+                twist.angular.y = 0.1
                 self._cmd_pub.publish(twist)
                 rospy.loginfo('Turn left!')
             elif min_distance_right < SAFE_STOP_DISTANCE:
                 twist.linear.x = 0.1
-                twist.angular.z = -0.1
+                twist.angular.y = -0.1
                 self._cmd_pub.publish(twist)
                 rospy.loginfo('Turn left!')
             else:
