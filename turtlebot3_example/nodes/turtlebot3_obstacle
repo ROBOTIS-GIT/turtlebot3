@@ -117,6 +117,7 @@ class Obstacle():
                 self._cmd_pub.publish(twist)
                 turtlebot_moving = True
                 rospy.loginfo('Distance of the obstacle : %f', min_distance)
+                rospy.loginfo(lidar_distances)
 
 def main():
     #Get I2C bus YO
