@@ -79,7 +79,7 @@ class Obstacle():
                     twist.linear.x = 0.1
                     twist.angular.z = 0.1
                     self._cmd_pub.publish(twist)
-                    turtlebot_moving = False
+                    #turtlebot_moving = False
                     rospy.loginfo('Reverse and turn!')
             else:
                 twist.linear.x = LINEAR_VEL
