@@ -51,7 +51,12 @@ SAFE_STOP_DISTANCE = STOP_DISTANCE + LIDAR_ERROR
 
         print("The color is: " + color)"""
 
-
+def min_uden_0(a):
+    x = 3.5
+    for i in range (len(a)):
+        if a[i] > 0 and a[i] < x:
+            x = a[i]
+    return x
 
 class Obstacle():
     def __init__(self):
@@ -84,8 +89,8 @@ class Obstacle():
         for i in range(samples_view):
             if scan_filter[i] == float('Inf'):
                 scan_filter[i] = 3.5
-            #elif math.isnan(scan_filter[i]):
-                #scan_filter[i] = 0
+            elif math.isnan(scan_filter[i]):
+                scan_filter[i] = 0
         
         return scan_filter
 
@@ -96,7 +101,7 @@ class Obstacle():
         while not rospy.is_shutdown():
             #getAndUpdateColour()
             lidar_distances = self.get_scan()
-            min_distance = min(lidar_distances)
+            min_distance = min_uden_0(lidar_distances)
 
             if min_distance < SAFE_STOP_DISTANCE:
                 if turtlebot_moving:
