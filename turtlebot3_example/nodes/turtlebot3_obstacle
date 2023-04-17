@@ -78,7 +78,7 @@ class Obstacle():
         if samples_view is 3:
             scan_filter[0] = scan.ranges[330]
             scan_filter[1] = scan.ranges[0] 
-            scan_filter[2] = scan.ranges[30])
+            scan_filter[2] = scan.ranges[30]
 
         else:
             left_lidar_samples_ranges = -(samples_view//2 + samples_view % 2)
