@@ -21,11 +21,37 @@ import rospy
 import math
 from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import Twist
+# import smbus2 as smbus #"NO MODULE CALLED SMBUS2"
+import time
 
 LINEAR_VEL = 0.22
 STOP_DISTANCE = 0.25
 LIDAR_ERROR = 0.05
 SAFE_STOP_DISTANCE = STOP_DISTANCE + LIDAR_ERROR
+
+
+"""def getAndUpdateColour(): #RGB SENSOR
+    while True:
+        data = bus.read_i2c_block_data(0x44, 0x09, 6) #Selects the right registers
+        green = data[1] + data[0]/256 # Calculates the levels of each color [0, 255]
+        red = data[3] + data[2]/256
+        blue = data[5] + data[4]/256
+        
+        
+        # Determines the color based on which has the higher value
+        color = ""
+        if green > red and green > blue: 
+            color = "Green"
+        elif blue > red:
+            color = "Blue"
+        else:
+            color = "Red"
+
+        print("RGB(%d %d %d)" % (red, green, blue))
+
+        print("The color is: " + color)"""
+
+
 
 class Obstacle():
     def __init__(self):
@@ -68,9 +94,37 @@ class Obstacle():
         turtlebot_moving = True
 
         while not rospy.is_shutdown():
+            #getAndUpdateColour()
             lidar_distances = self.get_scan()
             min_distance = min(lidar_distances)
 
+            if min_distance < SAFE_STOP_DISTANCE:
+                if turtlebot_moving:
+                    twist.linear.x = -0.1
+                    twist.angular.z = 0.1
+                    self._cmd_pub.publish(twist)
+                    #turtlebot_moving = False
+                    rospy.loginfo('Reverse!')
+            else:
+                twist.linear.x = LINEAR_VEL
+                twist.angular.z = 0.0
+                self._cmd_pub.publish(twist)
+                turtlebot_moving = True
+                rospy.loginfo('Distance of the obstacle : %f', min_distance)
+
+def main():
+    #Get I2C bus YO
+    #bus = smbus.SMBus(1)
+    #bus.write_byte_data(0x44, 0x01, 0x05)
+
+    rospy.init_node('turtlebot3_obstacle')
+    try:
+        obstacle = Obstacle()
+    except rospy.ROSInterruptException:
+        pass
+
+if __name__ == '__main__':
+    main()
             if min_distance < SAFE_STOP_DISTANCE:
                 if turtlebot_moving:
                     twist.linear.x = -0.1
