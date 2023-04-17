@@ -70,13 +70,15 @@ class Obstacle():
         samples = len(scan.ranges)  # The number of samples is defined in 
                                     # turtlebot3_<model>.gazebo.xacro file,
                                     # the default is 360.
-        samples_view = 1            # 1 <= samples_view <= samples
+        samples_view = 3            # 1 <= samples_view <= samples
         
         if samples_view > samples:
             samples_view = samples
 
-        if samples_view is 1:
-            scan_filter = (scan.ranges[0], scan.ranges[30], scan.ranges[330])
+        if samples_view is 3:
+            scan_filter[0] = scan.ranges[330]
+            scan_filter[1] = scan.ranges[0] 
+            scan_filter[2] = scan.ranges[30])
 
         else:
             left_lidar_samples_ranges = -(samples_view//2 + samples_view % 2)
@@ -89,8 +91,8 @@ class Obstacle():
         for i in range(samples_view):
             if scan_filter[i] == float('Inf'):
                 scan_filter[i] = 3.5
-            elif math.isnan(scan_filter[i]):
-                scan_filter[i] = 0
+            #elif math.isnan(scan_filter[i]):
+                #scan_filter[i] = 0
         
         return scan_filter
 
