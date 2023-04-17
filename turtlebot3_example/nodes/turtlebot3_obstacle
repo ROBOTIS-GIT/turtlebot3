@@ -22,7 +22,7 @@ import math
 from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import Twist
 
-LINEAR_VEL = 0.15
+LINEAR_VEL = -0.15
 STOP_DISTANCE = 0.30
 LIDAR_ERROR = 0.05
 SAFE_STOP_DISTANCE = STOP_DISTANCE + LIDAR_ERROR
@@ -76,8 +76,8 @@ class Obstacle():
 
             if min_distance < SAFE_STOP_DISTANCE:
                 if turtlebot_moving:
-                    twist.linear.x = -0.1
-                    twist.angular.z = -0.1
+                    twist.linear.x = 0.1
+                    twist.angular.z = 0.1
                     self._cmd_pub.publish(twist)
                     turtlebot_moving = False
                     rospy.loginfo('Reverse and turn!')
