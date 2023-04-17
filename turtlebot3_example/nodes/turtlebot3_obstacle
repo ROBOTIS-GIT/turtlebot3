@@ -22,8 +22,8 @@ import math
 from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import Twist
 
-LINEAR_VEL = 0.22
-STOP_DISTANCE = 0.2
+LINEAR_VEL = 0.15
+STOP_DISTANCE = 0.30
 LIDAR_ERROR = 0.05
 SAFE_STOP_DISTANCE = STOP_DISTANCE + LIDAR_ERROR
 
