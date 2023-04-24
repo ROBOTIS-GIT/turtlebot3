@@ -74,7 +74,7 @@ class Obstacle():
     def obstacle(self):
         twist = Twist()
         turtlebot_moving = True
-        t_end = time.time() + 10  # time_time returns time since 1st jan 1970
+        t_end = time.time() + 120  # time_time returns time since 1st jan 1970
         speed_updates = 0
         speed_accumulation = 0
 
@@ -85,12 +85,12 @@ class Obstacle():
             min_distance_left = min(lidar_distances[45:90])
 
             if min_distance_right < SAFE_STOP_DISTANCE:
-                twist.linear.x = 0.02
+                twist.linear.x = 0.09
                 twist.angular.z = 0.15
                 self._cmd_pub.publish(twist)
                 rospy.loginfo('Turn left!')
             elif min_distance_left < SAFE_STOP_DISTANCE:
-                twist.linear.x = 0.02
+                twist.linear.x = 0.09
                 twist.angular.z = -0.15
                 self._cmd_pub.publish(twist)
                 rospy.loginfo('Turn right!')
