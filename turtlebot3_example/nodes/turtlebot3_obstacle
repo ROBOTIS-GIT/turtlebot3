@@ -21,7 +21,7 @@ import rospy
 import math
 from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import Twist
-import time  # time module
+#import time  # time module
 
 LINEAR_VEL = -0.15
 STOP_DISTANCE = 0.30
