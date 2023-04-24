@@ -56,7 +56,7 @@ class Obstacle():
         if samples_view > samples:
             samples_view = samples
 
-        if samples_view is 1:
+        if samples_view == 1:
             scan_filter.append(scan.ranges[0])
 
         else:
@@ -116,7 +116,6 @@ def velocity_callback(data):
 
 
 def main():
-    rospy.init_node('rosbot_average_speed_calculator')
     # subscriber
     velocity_subcriber = rospy.Subscriber('/odom', Odometry, velocity_callback)
 
