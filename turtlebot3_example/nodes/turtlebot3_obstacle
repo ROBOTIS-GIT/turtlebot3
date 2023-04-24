@@ -75,8 +75,8 @@ class Obstacle():
         twist = Twist()
         turtlebot_moving = True
         t_end = time.time() + 120  # time_time returns time since 1st jan 1970
-        speed_updates = 0
-        speed_accumulation = 0
+        speed_updates = 0 # for average speed
+        speed_accumulation = 0 # for average speed
 
         while time.time() < t_end:  # runs for 120 secs
             lidar_distances = self.get_scan()
