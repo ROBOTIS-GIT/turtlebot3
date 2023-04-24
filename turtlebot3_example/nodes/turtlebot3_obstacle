@@ -83,15 +83,15 @@ class Obstacle():
             min_distance_right = min(lidar_distances[45:90])
 
             if min_distance_left < SAFE_STOP_DISTANCE:
-                twist.linear.x = 0.01
-                twist.angular.z = 0.22
-                self._cmd_pub.publish(twist)
-                rospy.loginfo('Turn left!')
-            elif min_distance_right < SAFE_STOP_DISTANCE:
-                twist.linear.x = 0.10
+                twist.linear.x = 0.05
                 twist.angular.z = 0.10
                 self._cmd_pub.publish(twist)
                 rospy.loginfo('Turn left!')
+            elif min_distance_right < SAFE_STOP_DISTANCE:
+                twist.linear.x = 0.05
+                twist.angular.z = -0.10
+                self._cmd_pub.publish(twist)
+                rospy.loginfo('Turn right!')
             else:
                 twist.linear.x = LINEAR_VEL
                 twist.angular.z = 0.0
