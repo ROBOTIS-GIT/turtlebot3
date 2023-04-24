@@ -22,11 +22,12 @@ import math
 from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import Twist
 import time  # time module
+from nav_msgs.msg import Odometry
 
 LINEAR_VEL = -0.15
 STOP_DISTANCE = 0.30
 LIDAR_ERROR = 0.05
-ANGLE = 90  # best with an even number
+ANGLE = 90
 SAFE_STOP_DISTANCE = STOP_DISTANCE + LIDAR_ERROR
 
 
@@ -36,9 +37,9 @@ class Obstacle():
         self._cmd_pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
         self.obstacle()
 
-    def speed_tick(accumulation, updates, cur_speed):
-        accumulation += cur_speed
-        updates += 1
+    # def speed_tick(accumulation, updates, cur_speed):
+    #     accumulation += cur_speed
+    #     updates += 1
 
     def get_scan(self):
         scan = rospy.wait_for_message('scan', LaserScan)
@@ -47,6 +48,7 @@ class Obstacle():
         samples = len(scan.ranges)  # The number of samples is defined in
         # turtlebot3_<model>.gazebo.xacro file,
         # the default is 360.
+
         samples_view = ANGLE           # 1 <= samples_view <= samples
 
         if samples_view > samples:
@@ -78,8 +80,6 @@ class Obstacle():
         twist = Twist()
         turtlebot_moving = True
         t_end = time.time() + 120  # time_time returns time since 1st jan 1970
-        speed_updates = 0
-        speed_accumulation = 0
 
         while not time.time() < t_end:  # runs for 120 secs
             lidar_distances = self.get_scan()
@@ -104,20 +104,29 @@ class Obstacle():
                 turtlebot_moving = True
                 rospy.loginfo('Distance of the obstacle : %f', min_distance)
 
-            self.speed_tick(speed_accumulation, speed_updates, twist.linear.x)
+
+count = 0
+speed_accumulation = 0.0
+
+
+def velocity_callback(data):
+    # rospy.loginfo(data.twist.twist.linear.x)
+    rospy.loginfo(data.twist.twist.angular.z)
+    speed_accumulation += data.twist.twist.linear.x
+    count += 1
+    rospy.loginfo('Average speed : %f', speed_accumulation / count)
 
 
 def main():
-    average_linear_speed = 0
+    rospy.init_node('rosbot_average_speed_calculator')
+    # subscriber
+    velocity_subcriber = rospy.Subscriber('/odom', Odometry, velocity_callback)
 
     rospy.init_node('turtlebot3_obstacle')
     try:
         obstacle = Obstacle()
     except rospy.ROSInterruptException:
         pass
-
-    average_linear_speed = Obstacle.speed_accumulation / Obstacle.speed_updates
-    rospy.loginfo(average_linear_speed)
 
 
 if __name__ == '__main__':
