@@ -36,10 +36,6 @@ class Obstacle():
         self._cmd_pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
         self.obstacle()
 
-    # def speed_tick(accumulation, updates, cur_speed):
-    #     accumulation += cur_speed
-    #     updates += 1
-
     def get_scan(self):
         scan = rospy.wait_for_message('scan', LaserScan)
         scan_filter = []
