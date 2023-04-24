@@ -22,7 +22,6 @@ import math
 from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import Twist
 import time  # time module
-from nav_msgs.msg import Odometry
 
 LINEAR_VEL = -0.15
 STOP_DISTANCE = 0.30
@@ -49,12 +48,12 @@ class Obstacle():
         # turtlebot3_<model>.gazebo.xacro file,
         # the default is 360.
 
-        samples_view = ANGLE           # 1 <= samples_view <= samples
+        samples_view = ANGLE        # 1 <= samples_view <= samples
 
         if samples_view > samples:
             samples_view = samples
 
-        if samples_view == 1:
+        if samples_view is 1:
             scan_filter.append(scan.ranges[0])
 
         else:
@@ -106,7 +105,6 @@ class Obstacle():
 
 
 def main():
-
     rospy.init_node('turtlebot3_obstacle')
     try:
         obstacle = Obstacle()
