@@ -29,6 +29,8 @@ STOP_DISTANCE = 0.30
 LIDAR_ERROR = 0.05
 ANGLE = 90
 SAFE_STOP_DISTANCE = STOP_DISTANCE + LIDAR_ERROR
+count = 0  # average speed calc
+speed_accumulation = 0.0  # average speed calc
 
 
 class Obstacle():
@@ -105,13 +107,9 @@ class Obstacle():
                 rospy.loginfo('Distance of the obstacle : %f', min_distance)
 
 
-count = 0
-speed_accumulation = 0.0
-
-
 def velocity_callback(data):
     # rospy.loginfo(data.twist.twist.linear.x)
-    rospy.loginfo(data.twist.twist.angular.z)
+    rospy.loginfo('Angular speed: %f', data.twist.twist.angular.z)
     speed_accumulation += data.twist.twist.linear.x
     count += 1
     rospy.loginfo('Average speed : %f', speed_accumulation / count)
