@@ -75,6 +75,8 @@ class Obstacle():
         twist = Twist()
         turtlebot_moving = True
         t_end = time.time() + 120  # time_time returns time since 1st jan 1970
+        speed_updates = 0
+        speed_accumulation = 0
 
         while time.time() < t_end:  # runs for 120 secs
             lidar_distances = self.get_scan()
@@ -98,6 +100,11 @@ class Obstacle():
                 self._cmd_pub.publish(twist)
                 turtlebot_moving = True
                 rospy.loginfo('Distance of the obstacle : %f', min_distance)
+
+            speed_updates = speed_updates + 1
+            speed_accumulation = speed_accumulation + twist.linear.x
+
+        rospy.loginfo('average speed : %f', speed_accumulation / speed_updates)
 
 
 def main():
