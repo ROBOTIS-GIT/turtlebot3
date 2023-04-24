@@ -110,7 +110,7 @@ class Obstacle():
 def velocity_callback(data):
     # rospy.loginfo(data.twist.twist.linear.x)
     rospy.loginfo('Angular speed: %f', data.twist.twist.angular.z)
-    speed_accumulation += data.twist.twist.linear.x
+    speed_accumulation = speed_accumulation + data.twist.twist.linear.x
     count += 1
     rospy.loginfo('Average speed : %f', speed_accumulation / count)
 
