@@ -29,8 +29,6 @@ STOP_DISTANCE = 0.30
 LIDAR_ERROR = 0.05
 ANGLE = 90
 SAFE_STOP_DISTANCE = STOP_DISTANCE + LIDAR_ERROR
-count = 0  # average speed calc
-speed_accumulation = 0.0  # average speed calc
 
 
 class Obstacle():
@@ -90,8 +88,8 @@ class Obstacle():
             min_distance_right = min(lidar_distances[(ANGLE/2):ANGLE])
 
             if min_distance_left < SAFE_STOP_DISTANCE:
-                twist.linear.x = 0.10
-                twist.angular.z = 0.10
+                twist.linear.x = 0.01
+                twist.angular.z = 0.22
                 self._cmd_pub.publish(twist)
                 rospy.loginfo('Turn left!')
             elif min_distance_right < SAFE_STOP_DISTANCE:
@@ -107,17 +105,7 @@ class Obstacle():
                 rospy.loginfo('Distance of the obstacle : %f', min_distance)
 
 
-def velocity_callback(data):
-    # rospy.loginfo(data.twist.twist.linear.x)
-    rospy.loginfo('Angular speed: %f', data.twist.twist.angular.z)
-    speed_accumulation = speed_accumulation + data.twist.twist.linear.x
-    count += 1
-    rospy.loginfo('Average speed : %f', speed_accumulation / count)
-
-
 def main():
-    # subscriber
-    velocity_subcriber = rospy.Subscriber('/odom', Odometry, velocity_callback)
 
     rospy.init_node('turtlebot3_obstacle')
     try:
