@@ -70,6 +70,8 @@ class Obstacle():
                 scan_filter[i] = 3.5
 
         return scan_filter
+    
+        
 
     def obstacle(self):
         twist = Twist()
@@ -78,7 +80,19 @@ class Obstacle():
         speed_updates = 0  # for average speed
         speed_accumulation = 0  # for average speed
         collision_count = 0  # collision counter
+        
+        #function for turning
+        def turn(min_left, min_right, turn_value):
+         if min_right < min_left:
+             twist.angular.z = turn_value  # left
+             self._cmd_pub.publish(twist)
+             rospy.loginfo('Turn left!')
+         else:  # min_distance_left < min_distance_right
+             twist.angular.z = -turn_value  # right
+             self._cmd_pub.publish(twist)
+             rospy.loginfo('Turn right!')
 
+        #runtime loop
         while time.time() < t_end:  # runs for 60 secs
             lidar_distances = self.get_scan()
             min_distance = min(lidar_distances)
@@ -89,16 +103,8 @@ class Obstacle():
             if min_distance_center < SAFE_STOP_DISTANCE:  # something need to be happen
                 if min_distance_center > 0.40:  # dist between 55 and 35
                     rospy.loginfo('Between 55 and 40')
-                    if min_distance_right < min_distance_left:
-                        # twist.linear.x *= 0.75
-                        twist.angular.z = 1  # left
-                        self._cmd_pub.publish(twist)
-                        rospy.loginfo('Turn left!')
-                    else:  # min_distance_left < min_distance_right
-                        # twist.linear.x *= 0.75
-                        twist.angular.z = -1  # right
-                        self._cmd_pub.publish(twist)
-                        rospy.loginfo('Turn right!')
+                    turn(min_distance_left, min_distance_right, 1)
+                    
                 elif min_distance_center > 0.25:  # dist between 35 and 20
                     rospy.loginfo('Between 40 and 25')
                     if min_distance_right < min_distance_left:
