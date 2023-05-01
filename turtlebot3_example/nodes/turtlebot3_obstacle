@@ -87,34 +87,34 @@ class Obstacle():
             min_distance_left = min(lidar_distances[60:89])
 
             if min_distance_center < SAFE_STOP_DISTANCE:  # something need to be happen
-                if min_distance_center > 0.35:  # dist between 55 and 35
-                    rospy.loginfo('Between 55 and 35')
+                if min_distance_center > 0.40:  # dist between 55 and 35
+                    rospy.loginfo('Between 55 and 40')
                     if min_distance_right < min_distance_left:
                         # twist.linear.x *= 0.75
-                        twist.angular.z = 0.4  # left
+                        twist.angular.z = 1  # left
                         self._cmd_pub.publish(twist)
                         rospy.loginfo('Turn left!')
                     else:  # min_distance_left < min_distance_right
                         # twist.linear.x *= 0.75
-                        twist.angular.z = -0.4  # right
+                        twist.angular.z = -1  # right
                         self._cmd_pub.publish(twist)
                         rospy.loginfo('Turn right!')
-                elif min_distance_center > 0.20:  # dist between 35 and 20
-                    rospy.loginfo('Between 35 and 20')
+                elif min_distance_center > 0.25:  # dist between 35 and 20
+                    rospy.loginfo('Between 40 and 25')
                     if min_distance_right < min_distance_left:
                         # twist.linear.x *= 0.5
-                        twist.angular.z = 0.7  # left
+                        twist.angular.z = 2  # left
                         self._cmd_pub.publish(twist)
                         rospy.loginfo('Turn left!')
                     else:  # min_distance_left < min_distance_right
                         # twist.linear.x *= 0.5
-                        twist.angular.z = -0.7  # right
+                        twist.angular.z = -2  # right
                         self._cmd_pub.publish(twist)
                         rospy.loginfo('Turn right!')
                 else:
                     rospy.loginfo('Below 20')
                     twist.linear.x = 0
-                    twist.angular.z = 1  # left
+                    twist.angular.z = 5  # left
                     self._cmd_pub.publish(twist)
                     rospy.loginfo('Turn left!')
 
