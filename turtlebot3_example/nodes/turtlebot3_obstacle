@@ -92,7 +92,7 @@ class Obstacle():
              self._cmd_pub.publish(twist)
              rospy.loginfo('Turn right!')
 
-        #runtime loop
+        #runtime loopet
         while time.time() < t_end:  # runs for 60 secs
             lidar_distances = self.get_scan()
             min_distance = min(lidar_distances)
