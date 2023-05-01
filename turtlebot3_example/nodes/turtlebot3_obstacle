@@ -81,14 +81,13 @@ class Obstacle():
 
         while time.time() < t_end:  # runs for 60 secs
             lidar_distances = self.get_scan()
-            min_distance = min(lidar_distances)
             min_distance_right = min(lidar_distances[0:29])
             min_distance_center = min(lidar_distances[30:59])
             min_distance_left = min(lidar_distances[60:89])
 
             if min_distance_center < SAFE_STOP_DISTANCE:  # something need to be happen
-                if min_distance > 35:  # dist between 55 and 35
-                    ospy.loginfo('Between 55 and 35')
+                if min_distance_center > 35:  # dist between 55 and 35
+                    rospy.loginfo('Between 55 and 35')
                     if min_distance_right < min_distance_left:
                         twist.linear.x *= 0.75
                         twist.angular.z = 1  # left
@@ -99,7 +98,7 @@ class Obstacle():
                         twist.angular.z = -1  # right
                         self._cmd_pub.publish(twist)
                         rospy.loginfo('Turn right!')
-                elif min_distance > 20:  # dist between 35 and 20
+                elif min_distance_center > 20:  # dist between 35 and 20
                     rospy.loginfo('Between 35 and 20')
                     if min_distance_right < min_distance_left:
                         twist.linear.x *= 0.5
