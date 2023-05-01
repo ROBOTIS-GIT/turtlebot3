@@ -91,38 +91,33 @@ class Obstacle():
                     rospy.loginfo('Between 55 and 35')
                     if min_distance_right < min_distance_left:
                         twist.linear.x *= 0.75
-                        twist.angular.z = 1  # left
+                        twist.angular.z = 0.10  # left
                         self._cmd_pub.publish(twist)
                         rospy.loginfo('Turn left!')
                     else:  # min_distance_left < min_distance_right
                         twist.linear.x *= 0.75
-                        twist.angular.z = -1  # right
+                        twist.angular.z = -0.10  # right
                         self._cmd_pub.publish(twist)
                         rospy.loginfo('Turn right!')
                 elif min_distance_center > 0.20:  # dist between 35 and 20
                     rospy.loginfo('Between 35 and 20')
                     if min_distance_right < min_distance_left:
                         twist.linear.x *= 0.5
-                        twist.angular.z = 1  # left
+                        twist.angular.z = 0.18  # left
                         self._cmd_pub.publish(twist)
                         rospy.loginfo('Turn left!')
                     else:  # min_distance_left < min_distance_right
-                        twist.linear.x *= 0.6
-                        twist.angular.z = -1  # right
+                        twist.linear.x *= 0.5
+                        twist.angular.z = -0.18  # right
                         self._cmd_pub.publish(twist)
                         rospy.loginfo('Turn right!')
                 else:
                     rospy.loginfo('Below 20')
-                    if min_distance_right < min_distance_left:
-                        twist.linear.x = 0
-                        twist.angular.z = 1  # left
-                        self._cmd_pub.publish(twist)
-                        rospy.loginfo('Turn left!')
-                    else:  # min_distance_left < min_distance_right
-                        twist.linear.x = 0
-                        twist.angular.z = -1  # right
-                        self._cmd_pub.publish(twist)
-                        rospy.loginfo('Turn right!')
+                    twist.linear.x = 0
+                    twist.angular.z = 1  # left
+                    self._cmd_pub.publish(twist)
+                    rospy.loginfo('Turn left!')
+
             else:
                 twist.linear.x = LINEAR_VEL
                 twist.angular.z = 0.0
