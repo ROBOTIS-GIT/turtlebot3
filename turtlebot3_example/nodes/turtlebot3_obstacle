@@ -88,12 +88,12 @@ class Obstacle():
 
             if min_distance_center < SAFE_STOP_DISTANCE:  # something need to be happen
                 if min_distance_right < min_distance_left:
-                    twist.linear.x = 0.05
+                    twist.linear.x = 0.0
                     twist.angular.z = 0.40  # left
                     self._cmd_pub.publish(twist)
                     rospy.loginfo('Turn left!')
                 elif min_distance_left < min_distance_right:
-                    twist.linear.x = 0.05
+                    twist.linear.x = 0.0
                     twist.angular.z = -0.40  # right
                     self._cmd_pub.publish(twist)
                     rospy.loginfo('Turn right!')
