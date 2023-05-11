@@ -59,7 +59,7 @@ $ git clone -b noetic-devel https://github.com/ROBOTIS-GIT/open_manipulator_msgs
 $ git clone -b noetic-devel https://github.com/ROBOTIS-GIT/open_manipulator_simulations.git
 $ git clone https://github.com/ROBOTIS-GIT/open_manipulator_dependencies.git
 
-# OM in TB3関連のパッケージ
+# OM with TB3関連のパッケージ
 $ git clone https://github.com/ROBOTIS-GIT/turtlebot3_manipulation.git
 $ git clone https://github.com/ROBOTIS-GIT/turtlebot3_manipulation_simulations.git
 $ git clone https://github.com/ROBOTIS-JAPAN-GIT/open_manipulator_friends_jp_custom.git
