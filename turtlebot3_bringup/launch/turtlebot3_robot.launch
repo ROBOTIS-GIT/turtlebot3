@@ -1,6 +1,7 @@
 <launch>
   <arg name="multi_robot_name" default=""/>
   <arg name="set_lidar_frame_id" default="base_scan"/>
+  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]"/>
 
   <include file="$(find turtlebot3_bringup)/launch/turtlebot3_core.launch">
     <arg name="multi_robot_name" value="$(arg multi_robot_name)"/>
@@ -8,6 +9,9 @@
   <include file="$(find turtlebot3_bringup)/launch/turtlebot3_lidar.launch">
     <arg name="set_frame_id" value="$(arg set_lidar_frame_id)"/>
   </include>
-
   <node pkg="turtlebot3_bringup" type="turtlebot3_diagnostics" name="turtlebot3_diagnostics" output="screen"/>
+
+  <group if = "$(eval model == 'waffle_pi')">
+    <include file="$(find turtlebot3_bringup)/launch/turtlebot3_rpicamera.launch"/>
+  </group>
 </launch>

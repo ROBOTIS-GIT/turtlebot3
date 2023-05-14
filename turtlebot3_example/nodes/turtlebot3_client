@@ -44,7 +44,7 @@ class Client():
         self.client()
 
     def getkey(self):
-        mode, area, count = raw_input("| mode | area | count |\n").split()
+        mode, area, count = input("| mode | area | count |\n").split()
         mode, area, count = [str(mode), float(area), int(count)]
 
         if mode == 's':

@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <robot name="turtlebot3_waffle_for_open_manipulator" xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:include filename="$(find turtlebot3_description)/urdf/common_properties.xacro"/>
-  <xacro:include filename="$(find turtlebot3_description)/urdf/turtlebot3_waffle.gazebo.xacro"/>
+  <xacro:include filename="$(find turtlebot3_description)/urdf/turtlebot3_waffle_pi_for_open_manipulator.gazebo.xacro"/>
 
   <xacro:property name="r200_cam_rgb_px" value="0.005"/>
   <xacro:property name="r200_cam_rgb_py" value="0.018"/>
@@ -33,11 +33,16 @@
     </collision>
     
     <inertial>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <mass value="1.3729096e+00"/>
-      <inertia ixx="8.7002718e-03" ixy="-4.7576583e-05" ixz="1.1160499e-04"
-               iyy="8.6195418e-03" iyz="-3.5422299e-06"
-               izz="1.4612727e-02" />
+      <!-- <origin xyz="-0.064 0 0" rpy="0 0 0"/> -->
+      <origin xyz="-5.8190646e-02 3.8892103e-02 6.3998774e-02" rpy="0 0 0"/>
+      <mass value="2.7771056e+00"/>
+      <!-- <mass value="1.7771056e+00"/> -->
+      <!-- <inertia ixx="1.8257500e-01" ixy="4.9296089e-03" ixz="-1.1606178e-05" -->
+                <!-- iyy="4.8786869e-02" iyz="1.4954898e-05" -->
+                <!-- izz="3.9852748e-02" /> -->
+      <inertia ixx="1" ixy="0" ixz="0"
+                iyy="1" iyz="0"
+                izz="1" />
     </inertial>
   </link>
 

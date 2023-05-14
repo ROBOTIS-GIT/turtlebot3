@@ -2,6 +2,27 @@
 Changelog for package turtlebot3_example
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.2.6 (2022-02-24)
+------------------
+* No Changes
+
+1.2.5 (2020-12-30)
+------------------
+* No Changes
+
+1.2.4 (2020-09-29)
+------------------
+* Package info updated
+* Contributors: Will Son
+
+1.2.3 (2020-03-03)
+------------------
+* none
+
+1.2.2 (2019-08-20)
+------------------
+* none
+
 1.2.1 (2019-08-20)
 ------------------
 * Fixed typo `#436 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/436>`_

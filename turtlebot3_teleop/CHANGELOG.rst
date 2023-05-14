@@ -2,6 +2,29 @@
 Changelog for package turtlebot3_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.2.6 (2022-02-24)
+------------------
+* Fix teleop_key on Windows 10
+* Contributors: Rushikesh Kamalapurkar
+
+1.2.5 (2020-12-30)
+------------------
+* Python 2/3 compatibility fix
+* Contributors: Sean Yen
+
+1.2.4 (2020-09-29)
+------------------
+* Package info updated
+* Contributors: Will Son
+
+1.2.3 (2020-03-03)
+------------------
+* none
+
+1.2.2 (2019-08-20)
+------------------
+* none
+
 1.2.1 (2019-08-20)
 ------------------
 * none

@@ -1,0 +1,54 @@
+name: ros-ci
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+on:
+  push:
+    branches: [ master, develop ]
+  pull_request:
+    branches: [ master, develop ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  ros-ci:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ros_distribution:
+          # - kinetic
+          # - melodic
+          - noetic
+        include:
+            # Kinetic Kame (May 2016 - May 2021)
+          # - docker_image: ubuntu:xenial
+          #   ros_distribution: kinetic
+          #   ros_version: 1
+            # Melodic Morenia (May 2018 - May 2023)
+          # - docker_image: ubuntu:bionic
+          #   ros_distribution: melodic
+          #   ros_version: 1
+            # Noetic Ninjemys (May 2020 - May 2025)
+          - docker_image: ubuntu:focal
+            ros_distribution: noetic
+            ros_version: 1
+    container:
+      image: ${{ matrix.docker_image }}
+    steps:
+      - name: Setup directories
+        run: mkdir -p ros_ws/src
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          path: ros_ws/src
+      - name: Setup ROS environment
+        uses: ros-tooling/setup-ros@0.2.2
+        with:
+          required-ros-distributions: ${{ matrix.ros_distribution }}
+      - name: Setuptools workaround
+        run: export SETUPTOOLS_USE_DISTUTILS=stdlib
+      - name: Build and Test
+        uses: ros-tooling/action-ros-ci@v0.2
+        with:
+          package-name: turtlebot3
+          target-ros1-distro: ${{ matrix.ros_distribution }}
+          vcs-repo-file-url: ""
