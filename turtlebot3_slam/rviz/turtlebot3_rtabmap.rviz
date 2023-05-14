@@ -181,7 +181,7 @@ Visualization Manager:
         Value: true
       Axis: Z
       Channel Name: intensity
-      Class: rtabmap_ros/MapCloud
+      Class: rtabmap_rviz_plugins/MapCloud
       Cloud decimation: 4
       Cloud from scan: false
       Cloud max depth (m): 4
@@ -212,7 +212,7 @@ Visualization Manager:
       Use rainbow: true
       Value: true
     - Alpha: 1
-      Class: rtabmap_ros/MapGraph
+      Class: rtabmap_rviz_plugins/MapGraph
       Enabled: true
       Global loop closure: 255; 0; 0
       Local loop closure: 255; 255; 0

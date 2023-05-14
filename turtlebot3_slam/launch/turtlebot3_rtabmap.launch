@@ -8,7 +8,7 @@
 
   <!-- RTAB-Map -->
   <group ns="rtabmap">
-    <node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen" args="--delete_db_on_start">
+    <node name="rtabmap" pkg="rtabmap_slam" type="rtabmap" output="screen" args="--delete_db_on_start">
       <param name="database_path"       type="string" value="~/.ros/rtabmap.db"/>
       <param name="frame_id"            type="string" value="$(arg set_base_frame)"/>
       <param name="map_frame_id"        type="string" value="$(arg set_map_frame)"/>
