@@ -1,6 +1,6 @@
 [日本語](/turtlebot3/documentation/README_tb3_big_wheel_with_sara_jp.md) | [English](/turtlebot3/documentation/README_tb3_big_wheel_with_sara_en.md)
 
-# TurtleBot3 Friends: Big Wheel with SARA with SARA
+# TurtleBot3 Friends: Big Wheel with SARA
 ![TB3 Big Wheel with SARA](/turtlebot3/documentation/tb3_big_wheel_with_sara_bg.png)
 
 # 注意：Gazeboのみの対応。実機への対応中。
