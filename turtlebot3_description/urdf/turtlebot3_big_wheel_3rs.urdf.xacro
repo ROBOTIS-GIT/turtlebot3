@@ -234,7 +234,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 ${M_PI/2}"/>
       <geometry>
-        <mesh filename="package://turtlebot3_description/meshes/joints/d435_camera_base.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://turtlebot3_description/meshes/joints/d435_base_camera.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
 
