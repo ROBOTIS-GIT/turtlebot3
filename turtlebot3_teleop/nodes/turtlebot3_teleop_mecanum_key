@@ -35,9 +35,6 @@ if os.name == 'nt':
 else:
   import tty, termios
 
-MECANUM_MAX_LIN_VEL = 0.40
-MECANUM_MAX_ANG_VEL = 2.00
-
 MECANUM_W210_MAX_LIN_VEL = 0.40
 MECANUM_W210_MAX_ANG_VEL = 2.00
 
