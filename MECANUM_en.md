@@ -1,5 +1,9 @@
 # TurtleBot3 Friends : Mecanum  
-linear : 0.4 / angular : 2.0
+
+**Mecanum W210 :** linear : 0.40 | angular : 2.0
+
+**Mecanum W350 :** linear : 0.24 | angular : 1.2
+
 ## Setup Manual ( Quick Start Guide )
 ### 1. Environment Setup
 Few configurations from TurtleBot3 are required in order to use and test the **mecanum** model from the Turtlebot3 Friends family. To do so, please follow the official TurtleBot3 e-Manual
