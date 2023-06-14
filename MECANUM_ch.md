@@ -1,5 +1,8 @@
 # TurtleBot3 Friends : Mecanum  
-linear : 0.4 / angular : 2.0
+
+**Mecanum W210 :** linear : 0.40 | angular : 2.0
+
+**Mecanum W350 :** linear : 0.24 | angular : 1.2
 
 ## 快速安裝手冊
 
