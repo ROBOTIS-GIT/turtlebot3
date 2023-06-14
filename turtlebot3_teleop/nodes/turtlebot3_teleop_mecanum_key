@@ -52,8 +52,10 @@ Moving around:
    a    s    d    j    k
    z    x    c
 
-linear velocity (~ 0.40)
-angular velocity (~ 1.40)
+w/x     : increase/decrease linear velocity     (Mecanum W210 : ~ 0.40, Mecanum W350 : ~ 0.24)
+a/d     : increase/decrease sideways velocity   (Mecanum W210 : ~ 2.00, Mecanum W350 : ~ 0.12)
+q/e/z/c : increase/decrease diagonally velocity (Mecanum W210 : ~ 2.00, Mecanum W350 : ~ 0.12)
+j/k     : increase/decrease angular velocity    (Mecanum W210 : ~ 2.00, Mecanum W350 : ~ 0.12)
 
 space key, s : force stop
 
