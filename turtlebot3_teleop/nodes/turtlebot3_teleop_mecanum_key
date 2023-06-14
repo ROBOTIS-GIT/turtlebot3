@@ -113,9 +113,9 @@ def constrain(input, low, high):
     return input
 
 def checkLinearLimitVelocity(vel):
-    if turtlebot3_model == "mecanum w210":
+    if turtlebot3_model == "mecanum_w210":
       vel = constrain(vel, -MECANUM_W210_MAX_LIN_VEL, MECANUM_W210_MAX_LIN_VEL)
-    elif turtlebot3_model == "mecanum w350":
+    elif turtlebot3_model == "mecanum_w350":
       vel = constrain(vel, -MECANUM_W350_MAX_LIN_VEL, MECANUM_W350_MAX_LIN_VEL)
     else
       vel = constrain(vel, -MECANUM_W350_MAX_LIN_VEL, MECANUM_W350_MAX_LIN_VEL)
@@ -123,9 +123,9 @@ def checkLinearLimitVelocity(vel):
     return vel
 
 def checkAngularLimitVelocity(vel):
-    if turtlebot3_model == "mecanum w210":
+    if turtlebot3_model == "mecanum_w210":
       vel = constrain(vel, -MECANUM_W210_MAX_ANG_VEL, MECANUM_W210_MAX_ANG_VEL)
-    elif turtlebot3_model == "mecanum w350":
+    elif turtlebot3_model == "mecanum_w350":
       vel = constrain(vel, -MECANUM_W350_MAX_ANG_VEL, MECANUM_W350_MAX_ANG_VEL)
     else
       vel = constrain(vel, -MECANUM_W350_MAX_ANG_VEL, MECANUM_W350_MAX_ANG_VEL)
@@ -139,7 +139,7 @@ if __name__=="__main__":
     rospy.init_node('turtlebot3_teleop')
     pub = rospy.Publisher('cmd_vel', Twist, queue_size=10)
 
-    turtlebot3_model = rospy.get_param("model", "mecanum")
+    turtlebot3_model = rospy.get_param("model", "mecanum_w350")
 
     status = 0
     target_linear_vel_x   = 0.0
