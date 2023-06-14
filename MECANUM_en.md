@@ -1,8 +1,13 @@
 # TurtleBot3 Friends : Mecanum  
+model name according to XM430's model.
 
-**Mecanum W210 :** linear : 0.40 | angular : 2.0
+- **Mecanum W210**
+  
+  linear : 0.40 | angular : 2.0
 
-**Mecanum W350 :** linear : 0.24 | angular : 1.2
+- **Mecanum W350**
+  
+  linear : 0.24 | angular : 1.2
 
 ## Setup Manual ( Quick Start Guide )
 ### 1. Environment Setup
@@ -21,9 +26,22 @@ $ git clone https://github.com/zhl017/turtlebot3_idminer_custom
 $ git clone https://github.com/zhl017/turtlebot3_msgs_idminer_custom
 $ cd ~/catkin_ws && catkin_make
 $ echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
-$ echo "export TURTLEBOT3_MODEL=mecanum" >> ~/.bashrc
 $ source ~/.bashrc
 ```
+
+Set the default TURTLEBOT3_MODEL name to your model. Enter the below command to a terminal.
+- In case of `mecanum w210`
+```code
+$ echo "export TURTLEBOT3_MODEL=mecanum w210" >> ~/.bashrc
+$ source ~/.bashrc
+```
+- In case of `mecanum w350`
+```code
+$ echo "export TURTLEBOT3_MODEL=mecanum w350" >> ~/.bashrc
+$ source ~/.bashrc
+```
+
+
 - Changes in [3.2.2. Download TurtleBot3 SBC Image](https://emanual.robotis.com/docs/en/platform/turtlebot3/sbc_setup/#download-turtlebot3-sbc-image-2)
 We provide custom image for mecanum.
 > [**Download** `Raspberry Pi 4B (2GB of 4GB)` ROS Noetic image](https://mega.nz/file/MI0HXSjS#9mXlbcwk5lk_4uTEhls1XlHFqCEaI_y4SBJ7SBCc1x8)
