@@ -38,6 +38,12 @@ else:
 MECANUM_MAX_LIN_VEL = 0.40
 MECANUM_MAX_ANG_VEL = 2.00
 
+MECANUM_W210_MAX_LIN_VEL = 0.40
+MECANUM_W210_MAX_ANG_VEL = 2.00
+
+MECANUM_W350_MAX_LIN_VEL = 0.24
+MECANUM_W350_MAX_ANG_VEL = 0.12
+
 LIN_VEL_STEP_SIZE = 0.01
 ANG_VEL_STEP_SIZE = 0.1
 
@@ -108,12 +114,22 @@ def constrain(input, low, high):
     return input
 
 def checkLinearLimitVelocity(vel):
-    vel = constrain(vel, -MECANUM_MAX_LIN_VEL, MECANUM_MAX_LIN_VEL)
+    if turtlebot3_model == "mecanum w210":
+      vel = constrain(vel, -MECANUM_W210_MAX_LIN_VEL, MECANUM_W210_MAX_LIN_VEL)
+    elif turtlebot3_model == "mecanum w350":
+      vel = constrain(vel, -MECANUM_W350_MAX_LIN_VEL, MECANUM_W350_MAX_LIN_VEL)
+    else
+      vel = constrain(vel, -MECANUM_W350_MAX_LIN_VEL, MECANUM_W350_MAX_LIN_VEL)
 
     return vel
 
 def checkAngularLimitVelocity(vel):
-    vel = constrain(vel, -MECANUM_MAX_ANG_VEL, MECANUM_MAX_ANG_VEL)
+    if turtlebot3_model == "mecanum w210":
+      vel = constrain(vel, -MECANUM_W210_MAX_ANG_VEL, MECANUM_W210_MAX_ANG_VEL)
+    elif turtlebot3_model == "mecanum w350":
+      vel = constrain(vel, -MECANUM_W350_MAX_ANG_VEL, MECANUM_W350_MAX_ANG_VEL)
+    else
+      vel = constrain(vel, -MECANUM_W350_MAX_ANG_VEL, MECANUM_W350_MAX_ANG_VEL)
 
     return vel
 
