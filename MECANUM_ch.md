@@ -1,5 +1,5 @@
 # TurtleBot3 Friends : Mecanum  
-根據輪子馬達型號分為兩個model
+根據輪子馬達型號分為兩個type
 
 - **Mecanum W210**
 
@@ -36,12 +36,14 @@ $ source ~/.bashrc
 
 - mecanum w210
 ```code
-$ echo "export TURTLEBOT3_MODEL=mecanum w210" >> ~/.bashrc
+$ echo "export TURTLEBOT3_MODEL=mecanum" >> ~/.bashrc
+$ echo "export MECANUM_TYPE=w210 >> ~/.bashrc
 $ source ~/.bashrc
 ```
 - mecanum w350
 ```code
-$ echo "export TURTLEBOT3_MODEL=mecanum w350" >> ~/.bashrc
+$ echo "export TURTLEBOT3_MODEL=mecanum" >> ~/.bashrc
+$ echo "export MECANUM_TYPE=w350 >> ~/.bashrc
 $ source ~/.bashrc
 ```
 
