@@ -19,6 +19,12 @@
 #include <memory>
 #include <string>
 
+// // serial用の追加分
+// #include "turtlebot3_node/Serial.hpp"
+// #include <vector>
+// // #include <iostream>
+// #include <unistd.h>
+
 using robotis::turtlebot3::TurtleBot3;
 using namespace std::chrono_literals;
 
@@ -337,6 +343,64 @@ void TurtleBot3::cmd_vel_callback()
       uint8_t * p_data = &data.byte[0];
 
       dxl_sdk_wrapper_->set_data_to_device(start_addr, addr_length, p_data, &sdk_msg);
+
+      // // ここから追加
+
+      // auto list = getSerialList();
+      //   // for (const auto info : list) {
+      //   // 	cout << "device name:" << info.device_name() << endl;
+      //   // 	cout << "name:" << info.port() << "\n" << endl;
+      //   // }
+      // Serial serial;
+      // int port = 0;
+      // // cin >> port;
+      // if (!serial.open(list[port], 115200)){
+      //       // cout << list[port].port() << endl;
+      //   return -1; // return -1 をしたときにどうなるのか？？
+      // }
+      // // SerialInfo info = serial.getInfo();
+      // // cout << "open success" << endl;
+      // // cout << "device name:" << info.device_name() << endl;
+      // // cout << "name:" << info.port() << "\n" << endl;
+
+      // float x_lim = 0.0;
+      // float y_lim = 0.0;
+
+      // if(msg->twist.linear.x > 1.0){
+      //   x_lim = 1.0;
+      // }else if(msg->twist.linear.x < -1.0){
+      //   x_lim = -1.0;
+      // }else{
+      //   x_lim = msg->twist.linear.x * 5; // 0.1から0.5にする
+      // }
+
+      // if(msg->twist.angular.z > 1.0){
+      //   y_lim = 1.0;
+      // }else if(msg->twist.angular.z < -1.0){
+      //   y_lim = -1.0;
+      // }else{
+      //   y_lim = msg->twist.angular.z;
+      // }
+      
+
+      // int int_x = x_lim * (-63);
+      // int int_y = y_lim * (-63);
+
+      // //Serialへの書き込み
+      // int_x = int_x + 63 + 128;
+      
+      // RCLCPP_INFO(this->get_logger(),"int_x:%d",int_x);
+      // unsigned char data_x = int_x;
+      // serial.write(&data_x, sizeof(data_x));
+      
+
+      // int_y  = int_y + 63;
+      // RCLCPP_INFO(this->get_logger(),"int_y:%d",int_y);
+
+      // unsigned char data_y = int_y;
+      // serial.write(&data_y, sizeof(data_y));
+
+      // //ここまで追加
 
       RCLCPP_DEBUG(
         this->get_logger(),
