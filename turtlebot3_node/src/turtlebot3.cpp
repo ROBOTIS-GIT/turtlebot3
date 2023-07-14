@@ -213,8 +213,9 @@ void TurtleBot3::run()
   Serial serial;
   int port = 0;
   // cin >> port;
-  if (!serial.open(list[port], 115200)){
+  if (serial.open(list[port], 115200)){
         // cout << list[port].port() << endl;
+    RCLCPP_INFO(this->get_logger(), "Successfully open serial");
     // return -1; // return -1 をしたときにどうなるのか？？
   }
 
