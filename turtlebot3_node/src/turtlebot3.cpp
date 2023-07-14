@@ -205,6 +205,18 @@ void TurtleBot3::add_devices()
 void TurtleBot3::run()
 {
   RCLCPP_INFO(this->get_logger(), "Run!");
+  auto list = getSerialList();
+    // for (const auto info : list) {
+    // 	cout << "device name:" << info.device_name() << endl;
+    // 	cout << "name:" << info.port() << "\n" << endl;
+    // }
+  Serial serial;
+  int port = 0;
+  // cin >> port;
+  if (!serial.open(list[port], 115200)){
+        // cout << list[port].port() << endl;
+    // return -1; // return -1 をしたときにどうなるのか？？
+  }
 
   publish_timer(std::chrono::milliseconds(50));
   heartbeat_timer(std::chrono::milliseconds(100));
@@ -346,18 +358,6 @@ void TurtleBot3::cmd_vel_callback()
 
       // ここから追加
 
-      auto list = getSerialList();
-        // for (const auto info : list) {
-        // 	cout << "device name:" << info.device_name() << endl;
-        // 	cout << "name:" << info.port() << "\n" << endl;
-        // }
-      Serial serial;
-      int port = 0;
-      // cin >> port;
-      if (!serial.open(list[port], 115200)){
-            // cout << list[port].port() << endl;
-        return -1; // return -1 をしたときにどうなるのか？？
-      }
       // SerialInfo info = serial.getInfo();
       // cout << "open success" << endl;
       // cout << "device name:" << info.device_name() << endl;
