@@ -217,6 +217,8 @@ void TurtleBot3::run()
         // cout << list[port].port() << endl;
     RCLCPP_INFO(this->get_logger(), "Successfully open serial");
     // return -1; // return -1 をしたときにどうなるのか？？
+  } else {
+    RCLCPP_INFO(this->get_logger(), "Failed to open serial");
   }
 
   publish_timer(std::chrono::milliseconds(50));
