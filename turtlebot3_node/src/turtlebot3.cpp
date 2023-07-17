@@ -225,7 +225,7 @@ void TurtleBot3::run()
   heartbeat_timer(std::chrono::milliseconds(100));
 
   parameter_event_callback();
-  cmd_vel_callback();
+  cmd_vel_callback(serial);
 }
 
 void TurtleBot3::publish_timer(const std::chrono::milliseconds timeout)
@@ -327,7 +327,7 @@ void TurtleBot3::parameter_event_callback()
   parameter_event_sub_ = priv_parameters_client_->on_parameter_event(param_event_callback);
 }
 
-void TurtleBot3::cmd_vel_callback()
+void TurtleBot3::cmd_vel_callback(const Serial serial)
 {
   auto qos = rclcpp::QoS(rclcpp::KeepLast(10));
   cmd_vel_sub_ = this->create_subscription<geometry_msgs::msg::Twist>(
@@ -369,20 +369,20 @@ void TurtleBot3::cmd_vel_callback()
       float x_lim = 0.0;
       float y_lim = 0.0;
 
-      if(msg->twist.linear.x > 1.0){
+      if(msg->linear.x > 1.0){
         x_lim = 1.0;
-      }else if(msg->twist.linear.x < -1.0){
+      }else if(msg->linear.x < -1.0){
         x_lim = -1.0;
       }else{
-        x_lim = msg->twist.linear.x * 5; // 0.1から0.5にする
+        x_lim = msg->linear.x * 5; // 0.1から0.5にする
       }
 
-      if(msg->twist.angular.z > 1.0){
+      if(msg->angular.z > 1.0){
         y_lim = 1.0;
-      }else if(msg->twist.angular.z < -1.0){
+      }else if(msg->angular.z < -1.0){
         y_lim = -1.0;
       }else{
-        y_lim = msg->twist.angular.z;
+        y_lim = msg->angular.z;
       }
       
 
