@@ -347,7 +347,9 @@ void TurtleBot3::cmd_vel_callback()
       // ここから追加
 
       Serial serial;
-      if (serial.open("/dev/ttyACM1", 115200)){
+      auto list = getSerialList();
+      int port = 0;
+      if (serial.open(list[port], 115200)){
         RCLCPP_INFO(this->get_logger(), "Successfully open serial");
         // return -1; // return -1 をしたときにどうなるのか？？
       } else {
