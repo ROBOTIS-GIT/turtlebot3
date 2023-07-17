@@ -356,21 +356,23 @@ void TurtleBot3::cmd_vel_callback()
 
       float x_lim = 0.0;
       float y_lim = 0.0;
+      float linear_x = static_cast<float>(msg->linear.x);
+      float angular_z = static_cast<float>(msg->angular.z);
 
-      if(msg->linear.x > 1.0){
+      if(linear_x > 1.0){
         x_lim = 1.0;
-      }else if(msg->linear.x < -1.0){
+      }else if(linear_x < -1.0){
         x_lim = -1.0;
       }else{
-        x_lim = msg->linear.x * 5; // 0.1から0.5にする
+        x_lim = linear_x * 5; // 0.1から0.5にする
       }
 
-      if(msg->angular.z > 1.0){
+      if(angular_z > 1.0){
         y_lim = 1.0;
-      }else if(msg->angular.z < -1.0){
+      }else if(angular_z < -1.0){
         y_lim = -1.0;
       }else{
-        y_lim = msg->angular.z;
+        y_lim = angular_z;
       }
       
 
