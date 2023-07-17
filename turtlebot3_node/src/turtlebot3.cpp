@@ -354,10 +354,10 @@ void TurtleBot3::cmd_vel_callback()
         RCLCPP_INFO(this->get_logger(), "Failed to open serial");
       }
 
-      float x_lim = 0.0;
-      float y_lim = 0.0;
-      float linear_x = static_cast<float>(msg->linear.x);
-      float angular_z = static_cast<float>(msg->angular.z);
+      double x_lim = 0.0;
+      double y_lim = 0.0;
+      double linear_x = msg->linear.x;
+      double angular_z = msg->angular.z;
 
       if(linear_x > 1.0){
         x_lim = 1.0;
