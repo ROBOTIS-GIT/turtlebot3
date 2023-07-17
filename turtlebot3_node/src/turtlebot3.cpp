@@ -205,27 +205,12 @@ void TurtleBot3::add_devices()
 void TurtleBot3::run()
 {
   RCLCPP_INFO(this->get_logger(), "Run!");
-  auto list = getSerialList();
-    // for (const auto info : list) {
-    // 	cout << "device name:" << info.device_name() << endl;
-    // 	cout << "name:" << info.port() << "\n" << endl;
-    // }
-  Serial serial;
-  int port = 0;
-  // cin >> port;
-  if (serial.open(list[port], 115200)){
-        // cout << list[port].port() << endl;
-    RCLCPP_INFO(this->get_logger(), "Successfully open serial");
-    // return -1; // return -1 をしたときにどうなるのか？？
-  } else {
-    RCLCPP_INFO(this->get_logger(), "Failed to open serial");
-  }
 
   publish_timer(std::chrono::milliseconds(50));
   heartbeat_timer(std::chrono::milliseconds(100));
 
   parameter_event_callback();
-  cmd_vel_callback(serial);
+  cmd_vel_callback();
 }
 
 void TurtleBot3::publish_timer(const std::chrono::milliseconds timeout)
@@ -327,7 +312,7 @@ void TurtleBot3::parameter_event_callback()
   parameter_event_sub_ = priv_parameters_client_->on_parameter_event(param_event_callback);
 }
 
-void TurtleBot3::cmd_vel_callback(const Serial serial)
+void TurtleBot3::cmd_vel_callback()
 {
   auto qos = rclcpp::QoS(rclcpp::KeepLast(10));
   cmd_vel_sub_ = this->create_subscription<geometry_msgs::msg::Twist>(
@@ -361,10 +346,13 @@ void TurtleBot3::cmd_vel_callback(const Serial serial)
 
       // ここから追加
 
-      // SerialInfo info = serial.getInfo();
-      // cout << "open success" << endl;
-      // cout << "device name:" << info.device_name() << endl;
-      // cout << "name:" << info.port() << "\n" << endl;
+      Serial serial;
+      if (serial.open("/dev/ttyACM1", 115200)){
+        RCLCPP_INFO(this->get_logger(), "Successfully open serial");
+        // return -1; // return -1 をしたときにどうなるのか？？
+      } else {
+        RCLCPP_INFO(this->get_logger(), "Failed to open serial");
+      }
 
       float x_lim = 0.0;
       float y_lim = 0.0;
@@ -402,6 +390,7 @@ void TurtleBot3::cmd_vel_callback(const Serial serial)
 
       unsigned char data_y = int_y;
       serial.write(&data_y, sizeof(data_y));
+      serial.close();
 
       //ここまで追加
 
