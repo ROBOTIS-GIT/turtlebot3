@@ -356,8 +356,8 @@ void TurtleBot3::cmd_vel_callback()
 
       float x_lim = 0.0;
       float y_lim = 0.0;
-      float linear_x = 0.1
-      float angular_z = 0.1
+      float linear_x = 0.1;
+      float angular_z = 0.1;
 
       if(linear_x > 1.0){
         x_lim = 1.0;
