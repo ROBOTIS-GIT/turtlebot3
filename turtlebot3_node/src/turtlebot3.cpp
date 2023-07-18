@@ -394,7 +394,7 @@ void TurtleBot3::cmd_vel_callback()
 
       unsigned char data_y = int_y;
       serial.write(&data_y, sizeof(data_y));
-      serial.close();
+
 
       //ここまで追加
 
