@@ -19,6 +19,9 @@
   <exec_depend>rviz2</exec_depend>
   <exec_depend>turtlebot3_description</exec_depend>
   <exec_depend>turtlebot3_node</exec_depend>
+  <exec_depend>usb_cam</exec_depend>
+  <exec_depend>image_tools</exec_depend>
+  <exec_depend>compressed_image_transport</exec_depend>
   <export>
     <build_type>ament_cmake</build_type>
   </export>

@@ -24,10 +24,17 @@ from launch_ros.actions import Node
 
 
 def generate_launch_description():
+    TURTLEBOT3_MODEL = os.environ['TURTLEBOT3_MODEL']
+
+    if TURTLEBOT3_MODEL == 'waffle_pi':
+        rviz_file = 'waffle_pi.rviz'
+    else:
+        rviz_file = 'model.rviz'
+
     rviz_config_dir = os.path.join(
         get_package_share_directory('turtlebot3_description'),
         'rviz',
-        'model.rviz')
+        rviz_file)
 
     return LaunchDescription([
         Node(

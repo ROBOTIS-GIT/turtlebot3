@@ -1,0 +1,8 @@
+/**:
+    ros__parameters:
+      framerate: 10.0
+      frame_id: "camera_rgb_optical_frame"
+      image_width: 640
+      image_height: 480
+      camera_name: "camera"
+      camera_info_url: "package://turtlebot3_bringup/camera_info/turtlebot3_rpicamera.yaml"
