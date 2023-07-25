@@ -2,6 +2,7 @@
     ros__parameters:
       framerate: 10.0
       frame_id: "camera_rgb_optical_frame"
+      pixel_format: "yuyv2rgb"
       image_width: 640
       image_height: 480
       camera_name: "camera"
