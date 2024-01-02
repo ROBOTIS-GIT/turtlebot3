@@ -108,9 +108,10 @@ Odometry::Odometry(
 
 void Odometry::joint_state_callback(const sensor_msgs::msg::JointState::SharedPtr joint_state_msg)
 {
+  const rclcpp::Time current_time = joint_state_msg->header.stamp;
   static rclcpp::Time last_time = joint_state_msg->header.stamp;
   rclcpp::Duration duration(rclcpp::Duration::from_nanoseconds(
-      joint_state_msg->header.stamp.nanosec - last_time.nanoseconds()));
+      current_time.nanoseconds() - last_time.nanoseconds()));
 
   update_joint_state(joint_state_msg);
   calculate_odometry(duration);
@@ -129,9 +130,10 @@ void Odometry::joint_state_and_imu_callback(
     joint_state_msg->header.stamp.nanosec,
     imu_msg->header.stamp.nanosec);
 
+  const rclcpp::Time current_time = joint_state_msg->header.stamp;
   static rclcpp::Time last_time = joint_state_msg->header.stamp;
   rclcpp::Duration duration(rclcpp::Duration::from_nanoseconds(
-      joint_state_msg->header.stamp.nanosec - last_time.nanoseconds()));
+      current_time.nanoseconds() - last_time.nanoseconds()));
 
   update_joint_state(joint_state_msg);
   update_imu(imu_msg);
