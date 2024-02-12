@@ -2,6 +2,8 @@
 <robot name="turtlebot3_burger_sim" xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:arg name="laser_visual" default="false"/>
   <xacro:arg name="imu_visual"   default="false"/>
+  <xacro:arg name="base_footprint_frame"   default="base_footprint"/>
+  <xacro:arg name="odom_frame"   default="odom"/>
 
   <gazebo reference="base_link">
     <material>Gazebo/DarkGrey</material>
@@ -51,10 +53,10 @@
     <plugin name="turtlebot3_burger_controller" filename="libgazebo_ros_diff_drive.so">
       <commandTopic>cmd_vel</commandTopic>
       <odometryTopic>odom</odometryTopic>
-      <odometryFrame>odom</odometryFrame>
+      <odometryFrame>$(arg odom_frame)</odometryFrame>
       <odometrySource>world</odometrySource>
       <publishOdomTF>true</publishOdomTF>
-      <robotBaseFrame>base_footprint</robotBaseFrame>
+      <robotBaseFrame>$(arg base_footprint_frame)</robotBaseFrame>
       <publishWheelTF>false</publishWheelTF>
       <publishTf>true</publishTf>
       <publishWheelJointState>true</publishWheelJointState>
