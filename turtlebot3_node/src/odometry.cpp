@@ -109,8 +109,9 @@ Odometry::Odometry(
 void Odometry::joint_state_callback(const sensor_msgs::msg::JointState::SharedPtr joint_state_msg)
 {
   static rclcpp::Time last_time = joint_state_msg->header.stamp;
+  rclcpp::Time current_time = joint_state_msg->header.stamp;
   rclcpp::Duration duration(rclcpp::Duration::from_nanoseconds(
-      joint_state_msg->header.stamp.nanosec - last_time.nanoseconds()));
+      current_time.nanoseconds() - last_time.nanoseconds()));
 
   update_joint_state(joint_state_msg);
   calculate_odometry(duration);
@@ -130,8 +131,9 @@ void Odometry::joint_state_and_imu_callback(
     imu_msg->header.stamp.nanosec);
 
   static rclcpp::Time last_time = joint_state_msg->header.stamp;
+  rclcpp::Time current_time = joint_state_msg->header.stamp;
   rclcpp::Duration duration(rclcpp::Duration::from_nanoseconds(
-      joint_state_msg->header.stamp.nanosec - last_time.nanoseconds()));
+      current_time.nanoseconds() - last_time.nanoseconds()));
 
   update_joint_state(joint_state_msg);
   update_imu(imu_msg);
@@ -271,6 +273,7 @@ bool Odometry::calculate_odometry(const rclcpp::Duration & duration)
   robot_vel_[0] = v;
   robot_vel_[1] = 0.0;
   robot_vel_[2] = w;
+  RCLCPP_DEBUG(nh_->get_logger(), "v : %f, w : %f, dt: %f", robot_vel_[0], robot_vel_[2], step_time);
 
   last_theta = theta;
   return true;
