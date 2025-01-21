@@ -18,6 +18,7 @@ import os
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
+from launch.conditions import IfCondition
 from launch.actions import DeclareLaunchArgument
 from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
@@ -29,6 +30,7 @@ TURTLEBOT3_MODEL = os.environ['TURTLEBOT3_MODEL']
 
 def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
+    use_rviz = LaunchConfiguration('use_rviz', default='true')
     map_dir = LaunchConfiguration(
         'map',
         default=os.path.join(
@@ -81,5 +83,6 @@ def generate_launch_description():
             name='rviz2',
             arguments=['-d', rviz_config_dir],
             parameters=[{'use_sim_time': use_sim_time}],
+            condition=IfCondition(use_rviz),
             output='screen'),
     ])
