@@ -61,5 +61,5 @@ def generate_launch_description():
             parameters=[
                     rsp_params,
                     {'use_sim_time': use_sim_time},
-                    {'frame_prefix': PythonExpression(["'", namespace, "/'"])}])
+                    {'frame_prefix': PythonExpression(['"', namespace, '/"'])}])
     ])
