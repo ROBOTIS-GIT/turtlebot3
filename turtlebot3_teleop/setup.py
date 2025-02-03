@@ -17,8 +17,8 @@ setup(
     zip_safe=True,
     author='Darby Lim',
     author_email='thlim@robotis.com',
-    maintainer='Will Son',
-    maintainer_email='willson@robotis.com',
+    maintainer='Pyo',
+    maintainer_email='pyo@robotis.com',
     keywords=['ROS'],
     classifiers=[
         'Intended Audience :: Developers',
