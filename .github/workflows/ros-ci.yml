@@ -1,15 +1,15 @@
-name: humble-devel
+name: humble
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 on:
   push:
-    branches: [ humble-devel ]
+    branches: [ main, humble ]
   pull_request:
-    branches: [ humble-devel ]
+    branches: [ main, humble ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  humble-devel:
+  humble:
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
@@ -59,4 +59,4 @@ jobs:
         with:
           package-name: turtlebot3
           target-ros2-distro: ${{ matrix.ros_distribution }}
-          vcs-repo-file-url: "https://raw.githubusercontent.com/ROBOTIS-GIT/turtlebot3/humble-devel/turtlebot3_ci.repos"
+          vcs-repo-file-url: "https://raw.githubusercontent.com/ROBOTIS-GIT/turtlebot3/humble/turtlebot3_ci.repos"
