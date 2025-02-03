@@ -35,7 +35,7 @@ jobs:
         with:
           linter: ${{ matrix.linter }}
           distribution: rolling
-          package-name: "*"
+          package-name: turtlebot3
 
       - name: Post job cleanup
         if: failure()
