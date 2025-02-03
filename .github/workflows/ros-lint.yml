@@ -23,7 +23,7 @@ jobs:
         uses: ros-tooling/setup-ros@v0.7
 
       - name: Cache dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ~/.ros
           key: ${{ runner.os }}-ros-${{ matrix.linter }}-${{ hashFiles('**/package.xml') }}
