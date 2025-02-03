@@ -1,10 +1,16 @@
+# The name of the workflow 
 name: Lint
-on: pull_request
+
+# Specifies the events that trigger the workflow
+on:
+  pull_request:
+
+# Defines a set of jobs to be run as part of the workflow
 jobs:
   ament_lint:
     runs-on: ubuntu-latest
     container:
-      image: ubuntu:noble
+      image: rostooling/setup-ros-docker:ubuntu-noble-ros-rolling-ros-base-latest
     strategy:
       fail-fast: false
       matrix:
@@ -15,4 +21,6 @@ jobs:
     - uses: ros-tooling/action-ros-lint@master
       with:
         linter: ${{ matrix.linter }}
-        package-name: turtlebot3
+        distribution: rolling
+        package-name: "*"
+          
