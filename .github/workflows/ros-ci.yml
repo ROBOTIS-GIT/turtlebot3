@@ -11,7 +11,7 @@ on:
 # Defines a set of jobs to be run as part of the workflow
 jobs:
   # The name of the job
-  build-and-test:
+  ROS_CI:
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false

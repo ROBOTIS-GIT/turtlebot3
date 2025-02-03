@@ -1,0 +1,18 @@
+name: Lint
+on: pull_request
+jobs:
+  ament_lint:
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:noble
+    strategy:
+      fail-fast: false
+      matrix:
+          linter: [cppcheck, cpplint, uncrustify, flake8, pep257, lint_cmake, xmllint, copyright]
+    steps:
+    - uses: actions/checkout@v4
+    - uses: ros-tooling/setup-ros@master
+    - uses: ros-tooling/action-ros-lint@master
+      with:
+        linter: ${{ matrix.linter }}
+        package-name: turtlebot3
