@@ -31,7 +31,7 @@ jobs:
             ${{ runner.os }}-ros-${{ matrix.linter }}-
 
       - name: Run Linter
-        uses: ros-tooling/action-ros-lint@v0.3
+        uses: ros-tooling/action-ros-lint@master
         with:
           linter: ${{ matrix.linter }}
           distribution: rolling
