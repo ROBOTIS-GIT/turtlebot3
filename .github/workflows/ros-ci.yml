@@ -49,21 +49,9 @@ jobs:
         with:
           required-ros-distributions: ${{ matrix.ros_distribution }}
 
-      - name: Cache dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.ros
-          key: ${{ runner.os }}-ros-${{ matrix.ros_distribution }}-${{ hashFiles('**/package.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-ros-${{ matrix.ros_distribution }}-
-
       - name: Build and Test
         uses: ros-tooling/action-ros-ci@v0.3
         with:
           package-name: turtlebot3
           target-ros2-distro: ${{ matrix.ros_distribution }}
           vcs-repo-file-url: "https://raw.githubusercontent.com/ROBOTIS-GIT/turtlebot3/main/turtlebot3_ci.repos"
-
-      - name: Post job cleanup
-        if: failure()
-        run: echo "Cleaning up after failure"
