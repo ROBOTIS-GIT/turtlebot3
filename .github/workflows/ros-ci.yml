@@ -52,6 +52,6 @@ jobs:
       - name: Build and Test
         uses: ros-tooling/action-ros-ci@v0.3
         with:
-          package-name: turtlebot3
+          package-name: "*"
           target-ros2-distro: ${{ matrix.ros_distribution }}
           vcs-repo-file-url: "https://raw.githubusercontent.com/ROBOTIS-GIT/turtlebot3/main/turtlebot3_ci.repos"
