@@ -155,7 +155,7 @@ def main():
 
     try:
         print(msg)
-        while(1):
+        while (1):
             key = get_key(settings)
             if key == 'w':
                 target_linear_velocity =\
