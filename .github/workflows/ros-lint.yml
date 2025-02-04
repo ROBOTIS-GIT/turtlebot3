@@ -10,7 +10,7 @@ jobs:
   ament_lint:
     runs-on: ubuntu-latest
     container:
-      image: rostooling/setup-ros-docker:ubuntu-jammy-ros-humble-ros-base-latest
+      image: rostooling/setup-ros-docker:ubuntu-noble-ros-rolling-ros-base-latest
     strategy:
       fail-fast: false
       matrix:
@@ -26,5 +26,5 @@ jobs:
         uses: ros-tooling/action-ros-lint@master
         with:
           linter: ${{ matrix.linter }}
-          distribution: humble
+          distribution: rolling
           package-name: "*"
