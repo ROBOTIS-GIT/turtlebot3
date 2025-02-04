@@ -50,7 +50,7 @@ class Turtlebot3PatrolClient(Node):
         # Initialise clients
         self.action_client = ActionClient(self, Patrol, 'patrol')
 
-        self.get_logger().info("Turtlebot3 patrol node has been initialised.")
+        self.get_logger().info('Turtlebot3 patrol node has been initialised.')
 
         # Get keyboard input and send goal
         self.get_key()
@@ -61,7 +61,7 @@ class Turtlebot3PatrolClient(Node):
     def get_key(self):
         print(terminal_msg)
         settings = termios.tcgetattr(sys.stdin)
-        input_radius = input("Input radius: ")
+        input_radius = input('Input radius: ')
 
         self.radius = float(input_radius)
         termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)

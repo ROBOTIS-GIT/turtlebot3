@@ -37,9 +37,9 @@
 import os
 import select
 import sys
-import rclpy
 
 from geometry_msgs.msg import Twist
+import rclpy
 from rclpy.qos import QoSProfile
 
 if os.name == 'nt':
@@ -100,15 +100,15 @@ def print_vels(target_linear_velocity, target_angular_velocity):
         target_angular_velocity))
 
 
-def make_simple_profile(output, input, slop):
-    if input > output:
-        output = min(input, output + slop)
-    elif input < output:
-        output = max(input, output - slop)
+def make_simple_profile(output_vel, input_vel, slop):
+    if input_vel > output_vel:
+        output_vel = min(input_vel, output_vel + slop)
+    elif input_vel < output_vel:
+        output_vel = max(input_vel, output_vel - slop)
     else:
-        output = input
+        output_vel = input_vel
 
-    return output
+    return output_vel
 
 
 def constrain(input_vel, low_bound, high_bound):

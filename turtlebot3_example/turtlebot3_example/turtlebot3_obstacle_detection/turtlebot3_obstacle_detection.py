@@ -18,8 +18,7 @@
 
 from geometry_msgs.msg import Twist
 from rclpy.node import Node
-from rclpy.qos import QoSProfile
-from rclpy.qos import qos_profile_sensor_data
+from rclpy.qos import qos_profile_sensor_data, QoSProfile
 from sensor_msgs.msg import LaserScan
 
 
@@ -63,7 +62,7 @@ class Turtlebot3ObstacleDetection(Node):
             0.010,  # unit: s
             self.update_callback)
 
-        self.get_logger().info("Turtlebot3 obstacle detection node has been initialised.")
+        self.get_logger().info('Turtlebot3 obstacle detection node has been initialised.')
 
     """*******************************************************************************
     ** Callback functions and relevant functions
@@ -91,6 +90,6 @@ class Turtlebot3ObstacleDetection(Node):
         else:
             twist.linear.x = 0.0
             twist.angular.z = 0.0
-            self.get_logger().info("Obstacles are detected nearby. Robot stopped.")
+            self.get_logger().info('Obstacles are detected nearby. Robot stopped.')
 
         self.cmd_vel_pub.publish(twist)
