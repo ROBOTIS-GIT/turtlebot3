@@ -18,7 +18,8 @@
 
 from geometry_msgs.msg import Twist
 from rclpy.node import Node
-from rclpy.qos import qos_profile_sensor_data, QoSProfile
+from rclpy.qos import qos_profile_sensor_data
+from rclpy.qos import QoSProfile
 from sensor_msgs.msg import LaserScan
 
 
