@@ -1,4 +1,4 @@
-# The name of the workflow 
+# The name of the workflow
 name: Lint
 
 # Specifies the events that trigger the workflow

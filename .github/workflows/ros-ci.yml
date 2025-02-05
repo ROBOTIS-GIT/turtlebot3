@@ -1,4 +1,4 @@
-# The name of the workflow 
+# The name of the workflow
 name: CI
 
 # Specifies the events that trigger the workflow
@@ -55,11 +55,11 @@ jobs:
           target-ros2-distro: ${{ matrix.ros_distribution }}
           vcs-repo-file-url: "https://raw.githubusercontent.com/ROBOTIS-GIT/turtlebot3/main/turtlebot3_ci.repos"
           package-name: |
-            turtlebot3 
-            turtlebot3_bringup 
-            turtlebot3_cartographer 
-            turtlebot3_description 
-            turtlebot3_example 
-            turtlebot3_navigation2 
-            turtlebot3_node 
+            turtlebot3
+            turtlebot3_bringup
+            turtlebot3_cartographer
+            turtlebot3_description
+            turtlebot3_example
+            turtlebot3_navigation2
+            turtlebot3_node
             turtlebot3_teleop
