@@ -23,6 +23,8 @@ jobs:
         uses: ros-tooling/setup-ros@v0.7
 
       - name: Run Linter
+        env:
+          AMENT_CPPCHECK_ALLOW_SLOW_VERSIONS: 1
         uses: ros-tooling/action-ros-lint@master
         with:
           linter: ${{ matrix.linter }}
