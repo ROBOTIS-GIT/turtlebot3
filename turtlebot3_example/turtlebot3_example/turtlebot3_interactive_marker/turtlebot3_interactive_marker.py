@@ -20,12 +20,9 @@
 
 import sys
 from rclpy.node import Node
-
 from interactive_markers import InteractiveMarkerServer
 import rclpy
-from visualization_msgs.msg import InteractiveMarker
-from visualization_msgs.msg import InteractiveMarkerControl
-
+from visualization_msgs.msg import InteractiveMarker, InteractiveMarkerControl
 from rclpy.qos import QoSProfile
 from geometry_msgs.msg import Twist
 from nav_msgs.msg import Odometry
@@ -38,6 +35,7 @@ class Turtlebot3InteractiveMarker(Node):
         print("TurtleBot3 Interactive Markers")
         print("----------------------------------------------")
         print("Move red arrows while click the arrows")
+        print("Rotate with the circular handles along Z-axis")
         print("----------------------------------------------")
 
         qos = QoSProfile(depth=10)
@@ -56,26 +54,32 @@ class Turtlebot3InteractiveMarker(Node):
 
     def processFeedback(self, feedback):
         goal_position = feedback.pose.position
+        goal_orientation = feedback.pose.orientation
 
         twist = Twist()
         twist.linear.x = goal_position.x - self.odom.pose.pose.position.x
+
+        yaw_difference = goal_orientation.z - self.odom.pose.pose.orientation.z
+        twist.angular.z = yaw_difference
 
         if twist.linear.x > 0.1:
             twist.linear.x = 0.1
         elif twist.linear.x < -0.1:
             twist.linear.x = -0.1
 
-        self.get_logger().info("goal_position.x: {:.3f}, robot_x: {:.3f}". \
-            format(goal_position.x, self.odom.pose.pose.position.x))
+        if twist.angular.z > 0.5:
+            twist.angular.z = 0.5
+        elif twist.angular.z < -0.5:
+            twist.angular.z = -0.5
+
+        self.get_logger().info("goal_position.x: {:.3f}, robot_x: {:.3f}, yaw_diff: {:.3f}". \
+            format(goal_position.x, self.odom.pose.pose.position.x, yaw_difference))
+
         self.cmd_vel_pub.publish(twist)
 
-        
 def main(args=None):
     rclpy.init(args=sys.argv)
     turtlebot3_interactive_marker = Turtlebot3InteractiveMarker()
-   
-    qos = QoSProfile(depth=10)
-    turtlebot3_interactive_marker.cmd_vel_pub = turtlebot3_interactive_marker.create_publisher(Twist, 'cmd_vel', qos)
 
     server = InteractiveMarkerServer(turtlebot3_interactive_marker, 'turtlebot3_interactive_marker')
 
@@ -83,9 +87,18 @@ def main(args=None):
     int_marker.header.frame_id = 'base_link'
     int_marker.name = 'turtlebot3_marker'
 
+    move_control = InteractiveMarkerControl()
+    move_control.name = 'move_x'
+    move_control.interaction_mode = InteractiveMarkerControl.MOVE_AXIS
+    int_marker.controls.append(move_control)
+
     rotate_control = InteractiveMarkerControl()
-    rotate_control.name = 'move_x'
-    rotate_control.interaction_mode = InteractiveMarkerControl.MOVE_AXIS
+    rotate_control.name = 'rotate_z'
+    rotate_control.interaction_mode = InteractiveMarkerControl.MOVE_ROTATE
+    rotate_control.orientation.w = 1.0
+    rotate_control.orientation.x = 0.0
+    rotate_control.orientation.y = 1.0
+    rotate_control.orientation.z = 0.0
     int_marker.controls.append(rotate_control)
 
     server.insert(int_marker, feedback_callback=turtlebot3_interactive_marker.processFeedback)
