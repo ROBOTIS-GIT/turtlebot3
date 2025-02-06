@@ -69,11 +69,11 @@ class Turtlebot3PatrolServer(Node):
         while(1):
             position += self.twist.linear.x
             if position >= length:
-                break;
+                break
             self.twist.linear.x = self.linear_x
             self.twist.angular.z = 0.0
             self.cmd_vel_pub.publish(self.twist)
-            
+
             time.sleep(1)
         self.init_twist()
 
@@ -81,7 +81,7 @@ class Turtlebot3PatrolServer(Node):
         while (1):
             angle += self.twist.angular.z
             if (angle >= target_angle * math.pi / 180.0):
-                break;
+                break
             self.twist.linear.x = 0.0
             self.twist.angular.z = self.angular_z
             self.cmd_vel_pub.publish(self.twist)

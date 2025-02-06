@@ -42,7 +42,7 @@ class Turtlebot3ObstacleDetection(Node):
         self.stop_distance = 0.5  # m
 
         self.tele_twist = Twist()
-        
+
         qos = QoSProfile(depth=10)
 
         self.cmd_vel_pub = self.create_publisher(Twist, 'cmd_vel', qos)
@@ -52,7 +52,7 @@ class Turtlebot3ObstacleDetection(Node):
             'scan',
             self.scan_callback,
             qos_profile=qos_profile_sensor_data)
-        
+
         self.cmd_vel_raw_sub = self.create_subscription(
             Twist,
             'cmd_vel_raw',

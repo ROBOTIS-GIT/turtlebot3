@@ -21,7 +21,7 @@ import rclpy
 from rclpy.action import ActionClient
 from rclpy.node import Node
 
-from turtlebot3_msgs.action import Turtlebot3 
+from turtlebot3_msgs.action import Turtlebot3
 
 
 class Turtlebot3PatrolClient(Node):
@@ -58,7 +58,7 @@ class Turtlebot3PatrolClient(Node):
         elif mode == 'x':
             rclpy.shutdown()
         else:
-            self.get_logger().info("you selected wrong mode") 
+            self.get_logger().info("you selected wrong mode")
             rclpy.shutdown()
 
         return mode, travel_distance, patrol_count
