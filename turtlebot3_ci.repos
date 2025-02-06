@@ -2,16 +2,16 @@ repositories:
   turtlebot3/turtlebot3_msgs:
     type: git
     url: https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git
-    version: humble-devel
+    version: main
   utils/DynamixelSDK:
     type: git
     url: https://github.com/ROBOTIS-GIT/DynamixelSDK.git
-    version: humble-devel
+    version: main
   utils/hls_lfcd_lds_driver:
     type: git
     url: https://github.com/ROBOTIS-GIT/hls_lfcd_lds_driver.git
-    version: humble-devel
+    version: main
   utils/ld08_driver:
     type: git
     url: https://github.com/ROBOTIS-GIT/ld08_driver.git
-    version: ros2-devel
+    version: main
