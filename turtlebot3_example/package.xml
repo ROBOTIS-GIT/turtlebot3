@@ -11,7 +11,7 @@
   <url type="website">http://turtlebot3.robotis.com</url>
   <url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3</url>
   <url type="bugtracker">https://github.com/ROBOTIS-GIT/turtlebot3/issues</url>
-  <author email="jhshim@robotis.com">Ryan Shim</author>
+  <author email="ljg@robotis.com">Jeonggeun Lim</author>
   <author email="kkjong@robotis.com">Gilbert</author>
   <author email="willson@robotis.com">Will Son</author>
   <buildtool_depend>ament_cmake</buildtool_depend>
@@ -20,6 +20,8 @@
   <depend>rclpy</depend>
   <depend>sensor_msgs</depend>
   <depend>turtlebot3_msgs</depend>
+  <depend>tf_transformations</depend>
+  <depend>visualization_msgs</depend>
   <export>
     <build_type>ament_python</build_type>
   </export>
