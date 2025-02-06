@@ -16,7 +16,6 @@
 #
 # Authors: Jeonggeun Lim, Gilbert
 
-
 import rclpy
 from rclpy.node import Node
 import numpy
@@ -26,31 +25,28 @@ from rclpy.qos import QoSProfile
 from geometry_msgs.msg import Twist, Point
 from nav_msgs.msg import Odometry
 
-
-class Turtlebot3PositionControlPointOpKey(Node):
+class Turtlebot3PositionControlAbsolute(Node):
 
     def __init__(self):
-        super().__init__('turtlebot3_position_control_pointop_key')
+        super().__init__('turtlebot3_position_control_absolute')
 
-        print("TurtleBot3 Position Control")
+        print("TurtleBot3 Absolute Position Control")
         print("----------------------------------------------")
-        print("From the current pose,")
-        print("goal x: goal position x (unit: m)")
-        print("goal y: goal position y (unit: m)")
-        print("goal heading: goal orientation (range: -180 ~ 180, unit: deg)")
+        print("Enter absolute coordinates in odometry frame")
+        print("goal x: absolute x position (unit: m)")
+        print("goal y: absolute y position (unit: m)")
+        print("goal heading: absolute orientation (range: -180 ~ 180, unit: deg)")
         print("----------------------------------------------")
 
         self.goal_position = Point()
         self.goal_heading = 0.0
         self.position = Point()
-        self.heading = 0.0 
+        self.heading = 0.0
         self.position_error = Point()
-        self.heading_error = 0.0 
+        self.heading_error = 0.0
 
-        self.angular_speed = 0.3
+        self.angular_speed = 0.15
         self.linear_speed = 0.5
-
-        self.get_key()
 
         qos = QoSProfile(depth=10)
 
@@ -64,6 +60,10 @@ class Turtlebot3PositionControlPointOpKey(Node):
             10)
         self.odom_sub
 
+        self.get_logger().info("Ready to receive goal inputs.")
+
+        self.get_key()
+
         timer_period = 0.05
         self.timer = self.create_timer(timer_period, self.timer_callback)
 
@@ -74,71 +74,75 @@ class Turtlebot3PositionControlPointOpKey(Node):
         distance = math.sqrt(pow(self.position_error.x, 2) + pow(self.position_error.y, 2))
         goal_direction = math.atan2(self.position_error.y, self.position_error.x)
 
-        if distance > 0.1:
+        if distance > 0.05:
             path_angle = goal_direction - self.heading
 
             if path_angle < -math.pi:
-                path_angle = path_angle + 2 * math.pi
+                path_angle += 2 * math.pi
             elif path_angle > math.pi:
-                path_angle = path_angle - 2 * math.pi
+                path_angle -= 2 * math.pi
 
             self.cmd_vel.angular.z = path_angle
             self.cmd_vel.linear.x = min(self.linear_speed * distance, 0.1)
 
-            if self.cmd_vel.angular.z > 0:
-                self.cmd_vel.angular.z = min(self.cmd_vel.angular.z, 1.5)
-            else:
-                self.cmd_vel.angular.z = max(self.cmd_vel.angular.z, -1.5)
+            if self.cmd_vel.angular.z > 1.5:
+                self.cmd_vel.angular.z = 1.5
+            elif self.cmd_vel.angular.z < -1.5:
+                self.cmd_vel.angular.z = -1.5
 
-            self.get_logger().info("goal x,y: {:.2f}, {:.2f}, robot x,y: {:.2f}, {:.2f}".format( \
-                self.goal_position.x, self.goal_position.y, \
-                self.position.x, self.position.y))
+            self.get_logger().info("Moving to x: {:.2f}, y: {:.2f} (current: {:.2f}, {:.2f})".format(
+                self.goal_position.x, self.goal_position.y, self.position.x, self.position.y))
 
-            self.cmd_vel_pub.publish(self.cmd_vel)   
+            self.cmd_vel_pub.publish(self.cmd_vel)
+
         else:
+            self.cmd_vel.linear.x = 0.0
             self.heading_error = self.goal_heading - self.heading
 
             if self.heading_error < -math.pi:
-                self.heading_error = self.heading_error+ 2 * math.pi
+                self.heading_error += 2 * math.pi
             elif self.heading_error > math.pi:
-                self.heading_error = self.heading_error- 2 * math.pi
+                self.heading_error -= 2 * math.pi
 
-            self.cmd_vel.linear.x = 0.0
-            self.cmd_vel.angular.z = self.heading_error
+            turn_speed = max(min(abs(self.heading_error) * 1.0, 1.0), 0.1)
+            if self.heading_error > 0:
+                self.cmd_vel.angular.z = turn_speed
+            else:
+                self.cmd_vel.angular.z = -turn_speed
 
-            self.get_logger().info("goal heading: {:.2f}, robot heading: {:.2f}".format( \
-                self.goal_heading * 180.0 / math.pi, self.heading * 180.0 / math.pi))
+            self.get_logger().info("Rotating in place to heading: {:.2f}° (current: {:.2f}°)".format(
+                math.degrees(self.goal_heading), math.degrees(self.heading)))
 
-            if abs(self.heading_error * 180.0 / math.pi) < 1.0:
-                self.cmd_vel.linear.x = 0.0
+            if abs(math.degrees(self.heading_error)) < 1.0:
                 self.cmd_vel.angular.z = 0.0
                 self.cmd_vel_pub.publish(self.cmd_vel)
 
-                self.get_logger().info("goal heading: {:.2f}, robot heading: {:.2f}".format( \
-                    self.goal_heading * 180.0 / math.pi, self.heading * 180.0 / math.pi))
-                rclpy.shutdown()
-                
-                
+                self.get_logger().info("Final goal reached: x: {:.2f}, y: {:.2f}, heading: {:.2f}°".format(
+                    self.goal_position.x, self.goal_position.y, math.degrees(self.goal_heading)))
+
+                self.get_key()
+
         self.cmd_vel_pub.publish(self.cmd_vel)
 
-    def get_odom(self, msg):   
+
+    def get_odom(self, msg):
         self.position = msg.pose.pose.position
         _, _, self.heading = self.transfrom_from_quaternion_to_eular(msg.pose.pose.orientation)
-        
+
     def get_key(self):
-        self.goal_position.x = float(input("goal x: "))
-        self.goal_position.y = float(input("goal y: "))
-        self.goal_heading = float(input("goal heading: "))
+        self.goal_position.x = float(input("goal x (absolute): "))
+        self.goal_position.y = float(input("goal y (absolute): "))
+        self.goal_heading = float(input("goal heading (absolute, degrees): "))
 
-        if self.goal_heading >= math.pi:
-            self.goal_heading = self.goal_heading % (math.pi * 180.0 / math.pi)
-        elif self.goal_heading <= -math.pi:
-            self.goal_heading = -(-self.goal_heading % (math.pi * 180.0 / math.pi))
-        self.goal_heading = self.goal_heading * math.pi / 180.0
+        self.goal_heading = math.radians(self.goal_heading)
+        if self.goal_heading > math.pi:
+            self.goal_heading -= 2 * math.pi
+        elif self.goal_heading < -math.pi:
+            self.goal_heading += 2 * math.pi
 
-        self.get_logger().info("goal position xy: {:.2f}, {:.2f}, goal heading: {:.2f}".format( \
-            self.goal_position.x, self.goal_position.y, self.goal_heading * 180.0 / math.pi))
- 
+        self.get_logger().info("New goal: x: {:.2f}, y: {:.2f}, heading: {:.2f}°".format(
+            self.goal_position.x, self.goal_position.y, math.degrees(self.goal_heading)))
+
     def transfrom_from_quaternion_to_eular(self, q):
         sinr_cosp = 2.0 * (q.w * q.x + q.y * q.z)
         cosr_cosp = 1.0 - 2.0 * (q.x * q.x + q.y * q.y)
@@ -155,14 +159,14 @@ class Turtlebot3PositionControlPointOpKey(Node):
 
 def main(args=None):
     rclpy.init()
-    turtlebot3_position_control_pointop_key = Turtlebot3PositionControlPointOpKey()
+    node = Turtlebot3PositionControlAbsolute()
     try:
-        rclpy.spin(turtlebot3_position_control_pointop_key)
+        rclpy.spin(node)
     except KeyboardInterrupt:
-        turtlebot3_position_control_pointop_key.get_logger().info("Keyboard Interrupt (SIGINT)")
-    finally: 
+        node.get_logger().info("Keyboard Interrupt (SIGINT)")
+    finally:
+        node.destroy_node()
         rclpy.shutdown()
-        turtlebot3_position_control_pointop_key.destroy_node()
 
 if __name__ == '__main__':
     main()
