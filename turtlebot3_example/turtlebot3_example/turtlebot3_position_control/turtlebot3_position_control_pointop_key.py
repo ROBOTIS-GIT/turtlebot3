@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# Copyright 2023 ROBOTIS CO., LTD.
+# Copyright 2018 ROBOTIS CO., LTD.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Authors: Jeonggeun Lim, Gilbert
+# Authors: Wonho Yun, Jeonggeun Lim, Ryan Shim, Gilbert
 
 import rclpy
 from rclpy.node import Node
