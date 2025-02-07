@@ -14,6 +14,7 @@
   <author email="thlim@robotis.com">Darby Lim</author>
   <author email="pyo@robotis.com">Pyo</author>
   <author email="willson@robotis.com">Will Son</author>
+  <author email="kimhg@robotis.com">Hyungyu</author>
   <buildtool_depend>ament_cmake</buildtool_depend>
   <exec_depend>hls_lfcd_lds_driver</exec_depend>
   <exec_depend>robot_state_publisher</exec_depend>
