@@ -25,7 +25,8 @@ from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from launch.substitutions import PythonExpression, ThisLaunchFileDir
-from launch_ros.actions import Node, PushRosNamespace
+from launch_ros.actions import Node
+from launch_ros.actions import PushRosNamespace
 
 
 def generate_launch_description():
