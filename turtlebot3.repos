@@ -14,7 +14,7 @@ repositories:
   utils/DynamixelSDK:
     type: git
     url: https://github.com/ROBOTIS-GIT/DynamixelSDK.git
-    version: main
+    version: humble
   utils/hls_lfcd_lds_driver:
     type: git
     url: https://github.com/ROBOTIS-GIT/hls_lfcd_lds_driver.git
