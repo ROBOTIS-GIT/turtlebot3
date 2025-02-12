@@ -2,7 +2,7 @@
 Changelog for package turtlebot3_node
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-2.2.5 (2025-2-12)
+2.2.0 (2025-2-12)
 ------------------
 * Fixed a bug where odometry was not resetting and an offset issue
 * Contributors: Hyungyu Kim
