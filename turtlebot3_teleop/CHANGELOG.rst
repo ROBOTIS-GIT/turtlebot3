@@ -2,6 +2,10 @@
 Changelog for package turtlebot3_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.5 (2025-2-12)
+------------------
+* none
+
 2.1.5 (2022-05-26)
 ------------------
 * ROS2 Humble Hawksbill supported

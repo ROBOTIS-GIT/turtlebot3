@@ -2,6 +2,12 @@
 Changelog for package turtlebot3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.5 (2025-2-12)
+------------------
+* Added namespace functionality for multi-robot support
+* Fixed a bug where odometry was not resetting and an offset issue
+* Contributors: Hyungyu Kim
+
 2.1.5 (2022-05-26)
 ------------------
 * ROS2 Humble Hawksbill supported
