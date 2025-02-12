@@ -24,7 +24,8 @@
 
 using robotis::turtlebot3::sensors::JointState;
 
-static std::array<int32_t, robotis::turtlebot3::sensors::JOINT_NUM> last_diff_position, last_position;
+static std::array<int32_t, robotis::turtlebot3::sensors::JOINT_NUM> last_diff_position,
+  last_position;
 
 JointState::JointState(
   std::shared_ptr<rclcpp::Node> & nh,
