@@ -2,18 +2,19 @@
 Changelog for package turtlebot3_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-2.2.0 (2025-2-12)
-------------------
+2.2.0 (2025-2-13)
+-----------------
 * Added namespace functionality for multi-robot support
 * Contributors: Hyungyu Kim
 
 2.1.5 (2022-05-26)
 ------------------
-* ROS2 Humble Hawksbill supported
+* ROS 2 Humble Hawksbill supported
+* Contributors: Will Son
 
 2.1.4 (2022-02-08)
 ------------------
-* add LDS-02 support
+* Added LDS-02 support
 
 2.1.3 (2021-09-02)
 ------------------
@@ -46,7 +47,7 @@ Changelog for package turtlebot3_bringup
 ------------------
 * Supported ROS 2 Dashing Diademata
 * Updated the CHANGELOG and version to release binary packages
-* Fixed ROS2 dependencies and library install `#454 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/454>`_
+* Fixed ROS 2 dependencies and library install `#454 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/454>`_
 * Contributors: Emerson Knapp, Darby Lim, Pyo
 
 1.2.2 (2019-08-20)

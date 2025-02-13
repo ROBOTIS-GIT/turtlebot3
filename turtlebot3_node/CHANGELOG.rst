@@ -2,18 +2,19 @@
 Changelog for package turtlebot3_node
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-2.2.0 (2025-2-12)
-------------------
+2.2.0 (2025-2-13)
+-----------------
 * Fixed a bug where odometry was not resetting and an offset issue
 * Contributors: Hyungyu Kim
 
 2.1.5 (2022-05-26)
 ------------------
-* ROS2 Humble Hawksbill supported
+* ROS 2 Humble Hawksbill supported
+* Contributors: Will Son
 
 2.1.4 (2022-02-08)
 ------------------
-* none
+* None
 
 2.1.3 (2021-09-02)
 ------------------
@@ -52,7 +53,7 @@ Changelog for package turtlebot3_node
 ------------------
 * Supported ROS 2 Dashing Diademata
 * Updated the CHANGELOG and version to release binary packages
-* Fixed ROS2 dependencies and library install `#454 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/454>`_
+* Fixed ROS 2 dependencies and library install `#454 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/454>`_
 * Fixed scan rate to 5hz `#418 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/418>`_
 * Initialized joint states variables `#411 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/411>`_
 * Contributors: Matt Hansen, Emerson Knapp, Darby Lim, Pyo

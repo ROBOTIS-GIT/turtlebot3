@@ -2,20 +2,22 @@
 Changelog for package turtlebot3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-2.2.0 (2025-2-12)
-------------------
+2.2.0 (2025-2-13)
+-----------------
 * Added namespace functionality for multi-robot support
 * Fixed a bug where odometry was not resetting and an offset issue
 * Contributors: Hyungyu Kim
 
 2.1.5 (2022-05-26)
 ------------------
-* ROS2 Humble Hawksbill supported
-* revise ROS2 Cartographer excutable & name
+* ROS 2 Humble Hawksbill supported
+* revise ROS 2 Cartographer excutable & name
+* Contributors: Will Son
 
 2.1.4 (2022-02-08)
 ------------------
-* add LDS-02 support
+* Added LDS-02 support
+* Contributors: Will Son
 
 2.1.3 (2021-09-02)
 ------------------
@@ -61,7 +63,7 @@ Changelog for package turtlebot3
 * Updated the CHANGELOG and version to release binary packages
 * Removed ament_export_dependency(xacro) `#462 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/462>`_
 * Added use_sim_time parameter for rviz2 `#456 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/456>`_
-* Fixed ROS2 dependencies and library install `#454 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/454>`_
+* Fixed ROS 2 dependencies and library install `#454 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/454>`_
 * Fixed turtlebot3.repos `#447 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/447>`_ `#432 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/432>`_
 * Fixed scan rate to 5hz `#418 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/418>`_
 * Initialized joint states variables `#411 <https://github.com/ROBOTIS-GIT/turtlebot3/issues/411>`_
