@@ -2,6 +2,11 @@
 Changelog for package turtlebot3_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.0 (2025-2-12)
+------------------
+* Added namespace functionality for multi-robot support
+* Contributors: Hyungyu Kim
+
 2.1.5 (2022-05-26)
 ------------------
 * ROS2 Humble Hawksbill supported
