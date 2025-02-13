@@ -1,62 +1,65 @@
-name: humble-devel
+# The name of the workflow
+name: CI
 
-# Controls when the action will run. Triggers the workflow on push or pull request
+# Specifies the events that trigger the workflow
 on:
   push:
-    branches: [ humble-devel ]
+    branches: [ main, humble ]
   pull_request:
-    branches: [ humble-devel ]
+    branches: [ main, humble ]
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+# Defines a set of jobs to be run as part of the workflow
 jobs:
-  humble-devel:
+  # The name of the job
+  ROS_CI:
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
         ros_distribution:
-          # - dashing
-          # - foxy
-          # - galactic
           - humble
+          # - jazzy
           # - rolling
         include:
-            # Dashing Diademata (May 2019 - May 2021)
-          # - docker_image: ubuntu:bionic
-          #   ros_distribution: dashing
-          #   ros_version: 2
-            # Foxy Fitzroy (June 2020 - May 2023)
-          # - docker_image: ubuntu:focal
-          #   ros_distribution: foxy
-          #   ros_version: 2
-            # Galactic Geochelone (May 2021)
-          # - docker_image: ubuntu:focal
-          #   ros_distribution: galactic
-          #   ros_version: 2
-            # Humble Hawksbill (May 2027)
+          # ROS 2 Humble Hawksbill
           - docker_image: ubuntu:jammy
             ros_distribution: humble
             ros_version: 2
-            # Rolling
-          # - docker_image: ubuntu:jammy
+          # ROS 2 Jazzy Jalisco
+          # - docker_image: ubuntu:noble
+          #   ros_distribution: jazzy
+          #   ros_version: 2
+          # ROS 2 Rolling Ridley
+          # - docker_image: ubuntu:noble
           #   ros_distribution: rolling
           #   ros_version: 2
     container:
       image: ${{ matrix.docker_image }}
     steps:
-      - name: Setup directories
+      - name: Setup workspace
         run: mkdir -p ros_ws/src
-      - name: checkout
-        uses: actions/checkout@v3
+
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
           path: ros_ws/src
+
       - name: Setup ROS environment
-        uses: ros-tooling/setup-ros@0.3.3
+        uses: ros-tooling/setup-ros@v0.7
         with:
           required-ros-distributions: ${{ matrix.ros_distribution }}
+
       - name: Build and Test
-        uses: ros-tooling/action-ros-ci@0.2.5
+        uses: ros-tooling/action-ros-ci@v0.3
         with:
-          package-name: turtlebot3
           target-ros2-distro: ${{ matrix.ros_distribution }}
-          vcs-repo-file-url: "https://raw.githubusercontent.com/ROBOTIS-GIT/turtlebot3/humble-devel/turtlebot3_ci.repos"
+          vcs-repo-file-url: "https://raw.githubusercontent.com/ROBOTIS-GIT/turtlebot3/main/turtlebot3_ci.repos"
+          package-name: |
+            turtlebot3
+            turtlebot3_bringup
+            turtlebot3_cartographer
+            turtlebot3_description
+            turtlebot3_example
+            turtlebot3_navigation2
+            turtlebot3_node
+            turtlebot3_teleop

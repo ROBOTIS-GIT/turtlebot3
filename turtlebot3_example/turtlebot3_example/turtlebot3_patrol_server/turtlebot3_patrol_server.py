@@ -61,7 +61,7 @@ class Turtlebot3PatrolServer(Node):
             goal_callback=self.goal_callback,
             cancel_callback=self.cancel_callback)
 
-        self.get_logger().info("Turtlebot3 patrol action server has been initialised.")
+        self.get_logger().info('Turtlebot3 patrol action server has been initialised.')
 
     """*******************************************************************************
     ** Callback functions and relevant functions

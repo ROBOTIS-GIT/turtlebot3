@@ -17,14 +17,15 @@
 # Authors: Ryan Shim, Gilbert
 
 import math
-import numpy
 import sys
 import termios
 
 from geometry_msgs.msg import Twist
+from nav_msgs.msg import Odometry
+import numpy
 from rclpy.node import Node
 from rclpy.qos import QoSProfile
-from nav_msgs.msg import Odometry
+
 
 from turtlebot3_example.turtlebot3_position_control.turtlebot3_path import Turtlebot3Path
 
@@ -78,7 +79,7 @@ class Turtlebot3PositionControl(Node):
         ************************************************************"""
         self.update_timer = self.create_timer(0.010, self.update_callback)  # unit: s
 
-        self.get_logger().info("Turtlebot3 position control node has been initialised.")
+        self.get_logger().info('Turtlebot3 position control node has been initialised.')
 
     """*******************************************************************************
     ** Callback functions and relevant functions
@@ -141,12 +142,12 @@ class Turtlebot3PositionControl(Node):
     def get_key(self):
         # Print terminal message and get inputs
         print(terminal_msg)
-        input_x = float(input("Input x: "))
-        input_y = float(input("Input y: "))
-        input_theta = float(input("Input theta: "))
+        input_x = float(input('Input x: '))
+        input_y = float(input('Input y: '))
+        input_theta = float(input('Input theta: '))
         while input_theta > 180 or input_theta < -180:
-            self.get_logger().info("Enter a value for theta between -180 and 180")
-            input_theta = input("Input theta: ")
+            self.get_logger().info('Enter a value for theta between -180 and 180')
+            input_theta = input('Input theta: ')
         input_theta = numpy.deg2rad(input_theta)  # Convert [deg] to [rad]
 
         settings = termios.tcgetattr(sys.stdin)

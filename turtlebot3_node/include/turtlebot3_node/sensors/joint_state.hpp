@@ -43,6 +43,7 @@ class JointState : public Sensors
 public:
   explicit JointState(
     std::shared_ptr<rclcpp::Node> & nh,
+    std::shared_ptr<DynamixelSDKWrapper> & dxl_sdk_wrapper,
     const std::string & topic_name = "joint_states",
     const std::string & frame_id = "base_link");
 

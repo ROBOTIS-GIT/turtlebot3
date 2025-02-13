@@ -17,6 +17,8 @@
 #ifndef TURTLEBOT3_NODE__TURTLEBOT3_HPP_
 #define TURTLEBOT3_NODE__TURTLEBOT3_HPP_
 
+#include <tf2_ros/transform_broadcaster.h>
+
 #include <array>
 #include <chrono>
 #include <list>
@@ -25,8 +27,6 @@
 #include <mutex>
 #include <string>
 #include <queue>
-
-#include <tf2_ros/transform_broadcaster.h>
 
 #include <geometry_msgs/msg/twist.hpp>
 #include <nav_msgs/msg/odometry.hpp>
