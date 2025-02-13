@@ -2,13 +2,13 @@
 Changelog for package turtlebot3_navigation2
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-2.2.0 (2025-2-13)
------------------
+2.2.0 (2025-02-13)
+------------------
 * None
 
 2.1.5 (2022-05-26)
 ------------------
-* ROS2 Humble Hawksbill supported
+* ROS 2 Humble Hawksbill supported
 * Contributors: Will Son
 
 2.1.4 (2022-02-08)
