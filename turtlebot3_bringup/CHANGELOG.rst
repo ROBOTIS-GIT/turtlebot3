@@ -2,8 +2,8 @@
 Changelog for package turtlebot3_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-2.2.0 (2025-2-13)
------------------
+2.2.0 (2025-02-13)
+------------------
 * Added namespace functionality for multi-robot support
 * Contributors: Hyungyu Kim
 
