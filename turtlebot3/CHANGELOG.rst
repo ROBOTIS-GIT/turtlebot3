@@ -2,8 +2,8 @@
 Changelog for package turtlebot3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-2.2.0 (2025-2-13)
------------------
+2.2.0 (2025-02-13)
+------------------
 * Added namespace functionality for multi-robot support
 * Fixed a bug where odometry was not resetting and an offset issue
 * Contributors: Hyungyu Kim
