@@ -16,27 +16,27 @@
 #
 # Authors: Jeonggeun Lim, Ryan Shim, Gilbert
 
-
-import time
-import rclpy
+from geometry_msgs.msg import Point
+from geometry_msgs.msg import Twist
 import math
+from nav_msgs.msg import Odometry
+import rclpy
 from rclpy.action import ActionServer
 from rclpy.action import GoalResponse
+from rclpy.callback_groups import ReentrantCallbackGroup
 from rclpy.node import Node
 from rclpy.qos import QoSProfile
-from rclpy.callback_groups import ReentrantCallbackGroup
-
-from geometry_msgs.msg import Twist, Point
+import time
 from turtlebot3_msgs.action import Patrol
-from nav_msgs.msg import Odometry
+
 
 class Turtlebot3PatrolServer(Node):
 
     def __init__(self):
         super().__init__('turtlebot3_patrol_server')
 
-        print("TurtleBot3 Patrol Server")
-        print("----------------------------------------------")
+        print('TurtleBot3 Patrol Server')
+        print('----------------------------------------------')
 
         self._action_server = ActionServer(
             self,
@@ -78,7 +78,7 @@ class Turtlebot3PatrolServer(Node):
         return math.atan2(siny, cosy)
 
     def go_front(self, position, length):
-        while(1):
+        while True:
             position += self.twist.linear.x
             if position >= length:
                 break
@@ -92,13 +92,18 @@ class Turtlebot3PatrolServer(Node):
     def turn(self, target_angle):
         initial_yaw = self.get_yaw()
         target_yaw = initial_yaw + (target_angle * math.pi / 180.0)
-        self.get_logger().info(f"Initial yaw: {initial_yaw:.3f}, Target yaw: {target_yaw:.3f}")
+        self.get_logger().info(f'Initial yaw: {initial_yaw:.3f}, Target yaw: {target_yaw:.3f}')
 
         while True:
             rclpy.spin_once(self, timeout_sec=0.1)
 
             current_yaw = self.get_yaw()
-            yaw_diff = abs(math.atan2(math.sin(target_yaw - current_yaw), math.cos(target_yaw - current_yaw)))
+            yaw_diff = abs(
+                math.atan2(
+                    math.sin(target_yaw - current_yaw),
+                    math.cos(target_yaw - current_yaw)
+                )
+            )
 
             if yaw_diff < 0.01:
                 break
@@ -121,16 +126,16 @@ class Turtlebot3PatrolServer(Node):
         length = self.goal_msg.goal.y
         iteration = int(self.goal_msg.goal.z)
 
-        while(1):
+        while True:
             if self.goal_msg.goal.x == 1:
                 for count in range(iteration):
                     self.square(feedback_msg, goal_handle, length)
-                feedback_msg.state = "square patrol complete!!"
+                feedback_msg.state = 'square patrol complete!!'
                 break
             elif self.goal_msg.goal.x == 2:
                 for count in range(iteration):
                     self.triangle(feedback_msg, goal_handle, length)
-                feedback_msg.state = "triangle patrol complete!!"
+                feedback_msg.state = 'triangle patrol complete!!'
                 break
 
         goal_handle.succeed()
@@ -150,7 +155,7 @@ class Turtlebot3PatrolServer(Node):
             self.go_front(self.position.x, length)
             self.turn(90.0)
 
-            feedback_msg.state = "line " + str(i + 1)
+            feedback_msg.state = 'line ' + str(i + 1)
             goal_handle.publish_feedback(feedback_msg)
             time.sleep(0.1)
 
@@ -167,11 +172,12 @@ class Turtlebot3PatrolServer(Node):
             self.go_front(self.position.x, length)
             self.turn(120.0)
 
-            feedback_msg.state = "line " + str(i + 1)
+            feedback_msg.state = 'line ' + str(i + 1)
             goal_handle.publish_feedback(feedback_msg)
             time.sleep(1)
 
         self.init_twist()
+
 
 def main(args=None):
     rclpy.init(args=args)
@@ -179,6 +185,7 @@ def main(args=None):
     turtlebot3_patrol_server = Turtlebot3PatrolServer()
 
     rclpy.spin(turtlebot3_patrol_server)
+
 
 if __name__ == '__main__':
     main()
