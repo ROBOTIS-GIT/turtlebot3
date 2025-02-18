@@ -29,13 +29,13 @@ class Turtlebot3PatrolClient(Node):
     def __init__(self):
         super().__init__('turtlebot3_patrol_client')
 
-        print("TurtleBot3 Patrol Client")
-        print("----------------------------------------------")
-        print("Input below")
-        print("mode: s: square, t: triangle")
-        print("travel_distance (unit: m)")
-        print("patrol_count")
-        print("----------------------------------------------")
+        print('TurtleBot3 Patrol Client')
+        print('----------------------------------------------')
+        print('Input below')
+        print('mode: s: square, t: triangle')
+        print('travel_distance (unit: m)')
+        print('patrol_count')
+        print('----------------------------------------------')
 
         self._action_client = ActionClient(self, Patrol, 'turtlebot3')
 
@@ -47,9 +47,9 @@ class Turtlebot3PatrolClient(Node):
         self.send_goal()
 
     def get_key(self):
-        mode = str(input("mode(s: square, t: triangle): "))
-        travel_distance = float(input("travel_distance: "))
-        patrol_count = int(input("patrol_count: "))
+        mode = str(input('mode(s: square, t: triangle): '))
+        travel_distance = float(input('travel_distance: '))
+        patrol_count = int(input('patrol_count: '))
 
         if mode == 's':
             mode = 1
@@ -58,7 +58,7 @@ class Turtlebot3PatrolClient(Node):
         elif mode == 'x':
             rclpy.shutdown()
         else:
-            self.get_logger().info("you selected wrong mode")
+            self.get_logger().info('you selected wrong mode')
             rclpy.shutdown()
 
         return mode, travel_distance, patrol_count
@@ -96,12 +96,14 @@ class Turtlebot3PatrolClient(Node):
         feedback = feedback_msg.feedback
         self.get_logger().info('Received feedback: {0}'.format(feedback.state))
 
+
 def main(args=None):
     rclpy.init(args=args)
 
     turtlebot3_patrol_client = Turtlebot3PatrolClient()
 
     rclpy.spin(turtlebot3_patrol_client)
+
 
 if __name__ == '__main__':
     main()
