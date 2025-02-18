@@ -184,14 +184,12 @@ class Turtlebot3PatrolServer(Node):
 
         self.init_twist()
 
-
 def main(args=None):
     rclpy.init(args=args)
 
     turtlebot3_patrol_server = Turtlebot3PatrolServer()
 
     rclpy.spin(turtlebot3_patrol_server)
-
 
 if __name__ == '__main__':
     main()
