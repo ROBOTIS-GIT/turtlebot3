@@ -2,6 +2,11 @@
 Changelog for package turtlebot3_node
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.1 (2025-02-18)
+------------------
+* Fixed a bug where the orientation in the odometry was incorrect
+* Contributors: Hyungyu Kim
+
 2.2.0 (2025-02-13)
 ------------------
 * Fixed a bug where odometry was not resetting and an offset issue
