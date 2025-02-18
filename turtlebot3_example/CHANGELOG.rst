@@ -12,11 +12,12 @@ Changelog for package turtlebot3_example
 
 2.1.5 (2022-05-26)
 ------------------
-* ROS2 Humble Hawksbill supported
+* ROS 2 Humble Hawksbill supported
+* Contributors: Will Son
 
 2.1.4 (2022-02-08)
 ------------------
-* none
+* None
 
 2.1.3 (2021-09-02)
 ------------------
