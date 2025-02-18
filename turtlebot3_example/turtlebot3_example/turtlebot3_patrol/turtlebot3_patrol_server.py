@@ -16,9 +16,11 @@
 #
 # Authors: Jeonggeun Lim, Ryan Shim, Gilbert
 
+import math
+import time
+
 from geometry_msgs.msg import Point
 from geometry_msgs.msg import Twist
-import math
 from nav_msgs.msg import Odometry
 import rclpy
 from rclpy.action import ActionServer
@@ -26,7 +28,7 @@ from rclpy.action import GoalResponse
 from rclpy.callback_groups import ReentrantCallbackGroup
 from rclpy.node import Node
 from rclpy.qos import QoSProfile
-import time
+
 from turtlebot3_msgs.action import Patrol
 
 
