@@ -17,8 +17,8 @@
 # Authors: Jeonggeun Lim, Ryan Shim, Gilbert
 
 import math
-import time
 import threading
+import time
 
 from geometry_msgs.msg import Point
 from geometry_msgs.msg import Twist
