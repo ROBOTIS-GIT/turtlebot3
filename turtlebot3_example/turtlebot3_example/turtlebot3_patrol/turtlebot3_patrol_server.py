@@ -145,7 +145,7 @@ class Turtlebot3PatrolServer(Node):
         result.result = feedback_msg.state
 
         self.init_twist()
-        self.get_logger().info("Patrol complete.")
+        self.get_logger().info('Patrol complete.')
         threading.Timer(0.1, rclpy.shutdown).start()
 
         return result
