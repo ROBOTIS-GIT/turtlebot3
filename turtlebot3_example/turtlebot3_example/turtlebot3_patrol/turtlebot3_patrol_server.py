@@ -18,6 +18,7 @@
 
 import math
 import time
+import threading
 
 from geometry_msgs.msg import Point
 from geometry_msgs.msg import Twist
@@ -94,7 +95,6 @@ class Turtlebot3PatrolServer(Node):
     def turn(self, target_angle):
         initial_yaw = self.get_yaw()
         target_yaw = initial_yaw + (target_angle * math.pi / 180.0)
-        self.get_logger().info(f'Initial yaw: {initial_yaw:.3f}, Target yaw: {target_yaw:.3f}')
 
         while True:
             rclpy.spin_once(self, timeout_sec=0.1)
@@ -143,6 +143,10 @@ class Turtlebot3PatrolServer(Node):
         goal_handle.succeed()
         result = Patrol.Result()
         result.result = feedback_msg.state
+
+        self.init_twist()
+        self.get_logger().info("Patrol complete.")
+        threading.Timer(0.1, rclpy.shutdown).start()
 
         return result
 
