@@ -2,6 +2,11 @@
 Changelog for package turtlebot3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.1 (2025-02-18)
+------------------
+* Fixed a bug where the orientation in the odometry was incorrect
+* Contributors: Hyungyu Kim
+
 2.2.0 (2025-02-13)
 ------------------
 * Added namespace functionality for multi-robot support
