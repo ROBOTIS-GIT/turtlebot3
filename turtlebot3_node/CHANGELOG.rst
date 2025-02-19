@@ -2,9 +2,14 @@
 Changelog for package turtlebot3_node
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-2.3.0 (2025-02-19)
+2.2.3 (2025-02-19)
 ------------------
 * None
+
+2.2.2 (2025-02-19)
+------------------
+* Fixed a bug where the frame_id in the header of the odom_msg starts with a slash
+* Contributors: Hyungyu Kim
 
 2.2.1 (2025-02-18)
 ------------------
