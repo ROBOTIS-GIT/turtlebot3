@@ -5,6 +5,7 @@ Changelog for package turtlebot3_node
 2.2.0 (2025-02-13)
 ------------------
 * Fixed a bug where odometry was not resetting and an offset issue
+* Fixed a bug where the frame_id in the header of the odom_msg starts with a slash
 * Contributors: Hyungyu Kim
 
 2.1.5 (2022-05-26)

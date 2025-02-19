@@ -56,11 +56,13 @@ Odometry::Odometry(
     "odometry.frame_id",
     frame_id_of_odometry_,
     std::string("odom"));
+  if (frame_id_of_odometry_[0] == ('/')) frame_id_of_odometry_.erase(0, 1);
 
   nh_->get_parameter_or<std::string>(
     "odometry.child_frame_id",
     child_frame_id_of_odometry_,
     std::string("base_footprint"));
+  if (child_frame_id_of_odometry_[0] == ('/')) child_frame_id_of_odometry_.erase(0, 1);
 
   auto qos = rclcpp::QoS(rclcpp::KeepLast(10));
   odom_pub_ = nh_->create_publisher<nav_msgs::msg::Odometry>("odom", qos);
