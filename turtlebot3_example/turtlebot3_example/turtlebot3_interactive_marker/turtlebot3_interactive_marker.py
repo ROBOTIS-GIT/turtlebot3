@@ -16,7 +16,6 @@
 #
 # Authors: Jeonggeun Lim, Gilbert #
 
-
 import sys
 from rclpy.node import Node
 from interactive_markers import InteractiveMarkerServer
@@ -25,6 +24,7 @@ from visualization_msgs.msg import InteractiveMarker, InteractiveMarkerControl
 from rclpy.qos import QoSProfile
 from geometry_msgs.msg import Twist
 from nav_msgs.msg import Odometry
+
 
 class Turtlebot3InteractiveMarker(Node):
 
@@ -71,16 +71,22 @@ class Turtlebot3InteractiveMarker(Node):
         elif twist.angular.z < -0.5:
             twist.angular.z = -0.5
 
-        self.get_logger().info("goal_position.x: {:.3f}, robot_x: {:.3f}, yaw_diff: {:.3f}". \
-            format(goal_position.x, self.odom.pose.pose.position.x, yaw_difference))
+        self.get_logger().info(
+            "goal_position.x: {:.3f}, robot_x: {:.3f}, yaw_diff: {:.3f}".format(
+                goal_position.x, self.odom.pose.pose.position.x, yaw_difference
+            )
+        )
 
         self.cmd_vel_pub.publish(twist)
+
 
 def main(args=None):
     rclpy.init(args=sys.argv)
     turtlebot3_interactive_marker = Turtlebot3InteractiveMarker()
 
-    server = InteractiveMarkerServer(turtlebot3_interactive_marker, 'turtlebot3_interactive_marker')
+    server = InteractiveMarkerServer(
+        turtlebot3_interactive_marker, 'turtlebot3_interactive_marker'
+    )
 
     int_marker = InteractiveMarker()
     int_marker.header.frame_id = 'base_link'
@@ -105,6 +111,7 @@ def main(args=None):
 
     rclpy.spin(turtlebot3_interactive_marker)
     server.shutdown()
+
 
 if __name__ == '__main__':
     main()
