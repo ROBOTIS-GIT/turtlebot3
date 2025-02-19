@@ -2,7 +2,7 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>turtlebot3_example</name>
-  <version>2.2.2</version>
+  <version>2.2.3</version>
   <description>
     This package provides four basic examples for TurtleBot3 (i.e., interactive marker, object detection, patrol and position control).
   </description>
@@ -11,6 +11,7 @@
   <url type="website">http://turtlebot3.robotis.com</url>
   <url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3</url>
   <url type="bugtracker">https://github.com/ROBOTIS-GIT/turtlebot3/issues</url>
+  <author email="ljg@robotis.com">Jeonggeun Lim</author>
   <author email="jhshim@robotis.com">Ryan Shim</author>
   <author email="kkjong@robotis.com">Gilbert</author>
   <author email="willson@robotis.com">Will Son</author>
@@ -20,6 +21,8 @@
   <depend>rclpy</depend>
   <depend>sensor_msgs</depend>
   <depend>turtlebot3_msgs</depend>
+  <depend>tf_transformations</depend>
+  <depend>visualization_msgs</depend>
   <export>
     <build_type>ament_python</build_type>
   </export>

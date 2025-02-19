@@ -2,6 +2,11 @@
 Changelog for package turtlebot3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.3 (2025-02-19)
+------------------
+* Modified Patrol server and client
+* Contributors: Junyeong Jeong, Jeonggeun Lim
+
 2.2.2 (2025-02-19)
 ------------------
 * Fixed a bug where the frame_id in the header of the odom_msg starts with a slash

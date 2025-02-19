@@ -2,6 +2,11 @@
 Changelog for package turtlebot3_example
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.3 (2025-02-19)
+------------------
+* Modified Patrol server and client
+* Contributors: Junyeong Jeong, Jeonggeun Lim
+
 2.2.2 (2025-02-19)
 ------------------
 * None
