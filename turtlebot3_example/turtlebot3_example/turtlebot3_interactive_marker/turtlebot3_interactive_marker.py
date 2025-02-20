@@ -25,7 +25,7 @@ from visualization_msgs.msg import InteractiveMarker, InteractiveMarkerControl
 from rclpy.qos import QoSProfile
 from geometry_msgs.msg import Twist
 from nav_msgs.msg import Odometry
-from tf_transformations import euler_from_quaternion
+from tf_transformations import euler_from_quaternion, quaternion_from_euler
 
 
 class Turtlebot3InteractiveMarker(Node):
@@ -55,16 +55,16 @@ class Turtlebot3InteractiveMarker(Node):
         self.server = InteractiveMarkerServer(self, 'turtlebot3_interactive_marker')
 
         # 🎯 이동 컨트롤 마커 추가 (Move Control)
-        move_marker = InteractiveMarker()
-        move_marker.header.frame_id = 'odom'  # odom 기준으로 이동
-        move_marker.name = 'turtlebot3_move_marker'
+        self.move_marker = InteractiveMarker()
+        self.move_marker.header.frame_id = 'odom'  # odom 기준으로 이동
+        self.move_marker.name = 'turtlebot3_move_marker'
 
         move_control = InteractiveMarkerControl()
         move_control.name = 'move_x'
         move_control.interaction_mode = InteractiveMarkerControl.MOVE_AXIS
-        move_marker.controls.append(move_control)
+        self.move_marker.controls.append(move_control)
 
-        self.server.insert(move_marker, feedback_callback=self.processMoveFeedback)
+        self.server.insert(self.move_marker, feedback_callback=self.processMoveFeedback)
 
         # 🎯 회전 컨트롤 마커 추가 (Rotate Control)
         rotate_marker = InteractiveMarker()
@@ -101,11 +101,34 @@ class Turtlebot3InteractiveMarker(Node):
         self.goal_orientation = feedback.pose.orientation
         self.goal_position = None  # 회전 시 이동 목표는 리셋
 
+        self.update_move_marker_pose()
+
     def get_yaw(self):
         """ 로봇의 현재 Yaw (회전 각도) 가져오기 """
         q = self.odom.pose.pose.orientation
         euler = euler_from_quaternion([q.x, q.y, q.z, q.w])
         return euler[2]  # Yaw 값 반환
+
+    def update_move_marker_pose(self):
+        """ 🎯 move_marker의 위치를 회전에 맞게 업데이트 """
+        # 현재 로봇 위치를 가져옴
+        current_x = self.odom.pose.pose.position.x
+        current_y = self.odom.pose.pose.position.y
+        current_yaw = self.get_yaw()
+
+        # 현재 Yaw 값을 quaternion으로 변환
+        new_quat = quaternion_from_euler(0, 0, current_yaw)
+
+        # move_marker의 pose 업데이트
+        self.move_marker.pose.position.x = current_x
+        self.move_marker.pose.position.y = current_y
+        self.move_marker.pose.orientation.x = new_quat[0]
+        self.move_marker.pose.orientation.y = new_quat[1]
+        self.move_marker.pose.orientation.z = new_quat[2]
+        self.move_marker.pose.orientation.w = new_quat[3]
+
+        self.server.insert(self.move_marker)
+        self.server.applyChanges()
 
     def publish_cmd_vel(self):
         """ 로봇이 목표 위치 or 목표 방향으로 이동하도록 cmd_vel을 지속적으로 업데이트 """
@@ -114,14 +137,27 @@ class Turtlebot3InteractiveMarker(Node):
         # 🎯 1. 이동 컨트롤 처리 (회전 목표가 없을 때만)
         if self.goal_position is not None:
             current_x = self.odom.pose.pose.position.x
-            dx = self.goal_position.x - current_x
-            distance = abs(dx)
+            current_y = self.odom.pose.pose.position.y
+            current_yaw = self.get_yaw()
 
-            # 목표에 가까우면 멈춤
+            goal_x = self.goal_position.x
+            goal_y = self.goal_position.y
+
+            # 목표까지의 거리 계산
+            dx = goal_x - current_x
+            dy = goal_y - current_y
+            distance = math.sqrt(dx**2 + dy**2)
+
+            # 목표에 가까우면 정지
             if distance < 0.01:
                 self.goal_position = None  # 목표 완료 후 초기화
             else:
-                twist.linear.x = max(-0.1, min(0.1, dx))  # 방향에 맞춰 이동
+                # 🔹 현재 회전 각도를 반영하여 로봇이 목표 방향을 향하도록 변환
+                forward_speed = dx * math.cos(current_yaw) + dy * math.sin(current_yaw)
+                lateral_speed = -dx * math.sin(current_yaw) + dy * math.cos(current_yaw)
+
+                twist.linear.x = max(-0.1, min(0.1, forward_speed))  # 전진 속도
+                twist.linear.y = max(-0.1, min(0.1, lateral_speed))  # 좌우 속도 반영
 
         # 🎯 2. 회전 컨트롤 처리 (이동 목표가 없을 때만)
         elif self.goal_orientation is not None:
