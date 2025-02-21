@@ -101,8 +101,6 @@ class Turtlebot3InteractiveMarker(Node):
         self.goal_orientation = feedback.pose.orientation
         self.goal_position = None
 
-        #self.update_move_marker_pose()
-
     def get_yaw(self):
         q = self.odom.pose.pose.orientation
         euler = euler_from_quaternion([q.x, q.y, q.z, q.w])
