@@ -2,13 +2,31 @@
 Changelog for package turtlebot3_example
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.3 (2025-02-19)
+------------------
+* Modified Patrol server and client
+* Contributors: Junyeong Jeong, Jeonggeun Lim
+
+2.2.2 (2025-02-19)
+------------------
+* None
+
+2.2.1 (2025-02-18)
+------------------
+* None
+
+2.2.0 (2025-02-13)
+------------------
+* None
+
 2.1.5 (2022-05-26)
 ------------------
-* ROS2 Humble Hawksbill supported
+* ROS 2 Humble Hawksbill supported
+* Contributors: Will Son
 
 2.1.4 (2022-02-08)
 ------------------
-* none
+* None
 
 2.1.3 (2021-09-02)
 ------------------

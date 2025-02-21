@@ -24,14 +24,18 @@ from launch.actions import DeclareLaunchArgument
 from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
+from launch.substitutions import PythonExpression
 from launch.substitutions import ThisLaunchFileDir
 from launch_ros.actions import Node
+from launch_ros.actions import PushRosNamespace
 
 
 def generate_launch_description():
     TURTLEBOT3_MODEL = os.environ['TURTLEBOT3_MODEL']
     LDS_MODEL = os.environ['LDS_MODEL']
     LDS_LAUNCH_FILE = '/hlds_laser.launch.py'
+
+    namespace = LaunchConfiguration('namespace', default='')
 
     usb_port = LaunchConfiguration('usb_port', default='/dev/ttyACM0')
 
@@ -74,10 +78,18 @@ def generate_launch_description():
             default_value=tb3_param_dir,
             description='Full path to turtlebot3 parameter file to load'),
 
+        DeclareLaunchArgument(
+            'namespace',
+            default_value=namespace,
+            description='Namespace for nodes'),
+
+        PushRosNamespace(namespace),
+
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 [ThisLaunchFileDir(), '/turtlebot3_state_publisher.launch.py']),
-            launch_arguments={'use_sim_time': use_sim_time}.items(),
+            launch_arguments={'use_sim_time': use_sim_time,
+                              'namespace': namespace}.items(),
         ),
 
         IncludeLaunchDescription(
@@ -88,7 +100,11 @@ def generate_launch_description():
         Node(
             package='turtlebot3_node',
             executable='turtlebot3_ros',
-            parameters=[tb3_param_dir],
+            parameters=[
+                tb3_param_dir,
+                {'odometry.frame_id': PythonExpression(['"', namespace, '/odom"'])},
+                {'odometry.child_frame_id': PythonExpression(
+                    ['"', namespace, '/base_footprint"'])}],
             arguments=['-i', usb_port],
             output='screen'),
     ])

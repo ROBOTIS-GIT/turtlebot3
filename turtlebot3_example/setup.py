@@ -5,7 +5,7 @@ package_name = 'turtlebot3_example'
 
 setup(
     name=package_name,
-    version='2.1.5',
+    version='2.2.3',
     packages=find_packages(),
     data_files=[
         ('share/ament_index/resource_index/packages', ['resource/' + package_name]),
@@ -20,10 +20,11 @@ setup(
     ],
     install_requires=['setuptools', 'launch'],
     zip_safe=True,
-    author=['Ryan Shim', 'Gilbert'],
-    author_email=['jhshim@robotis.com', 'kkjong@robotis.com'],
-    maintainer='Will Son',
-    maintainer_email='willson@robotis.com',
+    author=['Jeonggeun Lim', 'Will Son', 'Ryan Shim', 'Gilbert'],
+    author_email=['ljg@robotis.com', 'willson@robotis.com', 'jhshim@robotis.com',
+                  'kkjong@robotis.com'],
+    maintainer='Pyo',
+    maintainer_email='pyo@robotis.com',
     keywords=['ROS', 'ROS2', 'examples', 'rclpy'],
     classifiers=[
         'Intended Audience :: Developers',
@@ -37,17 +38,10 @@ setup(
     license='Apache License, Version 2.0',
     entry_points={
         'console_scripts': [
-            # To be added
-            # 'turtlebot3_interactive_marker = \
-            #   turtlebot3_example.turtlebot3_interactive_marker.main:main',
-            'turtlebot3_obstacle_detection = \
-                turtlebot3_example.turtlebot3_obstacle_detection.main:main',
-            'turtlebot3_patrol_client = \
-                turtlebot3_example.turtlebot3_patrol_client.main:main',
             'turtlebot3_patrol_server = \
-                turtlebot3_example.turtlebot3_patrol_server.main:main',
-            'turtlebot3_position_control = \
-                turtlebot3_example.turtlebot3_position_control.main:main',
+                turtlebot3_example.turtlebot3_patrol.turtlebot3_patrol_server:main',
+            'turtlebot3_patrol_client = \
+                turtlebot3_example.turtlebot3_patrol.turtlebot3_patrol_client:main',
         ],
     },
 )

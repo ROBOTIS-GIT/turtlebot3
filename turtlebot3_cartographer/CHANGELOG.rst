@@ -2,14 +2,31 @@
 Changelog for package turtlebot3_cartographer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.3 (2025-02-19)
+------------------
+* None
+
+2.2.2 (2025-02-19)
+------------------
+* None
+
+2.2.1 (2025-02-18)
+------------------
+* None
+
+2.2.0 (2025-02-13)
+------------------
+* None
+
 2.1.5 (2022-05-26)
 ------------------
-* ROS2 Humble Hawksbill supported
-* revise ROS2 Cartographer excutable & name
+* ROS 2 Humble Hawksbill supported
+* revise ROS 2 Cartographer excutable & name
+* Contributors: Will Son
 
 2.1.4 (2022-02-08)
 ------------------
-* none
+* None
 
 2.1.3 (2021-09-02)
 ------------------
@@ -46,7 +63,7 @@ Changelog for package turtlebot3_cartographer
 
 1.2.2 (2019-08-20)
 ------------------
-* none
+* None
 
 1.2.1 (2019-08-20)
 ------------------
@@ -76,7 +93,7 @@ Changelog for package turtlebot3_cartographer
 
 0.2.1 (2018-03-14)
 ------------------
-* none
+* None
 
 0.2.0 (2018-03-12)
 ------------------

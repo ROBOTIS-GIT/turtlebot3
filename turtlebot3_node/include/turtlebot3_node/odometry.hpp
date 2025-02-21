@@ -17,16 +17,16 @@
 #ifndef TURTLEBOT3_NODE__ODOMETRY_HPP_
 #define TURTLEBOT3_NODE__ODOMETRY_HPP_
 
-#include <array>
-#include <chrono>
-#include <memory>
-#include <string>
-
 #include <message_filters/subscriber.h>
 #include <message_filters/sync_policies/approximate_time.h>
 #include <message_filters/synchronizer.h>
 #include <tf2_ros/transform_broadcaster.h>
 #include <tf2/LinearMath/Quaternion.h>
+
+#include <array>
+#include <chrono>
+#include <memory>
+#include <string>
 
 #include <geometry_msgs/msg/transform_stamped.hpp>
 #include <nav_msgs/msg/odometry.hpp>
@@ -87,6 +87,7 @@ private:
 
   bool use_imu_;
   bool publish_tf_;
+  bool last_theta_initialized_;
 
   std::array<double, 2> diff_joint_positions_;
   double imu_angle_;
