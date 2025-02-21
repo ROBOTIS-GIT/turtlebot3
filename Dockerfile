@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y \
     ros-${ROS_DISTRO}-nav2-bringup && \
     rm -rf /var/lib/apt/lists/*
 
-ENV COLCON_WS=/root/colcon_ws
+ENV COLCON_WS=/root/turtlebot3_ws
 WORKDIR ${COLCON_WS}
 
 RUN mkdir -p ${COLCON_WS}/src && \
