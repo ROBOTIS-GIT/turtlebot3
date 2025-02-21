@@ -5,7 +5,7 @@ package_name = 'turtlebot3_example'
 
 setup(
     name=package_name,
-    version='2.2.3',
+    version='2.2.4',
     packages=find_packages(),
     data_files=[
         ('share/ament_index/resource_index/packages', ['resource/' + package_name]),
@@ -20,9 +20,9 @@ setup(
     ],
     install_requires=['setuptools', 'launch'],
     zip_safe=True,
-    author=['Jeonggeun Lim', 'Will Son', 'Ryan Shim', 'Gilbert'],
-    author_email=['ljg@robotis.com', 'willson@robotis.com', 'jhshim@robotis.com',
-                  'kkjong@robotis.com'],
+    author=['JunyeongJeong', 'Jeonggeun Lim', 'Will Son', 'Ryan Shim', 'Gilbert'],
+    author_email=['junyeong4321@gmail.com', 'ljg@robotis.com', 'willson@robotis.com',
+                  'jhshim@robotis.com', 'kkjong@robotis.com'],
     maintainer='Pyo',
     maintainer_email='pyo@robotis.com',
     keywords=['ROS', 'ROS2', 'examples', 'rclpy'],

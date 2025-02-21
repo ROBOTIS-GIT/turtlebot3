@@ -2,6 +2,11 @@
 Changelog for package turtlebot3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.4 (2025-02-21)
+------------------
+* Modified Interactive Marker
+* Contributors: Junyeong Jeong, Jeonggeun Lim
+
 2.2.3 (2025-02-19)
 ------------------
 * Modified Patrol server and client

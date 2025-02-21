@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Authors: Jeonggeun Lim, Gilbert #
+# Authors: Junyeong Jeong, Jeonggeun Lim, Gilbert
 
 import math
 import sys
@@ -53,7 +53,7 @@ class Turtlebot3InteractiveMarker(Node):
             Odometry,
             'odom',
             self.odom_callback,
-            10)
+            qos)
 
         self.server = InteractiveMarkerServer(self, 'turtlebot3_interactive_marker')
 
