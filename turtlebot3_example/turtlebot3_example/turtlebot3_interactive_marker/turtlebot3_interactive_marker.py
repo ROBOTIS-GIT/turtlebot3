@@ -64,6 +64,7 @@ class Turtlebot3InteractiveMarker(Node):
         move_control = InteractiveMarkerControl()
         move_control.name = 'move_x'
         move_control.interaction_mode = InteractiveMarkerControl.MOVE_AXIS
+        move_control.always_visible = True
         self.move_marker.controls.append(move_control)
 
         self.server.insert(self.move_marker, feedback_callback=self.processMoveFeedback)
@@ -94,11 +95,13 @@ class Turtlebot3InteractiveMarker(Node):
         self.goal_position = feedback.pose.position
         self.goal_orientation = None
 
+        self.update_move_marker_pose()
+
     def processRotateFeedback(self, feedback):
         self.goal_orientation = feedback.pose.orientation
         self.goal_position = None
 
-        self.update_move_marker_pose()
+        #self.update_move_marker_pose()
 
     def get_yaw(self):
         q = self.odom.pose.pose.orientation
@@ -163,6 +166,7 @@ class Turtlebot3InteractiveMarker(Node):
                 twist.angular.z = max(-0.5, min(0.5, yaw_diff))
 
         self.cmd_vel_pub.publish(twist)
+        self.update_move_marker_pose()
 
 
 def main(args=None):
