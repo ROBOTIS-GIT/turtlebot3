@@ -16,16 +16,15 @@
 #
 # Authors: Wonho Yun, Jeonggeun Lim, Ryan Shim, Gilbert
 
-import math
 import numpy
 
+import math
 import rclpy
 from rclpy.node import Node
-from rclpy.qos import QoSProfile
-
 from geometry_msgs.msg import Point
 from geometry_msgs.msg import Twist
 from nav_msgs.msg import Odometry
+from rclpy.qos import QoSProfile
 
 
 class Turtlebot3PositionControlAbsolute(Node):
