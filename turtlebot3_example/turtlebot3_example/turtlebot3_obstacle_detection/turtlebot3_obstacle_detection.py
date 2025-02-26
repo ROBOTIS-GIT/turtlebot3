@@ -17,10 +17,10 @@
 # Authors: Jeonggeun Lim, Ryan Shim, Gilbert
 
 import rclpy
-from rclpy.node import Node
 from geometry_msgs.msg import Twist
-from sensor_msgs.msg import LaserScan
+from rclpy.node import Node
 from rclpy.qos import qos_profile_sensor_data
+from sensor_msgs.msg import LaserScan
 from rclpy.qos import QoSProfile
 
 
