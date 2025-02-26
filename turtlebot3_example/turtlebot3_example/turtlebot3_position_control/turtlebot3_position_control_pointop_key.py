@@ -20,10 +20,10 @@ import math
 
 import numpy
 
-import rclpy
 from geometry_msgs.msg import Point
-from rclpy.node import Node
+import rclpy
 from geometry_msgs.msg import Twist
+from rclpy.node import Node
 from nav_msgs.msg import Odometry
 from rclpy.qos import QoSProfile
 
