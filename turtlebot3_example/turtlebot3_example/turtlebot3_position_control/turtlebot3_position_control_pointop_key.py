@@ -21,8 +21,8 @@ import math
 import numpy
 
 import rclpy
-from rclpy.node import Node
 from geometry_msgs.msg import Point
+from rclpy.node import Node
 from geometry_msgs.msg import Twist
 from nav_msgs.msg import Odometry
 from rclpy.qos import QoSProfile
