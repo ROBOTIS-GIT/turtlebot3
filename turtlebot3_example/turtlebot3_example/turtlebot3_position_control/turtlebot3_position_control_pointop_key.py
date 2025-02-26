@@ -31,13 +31,13 @@ class Turtlebot3PositionControlAbsolute(Node):
     def __init__(self):
         super().__init__('turtlebot3_position_control_absolute')
 
-        print("TurtleBot3 Absolute Position Control")
-        print("----------------------------------------------")
-        print("Enter absolute coordinates in odometry frame")
-        print("goal x: absolute x position (unit: m)")
-        print("goal y: absolute y position (unit: m)")
-        print("goal heading: absolute orientation (range: -180 ~ 180, unit: deg)")
-        print("----------------------------------------------")
+        print('TurtleBot3 Absolute Position Control')
+        print('----------------------------------------------')
+        print('Enter absolute coordinates in odometry frame')
+        print('goal x: absolute x position (unit: m)')
+        print('goal y: absolute y position (unit: m)')
+        print('goal heading: absolute orientation (range: -180 ~ 180, unit: deg)')
+        print('----------------------------------------------')
 
         self.goal_position = Point()
         self.goal_heading = 0.0
@@ -60,7 +60,7 @@ class Turtlebot3PositionControlAbsolute(Node):
             self.get_odom,
             10)
 
-        self.get_logger().info("Ready to receive goal inputs.")
+        self.get_logger().info('Ready to receive goal inputs.')
 
         self.get_key()
 
@@ -89,8 +89,8 @@ class Turtlebot3PositionControlAbsolute(Node):
             self.cmd_vel.angular.z = max(min(self.cmd_vel.angular.z, 1.5), -1.5)
 
             self.get_logger().info(
-                f"Moving to x: {self.goal_position.x:.2f}, y: {self.goal_position.y:.2f} "
-                f"(current: {self.position.x:.2f}, {self.position.y:.2f})"
+                f'Moving to x: {self.goal_position.x:.2f}, y: {self.goal_position.y:.2f} '
+                f'(current: {self.position.x:.2f}, {self.position.y:.2f})'
             )
 
             self.cmd_vel_pub.publish(self.cmd_vel)
@@ -108,8 +108,8 @@ class Turtlebot3PositionControlAbsolute(Node):
             self.cmd_vel.angular.z = turn_speed if self.heading_error > 0 else -turn_speed
 
             self.get_logger().info(
-                f"Rotating to heading: {math.degrees(self.goal_heading):.2f}° "
-                f"(current: {math.degrees(self.heading):.2f}°)"
+                f'Rotating to heading: {math.degrees(self.goal_heading):.2f}° '
+                f'(current: {math.degrees(self.heading):.2f}°)'
             )
 
             if abs(math.degrees(self.heading_error)) < 1.0:
@@ -117,8 +117,8 @@ class Turtlebot3PositionControlAbsolute(Node):
                 self.cmd_vel_pub.publish(self.cmd_vel)
 
                 self.get_logger().info(
-                    f"Goal reached: x: {self.goal_position.x:.2f}, y: {self.goal_position.y:.2f}, "
-                    f"heading: {math.degrees(self.goal_heading):.2f}°"
+                    f'Goal reached: x: {self.goal_position.x:.2f}, y: {self.goal_position.y:.2f}, '
+                    f'heading: {math.degrees(self.goal_heading):.2f}°'
                 )
 
                 self.get_key()
@@ -130,9 +130,9 @@ class Turtlebot3PositionControlAbsolute(Node):
         _, _, self.heading = self.transfrom_from_quaternion_to_eular(msg.pose.pose.orientation)
 
     def get_key(self):
-        self.goal_position.x = float(input("goal x (absolute): "))
-        self.goal_position.y = float(input("goal y (absolute): "))
-        self.goal_heading = float(input("goal heading (absolute, degrees): "))
+        self.goal_position.x = float(input('goal x (absolute): '))
+        self.goal_position.y = float(input('goal y (absolute): '))
+        self.goal_heading = float(input('goal heading (absolute, degrees): '))
 
         self.goal_heading = math.radians(self.goal_heading)
         if self.goal_heading > math.pi:
@@ -141,8 +141,8 @@ class Turtlebot3PositionControlAbsolute(Node):
             self.goal_heading += 2 * math.pi
 
         self.get_logger().info(
-            f"New goal: x: {self.goal_position.x:.2f}, y: {self.goal_position.y:.2f}, "
-            f"heading: {math.degrees(self.goal_heading):.2f}°"
+            f'New goal: x: {self.goal_position.x:.2f}, y: {self.goal_position.y:.2f}, '
+            f'heading: {math.degrees(self.goal_heading):.2f}°'
         )
 
     def transfrom_from_quaternion_to_eular(self, q):
@@ -166,7 +166,7 @@ def main(args=None):
     try:
         rclpy.spin(node)
     except KeyboardInterrupt:
-        node.get_logger().info("Keyboard Interrupt (SIGINT)")
+        node.get_logger().info('Keyboard Interrupt (SIGINT)')
     finally:
         node.destroy_node()
         rclpy.shutdown()

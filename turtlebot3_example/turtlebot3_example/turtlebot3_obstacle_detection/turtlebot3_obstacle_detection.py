@@ -28,11 +28,11 @@ class Turtlebot3ObstacleDetection(Node):
 
     def __init__(self):
         super().__init__('turtlebot3_obstacle_detection')
-        print("TurtleBot3 Obstacle Detection - Auto Move Enabled")
-        print("----------------------------------------------")
-        print("stop angle: -90 ~ 90 deg")
-        print("stop distance: 0.5 m")
-        print("----------------------------------------------")
+        print('TurtleBot3 Obstacle Detection - Auto Move Enabled')
+        print('----------------------------------------------')
+        print('stop angle: -90 ~ 90 deg')
+        print('stop distance: 0.5 m')
+        print('----------------------------------------------')
 
         self.scan_ranges = []
         self.has_scan_received = False
@@ -84,7 +84,7 @@ class Turtlebot3ObstacleDetection(Node):
         if obstacle_distance < self.stop_distance:
             twist.linear.x = 0.0
             twist.angular.z = self.tele_twist.angular.z
-            self.get_logger().info("Obstacle detected! Stopping.", throttle_duration_sec=2)
+            self.get_logger().info('Obstacle detected! Stopping.', throttle_duration_sec=2)
         else:
             twist = self.tele_twist
 
