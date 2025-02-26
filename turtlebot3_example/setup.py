@@ -22,7 +22,7 @@ setup(
     zip_safe=True,
     author=['Wonho Yun', 'Junyeong Jeong', 'Jeonggeun Lim', 'Will Son', 'Ryan Shim', 'Gilbert'],
     author_email=['ywh@robotis.com', 'junyeong4321@gmail.com', 'ljg@robotis.com',
-                    'willson@robotis.com', 'jhshim@robotis.com', 'kkjong@robotis.com'],
+                  'willson@robotis.com', 'jhshim@robotis.com', 'kkjong@robotis.com'],
     maintainer='Pyo',
     maintainer_email='pyo@robotis.com',
     keywords=['ROS', 'ROS2', 'examples', 'rclpy'],

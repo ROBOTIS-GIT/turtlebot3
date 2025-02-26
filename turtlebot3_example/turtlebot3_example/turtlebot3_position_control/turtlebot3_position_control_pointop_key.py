@@ -16,13 +16,15 @@
 #
 # Authors: Wonho Yun, Jeonggeun Lim, Ryan Shim, Gilbert
 
+import math
+import numpy
+
 import rclpy
 from rclpy.node import Node
-import numpy
-import math
-
 from rclpy.qos import QoSProfile
-from geometry_msgs.msg import Twist, Point
+
+from geometry_msgs.msg import Point
+from geometry_msgs.msg import Twist
 from nav_msgs.msg import Odometry
 
 
