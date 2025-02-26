@@ -2,6 +2,11 @@
 Changelog for package turtlebot3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.5 (2025-02-26)
+------------------
+* Modified Obstacle Detection and Position Control PointOp
+* Contributors: Wonho Yun, Jeonggeun Lim
+
 2.2.4 (2025-02-21)
 ------------------
 * Modified Interactive Marker
