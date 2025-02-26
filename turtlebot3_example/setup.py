@@ -45,10 +45,12 @@ setup(
                 turtlebot3_example.turtlebot3_patrol.turtlebot3_patrol_server:main',
             'turtlebot3_patrol_client = \
                 turtlebot3_example.turtlebot3_patrol.turtlebot3_patrol_client:main',
-            'turtlebot3_obstacle_detection = \
-                turtlebot3_example.turtlebot3_obstacle_detection.turtlebot3_obstacle_detection:main',
-            'turtlebot3_position_control_pointop_key = \
-                turtlebot3_example.turtlebot3_position_control.turtlebot3_position_control_pointop_key:main',
+            'turtlebot3_obstacle_detection = '
+            'turtlebot3_example.turtlebot3_obstacle_detection.'
+            'turtlebot3_obstacle_detection:main',
+            'turtlebot3_position_control_pointop_key = '
+            'turtlebot3_example.turtlebot3_position_control.'
+            'turtlebot3_position_control_pointop_key:main'
         ],
     },
 )

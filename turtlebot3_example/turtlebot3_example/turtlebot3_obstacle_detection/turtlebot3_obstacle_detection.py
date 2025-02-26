@@ -90,6 +90,7 @@ class Turtlebot3ObstacleDetection(Node):
 
         self.cmd_vel_pub.publish(twist)
 
+
 def main(args=None):
     rclpy.init(args=args)
     turtlebot3_obstacle_detection = Turtlebot3ObstacleDetection()
@@ -97,6 +98,7 @@ def main(args=None):
 
     turtlebot3_obstacle_detection.destroy_node()
     rclpy.shutdown()
+
 
 if __name__ == '__main__':
     main()

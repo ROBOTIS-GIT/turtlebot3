@@ -25,6 +25,7 @@ from rclpy.qos import QoSProfile
 from geometry_msgs.msg import Twist, Point
 from nav_msgs.msg import Odometry
 
+
 class Turtlebot3PositionControlAbsolute(Node):
 
     def __init__(self):
@@ -58,7 +59,6 @@ class Turtlebot3PositionControlAbsolute(Node):
             'odom',
             self.get_odom,
             10)
-        self.odom_sub
 
         self.get_logger().info("Ready to receive goal inputs.")
 
@@ -71,7 +71,8 @@ class Turtlebot3PositionControlAbsolute(Node):
         self.position_error.x = self.goal_position.x - self.position.x
         self.position_error.y = self.goal_position.y - self.position.y
 
-        distance = math.sqrt(pow(self.position_error.x, 2) + pow(self.position_error.y, 2))
+        distance = math.sqrt(pow(self.position_error.x, 2) +
+                             pow(self.position_error.y, 2))
         goal_direction = math.atan2(self.position_error.y, self.position_error.x)
 
         if distance > 0.05:
@@ -85,13 +86,12 @@ class Turtlebot3PositionControlAbsolute(Node):
             self.cmd_vel.angular.z = path_angle
             self.cmd_vel.linear.x = min(self.linear_speed * distance, 0.1)
 
-            if self.cmd_vel.angular.z > 1.5:
-                self.cmd_vel.angular.z = 1.5
-            elif self.cmd_vel.angular.z < -1.5:
-                self.cmd_vel.angular.z = -1.5
+            self.cmd_vel.angular.z = max(min(self.cmd_vel.angular.z, 1.5), -1.5)
 
-            self.get_logger().info("Moving to x: {:.2f}, y: {:.2f} (current: {:.2f}, {:.2f})".format(
-                self.goal_position.x, self.goal_position.y, self.position.x, self.position.y))
+            self.get_logger().info(
+                f"Moving to x: {self.goal_position.x:.2f}, y: {self.goal_position.y:.2f} "
+                f"(current: {self.position.x:.2f}, {self.position.y:.2f})"
+            )
 
             self.cmd_vel_pub.publish(self.cmd_vel)
 
@@ -105,25 +105,25 @@ class Turtlebot3PositionControlAbsolute(Node):
                 self.heading_error -= 2 * math.pi
 
             turn_speed = max(min(abs(self.heading_error) * 1.0, 1.0), 0.1)
-            if self.heading_error > 0:
-                self.cmd_vel.angular.z = turn_speed
-            else:
-                self.cmd_vel.angular.z = -turn_speed
+            self.cmd_vel.angular.z = turn_speed if self.heading_error > 0 else -turn_speed
 
-            self.get_logger().info("Rotating in place to heading: {:.2f}° (current: {:.2f}°)".format(
-                math.degrees(self.goal_heading), math.degrees(self.heading)))
+            self.get_logger().info(
+                f"Rotating to heading: {math.degrees(self.goal_heading):.2f}° "
+                f"(current: {math.degrees(self.heading):.2f}°)"
+            )
 
             if abs(math.degrees(self.heading_error)) < 1.0:
                 self.cmd_vel.angular.z = 0.0
                 self.cmd_vel_pub.publish(self.cmd_vel)
 
-                self.get_logger().info("Final goal reached: x: {:.2f}, y: {:.2f}, heading: {:.2f}°".format(
-                    self.goal_position.x, self.goal_position.y, math.degrees(self.goal_heading)))
+                self.get_logger().info(
+                    f"Goal reached: x: {self.goal_position.x:.2f}, y: {self.goal_position.y:.2f}, "
+                    f"heading: {math.degrees(self.goal_heading):.2f}°"
+                )
 
                 self.get_key()
 
         self.cmd_vel_pub.publish(self.cmd_vel)
-
 
     def get_odom(self, msg):
         self.position = msg.pose.pose.position
@@ -140,8 +140,10 @@ class Turtlebot3PositionControlAbsolute(Node):
         elif self.goal_heading < -math.pi:
             self.goal_heading += 2 * math.pi
 
-        self.get_logger().info("New goal: x: {:.2f}, y: {:.2f}, heading: {:.2f}°".format(
-            self.goal_position.x, self.goal_position.y, math.degrees(self.goal_heading)))
+        self.get_logger().info(
+            f"New goal: x: {self.goal_position.x:.2f}, y: {self.goal_position.y:.2f}, "
+            f"heading: {math.degrees(self.goal_heading):.2f}°"
+        )
 
     def transfrom_from_quaternion_to_eular(self, q):
         sinr_cosp = 2.0 * (q.w * q.x + q.y * q.z)
@@ -157,6 +159,7 @@ class Turtlebot3PositionControlAbsolute(Node):
 
         return roll, pitch, yaw
 
+
 def main(args=None):
     rclpy.init()
     node = Turtlebot3PositionControlAbsolute()
@@ -167,6 +170,7 @@ def main(args=None):
     finally:
         node.destroy_node()
         rclpy.shutdown()
+
 
 if __name__ == '__main__':
     main()
