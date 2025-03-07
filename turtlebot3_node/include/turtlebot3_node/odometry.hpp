@@ -87,6 +87,7 @@ private:
 
   bool use_imu_;
   bool publish_tf_;
+  bool last_theta_initialized_;
 
   std::array<double, 2> diff_joint_positions_;
   double imu_angle_;

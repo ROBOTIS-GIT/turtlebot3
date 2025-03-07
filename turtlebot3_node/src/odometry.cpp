@@ -32,6 +32,7 @@ Odometry::Odometry(
   wheels_radius_(wheels_radius),
   use_imu_(false),
   publish_tf_(false),
+  last_theta_initialized_(false),
   imu_angle_(0.0f)
 {
   RCLCPP_INFO(nh_->get_logger(), "Init Odometry");
@@ -56,11 +57,13 @@ Odometry::Odometry(
     "odometry.frame_id",
     frame_id_of_odometry_,
     std::string("odom"));
+  if (frame_id_of_odometry_[0] == ('/')) {frame_id_of_odometry_.erase(0, 1);}
 
   nh_->get_parameter_or<std::string>(
     "odometry.child_frame_id",
     child_frame_id_of_odometry_,
     std::string("base_footprint"));
+  if (child_frame_id_of_odometry_[0] == ('/')) {child_frame_id_of_odometry_.erase(0, 1);}
 
   auto qos = rclcpp::QoS(rclcpp::KeepLast(10));
   odom_pub_ = nh_->create_publisher<nav_msgs::msg::Odometry>("odom", qos);
@@ -250,8 +253,15 @@ bool Odometry::calculate_odometry(const rclcpp::Duration & duration)
   delta_s = wheels_radius_ * (wheel_r + wheel_l) / 2.0;
 
   if (use_imu_) {
-    theta = imu_angle_;
-    delta_theta = theta - last_theta;
+    if (last_theta_initialized_) {
+      theta = imu_angle_;
+      delta_theta = theta - last_theta;
+    } else {
+      theta = imu_angle_;
+      last_theta = imu_angle_;
+      delta_theta = theta - last_theta;
+      last_theta_initialized_ = true;
+    }
   } else {
     theta = wheels_radius_ * (wheel_r - wheel_l) / wheels_separation_;
     delta_theta = theta;

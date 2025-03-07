@@ -2,6 +2,31 @@
 Changelog for package turtlebot3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.5 (2025-02-26)
+------------------
+* Modified Obstacle Detection and Position Control PointOp
+* Contributors: Wonho Yun, Jeonggeun Lim
+
+2.2.4 (2025-02-21)
+------------------
+* Modified Interactive Marker
+* Contributors: Junyeong Jeong, Jeonggeun Lim
+
+2.2.3 (2025-02-19)
+------------------
+* Modified Patrol server and client
+* Contributors: Junyeong Jeong, Jeonggeun Lim
+
+2.2.2 (2025-02-19)
+------------------
+* Fixed a bug where the frame_id in the header of the odom_msg starts with a slash
+* Contributors: Hyungyu Kim
+
+2.2.1 (2025-02-18)
+------------------
+* Fixed a bug where the orientation in the odometry was incorrect
+* Contributors: Hyungyu Kim
+
 2.2.0 (2025-02-13)
 ------------------
 * Added namespace functionality for multi-robot support
