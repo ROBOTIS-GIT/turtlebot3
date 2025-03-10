@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# Copyright 2019 ROBOTIS CO., LTD.
+# Copyright 2018 ROBOTIS CO., LTD.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,9 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Authors: Ryan Shim, Gilbert
+# Authors: Jeonggeun Lim, Ryan Shim, Gilbert
 
 from geometry_msgs.msg import Twist
+import rclpy
 from rclpy.node import Node
 from rclpy.qos import qos_profile_sensor_data
 from rclpy.qos import QoSProfile
@@ -27,70 +28,77 @@ class Turtlebot3ObstacleDetection(Node):
 
     def __init__(self):
         super().__init__('turtlebot3_obstacle_detection')
+        print('TurtleBot3 Obstacle Detection - Auto Move Enabled')
+        print('----------------------------------------------')
+        print('stop angle: -90 ~ 90 deg')
+        print('stop distance: 0.5 m')
+        print('----------------------------------------------')
 
-        """************************************************************
-        ** Initialise variables
-        ************************************************************"""
-        self.linear_velocity = 0.0  # unit: m/s
-        self.angular_velocity = 0.0  # unit: m/s
         self.scan_ranges = []
-        self.init_scan_state = False  # To get the initial scan data at the beginning
+        self.has_scan_received = False
 
-        """************************************************************
-        ** Initialise ROS publishers and subscribers
-        ************************************************************"""
+        self.stop_distance = 0.5
+        self.tele_twist = Twist()
+        self.tele_twist.linear.x = 0.2
+        self.tele_twist.angular.z = 0.0
+
         qos = QoSProfile(depth=10)
 
-        # Initialise publishers
         self.cmd_vel_pub = self.create_publisher(Twist, 'cmd_vel', qos)
 
-        # Initialise subscribers
         self.scan_sub = self.create_subscription(
             LaserScan,
             'scan',
             self.scan_callback,
             qos_profile=qos_profile_sensor_data)
+
         self.cmd_vel_raw_sub = self.create_subscription(
             Twist,
             'cmd_vel_raw',
             self.cmd_vel_raw_callback,
-            qos)
+            qos_profile=qos_profile_sensor_data)
 
-        """************************************************************
-        ** Initialise timers
-        ************************************************************"""
-        self.update_timer = self.create_timer(
-            0.010,  # unit: s
-            self.update_callback)
+        self.timer = self.create_timer(0.1, self.timer_callback)
 
-        self.get_logger().info('Turtlebot3 obstacle detection node has been initialised.')
-
-    """*******************************************************************************
-    ** Callback functions and relevant functions
-    *******************************************************************************"""
     def scan_callback(self, msg):
         self.scan_ranges = msg.ranges
-        self.init_scan_state = True
+        self.has_scan_received = True
 
     def cmd_vel_raw_callback(self, msg):
-        self.linear_velocity = msg.linear.x
-        self.angular_velocity = msg.angular.z
+        self.tele_twist = msg
 
-    def update_callback(self):
-        if self.init_scan_state is True:
+    def timer_callback(self):
+        if self.has_scan_received:
             self.detect_obstacle()
 
     def detect_obstacle(self):
-        twist = Twist()
-        obstacle_distance = min(self.scan_ranges)
-        safety_distance = 0.3  # unit: m
+        left_range = int(len(self.scan_ranges) / 4)
+        right_range = int(len(self.scan_ranges) * 3 / 4)
 
-        if obstacle_distance > safety_distance:
-            twist.linear.x = self.linear_velocity
-            twist.angular.z = self.angular_velocity
-        else:
+        obstacle_distance = min(
+            min(self.scan_ranges[0:left_range]),
+            min(self.scan_ranges[right_range:360])
+        )
+
+        twist = Twist()
+        if obstacle_distance < self.stop_distance:
             twist.linear.x = 0.0
-            twist.angular.z = 0.0
-            self.get_logger().info('Obstacles are detected nearby. Robot stopped.')
+            twist.angular.z = self.tele_twist.angular.z
+            self.get_logger().info('Obstacle detected! Stopping.', throttle_duration_sec=2)
+        else:
+            twist = self.tele_twist
 
         self.cmd_vel_pub.publish(twist)
+
+
+def main(args=None):
+    rclpy.init(args=args)
+    turtlebot3_obstacle_detection = Turtlebot3ObstacleDetection()
+    rclpy.spin(turtlebot3_obstacle_detection)
+
+    turtlebot3_obstacle_detection.destroy_node()
+    rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()
