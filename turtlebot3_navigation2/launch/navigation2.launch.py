@@ -25,7 +25,7 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
 TURTLEBOT3_MODEL = os.environ['TURTLEBOT3_MODEL']
-ROS_DISTRO = os.environ.get("ROS_DISTRO")
+ROS_DISTRO = os.environ.get('ROS_DISTRO')
 
 
 def generate_launch_description():
