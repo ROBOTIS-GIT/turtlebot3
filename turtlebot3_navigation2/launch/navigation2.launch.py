@@ -25,6 +25,7 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
 TURTLEBOT3_MODEL = os.environ['TURTLEBOT3_MODEL']
+ROS_DISTRO = os.environ.get("ROS_DISTRO")
 
 
 def generate_launch_description():
@@ -42,6 +43,7 @@ def generate_launch_description():
         default=os.path.join(
             get_package_share_directory('turtlebot3_navigation2'),
             'param',
+            ROS_DISTRO,
             param_file_name))
 
     nav2_launch_file_dir = os.path.join(get_package_share_directory('nav2_bringup'), 'launch')
