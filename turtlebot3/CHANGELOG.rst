@@ -2,6 +2,11 @@
 Changelog for package turtlebot3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.6 (2025-03-20)
+------------------
+* Added Nav2 parameters for Jazzy
+* Contributors: Hyungyu Kim
+
 2.2.5 (2025-02-26)
 ------------------
 * Modified Obstacle Detection and Position Control PointOp
