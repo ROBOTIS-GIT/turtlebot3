@@ -96,6 +96,7 @@ docking_server:
       type: 'nova_carter_dock'
       frame: map
       pose: [30.0, 30.0, 0.0]
+    enable_stamped_cmd_vel: true
 
 controller_server:
   ros__parameters:
@@ -157,6 +158,7 @@ controller_server:
       RotateToGoal.scale: 32.0
       RotateToGoal.slowing_factor: 5.0
       RotateToGoal.lookahead_time: -1.0
+    enable_stamped_cmd_vel: true
 
 local_costmap:
   local_costmap:
@@ -286,25 +288,33 @@ planner_server:
       use_astar: false
       allow_unknown: true
 
-recoveries_server:
+behavior_server:
   ros__parameters:
-    costmap_topic: local_costmap/costmap_raw
-    footprint_topic: local_costmap/published_footprint
+    local_costmap_topic: local_costmap/costmap_raw
+    local_footprint_topic: local_costmap/published_footprint
+    global_costmap_topic: global_costmap/costmap_raw
+    global_footprint_topic: global_costmap/published_footprint
     cycle_frequency: 10.0
-    recovery_plugins: ["spin", "backup", "wait"]
+    behavior_plugins: ["spin", "backup", "drive_on_heading", "wait", "assisted_teleop"]
     spin:
-      plugin: "nav2_recoveries/Spin"
+      plugin: "nav2_behaviors::Spin" # In Iron and older versions, "/" was used instead of "::"
     backup:
-      plugin: "nav2_recoveries/BackUp"
+      plugin: "nav2_behaviors::BackUp" # In Iron and older versions, "/" was used instead of "::"
+    drive_on_heading:
+      plugin: "nav2_behaviors::DriveOnHeading" # In Iron and older versions, "/" was used instead of "::"
     wait:
-      plugin: "nav2_recoveries/Wait"
-    global_frame: odom
+      plugin: "nav2_behaviors::Wait" # In Iron and older versions, "/" was used instead of "::"
+    assisted_teleop:
+      plugin: "nav2_behaviors::AssistedTeleop" # In Iron and older versions, "/" was used instead of "::"
+    local_frame: odom
+    global_frame: map
     robot_base_frame: base_link
     transform_timeout: 0.1
     simulate_ahead_time: 2.0
     max_rotational_vel: 1.0
     min_rotational_vel: 0.4
     rotational_acc_lim: 3.2
+    enable_stamped_cmd_vel: true
 
 waypoint_follower:
   ros__parameters:
@@ -327,7 +337,7 @@ collision_monitor:
     source_timeout: 5.0
     base_shift_correction: true
     stop_pub_timeout: 2.0
-    enable_stamped_cmd_vel: False
+    enable_stamped_cmd_vel: true
     use_realtime_priority: false
     polygons: ["PolygonStop", "PolygonSlow", "FootprintApproach"]
     PolygonStop:
@@ -405,3 +415,19 @@ collision_monitor:
       type: "scan"
       topic: "/scan"
       enabled: true
+
+velocity_smoother:
+  ros__parameters:
+    smoothing_frequency: 20.0
+    scale_velocities: false
+    feedback: "OPEN_LOOP"
+    max_velocity: [0.5, 0.0, 2.5]
+    min_velocity: [-0.5, 0.0, -2.5]
+    deadband_velocity: [0.0, 0.0, 0.0]
+    velocity_timeout: 1.0
+    max_accel: [2.5, 0.0, 3.2]
+    max_decel: [-2.5, 0.0, -3.2]
+    odom_topic: "odom"
+    odom_duration: 0.1
+    use_realtime_priority: false
+    enable_stamped_cmd_vel: true
