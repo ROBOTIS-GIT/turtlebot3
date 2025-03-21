@@ -38,13 +38,21 @@ def generate_launch_description():
             'map.yaml'))
 
     param_file_name = TURTLEBOT3_MODEL + '.yaml'
-    param_dir = LaunchConfiguration(
-        'params_file',
-        default=os.path.join(
-            get_package_share_directory('turtlebot3_navigation2'),
-            'param',
-            ROS_DISTRO,
-            param_file_name))
+    if ROS_DISTRO == 'humble':
+        param_dir = LaunchConfiguration(
+            'params_file',
+            default=os.path.join(
+                get_package_share_directory('turtlebot3_navigation2'),
+                'param',
+                ROS_DISTRO,
+                param_file_name))
+    else:
+        param_dir = LaunchConfiguration(
+            'params_file',
+            default=os.path.join(
+                get_package_share_directory('turtlebot3_navigation2'),
+                'param',
+                param_file_name))
 
     nav2_launch_file_dir = os.path.join(get_package_share_directory('nav2_bringup'), 'launch')
 
