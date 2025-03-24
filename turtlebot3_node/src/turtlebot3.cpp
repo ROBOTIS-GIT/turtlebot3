@@ -395,7 +395,10 @@ void TurtleBot3::cmd_vel_callback()
 
         RCLCPP_DEBUG(
           this->get_logger(),
-          "lin_vel: %f ang_vel: %f msg : %s", msg->twist.linear.x, msg->twist.angular.z, sdk_msg.c_str());
+          "lin_vel: %f ang_vel: %f msg : %s",
+          msg->twist.linear.x,
+          msg->twist.angular.z,
+          sdk_msg.c_str());
       }
     )
   );

@@ -13,8 +13,8 @@
 // limitations under the License.
 
 
-#ifndef NAV2_UTIL__TWIST_SUBSCRIBER_HPP_
-#define NAV2_UTIL__TWIST_SUBSCRIBER_HPP_
+#ifndef TURTLEBOT3_NODE__TWIST_SUBSCRIBER_HPP_
+#define TURTLEBOT3_NODE__TWIST_SUBSCRIBER_HPP_
 
 
 #include <memory>
@@ -76,7 +76,7 @@ public:
     typename TwistStampedCallbackT
   >
   explicit TwistSubscriber(
-    const rclcpp::Node::SharedPtr& node,
+    const rclcpp::Node::SharedPtr & node,
     const std::string & topic,
     const rclcpp::QoS & qos,
     TwistCallbackT && TwistCallback,
@@ -84,8 +84,8 @@ public:
   )
   {
     if (!node->has_parameter("enable_stamped_cmd_vel")) {
-        node->declare_parameter("enable_stamped_cmd_vel", false);
-      }
+      node->declare_parameter("enable_stamped_cmd_vel", false);
+    }
     node->get_parameter("enable_stamped_cmd_vel", is_stamped_);
     if (is_stamped_) {
       twist_stamped_sub_ = node->create_subscription<geometry_msgs::msg::TwistStamped>(
@@ -110,15 +110,15 @@ public:
   */
   template<typename TwistStampedCallbackT>
   explicit TwistSubscriber(
-    const rclcpp::Node::SharedPtr& node,
+    const rclcpp::Node::SharedPtr & node,
     const std::string & topic,
     const rclcpp::QoS & qos,
     TwistStampedCallbackT && TwistStampedCallback
   )
   {
     if (!node->has_parameter("enable_stamped_cmd_vel")) {
-        node->declare_parameter("enable_stamped_cmd_vel", false);
-      }
+      node->declare_parameter("enable_stamped_cmd_vel", false);
+    }
     node->get_parameter("enable_stamped_cmd_vel", is_stamped_);
     if (is_stamped_) {
       twist_stamped_sub_ = node->create_subscription<geometry_msgs::msg::TwistStamped>(
@@ -140,4 +140,4 @@ protected:
   rclcpp::Subscription<geometry_msgs::msg::TwistStamped>::SharedPtr twist_stamped_sub_ {nullptr};
 };
 
-#endif  // NAV2_UTIL__TWIST_SUBSCRIBER_HPP_
+#endif  // TURTLEBOT3_NODE__TWIST_SUBSCRIBER_HPP_
