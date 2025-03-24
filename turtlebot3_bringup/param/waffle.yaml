@@ -1,7 +1,9 @@
 /**:
   turtlebot3_node:
     ros__parameters:
-  
+    
+      enable_stamped_cmd_vel: false
+      
       opencr:
         id: 200
         baud_rate: 1000000
