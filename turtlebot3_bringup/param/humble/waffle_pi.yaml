@@ -1,16 +1,16 @@
 /**:
   turtlebot3_node:
     ros__parameters:
-
-      enable_stamped_cmd_vel: true
-
+      
+      enable_stamped_cmd_vel: false
+  
       opencr:
         id: 200
         baud_rate: 1000000
         protocol_version: 2.0
   
       wheels:
-        separation: 0.160
+        separation: 0.287
         radius: 0.033
   
       motors:

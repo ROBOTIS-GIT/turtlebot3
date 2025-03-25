@@ -2,7 +2,7 @@
   turtlebot3_node:
     ros__parameters:
       
-      enable_stamped_cmd_vel: false
+      enable_stamped_cmd_vel: true
   
       opencr:
         id: 200
