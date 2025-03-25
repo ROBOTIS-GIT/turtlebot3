@@ -40,8 +40,8 @@ import sys
 
 from geometry_msgs.msg import Twist, TwistStamped
 import rclpy
-from rclpy.qos import QoSProfile
 from rclpy.clock import Clock
+from rclpy.qos import QoSProfile
 
 if os.name == 'nt':
     import msvcrt
@@ -245,7 +245,7 @@ def main():
             pub.publish(twist)
         else:
             twist_stamped = TwistStamped()
-            twist_stamped.header.stamp = now()
+            twist_stamped.header.stamp = Clock().now().to_msg()
             twist_stamped.header.frame_id = ''
             twist_stamped.twist.linear.x = control_linear_velocity
             twist_stamped.twist.linear.y = 0.0
