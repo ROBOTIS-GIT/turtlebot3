@@ -49,7 +49,7 @@ def generate_launch_description():
                 ROS_DISTRO,
                 TURTLEBOT3_MODEL + '.yaml'))
     else:
-        param_dir = LaunchConfiguration(
+        tb3_param_dir = LaunchConfiguration(
             'tb3_param_dir',
             default=os.path.join(
                 get_package_share_directory('turtlebot3_bringup'),
