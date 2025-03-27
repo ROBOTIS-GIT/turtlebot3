@@ -20,6 +20,7 @@ import math
 import numpy
 import sys
 import termios
+import os
 
 from geometry_msgs.msg import Twist
 from rclpy.node import Node
@@ -27,6 +28,12 @@ from rclpy.qos import QoSProfile
 from nav_msgs.msg import Odometry
 
 from turtlebot3_example.turtlebot3_relative_move.turtlebot3_path import Turtlebot3Path
+
+ros_distro = os.environ.get('ROS_DISTRO', 'humble').lower()
+if ros_distro == 'humble':
+    from geometry_msgs.msg import Twist as CmdVelMsg
+else:
+    from geometry_msgs.msg import TwistStamped as CmdVelMsg
 
 terminal_msg = """
 Turtlebot3 Relative Move
@@ -64,7 +71,7 @@ class Turtlebot3RelativeMove(Node):
         qos = QoSProfile(depth=10)
 
         # Initialise publishers
-        self.cmd_vel_pub = self.create_publisher(Twist, 'cmd_vel', qos)
+        self.cmd_vel_pub = self.create_publisher(CmdVelMsg, 'cmd_vel', qos)
 
         # Initialise subscribers
         self.odom_sub = self.create_subscription(
@@ -143,7 +150,13 @@ class Turtlebot3RelativeMove(Node):
                 self.step = 1
                 self.get_key_state = False
 
-            self.cmd_vel_pub.publish(twist)
+            if ros_distro == 'humble':
+                self.cmd_vel_pub.publish(twist)
+            else:
+                stamped = CmdVelMsg()
+                stamped.header.stamp = self.get_clock().now().to_msg()
+                stamped.twist = twist
+                self.cmd_vel_pub.publish(stamped)
 
     def get_key(self):
         # Print terminal message and get inputs
