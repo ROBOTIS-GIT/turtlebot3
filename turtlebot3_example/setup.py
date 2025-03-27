@@ -41,16 +41,23 @@ setup(
             'turtlebot3_interactive_marker = '
             'turtlebot3_example.turtlebot3_interactive_marker.'
             'turtlebot3_interactive_marker:main',
+
             'turtlebot3_patrol_server = \
                 turtlebot3_example.turtlebot3_patrol.turtlebot3_patrol_server:main',
             'turtlebot3_patrol_client = \
                 turtlebot3_example.turtlebot3_patrol.turtlebot3_patrol_client:main',
+
             'turtlebot3_obstacle_detection = '
             'turtlebot3_example.turtlebot3_obstacle_detection.'
             'turtlebot3_obstacle_detection:main',
-            'turtlebot3_position_control_pointop_key = '
-            'turtlebot3_example.turtlebot3_position_control.'
-            'turtlebot3_position_control_pointop_key:main'
+
+            'turtlebot3_absolute_move = '
+            'turtlebot3_example.turtlebot3_absolute_move.'
+            'turtlebot3_absolute_move:main',
+
+            'turtlebot3_relative_move = '
+            'turtlebot3_example.turtlebot3_relative_move.'
+            'main:main'
         ],
     },
 )
