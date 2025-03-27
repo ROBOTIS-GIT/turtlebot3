@@ -1,0 +1,97 @@
+name: 🆘 Help Wanted
+description: Request help with a problem you're facing.
+labels: ["help wanted"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        📌 **Before submitting...**
+        Please make sure to check **existing GitHub issues** and search online to see if a similar question or problem has already been reported. This helps reduce duplicates and keeps the issue tracker clean 🙏
+
+        ---
+
+        **Required Info:**
+
+  - type: input
+    id: os
+    attributes:
+      label: "Operating System:"
+      description: |
+        **Examples:** *Ubuntu 22.04*, *Windows 10*, *macOS Big Sur*, *Docker* ...
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: "ROS version :"
+      description: |
+        **Examples:** *Noetic*, *Humble*, *Jazzy*, *Rolling* ...
+    validations:
+      required: true
+
+  - type: input
+    id: Turtlebot3_Model
+    attributes:
+      label: "Turtlebot3 Model:"
+      description: |
+        **Examples:** *Burger*, *Waffle*, *Waffle pi*, *Waffle pi with OpenMANIPULATOR-X* ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: "Description"
+      description: |
+        Please provide a clear and concise description of the issue you need help with.
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: "Steps to reproduce issue"
+      description: |
+        Please provide detailed steps for reproducing the issue.
+      placeholder: |
+        1.
+        2.
+        3.
+        ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: attempts
+    attributes:
+      label: "What Have You Tried?"
+      description: |
+        Please describe any troubleshooting steps you've already tried (e.g. restarting the system, checking connections, updating packages, etc.)
+      placeholder: |
+        - Restarted the system
+        - Checked topic list with `ros2 topic list`
+        - Rebuilt the workspace with `colcon build`
+      render: shell
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: "Relevant logs / Terminal output"
+      description: |
+        If you have any logs, errors, or warnings from the terminal, please paste them here.
+      render: shell
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: "Screenshots or Diagrams"
+      description: |
+        You can paste screenshots, block diagrams, or relevant visuals that help explain your setup or issue.
+
+  - type: textarea
+    id: addinfo
+    attributes:
+      label: "Additional Information (Optional)"
+      description: |
+        Please provide any additional information that may be helpful in solving the issue. e.g. environment details, links, context, etc.

@@ -1,0 +1,97 @@
+name: 🐛 Bug Report
+description: Create a report about a bug you found.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        📌 **Before submitting...**
+        Please make sure to check **existing GitHub issues** and search online to see if a similar bug has already been reported. This helps reduce duplicates and speeds up fixing the issue 🙏
+
+        ---
+
+        **Required Info:**
+
+  - type: input
+    id: os
+    attributes:
+      label: "Operating System:"
+      description: |
+        **Examples:** *Ubuntu 22.04*, *Windows 10*, *macOS Big Sur*, *Docker* ...
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: "ROS version:"
+      description: |
+        **Examples:** *Noetic*, *Humble*, *Jazzy*, *Rolling* ...
+    validations:
+      required: true
+
+  - type: input
+    id: Turtlebot3_Model
+    attributes:
+      label: "Turtlebot3 Model:"
+      description: |
+        **Examples:** *Burger*, *Waffle*, *Waffle pi*, *Waffle pi with OpenMANIPULATOR-X* ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: "Bug Description"
+      description: |
+        Please provide a clear and concise description of what the bug is.
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: "Steps to Reproduce"
+      description: |
+        Please provide detailed steps for reproducing the issue.
+      placeholder: |
+        1.
+        2.
+        3.
+        ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: "Actual Behavior"
+      description: |
+        Describe what actually happens when the bug occurs.
+
+  - type: textarea
+    id: attempts
+    attributes:
+      label: "What Have You Tried?"
+      description: |
+        List any steps you've already taken to try and resolve the issue.
+      placeholder: |
+        - Restarted the robot
+        - Reset parameters
+        - Rebuilt workspace with `colcon build`
+      render: shell
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: "Relevant Logs / Terminal Output"
+      description: |
+        Paste any error messages, warnings, or other terminal output here.
+      render: shell
+
+  - type: textarea
+    id: addinfo
+    attributes:
+      label: "Additional Information (Optional)"
+      description: |
+        Any other context, screenshots, or system-specific notes that might be helpful.
