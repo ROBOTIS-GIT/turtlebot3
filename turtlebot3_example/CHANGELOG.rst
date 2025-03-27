@@ -2,6 +2,11 @@
 Changelog for package turtlebot3_example
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.6 (2025-03-27)
+------------------
+* Modified Relative Move
+* Contributors: YeonSoo Noh
+
 2.2.5 (2025-02-26)
 ------------------
 * Modified Obstacle Detection and Position Control PointOp

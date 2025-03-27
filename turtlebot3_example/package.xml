@@ -2,7 +2,7 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>turtlebot3_example</name>
-  <version>2.2.5</version>
+  <version>2.2.6</version>
   <description>
     This package provides four basic examples for TurtleBot3 (i.e., interactive marker, object detection, patrol and position control).
   </description>
@@ -16,6 +16,7 @@
   <author email="kkjong@robotis.com">Gilbert</author>
   <author email="willson@robotis.com">Will Son</author>
   <author email="junyeong4321@gmail.com">Junyeong Jeong</author>
+  <author email="nys8277@gmail.com">YeonSoo Noh</author>
   <buildtool_depend>ament_cmake</buildtool_depend>
   <depend>geometry_msgs</depend>
   <depend>nav_msgs</depend>

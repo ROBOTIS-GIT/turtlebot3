@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Authors: Ryan Shim, Gilbert
+# Authors: YeonSoo Noh, Ryan Shim, Gilbert
 
 import rclpy
 
@@ -36,6 +36,7 @@ def main(args=None):
 
         turtlebot3_relative_move.destroy_node()
         rclpy.shutdown()
+
 
 if __name__ == '__main__':
     main()
