@@ -18,9 +18,9 @@
 
 import rclpy
 
+from geometry_msgs.msg import Twist
 from turtlebot3_example.turtlebot3_relative_move.turtlebot3_relative_move \
     import Turtlebot3RelativeMove
-from geometry_msgs.msg import Twist
 
 
 def main(args=None):

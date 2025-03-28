@@ -18,6 +18,7 @@
 
 import math
 import numpy
+
 import sys
 import termios
 import os
@@ -85,18 +86,15 @@ class Turtlebot3RelativeMove(Node):
         ************************************************************"""
         self.update_timer = self.create_timer(0.010, self.update_callback)  # unit: s
 
-        self.get_logger().info("Turtlebot3 relative move node has been initialised.")
+        self.get_logger().info('Turtlebot3 relative move node has been initialised.')
 
     """*******************************************************************************
     ** Callback functions and relevant functions
     *******************************************************************************"""
     def odom_callback(self, msg):
         self.last_pose_x = msg.pose.pose.position.x
-        # self.get_logger().info(f"last pose x : {self.last_pose_x}")
         self.last_pose_y = msg.pose.pose.position.y
-        # self.get_logger().info(f"last pose x : {self.last_pose_x}")
         _, _, self.last_pose_theta = self.euler_from_quaternion(msg.pose.pose.orientation)
-        self.get_logger().info(f"last pose theta : {math.degrees(self.last_pose_theta):.2f}")
 
         self.init_odom_state = True
 
@@ -110,9 +108,7 @@ class Turtlebot3RelativeMove(Node):
         if self.get_key_state is False:
             input_x, input_y, input_theta = self.get_key()
             self.goal_pose_x = self.last_pose_x + input_x
-            self.get_logger().info(f"goal pose x : {self.goal_pose_x}")
             self.goal_pose_y = self.last_pose_y + input_y
-            self.get_logger().info(f"goal pose y : {self.goal_pose_y}")
             self.goal_pose_theta = self.last_pose_theta + input_theta
             self.get_key_state = True
 
@@ -122,9 +118,7 @@ class Turtlebot3RelativeMove(Node):
                 path_theta = math.atan2(
                     self.goal_pose_y - self.last_pose_y,
                     self.goal_pose_x - self.last_pose_x)
-                self.get_logger().info(f"path theta : {math.degrees(path_theta):.2f} deg")
                 angle = path_theta - self.last_pose_theta
-                self.get_logger().info(f"angle : {math.degrees(angle):.2f} deg")
                 angular_velocity = 0.3  # unit: rad/s
 
                 twist, self.step = Turtlebot3Path.turn(angle, angular_velocity, self.step)
@@ -163,25 +157,25 @@ class Turtlebot3RelativeMove(Node):
         print(terminal_msg)
         while True:
             try:
-                input_x = float(input("Input x: "))
+                input_x = float(input('Input x: '))
                 break
             except ValueError:
-                self.get_logger().info("Invalid input! Please enter a number for x.")
+                self.get_logger().info('Invalid input! Please enter a number for x.')
         while True:
             try:
-                input_y = float(input("Input y: "))
+                input_y = float(input('Input y: '))
                 break
             except ValueError:
-                self.get_logger().info("Invalid input! Please enter a number for y.")
+                self.get_logger().info('Invalid input! Please enter a number for y.')
         while True:
             try:
-                input_theta = float(input("Input theta (deg): "))
+                input_theta = float(input('Input theta (deg): '))
                 if -180 <= input_theta <= 180:
                     break
                 else:
-                    self.get_logger().info("Enter a value for theta between -180 and 180.")
+                    self.get_logger().info('Enter a value for theta between -180 and 180.')
             except ValueError:
-                self.get_logger().info("Invalid input! Please enter a number for theta.")
+                self.get_logger().info('Invalid input! Please enter a number for theta.')
 
         input_theta = numpy.deg2rad(input_theta)  # Convert [deg] to [rad]
 
