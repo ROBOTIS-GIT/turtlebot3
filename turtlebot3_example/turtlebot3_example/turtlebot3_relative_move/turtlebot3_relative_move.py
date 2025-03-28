@@ -24,9 +24,9 @@ import termios
 
 from geometry_msgs.msg import Twist
 from nav_msgs.msg import Odometry
-from rclpy.node import Node
 import numpy
 
+from rclpy.node import Node
 from rclpy.qos import QoSProfile
 
 from turtlebot3_example.turtlebot3_relative_move.turtlebot3_path import Turtlebot3Path
