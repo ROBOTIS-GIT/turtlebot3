@@ -22,12 +22,12 @@ import os
 import sys
 import termios
 
-import numpy
-
 from geometry_msgs.msg import Twist
-from rclpy.node import Node
 from nav_msgs.msg import Odometry
+from rclpy.node import Node
 from rclpy.qos import QoSProfile
+
+import numpy
 
 from turtlebot3_example.turtlebot3_relative_move.turtlebot3_path import Turtlebot3Path
 
