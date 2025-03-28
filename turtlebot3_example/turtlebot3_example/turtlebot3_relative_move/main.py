@@ -17,10 +17,11 @@
 # Authors: YeonSoo Noh, Ryan Shim, Gilbert
 
 from geometry_msgs.msg import Twist
-from turtlebot3_example.turtlebot3_relative_move.turtlebot3_relative_move \
-    import Turtlebot3RelativeMove
 
 import rclpy
+
+from turtlebot3_example.turtlebot3_relative_move.turtlebot3_relative_move \
+    import Turtlebot3RelativeMove
 
 
 def main(args=None):
