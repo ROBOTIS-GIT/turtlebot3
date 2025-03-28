@@ -17,16 +17,17 @@
 # Authors: YeonSoo Noh, Ryan Shim, Gilbert
 
 import math
-import numpy
 
+import os
 import sys
 import termios
-import os
+
+import numpy
 
 from geometry_msgs.msg import Twist
 from rclpy.node import Node
-from rclpy.qos import QoSProfile
 from nav_msgs.msg import Odometry
+from rclpy.qos import QoSProfile
 
 from turtlebot3_example.turtlebot3_relative_move.turtlebot3_path import Turtlebot3Path
 
