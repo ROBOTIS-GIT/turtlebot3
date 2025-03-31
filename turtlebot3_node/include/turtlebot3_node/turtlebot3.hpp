@@ -48,6 +48,7 @@
 #include "turtlebot3_node/sensors/joint_state.hpp"
 #include "turtlebot3_node/sensors/sensor_state.hpp"
 #include "turtlebot3_node/sensors/sensors.hpp"
+#include "turtlebot3_node/twist_subscriber.hpp"
 
 namespace robotis
 {
@@ -107,7 +108,7 @@ private:
   rclcpp::TimerBase::SharedPtr publish_timer_;
   rclcpp::TimerBase::SharedPtr heartbeat_timer_;
 
-  rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_sub_;
+  std::unique_ptr<TwistSubscriber> cmd_vel_sub_;
 
   rclcpp::AsyncParametersClient::SharedPtr priv_parameters_client_;
   rclcpp::Subscription<rcl_interfaces::msg::ParameterEvent>::SharedPtr parameter_event_sub_;

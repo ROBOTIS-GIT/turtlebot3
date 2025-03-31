@@ -2,6 +2,11 @@
 Changelog for package turtlebot3_node
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.6 (2025-03-24)
+------------------
+* Made it possible to choose between using the Twist type or the TwistStamped type in cmd_vel through a parameter
+* Contributors: Hyungyu Kim
+
 2.2.5 (2025-02-26)
 ------------------
 * None
