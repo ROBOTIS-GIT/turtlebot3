@@ -402,9 +402,4 @@ void TurtleBot3::cmd_vel_callback()
       }
     )
   );
-
-  // cmd_vel_sub_ = this->create_subscription<geometry_msgs::msg::Twist>(
-  //   "cmd_vel",
-  //   qos,
-  // );
 }

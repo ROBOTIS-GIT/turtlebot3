@@ -38,7 +38,8 @@ import os
 import select
 import sys
 
-from geometry_msgs.msg import Twist, TwistStamped
+from geometry_msgs.msg import Twist
+from geometry_msgs.msg import TwistStamped
 import rclpy
 from rclpy.clock import Clock
 from rclpy.qos import QoSProfile
