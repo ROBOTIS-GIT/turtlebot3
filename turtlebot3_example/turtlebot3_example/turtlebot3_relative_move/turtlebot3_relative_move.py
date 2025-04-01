@@ -108,8 +108,12 @@ class Turtlebot3RelativeMove(Node):
 
         if self.get_key_state is False:
             input_x, input_y, input_theta = self.get_key()
-            input_x_global = math.cos(self.last_pose_theta) * input_x - math.sin(self.last_pose_theta) * input_y
-            input_y_global = math.sin(self.last_pose_theta) * input_x + math.cos(self.last_pose_theta) * input_y
+            input_x_global = (
+                math.cos(self.last_pose_theta) * input_x - math.sin(self.last_pose_theta) * input_y
+            )
+            input_y_global = (
+                math.sin(self.last_pose_theta) * input_x + math.cos(self.last_pose_theta) * input_y
+                )
 
             self.goal_pose_x = self.last_pose_x + input_x_global
             self.goal_pose_y = self.last_pose_y + input_y_global
