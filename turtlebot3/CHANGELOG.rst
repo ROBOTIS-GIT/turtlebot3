@@ -2,6 +2,12 @@
 Changelog for package turtlebot3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.6 (2025-03-24)
+------------------
+* Added Nav2 parameters for Jazzy
+* Made it possible to choose between using the Twist type or the TwistStamped type in cmd_vel through a parameter
+* Contributors: Hyungyu Kim
+
 2.2.5 (2025-02-26)
 ------------------
 * Modified Obstacle Detection and Position Control PointOp

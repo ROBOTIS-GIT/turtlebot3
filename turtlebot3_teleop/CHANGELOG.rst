@@ -2,6 +2,12 @@
 Changelog for package turtlebot3_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.6 (2025-03-24)
+------------------
+* Jazzy support
+* Change msg type of cmd_vel from geometry_msgs/Twist to geometry_msgs/TwistStamped in jazzy
+* Contributors: Hyungyu Kim
+
 2.2.5 (2025-02-26)
 ------------------
 * None
