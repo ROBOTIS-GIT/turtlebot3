@@ -53,9 +53,6 @@ class Turtlebot3RelativeMove(Node):
     def __init__(self):
         super().__init__('turtlebot3_relative_move')
 
-        """************************************************************
-        ** Initialise variables
-        ************************************************************"""
         self.odom = Odometry()
         self.last_pose_x = 0.0
         self.last_pose_y = 0.0
@@ -65,33 +62,22 @@ class Turtlebot3RelativeMove(Node):
         self.goal_pose_theta = 0.0
         self.step = 1
         self.get_key_state = False
-        self.init_odom_state = False  # To get the initial pose at the beginning
+        self.init_odom_state = False
 
-        """************************************************************
-        ** Initialise ROS publishers and subscribers
-        ************************************************************"""
         qos = QoSProfile(depth=10)
 
-        # Initialise publishers
         self.cmd_vel_pub = self.create_publisher(CmdVelMsg, 'cmd_vel', qos)
 
-        # Initialise subscribers
         self.odom_sub = self.create_subscription(
             Odometry,
             'odom',
             self.odom_callback,
             qos)
 
-        """************************************************************
-        ** Initialise timers
-        ************************************************************"""
-        self.update_timer = self.create_timer(0.010, self.update_callback)  # unit: s
+        self.update_timer = self.create_timer(0.010, self.update_callback)
 
         self.get_logger().info('Turtlebot3 relative move node has been initialised.')
 
-    """*******************************************************************************
-    ** Callback functions and relevant functions
-    *******************************************************************************"""
     def odom_callback(self, msg):
         self.last_pose_x = msg.pose.pose.position.x
         self.last_pose_y = msg.pose.pose.position.y
@@ -121,33 +107,29 @@ class Turtlebot3RelativeMove(Node):
             self.get_key_state = True
 
         else:
-            # Step 1: Turn
             if self.step == 1:
                 path_theta = math.atan2(
                     self.goal_pose_y - self.last_pose_y,
                     self.goal_pose_x - self.last_pose_x)
                 angle = path_theta - self.last_pose_theta
-                angular_velocity = 0.3  # unit: rad/s
+                angular_velocity = 0.3
 
                 twist, self.step = Turtlebot3Path.turn(angle, angular_velocity, self.step)
 
-            # Step 2: Go Straight
             elif self.step == 2:
                 distance = math.sqrt(
                     (self.goal_pose_x - self.last_pose_x)**2 +
                     (self.goal_pose_y - self.last_pose_y)**2)
-                linear_velocity = 0.1  # unit: m/s
+                linear_velocity = 0.1
 
                 twist, self.step = Turtlebot3Path.go_straight(distance, linear_velocity, self.step)
 
-            # Step 3: Turn
             elif self.step == 3:
                 angle = self.goal_pose_theta - self.last_pose_theta
-                angular_velocity = 0.3  # unit: rad/s
+                angular_velocity = 0.3
 
                 twist, self.step = Turtlebot3Path.turn(angle, angular_velocity, self.step)
 
-            # Reset
             elif self.step == 4:
                 self.step = 1
                 self.get_key_state = False
@@ -161,7 +143,6 @@ class Turtlebot3RelativeMove(Node):
                 self.cmd_vel_pub.publish(stamped)
 
     def get_key(self):
-        # Print terminal message and get inputs
         print(terminal_msg)
         while True:
             try:
@@ -185,16 +166,13 @@ class Turtlebot3RelativeMove(Node):
             except ValueError:
                 self.get_logger().info('Invalid input! Please enter a number for theta.')
 
-        input_theta = numpy.deg2rad(input_theta)  # Convert [deg] to [rad]
+        input_theta = numpy.deg2rad(input_theta)
 
         settings = termios.tcgetattr(sys.stdin)
         termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
 
         return input_x, input_y, input_theta
 
-    """*******************************************************************************
-    ** Below should be replaced when porting for ROS 2 Python tf_conversions is done.
-    *******************************************************************************"""
     def euler_from_quaternion(self, quat):
         """
         Convert quaternion (w in last place) to euler roll, pitch, yaw.
