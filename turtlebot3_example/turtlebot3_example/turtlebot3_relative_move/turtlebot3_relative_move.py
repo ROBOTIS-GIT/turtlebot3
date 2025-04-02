@@ -14,10 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Authors: YeonSoo Noh, Ryan Shim, Gilbert
+# Authors: Ryan Shim, Gilbert, YeonSoo Noh
 
 import math
-
 import os
 import sys
 import termios
@@ -25,7 +24,6 @@ import termios
 from geometry_msgs.msg import Twist
 from nav_msgs.msg import Odometry
 import numpy
-
 from rclpy.node import Node
 from rclpy.qos import QoSProfile
 
@@ -76,7 +74,7 @@ class Turtlebot3RelativeMove(Node):
 
         self.update_timer = self.create_timer(0.010, self.update_callback)
 
-        self.get_logger().info('Turtlebot3 relative move node has been initialised.')
+        self.get_logger().info('TurtleBot3 relative move node has been initialised.')
 
     def odom_callback(self, msg):
         self.last_pose_x = msg.pose.pose.position.x
@@ -174,11 +172,6 @@ class Turtlebot3RelativeMove(Node):
         return input_x, input_y, input_theta
 
     def euler_from_quaternion(self, quat):
-        """
-        Convert quaternion (w in last place) to euler roll, pitch, yaw.
-
-        quat = [x, y, z, w]
-        """
         x = quat.x
         y = quat.y
         z = quat.z
