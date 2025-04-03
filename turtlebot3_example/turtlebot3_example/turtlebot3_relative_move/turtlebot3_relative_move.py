@@ -121,9 +121,6 @@ class Turtlebot3RelativeMove(Node):
                     (self.goal_pose_x - self.last_pose_x)**2 +
                     (self.goal_pose_y - self.last_pose_y)**2)
                 linear_velocity = 0.1
-                self.get_logger().info(f"Robot pose: ({self.last_pose_x:.2f}, {self.last_pose_y:.2f}, {math.degrees(self.last_pose_theta):.1f}°)")
-                self.get_logger().info(f"Goal pose: ({self.goal_pose_x:.2f}, {self.goal_pose_y:.2f})")
-                self.get_logger().info(f"[DEBUG] Distance to goal: {distance:.4f}")
 
                 twist, self.step = Turtlebot3Path.go_straight(distance, linear_velocity, self.step)
 
