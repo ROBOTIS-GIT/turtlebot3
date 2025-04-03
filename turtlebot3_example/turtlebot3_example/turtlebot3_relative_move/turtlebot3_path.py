@@ -28,7 +28,7 @@ class Turtlebot3Path():
 
         angle = math.atan2(math.sin(angle), math.cos(angle))
 
-        if abs(angle) > 0.01:  # 0.01 is small enough value
+        if abs(angle) > 0.01:
             twist.angular.z = angular_velocity if angle > 0 else -angular_velocity
         else:
             step += 1
@@ -38,7 +38,7 @@ class Turtlebot3Path():
     def go_straight(distance, linear_velocity, step):
         twist = Twist()
 
-        if distance > 0.01:  # 0.01 is small enough value
+        if distance > 0.01:
             twist.linear.x = linear_velocity
         else:
             step += 1
