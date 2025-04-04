@@ -29,6 +29,7 @@ from rclpy.qos import QoSProfile
 
 from turtlebot3_example.turtlebot3_relative_move.turtlebot3_path import Turtlebot3Path
 
+
 ros_distro = os.environ.get('ROS_DISTRO', 'humble').lower()
 if ros_distro == 'humble':
     from geometry_msgs.msg import Twist as CmdVelMsg
