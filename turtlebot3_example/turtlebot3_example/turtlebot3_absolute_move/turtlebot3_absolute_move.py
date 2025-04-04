@@ -27,12 +27,12 @@ from rclpy.node import Node
 from rclpy.qos import QoSProfile
 
 
-class Turtlebot3PositionControlAbsolute(Node):
+class Turtlebot3AbsoluteMove(Node):
 
     def __init__(self):
-        super().__init__('turtlebot3_position_control_absolute')
+        super().__init__('turtlebot3_absolute_move')
 
-        print('TurtleBot3 Absolute Position Control')
+        print('TurtleBot3 Absolute Move')
         print('----------------------------------------------')
         print('Enter absolute coordinates in odometry frame')
         print('goal x: absolute x position (unit: m)')
@@ -163,7 +163,7 @@ class Turtlebot3PositionControlAbsolute(Node):
 
 def main(args=None):
     rclpy.init()
-    node = Turtlebot3PositionControlAbsolute()
+    node = Turtlebot3AbsoluteMove()
     try:
         rclpy.spin(node)
     except KeyboardInterrupt:

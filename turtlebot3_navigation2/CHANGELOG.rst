@@ -2,6 +2,10 @@
 Changelog for package turtlebot3_navigation2
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.7 (2025-03-27)
+------------------
+* None
+
 2.2.6 (2025-03-24)
 ------------------
 * Added Nav2 parameters for Jazzy
