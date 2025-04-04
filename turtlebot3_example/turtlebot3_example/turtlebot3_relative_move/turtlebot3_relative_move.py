@@ -92,7 +92,7 @@ class Turtlebot3RelativeMove(Node):
         if not self.init_odom_state:
             return
 
-        if self.get_key_state is False:
+        if not self.get_key_state:
             input_x, input_y, input_theta = self.get_key()
             input_x_global = (
                 math.cos(self.last_pose_theta) * input_x - math.sin(self.last_pose_theta) * input_y
