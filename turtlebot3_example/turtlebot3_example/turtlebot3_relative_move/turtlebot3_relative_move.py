@@ -84,7 +84,7 @@ class Turtlebot3RelativeMove(Node):
         self.init_odom_state = True
 
     def update_callback(self):
-        if self.init_odom_state is True:
+        if self.init_odom_state:
             self.generate_path()
 
     def generate_path(self):
