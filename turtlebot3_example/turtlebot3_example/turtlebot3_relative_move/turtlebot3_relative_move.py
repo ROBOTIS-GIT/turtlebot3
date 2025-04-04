@@ -37,7 +37,7 @@ else:
     from geometry_msgs.msg import TwistStamped as CmdVelMsg
 
 terminal_msg = """
-Turtlebot3 Relative Move
+TurtleBot3 Relative Move
 ------------------------------------------------------
 From the current pose,
 x: goal position x (unit: m)
@@ -46,7 +46,9 @@ theta: goal orientation (range: -180 ~ 180, unit: deg)
 ------------------------------------------------------
 """
 
+
 class Turtlebot3RelativeMove(Node):
+
     def __init__(self):
         super().__init__('turtlebot3_relative_move')
 

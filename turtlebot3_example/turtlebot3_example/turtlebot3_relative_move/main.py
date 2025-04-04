@@ -16,8 +16,8 @@
 #
 # Authors: Ryan Shim, Gilbert, YeonSoo Noh
 
-import rclpy
 from geometry_msgs.msg import Twist
+import rclpy
 
 from turtlebot3_example.turtlebot3_relative_move.turtlebot3_relative_move \
     import Turtlebot3RelativeMove
@@ -38,6 +38,7 @@ def main(args=None):
 
         turtlebot3_relative_move.destroy_node()
         rclpy.shutdown()
+
 
 if __name__ == '__main__':
     main()
