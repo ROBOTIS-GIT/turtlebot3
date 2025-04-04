@@ -22,7 +22,6 @@ from geometry_msgs.msg import Twist
 
 
 class Turtlebot3Path():
-
     def turn(angle, angular_velocity, step):
         twist = Twist()
 

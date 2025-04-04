@@ -46,9 +46,7 @@ theta: goal orientation (range: -180 ~ 180, unit: deg)
 ------------------------------------------------------
 """
 
-
 class Turtlebot3RelativeMove(Node):
-
     def __init__(self):
         super().__init__('turtlebot3_relative_move')
 

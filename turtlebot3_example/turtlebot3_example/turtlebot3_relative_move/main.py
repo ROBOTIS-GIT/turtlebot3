@@ -28,15 +28,16 @@ def main(args=None):
     turtlebot3_relative_move = Turtlebot3RelativeMove()
     try:
         rclpy.spin(turtlebot3_relative_move)
+
     except KeyboardInterrupt:
         pass
+
     finally:
         stop_twist = Twist()
         turtlebot3_relative_move.cmd_vel_pub.publish(stop_twist)
 
         turtlebot3_relative_move.destroy_node()
         rclpy.shutdown()
-
 
 if __name__ == '__main__':
     main()
