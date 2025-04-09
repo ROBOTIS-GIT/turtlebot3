@@ -24,10 +24,9 @@ import termios
 from geometry_msgs.msg import Twist
 from nav_msgs.msg import Odometry
 import numpy
+import rclpy
 from rclpy.node import Node
 from rclpy.qos import QoSProfile
-
-from turtlebot3_example.turtlebot3_relative_move.turtlebot3_path import Turtlebot3Path
 
 
 ros_distro = os.environ.get('ROS_DISTRO', 'humble').lower()
@@ -46,6 +45,32 @@ theta: goal orientation (range: -180 ~ 180, unit: deg)
 ------------------------------------------------------
 """
 
+
+class Turtlebot3Path():
+
+    @staticmethod
+    def turn(angle, angular_velocity, step):
+        twist = Twist()
+
+        angle = math.atan2(math.sin(angle), math.cos(angle))
+
+        if abs(angle) > 0.01:
+            twist.angular.z = angular_velocity if angle > 0 else -angular_velocity
+        else:
+            step += 1
+
+        return twist, step
+
+    @staticmethod
+    def go_straight(distance, linear_velocity, step):
+        twist = Twist()
+
+        if distance > 0.01:
+            twist.linear.x = linear_velocity
+        else:
+            step += 1
+
+        return twist, step
 
 class Turtlebot3RelativeMove(Node):
 
@@ -192,3 +217,23 @@ class Turtlebot3RelativeMove(Node):
         yaw = numpy.arctan2(siny_cosp, cosy_cosp)
 
         return roll, pitch, yaw
+
+def main(args=None):
+    rclpy.init(args=args)
+    node = Turtlebot3RelativeMove()
+    try:
+        rclpy.spin(node)
+
+    except KeyboardInterrupt:
+        pass
+
+    finally:
+        stop_twist = Twist()
+        node.cmd_vel_pub.publish(stop_twist)
+
+        node.destroy_node()
+        rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()

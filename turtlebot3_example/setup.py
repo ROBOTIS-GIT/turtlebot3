@@ -62,7 +62,7 @@ setup(
 
             'turtlebot3_relative_move = '
             'turtlebot3_example.turtlebot3_relative_move.'
-            'main:main'
+            'turtlebot3_relative_move:main'
         ],
     },
 )
