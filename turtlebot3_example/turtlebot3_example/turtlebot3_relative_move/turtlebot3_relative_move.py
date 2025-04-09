@@ -72,6 +72,7 @@ class Turtlebot3Path():
 
         return twist, step
 
+
 class Turtlebot3RelativeMove(Node):
 
     def __init__(self):
@@ -217,6 +218,7 @@ class Turtlebot3RelativeMove(Node):
         yaw = numpy.arctan2(siny_cosp, cosy_cosp)
 
         return roll, pitch, yaw
+
 
 def main(args=None):
     rclpy.init(args=args)
