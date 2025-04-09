@@ -49,7 +49,7 @@ class Turtlebot3Path():
 
     @staticmethod
     def turn(angle, angular_velocity, step):
-        twist = Twist()
+        twist = CmdVelMsg()
 
         angle = math.atan2(math.sin(angle), math.cos(angle))
 
@@ -62,7 +62,7 @@ class Turtlebot3Path():
 
     @staticmethod
     def go_straight(distance, linear_velocity, step):
-        twist = Twist()
+        twist = CmdVelMsg()
 
         if distance > 0.01:
             twist.linear.x = linear_velocity
@@ -114,7 +114,7 @@ class Turtlebot3RelativeMove(Node):
             self.generate_path()
 
     def generate_path(self):
-        twist = Twist()
+        twist = CmdVelMsg()
         if not self.init_odom_state:
             return
 
@@ -229,7 +229,7 @@ def main(args=None):
         pass
 
     finally:
-        stop_twist = Twist()
+        stop_twist = CmdVelMsg()
         node.cmd_vel_pub.publish(stop_twist)
 
         node.destroy_node()
