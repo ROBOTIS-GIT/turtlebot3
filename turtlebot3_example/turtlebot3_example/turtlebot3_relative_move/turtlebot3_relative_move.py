@@ -21,7 +21,6 @@ import os
 import sys
 import termios
 
-from geometry_msgs.msg import Twist
 from nav_msgs.msg import Odometry
 import numpy
 import rclpy
