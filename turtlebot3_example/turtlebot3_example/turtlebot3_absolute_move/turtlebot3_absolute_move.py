@@ -17,6 +17,7 @@
 # Authors: Wonho Yun, Jeonggeun Lim, Ryan Shim, Gilbert
 
 import math
+import os
 
 from geometry_msgs.msg import Point
 from geometry_msgs.msg import Twist
@@ -25,6 +26,13 @@ import numpy
 import rclpy
 from rclpy.node import Node
 from rclpy.qos import QoSProfile
+
+
+ros_distro = os.environ.get('ROS_DISTRO', 'humble').lower()
+if ros_distro == 'humble':
+    from geometry_msgs.msg import Twist as CmdVelMsg
+else:
+    from geometry_msgs.msg import TwistStamped as CmdVelMsg
 
 
 class Turtlebot3AbsoluteMove(Node):
@@ -52,8 +60,8 @@ class Turtlebot3AbsoluteMove(Node):
 
         qos = QoSProfile(depth=10)
 
-        self.cmd_vel_pub = self.create_publisher(Twist, 'cmd_vel', qos)
-        self.cmd_vel = Twist()
+        self.cmd_vel_pub = self.create_publisher(CmdVelMsg, 'cmd_vel', qos)
+        self.cmd_vel = CmdVelMsg()
 
         self.odom_sub = self.create_subscription(
             Odometry,
