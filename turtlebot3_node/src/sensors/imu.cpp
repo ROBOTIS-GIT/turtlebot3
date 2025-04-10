@@ -32,6 +32,14 @@ Imu::Imu(
   imu_pub_ = nh->create_publisher<sensor_msgs::msg::Imu>(imu_topic_name, this->qos_);
   mag_pub_ = nh->create_publisher<sensor_msgs::msg::MagneticField>(mag_topic_name, this->qos_);
 
+  nh_->get_parameter_or<std::string>(
+    "namespace",
+    name_space_,
+    std::string(""));
+
+  if(name_space_!=""){
+    frame_id_ = name_space_ + "/" + frame_id_;
+  }
   RCLCPP_INFO(nh_->get_logger(), "Succeeded to create imu publisher");
 }
 
