@@ -114,9 +114,7 @@ def generate_launch_description():
             executable='turtlebot3_ros',
             parameters=[
                 tb3_param_dir,
-                {'odometry.frame_id': PythonExpression(['"', namespace, '/odom"'])},
-                {'odometry.child_frame_id': PythonExpression(
-                    ['"', namespace, '/base_footprint"'])}],
+                {'namespace':namespace}],
             arguments=['-i', usb_port],
             output='screen'),
     ])
