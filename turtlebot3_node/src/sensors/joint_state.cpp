@@ -42,6 +42,15 @@ JointState::JointState(
     dxl_sdk_wrapper->get_data_from_device<int32_t>(
       extern_control_table.present_position_right.addr,
       extern_control_table.present_position_right.length)};
+
+  nh_->get_parameter_or<std::string>(
+    "namespace",
+    name_space_,
+    std::string(""));
+
+  if(name_space_!=""){
+    frame_id_ = name_space_ + "/" + frame_id_;
+  }
   RCLCPP_INFO(nh_->get_logger(), "Succeeded to create joint state publisher");
 }
 

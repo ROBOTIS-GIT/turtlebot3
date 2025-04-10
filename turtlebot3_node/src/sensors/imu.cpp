@@ -32,7 +32,6 @@ Imu::Imu(
   imu_pub_ = nh->create_publisher<sensor_msgs::msg::Imu>(imu_topic_name, this->qos_);
   mag_pub_ = nh->create_publisher<sensor_msgs::msg::MagneticField>(mag_topic_name, this->qos_);
 
-  nh_->declare_parameter<std::string>("namespace");
   nh_->get_parameter_or<std::string>(
     "namespace",
     name_space_,

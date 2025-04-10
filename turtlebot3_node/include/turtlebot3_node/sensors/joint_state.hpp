@@ -53,6 +53,8 @@ public:
 
 private:
   rclcpp::Publisher<sensor_msgs::msg::JointState>::SharedPtr pub_;
+
+  std::string name_space_;
 };
 }  // namespace sensors
 }  // namespace turtlebot3
