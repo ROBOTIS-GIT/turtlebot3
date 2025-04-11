@@ -55,6 +55,8 @@ private:
   rclcpp::Publisher<sensor_msgs::msg::JointState>::SharedPtr pub_;
 
   std::string name_space_;
+  std::string wheel_left_joint_ = "wheel_left_joint";
+  std::string wheel_right_joint_ = "wheel_right_joint";
 };
 }  // namespace sensors
 }  // namespace turtlebot3

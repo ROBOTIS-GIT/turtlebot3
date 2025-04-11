@@ -50,6 +50,8 @@ JointState::JointState(
 
   if(name_space_!=""){
     frame_id_ = name_space_ + "/" + frame_id_;
+    wheel_right_joint_ = name_space_ + "/" + wheel_right_joint_;
+    wheel_left_joint_ = name_space_ + "/" + wheel_left_joint_;
   }
   RCLCPP_INFO(nh_->get_logger(), "Succeeded to create joint state publisher");
 }
@@ -87,8 +89,8 @@ void JointState::publish(
   msg->header.frame_id = this->frame_id_;
   msg->header.stamp = now;
 
-  msg->name.push_back("wheel_left_joint");
-  msg->name.push_back("wheel_right_joint");
+  msg->name.push_back(wheel_left_joint_);
+  msg->name.push_back(wheel_right_joint_);
 
   msg->position.push_back(TICK_TO_RAD * last_diff_position[0]);
   msg->position.push_back(TICK_TO_RAD * last_diff_position[1]);
