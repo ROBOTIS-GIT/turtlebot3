@@ -46,7 +46,7 @@ def generate_launch_description():
         'xacro ',
         urdf,
         ' namespace:=',
-        PythonExpression(['"',namespace, '" + "/" if "', namespace, '" != "" else ""']),
+        PythonExpression(['"', namespace, '" + "/" if "', namespace, '" != "" else ""']),
     ])
 
     # Major refactor of the robot_state_publisher

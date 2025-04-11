@@ -48,7 +48,7 @@ JointState::JointState(
     name_space_,
     std::string(""));
 
-  if(name_space_!=""){
+  if (name_space_ != "") {
     frame_id_ = name_space_ + "/" + frame_id_;
     wheel_right_joint_ = name_space_ + "/" + wheel_right_joint_;
     wheel_left_joint_ = name_space_ + "/" + wheel_left_joint_;

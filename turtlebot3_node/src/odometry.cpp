@@ -69,7 +69,7 @@ Odometry::Odometry(
     name_space_,
     std::string(""));
 
-  if(name_space_!=""){
+  if (name_space_ != "") {
     frame_id_of_odometry_ = name_space_ + "/" + frame_id_of_odometry_;
     child_frame_id_of_odometry_ = name_space_ + "/" + child_frame_id_of_odometry_;
   }

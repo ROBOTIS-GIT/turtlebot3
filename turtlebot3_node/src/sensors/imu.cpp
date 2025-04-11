@@ -37,7 +37,7 @@ Imu::Imu(
     name_space_,
     std::string(""));
 
-  if(name_space_!=""){
+  if (name_space_ != "") {
     frame_id_ = name_space_ + "/" + frame_id_;
   }
   RCLCPP_INFO(nh_->get_logger(), "Succeeded to create imu publisher");
