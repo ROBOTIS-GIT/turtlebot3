@@ -2,6 +2,11 @@
 Changelog for package turtlebot3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.7 (2025-04-11)
+------------------
+* Support flexible configuration of the frame_id used when publishing the topic
+* Contributors: Hyungyu Kim
+
 2.2.6 (2025-03-24)
 ------------------
 * Added Nav2 parameters for Jazzy
