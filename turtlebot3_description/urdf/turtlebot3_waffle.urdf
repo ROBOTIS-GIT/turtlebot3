@@ -6,7 +6,8 @@
   <xacro:property name="r200_cam_rgb_py" value="0.018"/>
   <xacro:property name="r200_cam_rgb_pz" value="0.013"/>
   <xacro:property name="r200_cam_depth_offset" value="0.01"/> -->
-
+  <xacro:arg name="namespace" default=""/>
+  <xacro:property name="namespace" value="$(arg namespace)"/>
   <!-- Init colour -->
   <material name="black">
       <color rgba="0.0 0.0 0.0 1.0"/>
@@ -48,15 +49,15 @@
     <color rgba="1.0 1.0 1.0 1.0"/>
   </material>
 
-  <link name="base_footprint"/>
+  <link name="${namespace}base_footprint"/>
 
-  <joint name="base_joint" type="fixed">
-    <parent link="base_footprint"/>
-    <child link="base_link" />
+  <joint name="${namespace}base_joint" type="fixed">
+    <parent link="${namespace}base_footprint"/>
+    <child link="${namespace}base_link" />
     <origin xyz="0 0 0.010" rpy="0 0 0"/>
   </joint>
 
-  <link name="base_link">
+  <link name="${namespace}base_link">
     <visual>
       <origin xyz="-0.064 0 0.0" rpy="0 0 0"/>
       <geometry>
@@ -81,14 +82,14 @@
     </inertial>
   </link>
 
-  <joint name="wheel_left_joint" type="continuous">
-    <parent link="base_link"/>
-    <child link="wheel_left_link"/>
+  <joint name="${namespace}wheel_left_joint" type="continuous">
+    <parent link="${namespace}base_link"/>
+    <child link="${namespace}wheel_left_link"/>
     <origin xyz="0.0 0.144 0.023" rpy="-1.57 0 0"/>
     <axis xyz="0 0 1"/>
   </joint>
 
-  <link name="wheel_left_link">
+  <link name="${namespace}wheel_left_link">
     <visual>
       <origin xyz="0 0 0" rpy="1.57 0 0"/>
       <geometry>
@@ -113,14 +114,14 @@
       </inertial>
   </link>
 
-  <joint name="wheel_right_joint" type="continuous">
-    <parent link="base_link"/>
-    <child link="wheel_right_link"/>
+  <joint name="${namespace}wheel_right_joint" type="continuous">
+    <parent link="${namespace}base_link"/>
+    <child link="${namespace}wheel_right_link"/>
     <origin xyz="0.0 -0.144 0.023" rpy="-1.57 0 0"/>
     <axis xyz="0 0 1"/>
   </joint>
 
-  <link name="wheel_right_link">
+  <link name="${namespace}wheel_right_link">
     <visual>
       <origin xyz="0 0 0" rpy="1.57 0 0"/>
       <geometry>
@@ -145,13 +146,13 @@
       </inertial>
   </link>
 
-  <joint name="caster_back_right_joint" type="fixed">
-    <parent link="base_link"/>
-    <child link="caster_back_right_link"/>
+  <joint name="${namespace}caster_back_right_joint" type="fixed">
+    <parent link="${namespace}base_link"/>
+    <child link="${namespace}caster_back_right_link"/>
     <origin xyz="-0.177 -0.064 -0.004" rpy="-1.57 0 0"/>
   </joint>
 
-  <link name="caster_back_right_link">
+  <link name="${namespace}caster_back_right_link">
     <collision>
       <origin xyz="0 0.001 0" rpy="0 0 0"/>
       <geometry>
@@ -168,13 +169,13 @@
     </inertial>
   </link>
 
-  <joint name="caster_back_left_joint" type="fixed">
-    <parent link="base_link"/>
-    <child link="caster_back_left_link"/>
+  <joint name="${namespace}caster_back_left_joint" type="fixed">
+    <parent link="${namespace}base_link"/>
+    <child link="${namespace}caster_back_left_link"/>
     <origin xyz="-0.177 0.064 -0.004" rpy="-1.57 0 0"/>
   </joint>
 
-  <link name="caster_back_left_link">
+  <link name="${namespace}caster_back_left_link">
     <collision>
       <origin xyz="0 0.001 0" rpy="0 0 0"/>
       <geometry>
@@ -191,21 +192,21 @@
     </inertial>
   </link>
 
-  <joint name="imu_joint" type="fixed">
-    <parent link="base_link"/>
-    <child link="imu_link"/>
+  <joint name="${namespace}imu_joint" type="fixed">
+    <parent link="${namespace}base_link"/>
+    <child link="${namespace}imu_link"/>
     <origin xyz="0.0 0 0.068" rpy="0 0 0"/>
   </joint>
 
-  <link name="imu_link"/>
+  <link name="${namespace}imu_link"/>
 
-  <joint name="scan_joint" type="fixed">
-    <parent link="base_link"/>
-    <child link="base_scan"/>
+  <joint name="${namespace}scan_joint" type="fixed">
+    <parent link="${namespace}base_link"/>
+    <child link="${namespace}base_scan"/>
     <origin xyz="-0.064 0 0.122" rpy="0 0 0"/>
   </joint>
 
-  <link name="base_scan">
+  <link name="${namespace}base_scan">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
@@ -230,13 +231,13 @@
     </inertial>
   </link>
 
-  <joint name="camera_joint" type="fixed">
+  <joint name="${namespace}camera_joint" type="fixed">
     <origin xyz="0.064 -0.065 0.094" rpy="0 0 0"/>
-    <parent link="base_link"/>
-    <child link="camera_link"/>
+    <parent link="${namespace}base_link"/>
+    <child link="${namespace}camera_link"/>
   </joint>
 
-  <link name="camera_link">
+  <link name="${namespace}camera_link">
     <visual>
      <origin xyz="0 0 0" rpy="1.57 0 1.57"/>
       <geometry>
@@ -260,34 +261,34 @@
     </inertial>-->
   </link>
 
-  <joint name="camera_rgb_joint" type="fixed">
+  <joint name="${namespace}camera_rgb_joint" type="fixed">
     <origin xyz="0.005 0.018 0.013" rpy="0 0 0"/>
     <!-- <origin xyz="${r200_cam_rgb_px} ${r200_cam_rgb_py} ${r200_cam_rgb_pz}" rpy="0 0 0"/> -->
-    <parent link="camera_link"/>
-    <child link="camera_rgb_frame"/>
+    <parent link="${namespace}camera_link"/>
+    <child link="${namespace}camera_rgb_frame"/>
   </joint>
-  <link name="camera_rgb_frame"/>
+  <link name="${namespace}camera_rgb_frame"/>
 
-  <joint name="camera_rgb_optical_joint" type="fixed">
+  <joint name="${namespace}camera_rgb_optical_joint" type="fixed">
     <origin xyz="0 0 0" rpy="-1.57 0 -1.57"/>
-    <parent link="camera_rgb_frame"/>
-    <child link="camera_rgb_optical_frame"/>
+    <parent link="${namespace}camera_rgb_frame"/>
+    <child link="${namespace}camera_rgb_optical_frame"/>
   </joint>
-  <link name="camera_rgb_optical_frame"/>
+  <link name="${namespace}camera_rgb_optical_frame"/>
 
-  <joint name="camera_depth_joint" type="fixed">
+  <joint name="${namespace}camera_depth_joint" type="fixed">
     <origin xyz="0.005 0.028 0.013" rpy="0 0 0"/>
     <!-- <origin xyz="${r200_cam_rgb_px} ${r200_cam_rgb_py + r200_cam_depth_offset} ${r200_cam_rgb_pz}" rpy="0 0 0"/> -->
-    <parent link="camera_link"/>
-    <child link="camera_depth_frame"/>
+    <parent link="${namespace}camera_link"/>
+    <child link="${namespace}camera_depth_frame"/>
   </joint>
-  <link name="camera_depth_frame"/>
+  <link name="${namespace}camera_depth_frame"/>
 
-  <joint name="camera_depth_optical_joint" type="fixed">
+  <joint name="${namespace}camera_depth_optical_joint" type="fixed">
     <origin xyz="0 0 0" rpy="-1.57 0 -1.57"/>
-    <parent link="camera_depth_frame"/>
-    <child link="camera_depth_optical_frame"/>
+    <parent link="${namespace}camera_depth_frame"/>
+    <child link="${namespace}camera_depth_optical_frame"/>
   </joint>
-  <link name="camera_depth_optical_frame"/>
+  <link name="${namespace}camera_depth_optical_frame"/>
 
 </robot>
