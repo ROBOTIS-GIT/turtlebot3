@@ -17,9 +17,9 @@
 # Authors: Wonho Yun, Jeonggeun Lim, Ryan Shim, Gilbert
 
 import math
+import os
 
 from geometry_msgs.msg import Point
-from geometry_msgs.msg import Twist
 from nav_msgs.msg import Odometry
 import numpy
 import rclpy
@@ -27,12 +27,19 @@ from rclpy.node import Node
 from rclpy.qos import QoSProfile
 
 
-class Turtlebot3PositionControlAbsolute(Node):
+ros_distro = os.environ.get('ROS_DISTRO', 'humble').lower()
+if ros_distro == 'humble':
+    from geometry_msgs.msg import Twist as CmdVelMsg
+else:
+    from geometry_msgs.msg import TwistStamped as CmdVelMsg
+
+
+class Turtlebot3AbsoluteMove(Node):
 
     def __init__(self):
-        super().__init__('turtlebot3_position_control_absolute')
+        super().__init__('turtlebot3_absolute_move')
 
-        print('TurtleBot3 Absolute Position Control')
+        print('TurtleBot3 Absolute Move')
         print('----------------------------------------------')
         print('Enter absolute coordinates in odometry frame')
         print('goal x: absolute x position (unit: m)')
@@ -52,8 +59,8 @@ class Turtlebot3PositionControlAbsolute(Node):
 
         qos = QoSProfile(depth=10)
 
-        self.cmd_vel_pub = self.create_publisher(Twist, 'cmd_vel', qos)
-        self.cmd_vel = Twist()
+        self.cmd_vel_pub = self.create_publisher(CmdVelMsg, 'cmd_vel', qos)
+        self.cmd_vel = CmdVelMsg()
 
         self.odom_sub = self.create_subscription(
             Odometry,
@@ -163,7 +170,7 @@ class Turtlebot3PositionControlAbsolute(Node):
 
 def main(args=None):
     rclpy.init()
-    node = Turtlebot3PositionControlAbsolute()
+    node = Turtlebot3AbsoluteMove()
     try:
         rclpy.spin(node)
     except KeyboardInterrupt:

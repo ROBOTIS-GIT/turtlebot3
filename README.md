@@ -1,7 +1,7 @@
 # TurtleBot3
 <img src="https://raw.githubusercontent.com/ROBOTIS-GIT/emanual/master/assets/images/platform/turtlebot3/logo_turtlebot3.png" width="300">
 
-- Active Branches: noetic, humble, main
+- Active Branches: noetic, humble, jazzy, main
 - Legacy Branches: *-devel
 
 ## Open Source Projects Related to TurtleBot3
