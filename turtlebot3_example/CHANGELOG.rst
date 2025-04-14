@@ -2,6 +2,11 @@
 Changelog for package turtlebot3_example
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.7 (2025-03-27)
+------------------
+* Modified Relative Move
+* Contributors: YeonSoo Noh
+
 2.2.6 (2025-03-24)
 ------------------
 * None
