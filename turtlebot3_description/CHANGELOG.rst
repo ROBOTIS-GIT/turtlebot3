@@ -2,10 +2,14 @@
 Changelog for package turtlebot3_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-2.2.7 (2025-04-11)
+2.2.8 (2025-04-11)
 ------------------
 * Support flexible configuration of the frame_id used when publishing the topic
 * Contributors: Hyungyu Kim
+
+2.2.7 (2025-03-27)
+------------------
+* None
 
 2.2.6 (2025-03-24)
 ------------------
