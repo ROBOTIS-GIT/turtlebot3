@@ -56,6 +56,7 @@ void TurtleBot3::init_dynamixel_sdk_wrapper(const std::string & usb_port)
   this->declare_parameter<uint8_t>("opencr.id");
   this->declare_parameter<int>("opencr.baud_rate");
   this->declare_parameter<float>("opencr.protocol_version");
+  this->declare_parameter<std::string>("namespace");
 
   this->get_parameter_or<uint8_t>("opencr.id", opencr.id, 200);
   this->get_parameter_or<int>("opencr.baud_rate", opencr.baud_rate, 1000000);

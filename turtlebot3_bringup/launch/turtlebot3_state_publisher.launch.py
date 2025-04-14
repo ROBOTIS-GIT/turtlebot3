@@ -21,6 +21,7 @@ import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
+from launch.substitutions import Command
 from launch.substitutions import LaunchConfiguration
 from launch.substitutions import PythonExpression
 from launch_ros.actions import Node
@@ -41,10 +42,15 @@ def generate_launch_description():
         'urdf',
         urdf_file_name)
 
+    robot_desc = Command([
+        'xacro ',
+        urdf,
+        ' namespace:=',
+        PythonExpression(['"', namespace, '" + "/" if "', namespace, '" != "" else ""']),
+    ])
+
     # Major refactor of the robot_state_publisher
     # Reference page: https://github.com/ros2/demos/pull/426
-    with open(urdf, 'r') as infp:
-        robot_desc = infp.read()
 
     rsp_params = {'robot_description': robot_desc}
 
@@ -61,6 +67,5 @@ def generate_launch_description():
             output='screen',
             parameters=[
                     rsp_params,
-                    {'use_sim_time': use_sim_time},
-                    {'frame_prefix': PythonExpression(['"', namespace, '/"'])}])
+                    {'use_sim_time': use_sim_time}])
     ])

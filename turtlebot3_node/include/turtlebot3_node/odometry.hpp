@@ -84,6 +84,7 @@ private:
 
   std::string frame_id_of_odometry_;
   std::string child_frame_id_of_odometry_;
+  std::string name_space_;
 
   bool use_imu_;
   bool publish_tf_;

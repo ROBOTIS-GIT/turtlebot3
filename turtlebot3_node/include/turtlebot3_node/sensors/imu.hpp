@@ -47,6 +47,8 @@ public:
 private:
   rclcpp::Publisher<sensor_msgs::msg::Imu>::SharedPtr imu_pub_;
   rclcpp::Publisher<sensor_msgs::msg::MagneticField>::SharedPtr mag_pub_;
+
+  std::string name_space_;
 };
 }  // namespace sensors
 }  // namespace turtlebot3
