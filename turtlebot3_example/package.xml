@@ -17,7 +17,6 @@
   <author email="willson@robotis.com">Will Son</author>
   <author email="junyeong4321@gmail.com">Junyeong Jeong</author>
   <author email="nys8277@gmail.com">YeonSoo Noh</author>
-  <buildtool_depend>ament_cmake</buildtool_depend>
   <depend>geometry_msgs</depend>
   <depend>nav_msgs</depend>
   <depend>rclpy</depend>
