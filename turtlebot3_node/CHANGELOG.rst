@@ -2,6 +2,10 @@
 Changelog for package turtlebot3_node
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.9 (2025-04-15)
+------------------
+* None
+
 2.2.8 (2025-04-11)
 ------------------
 * Support flexible configuration of the frame_id used when publishing the topic
