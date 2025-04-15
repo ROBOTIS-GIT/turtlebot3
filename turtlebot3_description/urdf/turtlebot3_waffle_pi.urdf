@@ -195,7 +195,7 @@
     <origin xyz="0.0 0 0.068" rpy="0 0 0"/>
   </joint>
 
-  <link name="${namespace}mu_link"/>
+  <link name="${namespace}imu_link"/>
 
   <joint name="${namespace}scan_joint" type="fixed">
     <parent link="${namespace}base_link"/>
