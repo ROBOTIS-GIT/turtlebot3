@@ -1,7 +1,7 @@
 # TurtleBot3
 <img src="https://raw.githubusercontent.com/ROBOTIS-GIT/emanual/master/assets/images/platform/turtlebot3/logo_turtlebot3.png" width="300">
 
-- Active Branches: noetic, humble, jazzy, main
+- Active Branches: noetic, humble, jazzy, main(rolling)
 - Legacy Branches: *-devel
 
 ## Open Source Projects Related to TurtleBot3
@@ -25,16 +25,17 @@
 ## Documentation, Videos, and Community
 
 ### Official Documentation
-- ⚙️ **[ROBOTIS DYNAMIXEL](https://dynamixel.com/)** – Official website for DYNAMIXEL
-- 📚 **[ROBOTIS e-Manual for Dynamixel SDK](http://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_sdk/overview/)** – Official guide for Dynamixel SDK
-- 📚 **[ROBOTIS e-Manual for TurtleBot3](http://turtlebot3.robotis.com/)** – Official guide for TurtleBot3
-- 📚 **[ROBOTIS e-Manual for OpenMANIPULATOR-X](https://emanual.robotis.com/docs/en/platform/openmanipulator_x/overview/)** – Official guide for OpenMANIPULATOR-X
+- ⚙️ **[ROBOTIS DYNAMIXEL](https://dynamixel.com/)**
+- 📚 **[ROBOTIS e-Manual for Dynamixel SDK](http://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_sdk/overview/)**
+- 📚 **[ROBOTIS e-Manual for TurtleBot3](http://turtlebot3.robotis.com/)**
+- 📚 **[ROBOTIS e-Manual for OpenMANIPULATOR-X](https://emanual.robotis.com/docs/en/platform/openmanipulator_x/overview/)**
 
 ### Learning Resources
 - 🎥 **[ROBOTIS YouTube Channel](https://www.youtube.com/@ROBOTISCHANNEL)**
 - 🎥 **[ROBOTIS Open Source YouTube Channel](https://www.youtube.com/@ROBOTISOpenSourceTeam)**
-- 🎥 **[ROBOTIS TurtleBot3 YouTube Playlist](https://www.youtube.com/playlist?list=PLRG6WP3c31_XI3wlvHlx2Mp8BYqgqDURU)** – Video tutorials for TurtleBot3
-- 🎥 **[ROBOTIS OpenMANIPULATOR YouTube Playlist](https://www.youtube.com/playlist?list=PLRG6WP3c31_WpEsB6_Rdt3KhiopXQlUkb)** – Video tutorials for OpenMANIPULATOR
+- 🎥 **[ROBOTIS TurtleBot3 YouTube Playlist](https://www.youtube.com/playlist?list=PLRG6WP3c31_XI3wlvHlx2Mp8BYqgqDURU)**
+- 🎥 **[ROBOTIS OpenMANIPULATOR YouTube Playlist](https://www.youtube.com/playlist?list=PLRG6WP3c31_WpEsB6_Rdt3KhiopXQlUkb)**
 
 ### Community & Support
-- 💬 **[ROBOTIS Community Forum](https://forum.robotis.com/)** – Get help and discuss with other users
+- 💬 **[ROBOTIS Community Forum](https://forum.robotis.com/)**
+- 💬 **[TurtleBot category from ROS Community](https://discourse.ros.org/c/turtlebot/)**
