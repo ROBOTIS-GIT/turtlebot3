@@ -56,7 +56,6 @@ void TurtleBot3::init_dynamixel_sdk_wrapper(const std::string & usb_port)
   this->declare_parameter<uint8_t>("opencr.id");
   this->declare_parameter<int>("opencr.baud_rate");
   this->declare_parameter<float>("opencr.protocol_version");
-  this->declare_parameter<std::string>("namespace");
 
   this->get_parameter_or<uint8_t>("opencr.id", opencr.id, 200);
   this->get_parameter_or<int>("opencr.baud_rate", opencr.baud_rate, 1000000);
@@ -66,10 +65,18 @@ void TurtleBot3::init_dynamixel_sdk_wrapper(const std::string & usb_port)
 
   dxl_sdk_wrapper_ = std::make_shared<DynamixelSDKWrapper>(opencr);
 
+  // Initialize the main control table range (original range)
   dxl_sdk_wrapper_->init_read_memory(
     extern_control_table.millis.addr,
     (extern_control_table.profile_acceleration_right.addr - extern_control_table.millis.addr) +
     extern_control_table.profile_acceleration_right.length
+  );
+  
+  // Add a separate initialization for the analog pins range
+  dxl_sdk_wrapper_->init_read_memory(
+    extern_control_table.analog_a0.addr,
+    (extern_control_table.analog_a5.addr - extern_control_table.analog_a0.addr) +
+    extern_control_table.analog_a5.length
   );
 }
 
@@ -197,6 +204,14 @@ void TurtleBot3::add_sensors()
       is_connected_illumination,
       is_connected_ir,
       is_connected_sonar));
+
+  sensors_.push_back(
+    new sensors::AnalogPins(
+      node_handle_,
+      "analog_pins"));
+      
+
+  RCLCPP_INFO(this->get_logger(), "Successfully added all sensors");
 
   dxl_sdk_wrapper_->read_data_set();
   sensors_.push_back(

@@ -43,6 +43,7 @@
 #include "turtlebot3_node/devices/sound.hpp"
 #include "turtlebot3_node/dynamixel_sdk_wrapper.hpp"
 #include "turtlebot3_node/odometry.hpp"
+#include "turtlebot3_node/sensors/analog_pins.hpp"
 #include "turtlebot3_node/sensors/battery_state.hpp"
 #include "turtlebot3_node/sensors/imu.hpp"
 #include "turtlebot3_node/sensors/joint_state.hpp"
