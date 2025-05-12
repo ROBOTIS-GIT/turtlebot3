@@ -79,7 +79,7 @@ public:
 
 private:
   void init_dynamixel_sdk_wrapper(const std::string & usb_port);
-  void check_device_status();
+  bool check_device_status();
 
   void add_sensors();
   void add_devices();
