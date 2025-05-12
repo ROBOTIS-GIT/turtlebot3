@@ -107,6 +107,8 @@ void TurtleBot3::check_device_status()
   int8_t device_status = dxl_sdk_wrapper_->get_data_from_device<int8_t>(
     extern_control_table.device_status.addr,
     extern_control_table.device_status.length);
+  
+  RCLCPP_INFO(this->get_logger(), "Device Status integer: %d", device_status);
 
   switch (device_status) {
     case NOT_CONNECTED_MOTOR:
