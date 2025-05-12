@@ -29,9 +29,17 @@ TurtleBot3::TurtleBot3(const std::string & usb_port)
   RCLCPP_INFO(get_logger(), "Init TurtleBot3 Node Main");
   node_handle_ = std::shared_ptr<::rclcpp::Node>(this, [](::rclcpp::Node *) {});
 
+  bool initialization_successful = true;
+
   try {
     init_dynamixel_sdk_wrapper(usb_port);
-    check_device_status();
+    
+    // Check device status with error handling but without exceptions
+    if (!check_device_status()) {
+      RCLCPP_ERROR(this->get_logger(), "Device initialization failed, shutting down");
+      initialization_successful = false;
+      return; // Exit constructor early
+    }
 
     // Add stabilization delay after calibration
     RCLCPP_INFO(this->get_logger(), "Waiting for IMU to stabilize after calibration...");
@@ -40,32 +48,33 @@ TurtleBot3::TurtleBot3(const std::string & usb_port)
     // Verify device connectivity before proceeding
     if (!dxl_sdk_wrapper_->is_connected_to_device()) {
       RCLCPP_ERROR(this->get_logger(), "Lost connection to device after calibration");
-      rclcpp::shutdown();
-      return;
+      initialization_successful = false;
+      return; // Exit constructor early
     }
 
-    try {
-      add_motors();
-      add_wheels();
-      add_sensors();
-      add_devices();
-    } catch (const std::exception & e) {
-      RCLCPP_ERROR(this->get_logger(), "Exception during initialization: %s", e.what());
-      rclcpp::shutdown();
-      return;
-    } catch (...) {
-      RCLCPP_ERROR(this->get_logger(), "Unknown exception during initialization");
-      rclcpp::shutdown();
-      return;
-    }
+    add_motors();
+    add_wheels();
+    add_sensors();
+    add_devices();
 
     run();
   } catch (const std::exception & e) {
     RCLCPP_ERROR(this->get_logger(), "Critical exception in TurtleBot3 initialization: %s", e.what());
-    rclcpp::shutdown();
+    initialization_successful = false;
   } catch (...) {
     RCLCPP_ERROR(this->get_logger(), "Unknown critical exception in TurtleBot3 initialization");
-    rclcpp::shutdown();
+    initialization_successful = false;
+  }
+
+  // Handle shutdown outside of the try-catch if initialization failed
+  if (!initialization_successful) {
+    RCLCPP_ERROR(this->get_logger(), "Initialization failed, requesting shutdown");
+    // Schedule shutdown instead of doing it immediately
+    auto shutdown_timer = this->create_wall_timer(
+      std::chrono::milliseconds(100),
+      []() {
+        rclcpp::shutdown();
+      });
   }
 }
 
@@ -110,45 +119,44 @@ void TurtleBot3::init_dynamixel_sdk_wrapper(const std::string & usb_port)
   );
 }
 
-void TurtleBot3::check_device_status()
+bool TurtleBot3::check_device_status()
 {
-  if (dxl_sdk_wrapper_->is_connected_to_device()) {
-    std::string sdk_msg;
-    uint8_t reset = 1;
-
-    // Add retry logic for setting calibration data
-    bool calibration_set = false;
-    for (int retry = 0; retry < 3 && !calibration_set; retry++) {
-      if (retry > 0) {
-        RCLCPP_WARN(this->get_logger(), "Retrying IMU calibration setup (attempt %d of 3)", retry + 1);
-        rclcpp::sleep_for(std::chrono::milliseconds(100));
-      }
-
-      sdk_msg.clear();
-      if (dxl_sdk_wrapper_->set_data_to_device(
-        extern_control_table.imu_re_calibration.addr,
-        extern_control_table.imu_re_calibration.length,
-        &reset,
-        &sdk_msg)) {
-        calibration_set = true;
-      } else {
-        RCLCPP_WARN(this->get_logger(), "Failed to set IMU calibration: %s", sdk_msg.c_str());
-      }
-    }
-
-    if (!calibration_set) {
-      RCLCPP_ERROR(this->get_logger(), "Failed to set IMU calibration after multiple attempts");
-      throw std::runtime_error("IMU calibration setup failed");
-    }
-
-    RCLCPP_INFO(this->get_logger(), "Start Calibration of Gyro");
-    rclcpp::sleep_for(std::chrono::seconds(5));
-    RCLCPP_INFO(this->get_logger(), "Calibration End");
-  } else {
+  if (!dxl_sdk_wrapper_->is_connected_to_device()) {
     RCLCPP_ERROR(this->get_logger(), "Failed connection with Devices");
-    rclcpp::shutdown();
-    return;
+    return false;
   }
+
+  std::string sdk_msg;
+  uint8_t reset = 1;
+
+  // Add retry logic for setting calibration data
+  bool calibration_set = false;
+  for (int retry = 0; retry < 3 && !calibration_set; retry++) {
+    if (retry > 0) {
+      RCLCPP_WARN(this->get_logger(), "Retrying IMU calibration setup (attempt %d of 3)", retry + 1);
+      rclcpp::sleep_for(std::chrono::milliseconds(100));
+    }
+
+    sdk_msg.clear();
+    if (dxl_sdk_wrapper_->set_data_to_device(
+      extern_control_table.imu_re_calibration.addr,
+      extern_control_table.imu_re_calibration.length,
+      &reset,
+      &sdk_msg)) {
+      calibration_set = true;
+    } else {
+      RCLCPP_WARN(this->get_logger(), "Failed to set IMU calibration: %s", sdk_msg.c_str());
+    }
+  }
+
+  if (!calibration_set) {
+    RCLCPP_ERROR(this->get_logger(), "Failed to set IMU calibration after multiple attempts");
+    return false;
+  }
+
+  RCLCPP_INFO(this->get_logger(), "Start Calibration of Gyro");
+  rclcpp::sleep_for(std::chrono::seconds(5));
+  RCLCPP_INFO(this->get_logger(), "Calibration End");
 
   const int8_t NOT_CONNECTED_MOTOR = -1;
 
@@ -168,8 +176,10 @@ void TurtleBot3::check_device_status()
     }
   } catch (const std::exception & e) {
     RCLCPP_ERROR(this->get_logger(), "Failed to get device status: %s", e.what());
-    throw std::runtime_error("Device status check failed");
+    return false;
   }
+
+  return true;
 }
 
 void TurtleBot3::add_motors()
