@@ -134,7 +134,7 @@ bool TurtleBot3::check_device_status()
   for (int retry = 0; retry < 3 && !calibration_set; retry++) {
     if (retry > 0) {
       RCLCPP_WARN(this->get_logger(), "Retrying IMU calibration setup (attempt %d of 3)", retry + 1);
-      rclcpp::sleep_for(std::chrono::milliseconds(100));
+      rclcpp::sleep_for(std::chrono::milliseconds(1000));
     }
 
     sdk_msg.clear();
