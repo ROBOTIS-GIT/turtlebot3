@@ -92,7 +92,7 @@ void TurtleBot3::check_device_status()
       extern_control_table.imu_re_calibration.length,
       &reset,
       &sdk_msg);
-      
+
       RCLCPP_INFO(this->get_logger(), "Start Calibration of Gyro");
       rclcpp::sleep_for(std::chrono::seconds(5));
       RCLCPP_INFO(this->get_logger(), "Calibration End");
@@ -103,6 +103,11 @@ void TurtleBot3::check_device_status()
   }
 
   const int8_t NOT_CONNECTED_MOTOR = -1;
+
+  // Add a sleep to allow device to fully initialize
+  rclcpp::sleep_for(std::chrono::seconds(5));
+
+  RCLCPP_INFO(this->get_logger(), "Retrieving device status integer");
 
   int8_t device_status = dxl_sdk_wrapper_->get_data_from_device<int8_t>(
     extern_control_table.device_status.addr,
