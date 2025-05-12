@@ -129,12 +129,13 @@ bool TurtleBot3::check_device_status()
   std::string sdk_msg;
   uint8_t reset = 1;
 
-  // Add retry logic for setting calibration data
+  // Add retry logic for setting calibration data with longer delays
   bool calibration_set = false;
   for (int retry = 0; retry < 3 && !calibration_set; retry++) {
     if (retry > 0) {
       RCLCPP_WARN(this->get_logger(), "Retrying IMU calibration setup (attempt %d of 3)", retry + 1);
-      rclcpp::sleep_for(std::chrono::milliseconds(1000));
+      // Increase delay to 2 seconds between attempts to give more recovery time
+      rclcpp::sleep_for(std::chrono::seconds(2));
     }
 
     sdk_msg.clear();
@@ -144,6 +145,14 @@ bool TurtleBot3::check_device_status()
       &reset,
       &sdk_msg)) {
       calibration_set = true;
+      
+      // Add a brief pause after successful command before starting calibration process
+      // This helps ensure the OpenCR has fully processed the command
+      rclcpp::sleep_for(std::chrono::milliseconds(500));
+      
+      RCLCPP_INFO(this->get_logger(), "Start Calibration of Gyro");
+      rclcpp::sleep_for(std::chrono::seconds(5));
+      RCLCPP_INFO(this->get_logger(), "Calibration End");
     } else {
       RCLCPP_WARN(this->get_logger(), "Failed to set IMU calibration: %s", sdk_msg.c_str());
     }
@@ -153,10 +162,6 @@ bool TurtleBot3::check_device_status()
     RCLCPP_ERROR(this->get_logger(), "Failed to set IMU calibration after multiple attempts");
     return false;
   }
-
-  RCLCPP_INFO(this->get_logger(), "Start Calibration of Gyro");
-  rclcpp::sleep_for(std::chrono::seconds(5));
-  RCLCPP_INFO(this->get_logger(), "Calibration End");
 
   const int8_t NOT_CONNECTED_MOTOR = -1;
 
