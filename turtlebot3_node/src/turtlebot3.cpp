@@ -18,6 +18,7 @@
 
 #include <memory>
 #include <string>
+#include <stdexcept>
 
 using robotis::turtlebot3::TurtleBot3;
 using namespace std::chrono_literals;
@@ -28,15 +29,44 @@ TurtleBot3::TurtleBot3(const std::string & usb_port)
   RCLCPP_INFO(get_logger(), "Init TurtleBot3 Node Main");
   node_handle_ = std::shared_ptr<::rclcpp::Node>(this, [](::rclcpp::Node *) {});
 
-  init_dynamixel_sdk_wrapper(usb_port);
-  check_device_status();
+  try {
+    init_dynamixel_sdk_wrapper(usb_port);
+    check_device_status();
 
-  add_motors();
-  add_wheels();
-  add_sensors();
-  add_devices();
+    // Add stabilization delay after calibration
+    RCLCPP_INFO(this->get_logger(), "Waiting for IMU to stabilize after calibration...");
+    rclcpp::sleep_for(std::chrono::milliseconds(500));
 
-  run();
+    // Verify device connectivity before proceeding
+    if (!dxl_sdk_wrapper_->is_connected_to_device()) {
+      RCLCPP_ERROR(this->get_logger(), "Lost connection to device after calibration");
+      rclcpp::shutdown();
+      return;
+    }
+
+    try {
+      add_motors();
+      add_wheels();
+      add_sensors();
+      add_devices();
+    } catch (const std::exception & e) {
+      RCLCPP_ERROR(this->get_logger(), "Exception during initialization: %s", e.what());
+      rclcpp::shutdown();
+      return;
+    } catch (...) {
+      RCLCPP_ERROR(this->get_logger(), "Unknown exception during initialization");
+      rclcpp::shutdown();
+      return;
+    }
+
+    run();
+  } catch (const std::exception & e) {
+    RCLCPP_ERROR(this->get_logger(), "Critical exception in TurtleBot3 initialization: %s", e.what());
+    rclcpp::shutdown();
+  } catch (...) {
+    RCLCPP_ERROR(this->get_logger(), "Unknown critical exception in TurtleBot3 initialization");
+    rclcpp::shutdown();
+  }
 }
 
 TurtleBot3::Wheels * TurtleBot3::get_wheels()
@@ -86,11 +116,30 @@ void TurtleBot3::check_device_status()
     std::string sdk_msg;
     uint8_t reset = 1;
 
-    dxl_sdk_wrapper_->set_data_to_device(
-      extern_control_table.imu_re_calibration.addr,
-      extern_control_table.imu_re_calibration.length,
-      &reset,
-      &sdk_msg);
+    // Add retry logic for setting calibration data
+    bool calibration_set = false;
+    for (int retry = 0; retry < 3 && !calibration_set; retry++) {
+      if (retry > 0) {
+        RCLCPP_WARN(this->get_logger(), "Retrying IMU calibration setup (attempt %d of 3)", retry + 1);
+        rclcpp::sleep_for(std::chrono::milliseconds(100));
+      }
+
+      sdk_msg.clear();
+      if (dxl_sdk_wrapper_->set_data_to_device(
+        extern_control_table.imu_re_calibration.addr,
+        extern_control_table.imu_re_calibration.length,
+        &reset,
+        &sdk_msg)) {
+        calibration_set = true;
+      } else {
+        RCLCPP_WARN(this->get_logger(), "Failed to set IMU calibration: %s", sdk_msg.c_str());
+      }
+    }
+
+    if (!calibration_set) {
+      RCLCPP_ERROR(this->get_logger(), "Failed to set IMU calibration after multiple attempts");
+      throw std::runtime_error("IMU calibration setup failed");
+    }
 
     RCLCPP_INFO(this->get_logger(), "Start Calibration of Gyro");
     rclcpp::sleep_for(std::chrono::seconds(5));
@@ -103,17 +152,23 @@ void TurtleBot3::check_device_status()
 
   const int8_t NOT_CONNECTED_MOTOR = -1;
 
-  int8_t device_status = dxl_sdk_wrapper_->get_data_from_device<int8_t>(
-    extern_control_table.device_status.addr,
-    extern_control_table.device_status.length);
+  // Add error handling for device status check
+  try {
+    int8_t device_status = dxl_sdk_wrapper_->get_data_from_device<int8_t>(
+      extern_control_table.device_status.addr,
+      extern_control_table.device_status.length);
 
-  switch (device_status) {
-    case NOT_CONNECTED_MOTOR:
-      RCLCPP_WARN(this->get_logger(), "Please double check your Dynamixels and Power");
-      break;
+    switch (device_status) {
+      case NOT_CONNECTED_MOTOR:
+        RCLCPP_WARN(this->get_logger(), "Please double check your Dynamixels and Power");
+        break;
 
-    default:
-      break;
+      default:
+        break;
+    }
+  } catch (const std::exception & e) {
+    RCLCPP_ERROR(this->get_logger(), "Failed to get device status: %s", e.what());
+    throw std::runtime_error("Device status check failed");
   }
 }
 
@@ -121,18 +176,23 @@ void TurtleBot3::add_motors()
 {
   RCLCPP_INFO(this->get_logger(), "Add Motors");
 
-  this->declare_parameter<float>("motors.profile_acceleration_constant");
-  this->declare_parameter<float>("motors.profile_acceleration");
+  try {
+    this->declare_parameter<float>("motors.profile_acceleration_constant");
+    this->declare_parameter<float>("motors.profile_acceleration");
 
-  this->get_parameter_or<float>(
-    "motors.profile_acceleration_constant",
-    motors_.profile_acceleration_constant,
-    214.577);
+    this->get_parameter_or<float>(
+      "motors.profile_acceleration_constant",
+      motors_.profile_acceleration_constant,
+      214.577);
 
-  this->get_parameter_or<float>(
-    "motors.profile_acceleration",
-    motors_.profile_acceleration,
-    0.0);
+    this->get_parameter_or<float>(
+      "motors.profile_acceleration",
+      motors_.profile_acceleration,
+      0.0);
+  } catch (const std::exception & e) {
+    RCLCPP_ERROR(this->get_logger(), "Failed to add motors: %s", e.what());
+    throw;
+  }
 }
 
 void TurtleBot3::add_wheels()
