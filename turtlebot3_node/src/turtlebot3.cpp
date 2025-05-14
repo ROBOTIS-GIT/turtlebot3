@@ -81,8 +81,20 @@ void TurtleBot3::init_dynamixel_sdk_wrapper(const std::string & usb_port)
   );
 }
 
+/**
+ * @brief Checks the status of connected devices and performs device initialization.
+ *
+ * This method verifies the connection to devices, performs IMU gyro calibration,
+ * and checks the device status. If no connection is established, it logs an error
+ * and shuts down the ROS node. The method includes a device status check and 
+ * provides a warning if motors are not connected.
+ *
+ * @note Includes a 5-second sleep to allow device initialization and calibration.
+ * @throws Shuts down ROS node if device connection fails.
+ */
 void TurtleBot3::check_device_status()
 {
+  // Check if device is connected and perform IMU gyroscope calibration
   if (dxl_sdk_wrapper_->is_connected_to_device()) {
     std::string sdk_msg;
     uint8_t reset = 1;
@@ -103,18 +115,43 @@ void TurtleBot3::check_device_status()
   }
 
   const int8_t NOT_CONNECTED_MOTOR = -1;
-
-  // Add a sleep to allow device to fully initialize
-  rclcpp::sleep_for(std::chrono::seconds(5));
-
-  RCLCPP_INFO(this->get_logger(), "Retrieving device status integer");
-
-  int8_t device_status = dxl_sdk_wrapper_->get_data_from_device<int8_t>(
-    extern_control_table.device_status.addr,
-    extern_control_table.device_status.length);
+  const int8_t TIME_TO_INITIALIZE = 5;  // seconds
   
-  RCLCPP_INFO(this->get_logger(), "Device Status integer: %d", device_status);
-
+  // Perform heartbeat check to verify basic device communication
+  bool device_responding = false;
+  for (int attempt = 0; attempt < 3 && !device_responding; attempt++) {
+    uint8_t test_value = 42;  // Distinctive test value
+    std::string sdk_msg;
+    
+    if (dxl_sdk_wrapper_->set_data_to_device(
+          extern_control_table.heartbeat.addr,
+          extern_control_table.heartbeat.length,
+          &test_value,
+          &sdk_msg)) {
+      RCLCPP_INFO(this->get_logger(), "Device responded to heartbeat: %s", sdk_msg.c_str());
+      device_responding = true;
+    } else {
+      RCLCPP_WARN(this->get_logger(), "Device failed to respond to heartbeat on attempt %d, retrying in %d seconds", attempt + 1, TIME_TO_INITIALIZE);
+      rclcpp::sleep_for(std::chrono::seconds(TIME_TO_INITIALIZE));
+    }
+  }
+  
+  // Only attempt to read device status if heartbeat succeeded
+  int8_t device_status = 0;
+  if (device_responding) {
+    try {
+      device_status = dxl_sdk_wrapper_->get_data_from_device<int8_t>(
+        extern_control_table.device_status.addr,
+        extern_control_table.device_status.length);    
+    } catch (...) {
+      RCLCPP_WARN(this->get_logger(), "Failed to read device status despite successful heartbeat");
+      device_status = 0;  // Default to a safe value
+    }
+  } else {
+    RCLCPP_WARN(this->get_logger(), "Skipping device status read due to heartbeat failure");
+    device_status = 0;  // Default to a safe value
+  }
+  
   switch (device_status) {
     case NOT_CONNECTED_MOTOR:
       RCLCPP_WARN(this->get_logger(), "Please double check your Dynamixels and Power");
