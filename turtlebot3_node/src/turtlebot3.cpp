@@ -128,8 +128,8 @@ void TurtleBot3::check_device_status()
       } else {
         break;
       }
-    RCLCPP_WARN(this->get_logger(), "Motors not initialized, please double check your Dynamixels and Power");
   }
+  RCLCPP_WARN(this->get_logger(), "Motors not initialized, please double check your Dynamixels and Power");
 }
 
 void TurtleBot3::add_motors()
