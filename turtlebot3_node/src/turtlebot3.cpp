@@ -114,51 +114,21 @@ void TurtleBot3::check_device_status()
       return;
   }
 
+  // Check if motors are connected, retry after longer interval if not
   const int8_t NOT_CONNECTED_MOTOR = -1;
-  const int8_t TIME_TO_INITIALIZE = 5;  // seconds
-  
-  // Perform heartbeat check to verify basic device communication
-  bool device_responding = false;
-  for (int attempt = 0; attempt < 3 && !device_responding; attempt++) {
-    uint8_t test_value = 42;  // Distinctive test value
-    std::string sdk_msg;
+  int8_t device_status = NOT_CONNECTED_MOTOR;
+  for (int i = 0; i < 4; i++) {
+    device_status = dxl_sdk_wrapper_->get_data_from_device<int8_t>(
+      extern_control_table.device_status.addr,
+      extern_control_table.device_status.length);  
     
-    if (dxl_sdk_wrapper_->set_data_to_device(
-          extern_control_table.heartbeat.addr,
-          extern_control_table.heartbeat.length,
-          &test_value,
-          &sdk_msg)) {
-      RCLCPP_INFO(this->get_logger(), "Device responded to heartbeat: %s", sdk_msg.c_str());
-      device_responding = true;
-    } else {
-      RCLCPP_WARN(this->get_logger(), "Device failed to respond to heartbeat on attempt %d, retrying in %d seconds", attempt + 1, TIME_TO_INITIALIZE);
-      rclcpp::sleep_for(std::chrono::seconds(TIME_TO_INITIALIZE));
-    }
-  }
-  
-  // Only attempt to read device status if heartbeat succeeded
-  int8_t device_status = 0;
-  if (device_responding) {
-    try {
-      device_status = dxl_sdk_wrapper_->get_data_from_device<int8_t>(
-        extern_control_table.device_status.addr,
-        extern_control_table.device_status.length);    
-    } catch (...) {
-      RCLCPP_WARN(this->get_logger(), "Failed to read device status despite successful heartbeat");
-      device_status = 0;  // Default to a safe value
-    }
-  } else {
-    RCLCPP_WARN(this->get_logger(), "Skipping device status read due to heartbeat failure");
-    device_status = 0;  // Default to a safe value
-  }
-  
-  switch (device_status) {
-    case NOT_CONNECTED_MOTOR:
-      RCLCPP_WARN(this->get_logger(), "Please double check your Dynamixels and Power");
-      break;
-
-    default:
-      break;
+      if (device_status == NOT_CONNECTED_MOTOR) {
+        RCLCPP_INFO(this->get_logger(), "Motors not yet initialized, retrying in %d seconds", i+1);  
+        rclcpp::sleep_for(std::chrono::seconds(i+1));
+      } else {
+        break;
+      }
+    RCLCPP_WARN(this->get_logger(), "Motors not initialized, please double check your Dynamixels and Power");
   }
 }
 
