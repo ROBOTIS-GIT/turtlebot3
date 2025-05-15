@@ -126,10 +126,13 @@ void TurtleBot3::check_device_status()
         RCLCPP_INFO(this->get_logger(), "Motors not yet initialized, retrying in %d seconds", i+1);  
         rclcpp::sleep_for(std::chrono::seconds(i+1));
       } else {
+        RCLCPP_INFO(this->get_logger(), "Motors successfully initialized");
         break;
       }
   }
-  RCLCPP_WARN(this->get_logger(), "Motors not initialized, please double check your Dynamixels and Power");
+  if (device_status == NOT_CONNECTED_MOTOR) {
+    RCLCPP_WARN(this->get_logger(), "Motors not initialized, please double check your Dynamixels and Power");
+  }
 }
 
 void TurtleBot3::add_motors()
