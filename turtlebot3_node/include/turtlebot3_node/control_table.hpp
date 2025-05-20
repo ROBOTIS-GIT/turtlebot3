@@ -46,8 +46,9 @@ typedef struct
   ControlItem baud_rate = {8, EEPROM, 1, READ};
 
   ControlItem millis = {10, RAM, 4, READ};
-  ControlItem micros = {14, RAM, 4, READ};
+  // ControlItem micros = {14, RAM, 4, READ};  // Does not match firmware
 
+  ControlItem device_ready = {17, RAM, 1, READ};
   ControlItem device_status = {18, RAM, 1, READ};
   ControlItem heartbeat = {19, RAM, 1, READ_WRITE};
 

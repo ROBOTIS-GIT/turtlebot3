@@ -114,24 +114,47 @@ void TurtleBot3::check_device_status()
       return;
   }
 
-  // Check if motors are connected, retry after longer interval if not
-  const int8_t NOT_CONNECTED_MOTOR = -1;
-  int8_t device_status = NOT_CONNECTED_MOTOR;
-  for (int i = 0; i < 4; i++) {
-    device_status = dxl_sdk_wrapper_->get_data_from_device<int8_t>(
-      extern_control_table.device_status.addr,
-      extern_control_table.device_status.length);  
-    
-      if (device_status == NOT_CONNECTED_MOTOR) {
-        RCLCPP_INFO(this->get_logger(), "Motors not yet initialized, retrying in %d seconds", i+1);  
-        rclcpp::sleep_for(std::chrono::seconds(i+1));
-      } else {
-        RCLCPP_INFO(this->get_logger(), "Motors successfully initialized");
-        break;
+  // Wait for device to be fully ready before checking status
+  bool device_ready = false;
+  const int MAX_RETRIES = 4;
+  int retries = 0;
+  
+  while (!device_ready && retries < MAX_RETRIES) {
+    try {
+      device_ready = dxl_sdk_wrapper_->get_data_from_device<bool>(
+        extern_control_table.device_ready.addr,
+        extern_control_table.device_ready.length);
+        
+      if (!device_ready) {
+        RCLCPP_INFO(this->get_logger(), "Waiting %d seconds for device to become ready... (%d/%d)", 
+                   retries+1, retries+1, MAX_RETRIES);
+        rclcpp::sleep_for(std::chrono::seconds(retries+1));
+        retries++;
       }
+    } catch (...) {
+      RCLCPP_WARN(this->get_logger(), "Failed to read device_ready flag, retrying in %d seconds... (%d/%d)",
+                 retries+1, retries+1, MAX_RETRIES);
+      rclcpp::sleep_for(std::chrono::seconds(retries+1));
+      retries++;
+    }
   }
-  if (device_status == NOT_CONNECTED_MOTOR) {
-    RCLCPP_WARN(this->get_logger(), "Motors not initialized, please double check your Dynamixels and Power");
+  
+  // Only check device_status if device is ready
+  if (device_ready) {
+    RCLCPP_INFO(this->get_logger(), "Device is ready, retrieving device status");
+    int8_t device_status = dxl_sdk_wrapper_->get_data_from_device<int8_t>(
+      extern_control_table.device_status.addr,
+      extern_control_table.device_status.length);
+      
+    // Check if motors are connected, retry after longer interval if not
+    const int8_t NOT_CONNECTED_MOTOR = -1;
+    if (device_status == NOT_CONNECTED_MOTOR) {
+      RCLCPP_INFO(this->get_logger(), "Motors not  initialized");
+    } else {
+      RCLCPP_INFO(this->get_logger(), "Motors successfully initialized");
+    }
+  } else {
+    RCLCPP_WARN(this->get_logger(), "Device did not become ready in time, skipping device status check");
   }
 }
 
