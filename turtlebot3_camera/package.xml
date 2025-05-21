@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>camera_ros</name>
+  <version>0.4.0</version>
+  <description>node for libcamera supported cameras (V4L2, Raspberry Pi Camera Modules)</description>
+  <maintainer email="Rauch.Christian@gmx.de">Christian Rauch</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend version_gte="0.1">libcamera</depend>
+  <depend>rclcpp</depend>
+  <depend>rclcpp_components</depend>
+  <depend>sensor_msgs</depend>
+  <depend>camera_info_manager</depend>
+  <depend>cv_bridge</depend>
+
+  <exec_depend>ros2launch</exec_depend>
+  <exec_depend>ament_index_python</exec_depend>
+  <exec_depend condition="$ROS_DISTRO != 'humble'">image_view</exec_depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_cmake_clang_format</test_depend>
+  <test_depend>clang-format</test_depend>
+  <test_depend>ament_cmake_cppcheck</test_depend>
+  <test_depend>ament_cmake_flake8</test_depend>
+  <test_depend>ament_cmake_lint_cmake</test_depend>
+  <test_depend>ament_cmake_mypy</test_depend>
+  <test_depend>ament_cmake_pep257</test_depend>
+  <test_depend>ament_cmake_pyflakes</test_depend>
+  <test_depend>ament_cmake_xmllint</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
