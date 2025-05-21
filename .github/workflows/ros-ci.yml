@@ -54,6 +54,8 @@ jobs:
         run: |
           set -e
           source /opt/ros/${{ matrix.ros_distribution }}/setup.bash
+          echo "--- Updating rosdep definitions ---"
+          rosdep update
           echo "--- Performing rosdep check for ROS 2 ${{ matrix.ros_distribution }} ---"
           if rosdep check --from-paths src --ignore-src --rosdistro ${{ matrix.ros_distribution }}; then
             echo "--- rosdep check passed ---"
