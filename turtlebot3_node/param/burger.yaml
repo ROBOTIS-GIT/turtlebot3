@@ -1,6 +1,6 @@
 turtlebot3_node:
   ros__parameters:
-
+#今日の天気
     opencr:
       id: 200
       baud_rate: 1000000
