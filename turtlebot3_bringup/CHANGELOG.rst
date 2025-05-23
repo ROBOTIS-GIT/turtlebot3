@@ -2,6 +2,11 @@
 Changelog for package turtlebot3_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.3.0 (2025-05-23)
+------------------
+* added launch file using camera_ros to reslove camera cropping issue
+* Contributor: YeonSoo Noh
+
 2.2.9 (2025-04-15)
 ------------------
 * None
