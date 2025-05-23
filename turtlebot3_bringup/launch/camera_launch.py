@@ -1,5 +1,4 @@
-#!/usr/bin/env python3
-#
+# Copyright 2021 Christian Rauch
 # Copyright 2025 ROBOTIS CO., LTD.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Authors: YeonSoo Noh
+# Portions of this file are based on https://github.com/christianrauch/camera_ros
+# Originally licensed under the MIT License
+
 
 from ament_index_python.resources import has_resource
 
