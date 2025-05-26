@@ -55,6 +55,7 @@ jobs:
           set -e
           source /opt/ros/${{ matrix.ros_distribution }}/setup.bash
           echo "--- Updating rosdep definitions ---"
+          sudo rosdep init || true
           rosdep update
           echo "--- Installing system dependencies for ROS 2 ${{ matrix.ros_distribution }} ---"
           rosdep install --from-paths ros_ws/src --ignore-src -y -r --rosdistro ${{ matrix.ros_distribution }}
