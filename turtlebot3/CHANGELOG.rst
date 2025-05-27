@@ -4,11 +4,12 @@ Changelog for package turtlebot3
 
 2.3.0 (2025-05-23)
 ------------------
-* None
+* Added launch file using camera_ros to reslove camera cropping issue
+* Contributor: YeonSoo Noh
 
 2.2.9 (2025-04-15)
 ------------------
-* fixed typo error in urdf
+* Fixed typo error in urdf
 * Contributors: Hyungyu Kim
 
 2.2.8 (2025-04-11)
