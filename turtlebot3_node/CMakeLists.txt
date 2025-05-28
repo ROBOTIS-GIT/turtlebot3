@@ -52,29 +52,32 @@ add_library(${PROJECT_NAME}_lib
   "src/sensors/sensor_state.cpp"
 )
 
-set(DEPENDENCIES
-  "dynamixel_sdk"
-  "geometry_msgs"
-  "message_filters"
-  "nav_msgs"
-  "rclcpp"
-  "rcutils"
-  "sensor_msgs"
-  "std_msgs"
-  "std_srvs"
-  "tf2"
-  "tf2_ros"
-  "turtlebot3_msgs"
+target_include_directories(${PROJECT_NAME}_lib PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>
+  ${dynamixel_sdk_INCLUDE_DIRS}
+)
+target_link_libraries(${PROJECT_NAME}_lib
+  ${dynamixel_sdk_LIBRARIES}
+  ${geometry_msgs_TARGETS}
+  ${message_filters_TARGETS}
+  ${nav_msgs_TARGETS}
+  ${sensor_msgs_TARGETS}
+  ${std_msgs_TARGETS}
+  ${std_srvs_TARGETS}
+  ${turtlebot3_msgs_TARGETS}
+  message_filters::message_filters
+  rclcpp::rclcpp
+  rcutils::rcutils
+  tf2::tf2
+  tf2_ros::tf2_ros
 )
 
-target_link_libraries(${PROJECT_NAME}_lib)
-ament_target_dependencies(${PROJECT_NAME}_lib ${DEPENDENCIES})
-
 set(EXECUTABLE_NAME "turtlebot3_ros")
-
 add_executable(${EXECUTABLE_NAME} src/node_main.cpp)
-target_link_libraries(${EXECUTABLE_NAME} ${PROJECT_NAME}_lib)
-ament_target_dependencies(${EXECUTABLE_NAME} ${DEPENDENCIES})
+target_link_libraries(${EXECUTABLE_NAME}
+  ${PROJECT_NAME}_lib
+)
 
 ################################################################################
 # Install
@@ -84,11 +87,28 @@ install(DIRECTORY param
 )
 
 install(TARGETS ${EXECUTABLE_NAME}
+  EXPORT ${PROJECT_NAME}
   DESTINATION lib/${PROJECT_NAME}
 )
 
 ################################################################################
 # Macro for ament package
 ################################################################################
+ament_export_libraries(${PROJECT_NAME})
+ament_export_targets(${PROJECT_NAME})
+ament_export_dependencies(
+  dynamixel_sdk
+  geometry_msgs
+  message_filters
+  nav_msgs
+  rclcpp
+  rcutils
+  sensor_msgs
+  std_msgs
+  std_srvs
+  tf2
+  tf2_ros
+  turtlebot3_msgs
+)
 ament_export_include_directories(include)
 ament_package()
