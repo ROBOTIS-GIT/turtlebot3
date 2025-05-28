@@ -60,7 +60,6 @@ target_include_directories(${PROJECT_NAME}_lib PUBLIC
 target_link_libraries(${PROJECT_NAME}_lib
   ${dynamixel_sdk_LIBRARIES}
   ${geometry_msgs_TARGETS}
-  ${message_filters_TARGETS}
   ${nav_msgs_TARGETS}
   ${sensor_msgs_TARGETS}
   ${std_msgs_TARGETS}
