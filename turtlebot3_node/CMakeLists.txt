@@ -87,15 +87,12 @@ install(DIRECTORY param
 )
 
 install(TARGETS ${EXECUTABLE_NAME}
-  EXPORT ${PROJECT_NAME}
   DESTINATION lib/${PROJECT_NAME}
 )
 
 ################################################################################
 # Macro for ament package
 ################################################################################
-ament_export_libraries(${PROJECT_NAME})
-ament_export_targets(${PROJECT_NAME})
 ament_export_dependencies(
   dynamixel_sdk
   geometry_msgs
