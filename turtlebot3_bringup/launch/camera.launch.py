@@ -1,5 +1,4 @@
-#!/usr/bin/env python3
-#
+# Copyright 2021 Christian Rauch
 # Copyright 2025 ROBOTIS CO., LTD.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,6 +12,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
+# Portions of this file are based on https://github.com/christianrauch/camera_ros
+# Originally licensed under the MIT License
 
 
 from ament_index_python.resources import has_resource
@@ -61,6 +63,24 @@ def generate_launch_description() -> LaunchDescription:
         description='Whether to launch image_view (true/false)'
     )
 
+    width_name = 'width'
+    width_default = '640'
+    width_param = LaunchConfiguration(width_name)
+    width_launch_arg = DeclareLaunchArgument(
+        width_name,
+        default_value=width_default,
+        description='Camera image width'
+    )
+
+    height_name = 'height'
+    height_default = '480'
+    height_param = LaunchConfiguration(height_name)
+    height_launch_arg = DeclareLaunchArgument(
+        height_name,
+        default_value=height_default,
+        description='Camera image height'
+    )
+
     composable_nodes = [
         ComposableNode(
             package='camera_ros',
@@ -68,8 +88,8 @@ def generate_launch_description() -> LaunchDescription:
             parameters=[{
                 'camera': camera_param,
                 'sensor_mode': '1640:1232',
-                'width': 320,
-                'height': 240,
+                'width': width_param,
+                'height': height_param,
                 'format': format_param,
             }],
             extra_arguments=[{'use_intra_process_comms': True}],
@@ -99,5 +119,7 @@ def generate_launch_description() -> LaunchDescription:
         camera_launch_arg,
         format_launch_arg,
         use_image_view_launch_arg,
+        width_launch_arg,
+        height_launch_arg,
         container,
     ])
