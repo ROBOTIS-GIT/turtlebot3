@@ -117,5 +117,7 @@ def generate_launch_description() -> LaunchDescription:
         camera_launch_arg,
         format_launch_arg,
         use_image_view_launch_arg,
+        width_launch_arg,
+        height_launch_arg,
         container,
     ])
