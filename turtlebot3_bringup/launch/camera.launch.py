@@ -61,6 +61,24 @@ def generate_launch_description() -> LaunchDescription:
         description='Whether to launch image_view (true/false)'
     )
 
+    width_name = 'width'
+    width_default = '640'
+    width_param = LaunchConfiguration(width_name)
+    width_launch_arg = DeclareLaunchArgument(
+        width_name,
+        default_value=width_default,
+        description='Camera image width'
+    )
+
+    height_name = 'height'
+    height_default = '480'
+    height_param = LaunchConfiguration(height_name)
+    height_launch_arg = DeclareLaunchArgument(
+        height_name,
+        default_value=height_default,
+        description='Camera image height'
+    )
+
     composable_nodes = [
         ComposableNode(
             package='camera_ros',
@@ -68,8 +86,8 @@ def generate_launch_description() -> LaunchDescription:
             parameters=[{
                 'camera': camera_param,
                 'sensor_mode': '1640:1232',
-                'width': 320,
-                'height': 240,
+                'width': width_param,
+                'height': height_param,
                 'format': format_param,
             }],
             extra_arguments=[{'use_intra_process_comms': True}],
