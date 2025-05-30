@@ -2,9 +2,20 @@
 Changelog for package turtlebot3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.3.1 (2025-05-30)
+------------------
+* Deprecate ament_include_dependency usage in CMakeLists.txt
+* Added launch arguments to camera.launch.py file to configure the camera image resolution at runtime via the CLI
+* Contributor: Hyungyu Kim, YeonSoo Noh
+
+2.3.0 (2025-05-23)
+------------------
+* Added a launch file using camera_ros to resolve the camera cropping issue
+* Contributor: YeonSoo Noh
+
 2.2.9 (2025-04-15)
 ------------------
-* fixed typo error in urdf
+* Fixed typo error in urdf
 * Contributors: Hyungyu Kim
 
 2.2.8 (2025-04-11)

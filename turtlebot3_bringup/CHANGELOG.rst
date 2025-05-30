@@ -2,6 +2,16 @@
 Changelog for package turtlebot3_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.3.1 (2025-05-30)
+------------------
+* Added launch arguments to camera.launch.py file to configure the camera image resolution at runtime via the CLI
+* Contributor: YeonSoo Noh
+
+2.3.0 (2025-05-23)
+------------------
+* Added a launch file using camera_ros to resolve the camera cropping issue
+* Contributor: YeonSoo Noh
+
 2.2.9 (2025-04-15)
 ------------------
 * None
