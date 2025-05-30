@@ -2,6 +2,11 @@
 Changelog for package turtlebot3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.3.1 (2025-05-28)
+------------------
+* Deprecate ament_include_dependency usage in CMakeLists.txt
+* Contributor: Hyungyu Kim
+
 2.3.0 (2025-05-23)
 ------------------
 * Added a launch file using camera_ros to reslove the camera cropping issue
