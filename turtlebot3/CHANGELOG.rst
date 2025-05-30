@@ -2,10 +2,11 @@
 Changelog for package turtlebot3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-2.3.1 (2025-05-28)
+2.3.1 (2025-05-30)
 ------------------
 * Deprecate ament_include_dependency usage in CMakeLists.txt
-* Contributor: Hyungyu Kim
+* Added launch arguments to camera.launch.py file to configure the camera image resolution at runtime via the CLI
+* Contributor: Hyungyu Kim, YeonSoo Noh
 
 2.3.0 (2025-05-23)
 ------------------

@@ -2,7 +2,7 @@
 Changelog for package turtlebot3_node
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-2.3.1 (2025-05-28)
+2.3.1 (2025-05-30)
 ------------------
 * Deprecate ament_include_dependency usage in CMakeLists.txt
 * Contributor: Hyungyu Kim
