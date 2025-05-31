@@ -98,7 +98,6 @@ void TurtleBot3::check_device_status()
   if (dxl_sdk_wrapper_->is_connected_to_device()) {
     std::string sdk_msg;
     uint8_t reset = 1;
-    uint8_t calibration_wait_time = 5;  // seconds
 
     dxl_sdk_wrapper_->set_data_to_device(
       extern_control_table.imu_re_calibration.addr,
@@ -106,10 +105,9 @@ void TurtleBot3::check_device_status()
       &reset,
       &sdk_msg);
 
-      RCLCPP_INFO(this->get_logger(), "Start %d seconds calibration of Gyro ", calibration_wait_time);
-      rclcpp::sleep_for(std::chrono::seconds(calibration_wait_time));
-      RCLCPP_INFO(this->get_logger(), "Calibration End, waiting %d seconds for device to be ready", calibration_wait_time);
-      rclcpp::sleep_for(std::chrono::seconds(5));  // HOT MESS FIX
+      RCLCPP_INFO(this->get_logger(), "Start Calibration of Gyro");
+      rclcpp::sleep_for(std::chrono::seconds(5));
+      RCLCPP_INFO(this->get_logger(), "Calibration End");
     } else {
       RCLCPP_ERROR(this->get_logger(), "Failed connection with Devices");
       rclcpp::shutdown();
