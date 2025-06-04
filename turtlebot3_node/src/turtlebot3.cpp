@@ -246,11 +246,11 @@ void TurtleBot3::add_sensors()
       is_connected_ir,
       is_connected_sonar));
 
-  sensors_.push_back(
-    new sensors::AnalogPins(
-      node_handle_,
-      "analog_pins"));
-      
+  // Create and store pointer to analog pins sensor
+  analog_pins_sensor_ = new sensors::AnalogPins(
+    node_handle_,
+    "analog_pins");
+  sensors_.push_back(analog_pins_sensor_);
 
   RCLCPP_INFO(this->get_logger(), "Successfully added all sensors");
 
@@ -278,7 +278,8 @@ void TurtleBot3::run()
 {
   RCLCPP_INFO(this->get_logger(), "Run!");
 
-  publish_timer(std::chrono::milliseconds(50));
+  publish_timer(std::chrono::milliseconds(50));  // 20 Hz for other sensors
+  analog_pins_timer(std::chrono::milliseconds(250));  // 4 Hz for analog pins
   heartbeat_timer(std::chrono::milliseconds(100));
 
   parameter_event_callback();
@@ -297,6 +298,20 @@ void TurtleBot3::publish_timer(const std::chrono::milliseconds timeout)
 
       for (const auto & sensor : sensors_) {
         sensor->publish(now, dxl_sdk_wrapper_);
+      }
+    }
+  );
+}
+
+void TurtleBot3::analog_pins_timer(const std::chrono::milliseconds timeout)
+{
+  analog_pins_timer_ = this->create_wall_timer(
+    timeout,
+    [this]() -> void
+    {
+      rclcpp::Time now = this->now();
+      if (analog_pins_sensor_) {
+        analog_pins_sensor_->publish(now, dxl_sdk_wrapper_);
       }
     }
   );
