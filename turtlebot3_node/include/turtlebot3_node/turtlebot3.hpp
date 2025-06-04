@@ -90,6 +90,7 @@ private:
 
   void publish_timer(const std::chrono::milliseconds timeout);
   void heartbeat_timer(const std::chrono::milliseconds timeout);
+  void analog_pins_timer(const std::chrono::milliseconds timeout);
 
   void cmd_vel_callback();
   void parameter_event_callback();
@@ -108,11 +109,14 @@ private:
 
   rclcpp::TimerBase::SharedPtr publish_timer_;
   rclcpp::TimerBase::SharedPtr heartbeat_timer_;
+  rclcpp::TimerBase::SharedPtr analog_pins_timer_;
 
   std::unique_ptr<TwistSubscriber> cmd_vel_sub_;
 
   rclcpp::AsyncParametersClient::SharedPtr priv_parameters_client_;
   rclcpp::Subscription<rcl_interfaces::msg::ParameterEvent>::SharedPtr parameter_event_sub_;
+
+  sensors::AnalogPins * analog_pins_sensor_;
 };
 }  // namespace turtlebot3
 }  // namespace robotis
