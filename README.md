@@ -11,11 +11,11 @@ This repo is part of the larger project [ez-turtlebot3](https://github.com/ez-tu
 1. If you haven't already, follow the Humble instructions for the [TurtleBot3 SBC setup](https://emanual.robotis.com/docs/en/platform/turtlebot3/sbc_setup/#sbc-setup)
 2. Replace the turtlebot3 repo with the analog-enabled fork
   * `cd ~/turtlebot3_ws/src`
-  * `rm -r turtlebot3`
+  * `rm -rf turtlebot3`
   * `git clone https://github.com/ez-turtlebot3/turtlebot3`
-  * `cd turtlebot3`
 3. Rebuild the turtlebot3_node
-  * `colcon build --symlink-install --packages-select turtlebot3_node --allow-overriding turtlebot3_node`
+  * `cd ~/turtlebot3_ws`
+  * `colcon build --packages-select turtlebot3_node`
 
 # Use
 1. Launch the TurtleBot with the same bringup command as before
