@@ -46,8 +46,9 @@ typedef struct
   ControlItem baud_rate = {8, EEPROM, 1, READ};
 
   ControlItem millis = {10, RAM, 4, READ};
-  ControlItem micros = {14, RAM, 4, READ};
+  // ControlItem micros = {14, RAM, 4, READ};  // Does not match firmware
 
+  ControlItem device_ready = {17, RAM, 1, READ};
   ControlItem device_status = {18, RAM, 1, READ};
   ControlItem heartbeat = {19, RAM, 1, READ_WRITE};
 
@@ -105,6 +106,13 @@ typedef struct
 
   ControlItem profile_acceleration_left = {174, RAM, 4, READ_WRITE};
   ControlItem profile_acceleration_right = {178, RAM, 4, READ_WRITE};
+
+  ControlItem analog_a0 = {350, RAM, 2, READ};
+  ControlItem analog_a1 = {352, RAM, 2, READ};
+  ControlItem analog_a2 = {354, RAM, 2, READ};
+  ControlItem analog_a3 = {356, RAM, 2, READ};
+  ControlItem analog_a4 = {358, RAM, 2, READ};
+  ControlItem analog_a5 = {360, RAM, 2, READ};
 } ControlTable;
 
 const ControlTable extern_control_table;
