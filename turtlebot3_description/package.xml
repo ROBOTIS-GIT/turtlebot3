@@ -16,6 +16,7 @@
   <author email="willson@robotis.com">Will Son</author>
   <buildtool_depend>ament_cmake</buildtool_depend>
   <depend>urdf</depend>
+  <depend>xacro</depend>
   <export>
     <build_type>ament_cmake</build_type>
   </export>
