@@ -2,6 +2,11 @@
 Changelog for package turtlebot3_node
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.3.2 (2025-07-08)
+------------------
+* Added class member variable initialization statement in the odometry node
+* Contributor: Hyungyu Kim
+
 2.3.1 (2025-05-30)
 ------------------
 * Deprecate ament_include_dependency usage in CMakeLists.txt

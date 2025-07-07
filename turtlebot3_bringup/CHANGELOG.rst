@@ -2,6 +2,10 @@
 Changelog for package turtlebot3_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.3.2 (2025-07-08)
+------------------
+* None
+
 2.3.1 (2025-05-30)
 ------------------
 * Added launch arguments to camera.launch.py file to configure the camera image resolution at runtime via the CLI
