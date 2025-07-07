@@ -35,7 +35,7 @@ Odometry::Odometry(
   last_theta_initialized_(false),
   imu_angle_(0.0f),
   robot_pose_({0.0, 0.0, 0.0}),
-  robot_vel_({0.0, 0.0, 0.0}),
+  robot_vel_({0.0, 0.0, 0.0})
 {
   RCLCPP_INFO(nh_->get_logger(), "Init Odometry");
 
