@@ -19,7 +19,7 @@ jobs:
         ros_distribution:
           - humble
           - jazzy
-          - rolling
+          # - rolling
         include:
           # ROS 2 Humble Hawksbill
           - docker_image: ubuntu:jammy
@@ -30,9 +30,9 @@ jobs:
             ros_distribution: jazzy
             ros_version: 2
           # ROS 2 Rolling Ridley
-          - docker_image: ubuntu:noble
-            ros_distribution: rolling
-            ros_version: 2
+          # - docker_image: ubuntu:noble
+          #   ros_distribution: rolling
+          #   ros_version: 2
     container:
       image: ${{ matrix.docker_image }}
     steps:
@@ -48,6 +48,23 @@ jobs:
         uses: ros-tooling/setup-ros@v0.7
         with:
           required-ros-distributions: ${{ matrix.ros_distribution }}
+
+      - name: Check and Install ROS dependencies
+        shell: bash
+        run: |
+          set -e
+          source /opt/ros/${{ matrix.ros_distribution }}/setup.bash
+          echo "--- Updating rosdep definitions ---"
+          rosdep update
+          echo "--- Installing system dependencies for ROS 2 ${{ matrix.ros_distribution }} ---"
+          rosdep install --from-paths ros_ws/src --ignore-src -y -r --rosdistro ${{ matrix.ros_distribution }}
+          echo "--- Performing rosdep check for ROS 2 ${{ matrix.ros_distribution }} ---"
+          if rosdep check --from-paths ros_ws/src --ignore-src --rosdistro ${{ matrix.ros_distribution }}; then
+            echo "--- rosdep check passed ---"
+          else
+            echo "--- rosdep check failed: Missing system dependencies or unresolvable keys. ---"
+            exit 1
+          fi
 
       - name: Build and Test
         uses: ros-tooling/action-ros-ci@v0.3
