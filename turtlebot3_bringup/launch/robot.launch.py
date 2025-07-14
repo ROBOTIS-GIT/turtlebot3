@@ -64,6 +64,11 @@ def generate_launch_description():
             'lidar_pkg_dir',
             default=os.path.join(get_package_share_directory('ld08_driver'), 'launch'))
         LDS_LAUNCH_FILE = '/ld08.launch.py'
+    elif LDS_MODEL == 'LDS-03':
+        lidar_pkg_dir = LaunchConfiguration(
+            'lidar_pkg_dir',
+            default=os.path.join(get_package_share_directory('coin_d4_driver'), 'launch'))
+        LDS_LAUNCH_FILE = '/single_lidar_node.launch.py'
     else:
         lidar_pkg_dir = LaunchConfiguration(
             'lidar_pkg_dir',
