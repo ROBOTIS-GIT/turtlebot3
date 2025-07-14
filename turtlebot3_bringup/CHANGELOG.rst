@@ -2,6 +2,11 @@
 Changelog for package turtlebot3_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.3.3 (2025-07-11)
+------------------
+* Supported COIN D4 LIDAR(ld03)
+* Contributors: Hyungyu Kim
+
 2.3.2 (2025-07-08)
 ------------------
 * None
