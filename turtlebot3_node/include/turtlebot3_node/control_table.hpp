@@ -52,10 +52,10 @@ typedef struct
   ControlItem device_status = {18, RAM, 1, READ};
   ControlItem heartbeat = {19, RAM, 1, READ_WRITE};
 
-  ControlItem external_led_1 = {20, RAM, 1, READ_WRITE};
-  ControlItem external_led_2 = {21, RAM, 1, READ_WRITE};
-  ControlItem external_led_3 = {22, RAM, 1, READ_WRITE};
-  ControlItem external_led_4 = {23, RAM, 1, READ_WRITE};
+  ControlItem external_led_1 = {20, RAM, 1, READ_WRITE};  // FW: ADDR_USER_LED_1
+  ControlItem external_led_2 = {21, RAM, 1, READ_WRITE};  // FW: ADDR_USER_LED_2
+  ControlItem external_led_3 = {22, RAM, 1, READ_WRITE};  // FW: ADDR_USER_LED_3
+  ControlItem external_led_4 = {23, RAM, 1, READ_WRITE};  // FW: ADDR_USER_LED_4
 
   ControlItem button_1 = {26, RAM, 1, READ};
   ControlItem button_2 = {27, RAM, 1, READ};
@@ -63,9 +63,16 @@ typedef struct
   ControlItem bumper_1 = {28, RAM, 1, READ};
   ControlItem bumper_2 = {29, RAM, 1, READ};
 
-  ControlItem illumination = {30, RAM, 4, READ};
-  ControlItem ir = {34, RAM, 4, READ};
-  ControlItem sonar = {38, RAM, 4, READ};
+  // ControlItem illumination = {30, RAM, 4, READ};
+  // ControlItem ir = {34, RAM, 4, READ};
+  // ControlItem sonar = {38, RAM, 4, READ};
+
+  ControlItem analog_a0 = {30, RAM, 2, READ};
+  ControlItem analog_a1 = {32, RAM, 2, READ};
+  ControlItem analog_a2 = {34, RAM, 2, READ};
+  ControlItem analog_a3 = {36, RAM, 2, READ};
+  ControlItem analog_a4 = {38, RAM, 2, READ};
+  ControlItem analog_a5 = {40, RAM, 2, READ};
 
   ControlItem battery_voltage = {42, RAM, 4, READ};
   ControlItem battery_percentage = {46, RAM, 4, READ};
@@ -95,7 +102,8 @@ typedef struct
   ControlItem present_position_left = {136, RAM, 4, READ};
   ControlItem present_position_right = {140, RAM, 4, READ};
 
-  ControlItem motor_torque_enable = {149, RAM, 1, READ_WRITE};
+  // Missing: ADDR_MOTOR_CONNECT = 148 (FW has this but control table doesn't)
+  ControlItem motor_torque_enable = {149, RAM, 1, READ_WRITE};  // FW: ADDR_MOTOR_TORQUE
 
   ControlItem cmd_velocity_linear_x = {150, RAM, 4, READ_WRITE};
   ControlItem cmd_velocity_linear_y = {154, RAM, 4, READ_WRITE};
@@ -107,12 +115,6 @@ typedef struct
   ControlItem profile_acceleration_left = {174, RAM, 4, READ_WRITE};
   ControlItem profile_acceleration_right = {178, RAM, 4, READ_WRITE};
 
-  ControlItem analog_a0 = {350, RAM, 2, READ};
-  ControlItem analog_a1 = {352, RAM, 2, READ};
-  ControlItem analog_a2 = {354, RAM, 2, READ};
-  ControlItem analog_a3 = {356, RAM, 2, READ};
-  ControlItem analog_a4 = {358, RAM, 2, READ};
-  ControlItem analog_a5 = {360, RAM, 2, READ};
 } ControlTable;
 
 const ControlTable extern_control_table;
