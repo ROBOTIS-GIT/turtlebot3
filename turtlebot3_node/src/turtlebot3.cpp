@@ -28,15 +28,15 @@ TurtleBot3::TurtleBot3(const std::string & usb_port)
   RCLCPP_INFO(get_logger(), "Init TurtleBot3 Node Main");
   node_handle_ = std::shared_ptr<::rclcpp::Node>(this, [](::rclcpp::Node *) {});
 
-    init_dynamixel_sdk_wrapper(usb_port);
-    check_device_status();
+  init_dynamixel_sdk_wrapper(usb_port);
+  check_device_status();
 
-    add_motors();
-    add_wheels();
-    add_sensors();
-    add_devices();
+  add_motors();
+  add_wheels();
+  add_sensors();
+  add_devices();
 
-    run();
+  run();
 }
 
 TurtleBot3::Wheels * TurtleBot3::get_wheels()
@@ -66,35 +66,15 @@ void TurtleBot3::init_dynamixel_sdk_wrapper(const std::string & usb_port)
 
   dxl_sdk_wrapper_ = std::make_shared<DynamixelSDKWrapper>(opencr);
 
-  // Initialize the main control table range (original range)
   dxl_sdk_wrapper_->init_read_memory(
     extern_control_table.millis.addr,
     (extern_control_table.profile_acceleration_right.addr - extern_control_table.millis.addr) +
     extern_control_table.profile_acceleration_right.length
   );
-  
-  // Add a separate initialization for the analog pins range
-  // dxl_sdk_wrapper_->init_read_memory(
-  //   extern_control_table.analog_a0.addr,
-  //   (extern_control_table.analog_a5.addr - extern_control_table.analog_a0.addr) +
-  //   extern_control_table.analog_a5.length
-  // );
 }
 
-/**
- * @brief Checks the status of connected devices and performs device initialization.
- *
- * This method verifies the connection to devices, performs IMU gyro calibration,
- * and checks the device status. If no connection is established, it logs an error
- * and shuts down the ROS node. The method includes a device status check and 
- * provides a warning if motors are not connected.
- *
- * @note Includes a 5-second sleep to allow device initialization and calibration.
- * @throws Shuts down ROS node if device connection fails.
- */
 void TurtleBot3::check_device_status()
 {
-  // Check if device is connected and perform IMU gyroscope calibration
   if (dxl_sdk_wrapper_->is_connected_to_device()) {
     std::string sdk_msg;
     uint8_t reset = 1;
@@ -105,56 +85,28 @@ void TurtleBot3::check_device_status()
       &reset,
       &sdk_msg);
 
-      RCLCPP_INFO(this->get_logger(), "Start Calibration of Gyro");
-      rclcpp::sleep_for(std::chrono::seconds(5));
-      RCLCPP_INFO(this->get_logger(), "Calibration End");
-    } else {
-      RCLCPP_ERROR(this->get_logger(), "Failed connection with Devices");
-      rclcpp::shutdown();
-      return;
+    RCLCPP_INFO(this->get_logger(), "Start Calibration of Gyro");
+    rclcpp::sleep_for(std::chrono::seconds(5));
+    RCLCPP_INFO(this->get_logger(), "Calibration End");
+  } else {
+    RCLCPP_ERROR(this->get_logger(), "Failed connection with Devices");
+    rclcpp::shutdown();
+    return;
   }
 
-  // Wait for device to be fully ready before checking status
-  bool device_ready = false;
-  const int MAX_RETRIES = 4;
-  int retries = 0;
-  
-  while (!device_ready && retries < MAX_RETRIES) {
-    try {
-      device_ready = dxl_sdk_wrapper_->get_data_from_device<bool>(
-        extern_control_table.device_ready.addr,
-        extern_control_table.device_ready.length);
-        
-      if (!device_ready) {
-        RCLCPP_INFO(this->get_logger(), "Waiting %d seconds for device to become ready... (%d/%d)", 
-                   retries+1, retries+1, MAX_RETRIES);
-        rclcpp::sleep_for(std::chrono::seconds(retries+1));
-        retries++;
-      }
-    } catch (...) {
-      RCLCPP_WARN(this->get_logger(), "Failed to read device_ready flag, retrying in %d seconds... (%d/%d)",
-                 retries+1, retries+1, MAX_RETRIES);
-      rclcpp::sleep_for(std::chrono::seconds(retries+1));
-      retries++;
-    }
-  }
-  
-  // Only check device_status if device is ready
-  if (device_ready) {
-    RCLCPP_INFO(this->get_logger(), "Device is ready, retrieving device status");
-    int8_t device_status = dxl_sdk_wrapper_->get_data_from_device<int8_t>(
-      extern_control_table.device_status.addr,
-      extern_control_table.device_status.length);
-      
-    // Check if motors are connected, retry after longer interval if not
-    const int8_t NOT_CONNECTED_MOTOR = -1;
-    if (device_status == NOT_CONNECTED_MOTOR) {
-      RCLCPP_INFO(this->get_logger(), "Motors not  initialized");
-    } else {
-      RCLCPP_INFO(this->get_logger(), "Motors successfully initialized");
-    }
-  } else {
-    RCLCPP_WARN(this->get_logger(), "Device did not become ready in time, skipping device status check");
+  const int8_t NOT_CONNECTED_MOTOR = -1;
+
+  int8_t device_status = dxl_sdk_wrapper_->get_data_from_device<int8_t>(
+    extern_control_table.device_status.addr,
+    extern_control_table.device_status.length);
+
+  switch (device_status) {
+    case NOT_CONNECTED_MOTOR:
+      RCLCPP_WARN(this->get_logger(), "Please double check your Dynamixels and Power");
+      break;
+
+    default:
+      break;
   }
 }
 
@@ -246,14 +198,6 @@ void TurtleBot3::add_sensors()
       is_connected_ir,
       is_connected_sonar));
 
-  // Create and store pointer to analog pins sensor
-  // analog_pins_sensor_ = new sensors::AnalogPins(
-  //   node_handle_,
-  //   "analog_pins");
-  // sensors_.push_back(analog_pins_sensor_);
-
-  RCLCPP_INFO(this->get_logger(), "Successfully added all sensors");
-
   dxl_sdk_wrapper_->read_data_set();
   sensors_.push_back(
     new sensors::JointState(
@@ -278,8 +222,7 @@ void TurtleBot3::run()
 {
   RCLCPP_INFO(this->get_logger(), "Run!");
 
-  publish_timer(std::chrono::milliseconds(50));  // 20 Hz for other sensors
-  // analog_pins_timer(std::chrono::milliseconds(250));  // 4 Hz for analog pins
+  publish_timer(std::chrono::milliseconds(50));
   heartbeat_timer(std::chrono::milliseconds(100));
 
   parameter_event_callback();
@@ -302,20 +245,6 @@ void TurtleBot3::publish_timer(const std::chrono::milliseconds timeout)
     }
   );
 }
-
-// void TurtleBot3::analog_pins_timer(const std::chrono::milliseconds timeout)
-// {
-//   analog_pins_timer_ = this->create_wall_timer(
-//     timeout,
-//     [this]() -> void
-//     {
-//       rclcpp::Time now = this->now();
-//       if (analog_pins_sensor_) {
-//         analog_pins_sensor_->publish(now, dxl_sdk_wrapper_);
-//       }
-//     }
-//   );
-// }
 
 void TurtleBot3::heartbeat_timer(const std::chrono::milliseconds timeout)
 {
