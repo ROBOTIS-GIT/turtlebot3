@@ -29,6 +29,27 @@ AnalogPins::AnalogPins(
 
   analog_publisher_ = nh->create_publisher<std_msgs::msg::UInt16MultiArray>(topic_name, qos);
 
+  // Read analog pin configuration from parameters
+  nh->declare_parameter<std::vector<int>>("sensors.analog_pins");
+  nh->get_parameter_or<std::vector<int>>("sensors.analog_pins", configured_pins_, {0, 1, 2, 3, 4, 5});
+
+  // Validate pin numbers (must be 0-5)
+  for (auto pin : configured_pins_) {
+    if (pin < 0 || pin > 5) {
+      RCLCPP_WARN(nh->get_logger(), "Invalid analog pin %d, must be 0-5", pin);
+    }
+  }
+
+  RCLCPP_INFO(nh->get_logger(), "Analog pins configured for pins: [%s]", 
+    [this]() {
+      std::string pins_str;
+      for (size_t i = 0; i < configured_pins_.size(); ++i) {
+        pins_str += std::to_string(configured_pins_[i]);
+        if (i < configured_pins_.size() - 1) pins_str += ", ";
+      }
+      return pins_str;
+    }().c_str());
+
   RCLCPP_INFO(nh->get_logger(), "Succeeded to create analog pins publisher");
 }
 
@@ -41,35 +62,37 @@ void AnalogPins::publish(
   try {
     auto analog_msg = std::make_unique<std_msgs::msg::UInt16MultiArray>();
     
-    // Set up dimensions for the message
+    // Set up dimensions for the message based on configured pins
     analog_msg->layout.dim.push_back(std_msgs::msg::MultiArrayDimension());
     analog_msg->layout.dim[0].label = "analog_pins";
-    analog_msg->layout.dim[0].size = 6;
-    analog_msg->layout.dim[0].stride = 6;
+    analog_msg->layout.dim[0].size = configured_pins_.size();
+    analog_msg->layout.dim[0].stride = configured_pins_.size();
     analog_msg->layout.data_offset = 0;
     
-    // Initialize data array to hold 6 pin values
-    analog_msg->data.resize(6);
+    // Initialize data array to hold configured pin values
+    analog_msg->data.resize(configured_pins_.size());
     
-    // Read values from all 6 analog pins (A0-A5)
-    analog_msg->data[0] = dxl_sdk_wrapper->get_data_from_device<uint16_t>(
-        extern_control_table.analog_a0.addr,
-        extern_control_table.analog_a0.length);
-    analog_msg->data[1] = dxl_sdk_wrapper->get_data_from_device<uint16_t>(
-        extern_control_table.analog_a1.addr,
-        extern_control_table.analog_a1.length);
-    analog_msg->data[2] = dxl_sdk_wrapper->get_data_from_device<uint16_t>(
-        extern_control_table.analog_a2.addr,
-        extern_control_table.analog_a2.length);
-    analog_msg->data[3] = dxl_sdk_wrapper->get_data_from_device<uint16_t>(
-        extern_control_table.analog_a3.addr,
-        extern_control_table.analog_a3.length);
-    analog_msg->data[4] = dxl_sdk_wrapper->get_data_from_device<uint16_t>(
-        extern_control_table.analog_a4.addr,
-        extern_control_table.analog_a4.length);
-    analog_msg->data[5] = dxl_sdk_wrapper->get_data_from_device<uint16_t>(
-        extern_control_table.analog_a5.addr,
-        extern_control_table.analog_a5.length);
+    // Array of control table entries for easy access
+    const auto* analog_entries[] = {
+      &extern_control_table.analog_a0,
+      &extern_control_table.analog_a1,
+      &extern_control_table.analog_a2,
+      &extern_control_table.analog_a3,
+      &extern_control_table.analog_a4,
+      &extern_control_table.analog_a5
+    };
+    
+    // Read values only from configured pins
+    for (size_t i = 0; i < configured_pins_.size(); ++i) {
+      int pin = configured_pins_[i];
+      if (pin >= 0 && pin <= 5) {
+        analog_msg->data[i] = dxl_sdk_wrapper->get_data_from_device<uint16_t>(
+          analog_entries[pin]->addr,
+          analog_entries[pin]->length);
+      } else {
+        analog_msg->data[i] = 0;  // Invalid pin, set to 0
+      }
+    }
     
     // Publish the message
     analog_publisher_->publish(std::move(analog_msg));
