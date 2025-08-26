@@ -101,7 +101,10 @@ def generate_launch_description():
 
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
-                [ThisLaunchFileDir(), '/turtlebot3_state_publisher.launch.py']),
+                [os.path.join(
+                    get_package_share_directory('turtlebot3_bringup'),
+                    'launch',
+                    'turtlebot3_state_publisher.launch.py')]),
             launch_arguments={'use_sim_time': use_sim_time,
                               'namespace': namespace}.items(),
         ),

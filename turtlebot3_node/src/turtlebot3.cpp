@@ -139,43 +139,81 @@ void TurtleBot3::add_wheels()
   this->get_parameter_or<float>("wheels.radius", wheels_.radius, 0.033);
 }
 
+// Original add_sensors function - commented out for analog pins implementation
+// void TurtleBot3::add_sensors()
+// {
+//   RCLCPP_INFO(this->get_logger(), "Add Sensors");
+
+//   uint8_t is_connected_bumper_1 = 0;
+//   uint8_t is_connected_bumper_2 = 0;
+//   uint8_t is_connected_illumination = 0;
+//   uint8_t is_connected_ir = 0;
+//   uint8_t is_connected_sonar = 0;
+
+//   this->declare_parameter<uint8_t>("sensors.bumper_1");
+//   this->declare_parameter<uint8_t>("sensors.bumper_2");
+//   this->declare_parameter<uint8_t>("sensors.illumination");
+//   this->declare_parameter<uint8_t>("sensors.ir");
+//   this->declare_parameter<uint8_t>("sensors.sonar");
+
+//   this->get_parameter_or<uint8_t>(
+//     "sensors.bumper_1",
+//     is_connected_bumper_1,
+//     0);
+//   this->get_parameter_or<uint8_t>(
+//     "sensors.bumper_2",
+//     is_connected_bumper_2,
+//     0);
+//   this->get_parameter_or<uint8_t>(
+//     "sensors.illumination",
+//     is_connected_illumination,
+//     0);
+//   this->get_parameter_or<uint8_t>(
+//     "sensors.ir",
+//     is_connected_ir,
+//     0);
+//   this->get_parameter_or<uint8_t>(
+//     "sensors.sonar",
+//     is_connected_sonar,
+//     0);
+
+//   sensors_.push_back(
+//     new sensors::BatteryState(
+//       node_handle_,
+//       "battery_state"));
+
+//   sensors_.push_back(
+//     new sensors::Imu(
+//       node_handle_,
+//       "imu",
+//       "magnetic_field",
+//       "imu_link"));
+
+//   sensors_.push_back(
+//     new sensors::SensorState(
+//       node_handle_,
+//       "sensor_state",
+//       is_connected_bumper_1,
+//       is_connected_bumper_2,
+//       is_connected_illumination,
+//       is_connected_ir,
+//       is_connected_sonar));
+
+//   dxl_sdk_wrapper_->read_data_set();
+//   sensors_.push_back(
+//     new sensors::JointState(
+//       node_handle_,
+//       dxl_sdk_wrapper_,
+//       "joint_states",
+//       "base_link"));
+// }
+
+// New add_sensors function with analog pins support
 void TurtleBot3::add_sensors()
 {
   RCLCPP_INFO(this->get_logger(), "Add Sensors");
 
-  uint8_t is_connected_bumper_1 = 0;
-  uint8_t is_connected_bumper_2 = 0;
-  uint8_t is_connected_illumination = 0;
-  uint8_t is_connected_ir = 0;
-  uint8_t is_connected_sonar = 0;
-
-  this->declare_parameter<uint8_t>("sensors.bumper_1");
-  this->declare_parameter<uint8_t>("sensors.bumper_2");
-  this->declare_parameter<uint8_t>("sensors.illumination");
-  this->declare_parameter<uint8_t>("sensors.ir");
-  this->declare_parameter<uint8_t>("sensors.sonar");
-
-  this->get_parameter_or<uint8_t>(
-    "sensors.bumper_1",
-    is_connected_bumper_1,
-    0);
-  this->get_parameter_or<uint8_t>(
-    "sensors.bumper_2",
-    is_connected_bumper_2,
-    0);
-  this->get_parameter_or<uint8_t>(
-    "sensors.illumination",
-    is_connected_illumination,
-    0);
-  this->get_parameter_or<uint8_t>(
-    "sensors.ir",
-    is_connected_ir,
-    0);
-  this->get_parameter_or<uint8_t>(
-    "sensors.sonar",
-    is_connected_sonar,
-    0);
-
+  // Keep essential sensors for basic TurtleBot3 functionality
   sensors_.push_back(
     new sensors::BatteryState(
       node_handle_,
@@ -188,15 +226,13 @@ void TurtleBot3::add_sensors()
       "magnetic_field",
       "imu_link"));
 
-  sensors_.push_back(
-    new sensors::SensorState(
-      node_handle_,
-      "sensor_state",
-      is_connected_bumper_1,
-      is_connected_bumper_2,
-      is_connected_illumination,
-      is_connected_ir,
-      is_connected_sonar));
+  // Add analog pins sensor
+  analog_pins_sensor_ = new sensors::AnalogPins(
+    node_handle_,
+    "analog_pins");
+  sensors_.push_back(analog_pins_sensor_);
+
+  RCLCPP_INFO(this->get_logger(), "Successfully added all sensors");
 
   dxl_sdk_wrapper_->read_data_set();
   sensors_.push_back(
