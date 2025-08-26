@@ -32,8 +32,8 @@ AnalogPins::AnalogPins(
   analog_publisher_ = nh->create_publisher<std_msgs::msg::UInt16MultiArray>(topic_name, qos);
 
   // Read analog pin configuration from parameters
-  nh->declare_parameter<std::vector<int64_t>>("sensors.analog_pins");
-  nh->get_parameter_or<std::vector<int64_t>>("sensors.analog_pins", configured_pins_, {0, 1, 2, 3, 4, 5});
+  nh->declare_parameter<std::vector<int64_t>>("sensors.analog_pins", std::vector<int64_t>{0, 1, 2, 3, 4, 5});
+  configured_pins_ = nh->get_parameter("sensors.analog_pins").as_integer_array();
 
   // Validate pin numbers (must be 0-5)
   for (auto pin : configured_pins_) {
