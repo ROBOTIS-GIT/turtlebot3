@@ -18,6 +18,8 @@
 #include <string>
 #include <utility>
 
+#include "turtlebot3_node/control_table.hpp"
+
 using robotis::turtlebot3::sensors::AnalogPins;
 
 AnalogPins::AnalogPins(
@@ -30,13 +32,13 @@ AnalogPins::AnalogPins(
   analog_publisher_ = nh->create_publisher<std_msgs::msg::UInt16MultiArray>(topic_name, qos);
 
   // Read analog pin configuration from parameters
-  nh->declare_parameter<std::vector<int>>("sensors.analog_pins");
-  nh->get_parameter_or<std::vector<int>>("sensors.analog_pins", configured_pins_, {0, 1, 2, 3, 4, 5});
+  nh->declare_parameter<std::vector<int64_t>>("sensors.analog_pins");
+  nh->get_parameter_or<std::vector<int64_t>>("sensors.analog_pins", configured_pins_, {0, 1, 2, 3, 4, 5});
 
   // Validate pin numbers (must be 0-5)
   for (auto pin : configured_pins_) {
     if (pin < 0 || pin > 5) {
-      RCLCPP_WARN(nh->get_logger(), "Invalid analog pin %d, must be 0-5", pin);
+      RCLCPP_WARN(nh->get_logger(), "Invalid analog pin %ld, must be 0-5", pin);
     }
   }
 
@@ -73,7 +75,7 @@ void AnalogPins::publish(
     analog_msg->data.resize(configured_pins_.size());
     
     // Array of control table entries for easy access
-    const auto* analog_entries[] = {
+    const robotis::turtlebot3::ControlItem* analog_entries[] = {
       &extern_control_table.analog_a0,
       &extern_control_table.analog_a1,
       &extern_control_table.analog_a2,
@@ -84,7 +86,7 @@ void AnalogPins::publish(
     
     // Read values only from configured pins
     for (size_t i = 0; i < configured_pins_.size(); ++i) {
-      int pin = configured_pins_[i];
+      int pin = static_cast<int>(configured_pins_[i]);
       if (pin >= 0 && pin <= 5) {
         analog_msg->data[i] = dxl_sdk_wrapper->get_data_from_device<uint16_t>(
           analog_entries[pin]->addr,

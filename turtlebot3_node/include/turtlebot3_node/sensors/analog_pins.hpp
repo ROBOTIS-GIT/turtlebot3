@@ -43,7 +43,7 @@ public:
 
 private:
   rclcpp::Publisher<std_msgs::msg::UInt16MultiArray>::SharedPtr analog_publisher_;
-  std::vector<int> configured_pins_;  // Which pins to read from
+  std::vector<int64_t> configured_pins_;  // Which pins to read from
 };
 }  // namespace sensors
 }  // namespace turtlebot3
