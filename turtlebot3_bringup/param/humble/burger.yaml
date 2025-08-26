@@ -26,6 +26,9 @@
         illumination: 0
         ir: 0
         sonar: 0
+        # Analog pins to read from (0-5). Must match firmware CONNECTED_ANALOG_PINS configuration
+        analog_pins: [0, 1, 2, 3, 4, 5]
+
 /**:
   diff_drive_controller:
     ros__parameters:
