@@ -17,6 +17,7 @@ endif()
 ################################################################################
 find_package(ament_cmake REQUIRED)
 find_package(dynamixel_sdk REQUIRED)
+find_package(ez_interfaces REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(message_filters REQUIRED)
 find_package(nav_msgs REQUIRED)
@@ -54,6 +55,7 @@ add_library(${PROJECT_NAME}_lib
 
 set(DEPENDENCIES
   "dynamixel_sdk"
+  "ez_interfaces"
   "geometry_msgs"
   "message_filters"
   "nav_msgs"

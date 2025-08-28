@@ -19,6 +19,7 @@
 #include <utility>
 
 #include "turtlebot3_node/control_table.hpp"
+#include "ez_interfaces/msg/analog_pins.hpp"
 
 using robotis::turtlebot3::sensors::AnalogPins;
 
@@ -29,7 +30,7 @@ AnalogPins::AnalogPins(
 {
   auto qos = rclcpp::QoS(rclcpp::KeepLast(10));
 
-  analog_publisher_ = nh->create_publisher<std_msgs::msg::UInt16MultiArray>(topic_name, qos);
+  analog_publisher_ = nh->create_publisher<ez_interfaces::msg::AnalogPins>(topic_name, qos);
 
   // Read analog pin configuration from parameters
   nh->declare_parameter<std::vector<int64_t>>("sensors.analog_pins", std::vector<int64_t>{0, 1, 2, 3, 4, 5});
@@ -59,20 +60,12 @@ void AnalogPins::publish(
   const rclcpp::Time & now,
   std::shared_ptr<DynamixelSDKWrapper> & dxl_sdk_wrapper)
 {
-  (void)now;  // Mark as unused intentionally to suppress warning
-  
   try {
-    auto analog_msg = std::make_unique<std_msgs::msg::UInt16MultiArray>();
+    auto analog_msg = std::make_unique<ez_interfaces::msg::AnalogPins>();
     
-    // Set up dimensions for the message based on configured pins
-    analog_msg->layout.dim.push_back(std_msgs::msg::MultiArrayDimension());
-    analog_msg->layout.dim[0].label = "analog_pins";
-    analog_msg->layout.dim[0].size = configured_pins_.size();
-    analog_msg->layout.dim[0].stride = configured_pins_.size();
-    analog_msg->layout.data_offset = 0;
-    
-    // Initialize data array to hold configured pin values
-    analog_msg->data.resize(configured_pins_.size());
+    // Set timestamp
+    analog_msg->header.stamp = now;
+    analog_msg->header.frame_id = "base_link";
     
     // Array of control table entries for easy access
     const robotis::turtlebot3::ControlItem* analog_entries[] = {
@@ -84,15 +77,19 @@ void AnalogPins::publish(
       &extern_control_table.analog_a5
     };
     
-    // Read values only from configured pins
+    // Create AnalogPin message for each configured pin
+    analog_msg->pins.resize(configured_pins_.size());
+    
     for (size_t i = 0; i < configured_pins_.size(); ++i) {
       int pin = static_cast<int>(configured_pins_[i]);
       if (pin >= 0 && pin <= 5) {
-        analog_msg->data[i] = dxl_sdk_wrapper->get_data_from_device<uint16_t>(
+        analog_msg->pins[i].pin = static_cast<uint8_t>(pin);
+        analog_msg->pins[i].value = dxl_sdk_wrapper->get_data_from_device<uint16_t>(
           analog_entries[pin]->addr,
           analog_entries[pin]->length);
       } else {
-        analog_msg->data[i] = 0;  // Invalid pin, set to 0
+        analog_msg->pins[i].pin = static_cast<uint8_t>(pin);
+        analog_msg->pins[i].value = 0;  // Invalid pin, set to 0
       }
     }
     

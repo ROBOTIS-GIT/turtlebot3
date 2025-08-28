@@ -20,7 +20,7 @@
 #include <vector>
 
 #include "rclcpp/rclcpp.hpp"
-#include "std_msgs/msg/u_int16_multi_array.hpp"
+#include "ez_interfaces/msg/analog_pins.hpp"
 
 #include "turtlebot3_node/sensors/sensors.hpp"
 
@@ -42,7 +42,7 @@ public:
     std::shared_ptr<DynamixelSDKWrapper> & dxl_sdk_wrapper) override;
 
 private:
-  rclcpp::Publisher<std_msgs::msg::UInt16MultiArray>::SharedPtr analog_publisher_;
+  rclcpp::Publisher<ez_interfaces::msg::AnalogPins>::SharedPtr analog_publisher_;
   std::vector<int64_t> configured_pins_;  // Which pins to read from
 };
 }  // namespace sensors
