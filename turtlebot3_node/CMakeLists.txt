@@ -51,6 +51,8 @@ add_library(${PROJECT_NAME}_lib
   "src/sensors/imu.cpp"
   "src/sensors/joint_state.cpp"
   "src/sensors/analog_pins.cpp"
+  "src/sensors/temperature.cpp"
+  "src/sensors/humidity.cpp"
 )
 
 set(DEPENDENCIES

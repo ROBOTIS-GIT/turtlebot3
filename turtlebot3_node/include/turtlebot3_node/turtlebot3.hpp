@@ -43,13 +43,16 @@
 #include "turtlebot3_node/devices/sound.hpp"
 #include "turtlebot3_node/dynamixel_sdk_wrapper.hpp"
 #include "turtlebot3_node/odometry.hpp"
-#include "turtlebot3_node/sensors/analog_pins.hpp"
 #include "turtlebot3_node/sensors/battery_state.hpp"
 #include "turtlebot3_node/sensors/imu.hpp"
 #include "turtlebot3_node/sensors/joint_state.hpp"
 #include "turtlebot3_node/sensors/sensor_state.hpp"
 #include "turtlebot3_node/sensors/sensors.hpp"
 #include "turtlebot3_node/twist_subscriber.hpp"
+
+#include "turtlebot3_node/sensors/analog_pins.hpp"
+#include "turtlebot3_node/sensors/temperature.hpp"
+#include "turtlebot3_node/sensors/humidity.hpp"
 
 namespace robotis
 {

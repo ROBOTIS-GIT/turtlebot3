@@ -48,7 +48,6 @@ typedef struct
   ControlItem millis = {10, RAM, 4, READ};
   // ControlItem micros = {14, RAM, 4, READ};  // Does not match firmware
 
-  ControlItem device_ready = {17, RAM, 1, READ};
   ControlItem device_status = {18, RAM, 1, READ};
   ControlItem heartbeat = {19, RAM, 1, READ_WRITE};
 
@@ -62,10 +61,6 @@ typedef struct
 
   ControlItem bumper_1 = {28, RAM, 1, READ};
   ControlItem bumper_2 = {29, RAM, 1, READ};
-
-  // ControlItem illumination = {30, RAM, 4, READ};
-  // ControlItem ir = {34, RAM, 4, READ};
-  // ControlItem sonar = {38, RAM, 4, READ};
 
   ControlItem analog_a0 = {30, RAM, 2, READ};
   ControlItem analog_a1 = {32, RAM, 2, READ};
@@ -94,6 +89,9 @@ typedef struct
   ControlItem imu_orientation_x = {100, RAM, 4, READ};
   ControlItem imu_orientation_y = {104, RAM, 4, READ};
   ControlItem imu_orientation_z = {108, RAM, 4, READ};
+
+  ControlItem temperature = {112, RAM, 4, READ};
+  ControlItem humidity = {116, RAM, 4, READ};
 
   ControlItem present_current_left = {120, RAM, 4, READ};
   ControlItem present_current_right = {124, RAM, 4, READ};
