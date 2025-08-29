@@ -41,13 +41,6 @@ void Temperature::publish(
   const rclcpp::Time & now,
   std::shared_ptr<DynamixelSDKWrapper> & dxl_sdk_wrapper)
 {
-  static int call_count = 0;
-  call_count++;
-  
-  if (call_count % 100 == 1) {  // Log every 100th call to avoid spam
-    RCLCPP_INFO(nh_->get_logger(), "Temperature::publish called %d times", call_count);
-  }
-  
   try {
     auto temp_msg = std::make_unique<sensor_msgs::msg::Temperature>();
     
@@ -57,13 +50,9 @@ void Temperature::publish(
     
     // Read temperature from control table (address 112, 4 bytes)
     // Firmware stores as float from DHT sensor
-    float raw_temp = dxl_sdk_wrapper->get_data_from_device<float>(
+    temp_msg->temperature = dxl_sdk_wrapper->get_data_from_device<float>(
       extern_control_table.temperature.addr,
       extern_control_table.temperature.length);
-    
-    RCLCPP_INFO(nh_->get_logger(), "Temperature raw value: %f", raw_temp);
-    
-    temp_msg->temperature = raw_temp;
     
     // Set variance to 0 (unknown)
     temp_msg->variance = 0.0;

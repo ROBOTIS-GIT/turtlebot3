@@ -50,14 +50,12 @@ void Humidity::publish(
     
     // Read humidity from control table (address 116, 4 bytes)  
     // Firmware stores as float from DHT sensor (percentage)
-    float raw_humidity = dxl_sdk_wrapper->get_data_from_device<float>(
+    float humidity_percent = dxl_sdk_wrapper->get_data_from_device<float>(
       extern_control_table.humidity.addr,
       extern_control_table.humidity.length);
     
-    RCLCPP_INFO(nh_->get_logger(), "Humidity raw value: %f%%", raw_humidity);
-    
     // Convert percentage to ratio (0.0-1.0) for ROS standard compliance
-    humidity_msg->relative_humidity = raw_humidity / 100.0;
+    humidity_msg->relative_humidity = humidity_percent / 100.0;
     
     // Set variance to 0 (unknown)
     humidity_msg->variance = 0.0;

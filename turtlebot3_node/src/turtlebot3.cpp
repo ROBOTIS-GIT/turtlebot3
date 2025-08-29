@@ -163,19 +163,17 @@ void TurtleBot3::add_sensors()
   sensors_.push_back(analog_pins_sensor_);
 
   // Add temperature and humidity sensors
-  RCLCPP_INFO(this->get_logger(), "Adding Temperature sensor...");
   sensors_.push_back(
     new sensors::Temperature(
       node_handle_,
       "temperature"));
 
-  RCLCPP_INFO(this->get_logger(), "Adding Humidity sensor...");
   sensors_.push_back(
     new sensors::Humidity(
       node_handle_,
       "humidity"));
 
-  RCLCPP_INFO(this->get_logger(), "Successfully added all sensors (total: %zu)", sensors_.size());
+  RCLCPP_INFO(this->get_logger(), "Successfully added all sensors");
 
   dxl_sdk_wrapper_->read_data_set();
   sensors_.push_back(
