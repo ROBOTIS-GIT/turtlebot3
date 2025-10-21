@@ -15,6 +15,7 @@ RUN apt-get update && \
     libudev-dev \
     udev \
     git \
+    nano \
     ros-${ROS_DISTRO}-turtlebot3-msgs \
     ros-${ROS_DISTRO}-dynamixel-sdk \
     ros-${ROS_DISTRO}-xacro \
