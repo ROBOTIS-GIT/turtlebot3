@@ -6,18 +6,18 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV COLCON_WS=/root/turtlebot3_ws
 
 # Install the required packages in a single layer and clean up afterwards
-RUN rm -rf /var/lib/apt/lists/* \
-    && apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
     python3-argcomplete \
     python3-colcon-common-extensions \
     libboost-system-dev \
     build-essential \
     libudev-dev \
     udev \
+    git \
     ros-${ROS_DISTRO}-hls-lfcd-lds-driver \
     ros-${ROS_DISTRO}-ld08-driver \
     ros-${ROS_DISTRO}-coin-d4-driver \
-    git \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR ${COLCON_WS}
