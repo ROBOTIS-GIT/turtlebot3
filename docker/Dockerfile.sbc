@@ -15,6 +15,9 @@ RUN apt-get update && \
     libudev-dev \
     udev \
     git \
+    ros-${ROS_DISTRO}-turtlebot3-msgs \
+    ros-${ROS_DISTRO}-dynamixel-sdk \
+    ros-${ROS_DISTRO}-xacro \
     ros-${ROS_DISTRO}-hls-lfcd-lds-driver \
     ros-${ROS_DISTRO}-ld08-driver \
     ros-${ROS_DISTRO}-coin-d4-driver \
