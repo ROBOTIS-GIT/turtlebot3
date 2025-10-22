@@ -1,11 +1,7 @@
 services:
   turtlebot3:
     container_name: turtlebot3
-<<<<<<< HEAD:docker/jazzy/sbc/docker-compose.yml
     image: robotis/turtlebot3:jazzy-sbc-latest
-=======
-    image: robotis/turtlebot3:latest
->>>>>>> e0efe4fa4d6955cf2d14dac69194458cd564f2ad:docker/docker-compose.yml
     build:
       context: .
       dockerfile: Dockerfile.sbc
