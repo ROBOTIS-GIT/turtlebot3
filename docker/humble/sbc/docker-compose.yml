@@ -2,9 +2,9 @@ services:
   turtlebot3:
     container_name: turtlebot3
     image: robotis/turtlebot3:humble-sbc-latest
-    build:
-      context: .
-      dockerfile: Dockerfile.sbc
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile.sbc
     tty: true
     restart: unless-stopped
     cap_add:

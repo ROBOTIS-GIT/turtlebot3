@@ -2,9 +2,9 @@ services:
   turtlebot3:
     container_name: turtlebot3
     image: robotis/turtlebot3:jazzy-pc-latest
-    build:
-      context: .
-      dockerfile: Dockerfile.pc
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile.pc
     tty: true
     restart: unless-stopped
     cap_add:
