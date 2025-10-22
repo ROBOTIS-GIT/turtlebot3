@@ -40,12 +40,6 @@ RUN bash -c "source /opt/ros/${ROS_DISTRO}/setup.bash && \
 RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc && \
     echo "source ${COLCON_WS}/install/setup.bash" >> ~/.bashrc && \
     echo "alias cb='colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release'" >> ~/.bashrc && \
-<<<<<<<< HEAD:docker/humble/sbc/Dockerfile.sbc
-    echo "export ROS_DOMAIN_ID=30 # TURTLEBOT3" >> ~/.bashrc && \
-    echo "export TURTLEBOT3_MODEL= # burger, waffle, waffle_pi" >> ~/.bashrc && \
-    echo "export LDS_MODEL= # LDS-01, LDS-02, LDS-03" >> ~/.bashrc
-========
     echo "export ROS_DOMAIN_ID=30 # TURTLEBOT3" >> ~/.bashrc
->>>>>>>> e0efe4fa4d6955cf2d14dac69194458cd564f2ad:docker/Dockerfile.pc
 
 CMD ["bash"]
