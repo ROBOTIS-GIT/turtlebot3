@@ -59,3 +59,4 @@ build-*/
 *.txt.user
 *.gch
 /.project
+.DS_Store
