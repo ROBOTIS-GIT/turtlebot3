@@ -4,6 +4,13 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 CONTAINER_NAME="turtlebot3"
 
+# Determine whether to use docker-compose or docker compose
+if command -v docker-compose &> /dev/null; then
+    COMPOSE_CMD="docker-compose"
+else
+    COMPOSE_CMD="docker compose"
+fi
+
 # Function to display help
 show_help() {
     echo "Usage: $0 [command]"
@@ -46,10 +53,10 @@ EOF
     sudo udevadm trigger
 
     # Pull the latest images
-    docker compose -f "${SCRIPT_DIR}/docker-compose.yml" pull
+    $COMPOSE_CMD -f "${SCRIPT_DIR}/docker-compose.yml" pull
 
     # Run docker-compose
-    docker compose -f "${SCRIPT_DIR}/docker-compose.yml" up -d
+    $COMPOSE_CMD -f "${SCRIPT_DIR}/docker-compose.yml" up -d
 }
 
 # Function to enter the container
@@ -80,7 +87,7 @@ stop_container() {
     read -p "Are you sure you want to continue? [y/N] " -n 1 -r
     echo
     if [[ $REPLY =~ ^[Yy]$ ]]; then
-        docker compose -f "${SCRIPT_DIR}/docker-compose.yml" down
+        $COMPOSE_CMD -f "${SCRIPT_DIR}/docker-compose.yml" down
     else
         echo "Operation cancelled."
         exit 0
