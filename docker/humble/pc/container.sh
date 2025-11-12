@@ -32,18 +32,13 @@ start_container() {
 
     echo "Starting Turtlebot3 container..."
 
-# If using the PC and SBC on the same computer, comment out the udev rule setup to avoid conflicts
-#     sudo tee /etc/udev/rules.d/99-tb3.rules > /dev/null <<EOF
-# ATTRS{idVendor}=="0483", ATTRS{idProduct}=="5740", ENV{ID_MM_DEVICE_IGNORE}="1", MODE:="0666"
-# ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", MODE:="0666"
-# ATTRS{idVendor}=="fff1", ATTRS{idProduct}=="ff48", ENV{ID_MM_DEVICE_IGNORE}="1", MODE:="0666"
-# ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", ENV{ID_MM_DEVICE_IGNORE}="1", MODE:="0666", SYMLINK+="tb3_lidar"
-# EOF
-
-#     # Reload udev rules
-#     echo "Reloading udev rules..."
-#     sudo udevadm control --reload-rules
-#     sudo udevadm trigger
+    # Copy udev rule for TurtleBot3
+    sudo tee /etc/udev/rules.d/99-tb3.rules > /dev/null <<EOF
+ATTRS{idVendor}=="0483", ATTRS{idProduct}=="5740", ENV{ID_MM_DEVICE_IGNORE}="1", MODE:="0666"
+ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", MODE:="0666"
+ATTRS{idVendor}=="fff1", ATTRS{idProduct}=="ff48", ENV{ID_MM_DEVICE_IGNORE}="1", MODE:="0666"
+ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", ENV{ID_MM_DEVICE_IGNORE}="1", MODE:="0666", SYMLINK+="tb3_lidar"
+EOF
 
     # Reload udev rules
     echo "Reloading udev rules..."
