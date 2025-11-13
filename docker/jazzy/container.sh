@@ -4,6 +4,13 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 CONTAINER_NAME="turtlebot3"
 
+# Determine whether to use docker-compose or docker compose
+if docker compose version &> /dev/null; then
+    COMPOSE_CMD="docker compose"
+else
+    COMPOSE_CMD="docker-compose"
+fi
+
 # Function to display help
 show_help() {
     echo "Usage: $0 [command]"
@@ -32,24 +39,24 @@ start_container() {
 
     echo "Starting Turtlebot3 container..."
 
-# If using the PC and SBC on the same computer, comment out the udev rule setup to avoid conflicts
-#     sudo tee /etc/udev/rules.d/99-tb3.rules > /dev/null <<EOF
-# ATTRS{idVendor}=="0483", ATTRS{idProduct}=="5740", ENV{ID_MM_DEVICE_IGNORE}="1", MODE:="0666"
-# ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", MODE:="0666"
-# ATTRS{idVendor}=="fff1", ATTRS{idProduct}=="ff48", ENV{ID_MM_DEVICE_IGNORE}="1", MODE:="0666"
-# ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", ENV{ID_MM_DEVICE_IGNORE}="1", MODE:="0666", SYMLINK+="tb3_lidar"
-# EOF
+    # Copy udev rule for TurtleBot3
+    sudo tee /etc/udev/rules.d/99-tb3.rules > /dev/null <<EOF
+ATTRS{idVendor}=="0483", ATTRS{idProduct}=="5740", ENV{ID_MM_DEVICE_IGNORE}="1", MODE:="0666"
+ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", MODE:="0666"
+ATTRS{idVendor}=="fff1", ATTRS{idProduct}=="ff48", ENV{ID_MM_DEVICE_IGNORE}="1", MODE:="0666"
+ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", ENV{ID_MM_DEVICE_IGNORE}="1", MODE:="0666", SYMLINK+="tb3_lidar"
+EOF
 
-#     # Reload udev rules
-#     echo "Reloading udev rules..."
-#     sudo udevadm control --reload-rules
-#     sudo udevadm trigger
+    # Reload udev rules
+    echo "Reloading udev rules..."
+    sudo udevadm control --reload-rules
+    sudo udevadm trigger
 
     # Pull the latest images
-    docker compose -f "${SCRIPT_DIR}/docker-compose.yml" pull
+    $COMPOSE_CMD -f "${SCRIPT_DIR}/docker-compose.yml" pull
 
     # Run docker-compose
-    docker compose -f "${SCRIPT_DIR}/docker-compose.yml" up -d
+    $COMPOSE_CMD -f "${SCRIPT_DIR}/docker-compose.yml" up -d
 }
 
 # Function to enter the container
@@ -80,7 +87,7 @@ stop_container() {
     read -p "Are you sure you want to continue? [y/N] " -n 1 -r
     echo
     if [[ $REPLY =~ ^[Yy]$ ]]; then
-        docker compose -f "${SCRIPT_DIR}/docker-compose.yml" down
+        $COMPOSE_CMD -f "${SCRIPT_DIR}/docker-compose.yml" down
     else
         echo "Operation cancelled."
         exit 0

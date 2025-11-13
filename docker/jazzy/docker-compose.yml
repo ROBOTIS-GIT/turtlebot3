@@ -1,7 +1,7 @@
 services:
   turtlebot3:
     container_name: turtlebot3
-    image: robotis/turtlebot3:jazzy-pc-latest
+    image: robotis/turtlebot3:jazzy-latest
     # build:
     #   context: .
     #   dockerfile: Dockerfile.pc
