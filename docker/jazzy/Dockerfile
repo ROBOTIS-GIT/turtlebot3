@@ -21,6 +21,7 @@ RUN apt-get update && \
     ros-${ROS_DISTRO}-cartographer-ros \
     ros-${ROS_DISTRO}-navigation2 \
     ros-${ROS_DISTRO}-nav2-bringup \
+    ros-${ROS_DISTRO}-nav2-route \
     ros-${ROS_DISTRO}-turtlebot3-msgs \
     ros-${ROS_DISTRO}-dynamixel-sdk \
     ros-${ROS_DISTRO}-xacro \
