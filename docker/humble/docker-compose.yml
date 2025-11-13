@@ -25,6 +25,6 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - /tmp/.docker.xauth:/tmp/.docker.xauth:rw
       - ./workspace:/workspace
-      - ../../../:/root/turtlebot3_ws/src/turtlebot3
+      - ../../:/root/turtlebot3_ws/src/turtlebot3
     privileged: true
     command: bash
