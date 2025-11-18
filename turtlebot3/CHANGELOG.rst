@@ -2,6 +2,11 @@
 Changelog for package turtlebot3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.3.4 (2025-10-24)
+------------------
+* Supported Docker for TurtleBot3 with Humble and Jazzy
+* Contributors: Hyungyu Kim
+
 2.3.3 (2025-07-11)
 ------------------
 * Supported COIN D4 LIDAR(ld03)

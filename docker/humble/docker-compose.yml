@@ -1,0 +1,30 @@
+services:
+  turtlebot3:
+    container_name: turtlebot3
+    image: robotis/turtlebot3:humble-latest
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile.pc
+    tty: true
+    restart: unless-stopped
+    cap_add:
+      - SYS_NICE
+    ulimits:
+      rtprio: 99
+      rttime: -1
+      memlock: 8428281856
+    network_mode: host
+    ipc: host
+    pid: host
+    environment:
+     - DISPLAY=${DISPLAY}
+     - QT_X11_NO_MITSHM=1
+    volumes:
+      - /dev:/dev
+      - /dev/shm:/dev/shm
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /tmp/.docker.xauth:/tmp/.docker.xauth:rw
+      - ./workspace:/workspace
+      - ../../:/root/turtlebot3_ws/src/turtlebot3
+    privileged: true
+    command: bash
