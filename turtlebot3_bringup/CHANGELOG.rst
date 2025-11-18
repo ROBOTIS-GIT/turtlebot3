@@ -2,6 +2,10 @@
 Changelog for package turtlebot3_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.3.4 (2025-10-24)
+------------------
+* None
+
 2.3.3 (2025-07-11)
 ------------------
 * Supported COIN D4 LIDAR(ld03)

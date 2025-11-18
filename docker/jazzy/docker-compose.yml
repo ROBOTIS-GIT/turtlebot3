@@ -1,11 +1,12 @@
 services:
-  ros2:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  turtlebot3:
     container_name: turtlebot3
+    image: robotis/turtlebot3:jazzy-latest
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile.pc
     tty: true
-    restart: always
+    restart: unless-stopped
     cap_add:
       - SYS_NICE
     ulimits:
@@ -13,14 +14,17 @@ services:
       rttime: -1
       memlock: 8428281856
     network_mode: host
+    ipc: host
+    pid: host
     environment:
      - DISPLAY=${DISPLAY}
      - QT_X11_NO_MITSHM=1
-     - ROS_DOMAIN_ID=30
     volumes:
       - /dev:/dev
-      - ./workspace:/workspace
+      - /dev/shm:/dev/shm
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - /tmp/.docker.xauth:/tmp/.docker.xauth:rw
+      - ./workspace:/workspace
+      - ../../:/root/turtlebot3_ws/src/turtlebot3
     privileged: true
     command: bash
