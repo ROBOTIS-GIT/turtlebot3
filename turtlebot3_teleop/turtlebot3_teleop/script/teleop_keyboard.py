@@ -1,10 +1,9 @@
 #!/usr/bin/env python
-# SPDX-License-Identifier: BSD-2-Clause
 #
 # Copyright (c) 2011, Willow Garage, Inc.
 # All rights reserved.
 #
-# Software License Agreement (BSD License 2.0)
+# Software License Agreement (BSD 2-Clause Simplified License)
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
