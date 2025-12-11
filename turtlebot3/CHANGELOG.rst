@@ -2,6 +2,11 @@
 Changelog for package turtlebot3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.3.5 (2025-12-09)
+------------------
+* Supported Pi Camera in Docker containers for TurtleBot3 with Humble and Jazzy
+* Contributors: Hyungyu Kim
+
 2.3.4 (2025-10-24)
 ------------------
 * Supported Docker for TurtleBot3 with Humble and Jazzy
