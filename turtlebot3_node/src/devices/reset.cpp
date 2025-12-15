@@ -48,16 +48,17 @@ void Reset::command(const void * request, void * response)
   std_srvs::srv::Trigger::Response * res = (std_srvs::srv::Trigger::Response *)response;
 
   uint8_t reset = 1;
-
-  res->success = dxl_sdk_wrapper_->set_data_to_device(
+  dxl_sdk_wrapper_->set_data_to_device(
     extern_control_table.imu_re_calibration.addr,
     extern_control_table.imu_re_calibration.length,
     &reset,
-    &res->message);
+    nullptr);
 
   RCLCPP_INFO(nh_->get_logger(), "Start Calibration of Gyro");
   rclcpp::sleep_for(std::chrono::seconds(5));
   RCLCPP_INFO(nh_->get_logger(), "Calibration End");
+  res->success = true;
+  res->message = "Calibration End, Odom reset requested";
 
   if (!reset_odom_client_->wait_for_service(std::chrono::seconds(1))) {
     RCLCPP_WARN(nh_->get_logger(), "reset_odometry service not available");
@@ -65,13 +66,15 @@ void Reset::command(const void * request, void * response)
   }
 
   auto request_reset_odom = std::make_shared<std_srvs::srv::Trigger::Request>();
-  reset_odom_client_->async_send_request(request_reset_odom, [this](rclcpp::Client<std_srvs::srv::Trigger>::SharedFuture future)
+  reset_odom_client_->async_send_request(
+    request_reset_odom,
+    [this](rclcpp::Client<std_srvs::srv::Trigger>::SharedFuture future)
   {
     auto response_reset_odom = future.get();
     RCLCPP_INFO(
       nh_->get_logger(),
       "odom reset response: %s",
-      response_reset_odom->message.c_str());
+      response_reset_odom->success ? "success" : "failed");
   });
 }
 
