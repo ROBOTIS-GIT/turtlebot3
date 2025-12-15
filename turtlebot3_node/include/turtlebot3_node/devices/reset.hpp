@@ -46,6 +46,7 @@ public:
 
 private:
   rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr srv_;
+  rclcpp::Client<std_srvs::srv::Trigger>::SharedPtr reset_odom_client_;
 };
 }  // namespace devices
 }  // namespace turtlebot3
