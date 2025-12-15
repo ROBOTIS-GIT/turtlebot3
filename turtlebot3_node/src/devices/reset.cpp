@@ -46,13 +46,14 @@ void Reset::command(const void * request, void * response)
   (void) request;
 
   std_srvs::srv::Trigger::Response * res = (std_srvs::srv::Trigger::Response *)response;
+  std::string result_msg;
 
   uint8_t reset = 1;
   dxl_sdk_wrapper_->set_data_to_device(
     extern_control_table.imu_re_calibration.addr,
     extern_control_table.imu_re_calibration.length,
     &reset,
-    nullptr);
+    &result_msg);
 
   RCLCPP_INFO(nh_->get_logger(), "Start Calibration of Gyro");
   rclcpp::sleep_for(std::chrono::seconds(5));
