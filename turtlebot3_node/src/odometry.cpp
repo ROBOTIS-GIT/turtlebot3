@@ -121,7 +121,11 @@ Odometry::Odometry(
 
   reset_odom_srv_ = nh_->create_service<std_srvs::srv::Trigger>(
     "reset_odometry",
-    std::bind(&Odometry::reset_odometry_callback, this, std::placeholders::_1, std::placeholders::_2));
+    std::bind(
+      &Odometry::reset_odometry_callback,
+      this,
+      std::placeholders::_1,
+      std::placeholders::_2));
 }
 
 void Odometry::joint_state_callback(const sensor_msgs::msg::JointState::SharedPtr joint_state_msg)

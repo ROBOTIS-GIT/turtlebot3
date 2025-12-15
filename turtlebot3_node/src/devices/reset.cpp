@@ -70,13 +70,13 @@ void Reset::command(const void * request, void * response)
   reset_odom_client_->async_send_request(
     request_reset_odom,
     [this](rclcpp::Client<std_srvs::srv::Trigger>::SharedFuture future)
-  {
-    auto response_reset_odom = future.get();
-    RCLCPP_INFO(
-      nh_->get_logger(),
-      "odom reset response: %s",
-      response_reset_odom->success ? "success" : "failed");
-  });
+    {
+      auto response_reset_odom = future.get();
+      RCLCPP_INFO(
+        nh_->get_logger(),
+        "odom reset response: %s",
+        response_reset_odom->success ? "success" : "failed");
+    });
 }
 
 void Reset::request(
