@@ -1,8 +1,8 @@
 # TurtleBot3
 <img src="https://raw.githubusercontent.com/ROBOTIS-GIT/emanual/master/assets/images/platform/turtlebot3/logo_turtlebot3.png" width="300">
 
-- Active Branches: noetic, humble, jazzy, main(rolling)
-- Legacy Branches: *-devel
+- Active Branches: humble, jazzy, main(rolling)
+- Legacy Branches: *-devel, noetic
 
 ## Open Source Projects Related to TurtleBot3
 - [turtlebot3](https://github.com/ROBOTIS-GIT/turtlebot3)
@@ -17,6 +17,7 @@
 - [turtlebot3_home_service_challenge](https://github.com/ROBOTIS-GIT/turtlebot3_home_service_challenge)
 - [hls_lfcd_lds_driver](https://github.com/ROBOTIS-GIT/hls_lfcd_lds_driver)
 - [ld08_driver](https://github.com/ROBOTIS-GIT/ld08_driver)
+- [coin_d4_driver](https://github.com/ROBOTIS-GIT/coin_d4_driver)
 - [open_manipulator](https://github.com/ROBOTIS-GIT/open_manipulator)
 - [dynamixel_sdk](https://github.com/ROBOTIS-GIT/DynamixelSDK)
 - [OpenCR-Hardware](https://github.com/ROBOTIS-GIT/OpenCR-Hardware)
