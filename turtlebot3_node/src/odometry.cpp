@@ -118,6 +118,14 @@ Odometry::Odometry(
       qos,
       std::bind(&Odometry::joint_state_callback, this, std::placeholders::_1));
   }
+
+  reset_odom_srv_ = nh_->create_service<std_srvs::srv::Trigger>(
+    "reset_odometry",
+    std::bind(
+      &Odometry::reset_odometry_callback,
+      this,
+      std::placeholders::_1,
+      std::placeholders::_2));
 }
 
 void Odometry::joint_state_callback(const sensor_msgs::msg::JointState::SharedPtr joint_state_msg)
@@ -295,4 +303,15 @@ bool Odometry::calculate_odometry(const rclcpp::Duration & duration)
 
   last_theta = theta;
   return true;
+}
+
+void Odometry::reset_odometry_callback(
+  const std::shared_ptr<std_srvs::srv::Trigger::Request> request,
+  std::shared_ptr<std_srvs::srv::Trigger::Response> response)
+{
+  (void)request;
+  robot_pose_ = {0.0, 0.0, 0.0};
+  robot_vel_ = {0.0, 0.0, 0.0};
+  response->success = true;
+  response->message = "Odometry reset";
 }

@@ -33,6 +33,7 @@
 #include <rclcpp/rclcpp.hpp>
 #include <sensor_msgs/msg/imu.hpp>
 #include <sensor_msgs/msg/joint_state.hpp>
+#include <std_srvs/srv/trigger.hpp>
 
 
 namespace robotis
@@ -51,6 +52,10 @@ public:
 private:
   bool calculate_odometry(const rclcpp::Duration & duration);
 
+  void reset_odometry_callback(
+    const std::shared_ptr<std_srvs::srv::Trigger::Request> request,
+    std::shared_ptr<std_srvs::srv::Trigger::Response> response);
+
   void update_imu(const std::shared_ptr<sensor_msgs::msg::Imu const> & imu);
   void update_joint_state(const std::shared_ptr<sensor_msgs::msg::JointState const> & joint_state);
 
@@ -67,6 +72,7 @@ private:
 
   rclcpp::Publisher<nav_msgs::msg::Odometry>::SharedPtr odom_pub_;
   rclcpp::Subscription<sensor_msgs::msg::JointState>::SharedPtr joint_state_sub_;
+  rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr reset_odom_srv_;
 
   std::shared_ptr<
     message_filters::Subscriber<sensor_msgs::msg::JointState>> msg_ftr_joint_state_sub_;

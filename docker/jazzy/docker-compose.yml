@@ -22,6 +22,7 @@ services:
     volumes:
       - /dev:/dev
       - /dev/shm:/dev/shm
+      - /run/udev:/run/udev
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - /tmp/.docker.xauth:/tmp/.docker.xauth:rw
       - ./workspace:/workspace
