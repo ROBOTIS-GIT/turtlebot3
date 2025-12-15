@@ -2,6 +2,15 @@
 Changelog for package turtlebot3_node
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.3.6 (2025-12-15)
+------------------
+* Fixed an issue where the reset trigger did not work correctly
+* Contributors: Hyungyu Kim
+
+2.3.5 (2025-12-09)
+------------------
+* None
+
 2.3.4 (2025-10-24)
 ------------------
 * None
