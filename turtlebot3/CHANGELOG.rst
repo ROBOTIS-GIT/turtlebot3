@@ -2,6 +2,11 @@
 Changelog for package turtlebot3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.3.6 (2025-12-15)
+------------------
+* Fixed an issue where the reset trigger did not work correctly
+* Contributors: Hyungyu Kim
+
 2.3.5 (2025-12-09)
 ------------------
 * Supported Pi Camera in Docker containers for TurtleBot3 with Humble and Jazzy

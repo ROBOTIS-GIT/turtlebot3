@@ -1,4 +1,4 @@
-ISSUE TEMPLATE ver. 0.4.2
+ISSUE TEMPLATE ver. 0.4.3
 
 **Please search for similar issues in the repository before submit an issue ticket.**
 
@@ -11,6 +11,7 @@ ISSUE TEMPLATE ver. 0.4.2
 
     - [ ] Raspberry Pi 3 B+
     - [ ] Raspberry Pi 4 (specify RAM size: 2/4/8GB)
+    - [ ] Raspberry Pi 5 (specify RAM size: 2/4/8GB)
     - [ ] other (specify the product)
 
 3. Which OS is installed on the TurtleBot3 SBC?
@@ -19,6 +20,7 @@ ISSUE TEMPLATE ver. 0.4.2
     - [ ] Ubuntu preinstalled server 18.04
     - [ ] Ubuntu preinstalled server 20.04
     - [ ] Ubuntu preinstalled server 22.04
+    - [ ] Ubuntu preinstalled server 24.04
     - [ ] other (specify the OS)
 
 4. Which OS is installed on Remote PC?
@@ -27,6 +29,7 @@ ISSUE TEMPLATE ver. 0.4.2
     - [ ] Ubuntu 18.04 LTS (Bionic Beaver)
     - [ ] Ubuntu 20.04 LTS (Focal Fossa)
     - [ ] Ubuntu 22.04 LTS (Jammy Jellyfish)
+    - [ ] Ubuntu 24.04 LTS (Noble Numbat)
     - [ ] other (specify the OS)
 
 5. Which ROS version do you use?
@@ -39,6 +42,7 @@ ISSUE TEMPLATE ver. 0.4.2
     - [ ] ROS2 Foxy Fitzroy
     - [ ] ROS2 Galactic Geochelone
     - [ ] ROS2 Humble Hawksbill
+    - [ ] ROS2 Jazzy Jellyfish
     - [ ] ROS2 Rolling Ridley
 
 6. Please describe the issue.
