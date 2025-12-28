@@ -21,7 +21,7 @@ import threading
 import time
 
 from geometry_msgs.msg import Point
-from geometry_msgs.msg import Twist
+from geometry_msgs.msg import Twist, TwistStamped
 from nav_msgs.msg import Odometry
 import rclpy
 from rclpy.action import ActionServer
@@ -50,7 +50,7 @@ class Turtlebot3PatrolServer(Node):
             goal_callback=self.goal_callback)
 
         self.goal_msg = Patrol.Goal()
-        self.twist = Twist()
+        self.twist = TwistStamped()
         self.odom = Odometry()
         self.position = Point()
         self.rotation = 0.0
@@ -60,15 +60,15 @@ class Turtlebot3PatrolServer(Node):
 
         qos = QoSProfile(depth=10)
 
-        self.cmd_vel_pub = self.create_publisher(Twist, 'cmd_vel', qos)
+        self.cmd_vel_pub = self.create_publisher(TwistStamped, 'cmd_vel', qos)
 
         self.odom_sub = self.create_subscription(
             Odometry, 'odom', self.odom_callback, qos
         )
 
     def init_twist(self):
-        self.twist.linear.x = 0.0
-        self.twist.angular.z = 0.0
+        self.twist.twist.linear.x = 0.0
+        self.twist.twist.angular.z = 0.0
         self.cmd_vel_pub.publish(self.twist)
 
     def odom_callback(self, msg):
@@ -82,11 +82,11 @@ class Turtlebot3PatrolServer(Node):
 
     def go_front(self, position, length):
         while True:
-            position += self.twist.linear.x
+            position += self.twist.twist.linear.x
             if position >= length:
                 break
-            self.twist.linear.x = self.linear_x
-            self.twist.angular.z = 0.0
+            self.twist.twist.linear.x = self.linear_x
+            self.twist.twist.angular.z = 0.0
             self.cmd_vel_pub.publish(self.twist)
 
             time.sleep(1)
@@ -110,8 +110,8 @@ class Turtlebot3PatrolServer(Node):
             if yaw_diff < 0.01:
                 break
 
-            self.twist.linear.x = 0.0
-            self.twist.angular.z = self.angular_z
+            self.twist.twist.linear.x = 0.0
+            self.twist.twist.angular.z = self.angular_z
             self.cmd_vel_pub.publish(self.twist)
 
         self.init_twist()
