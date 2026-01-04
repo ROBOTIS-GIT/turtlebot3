@@ -1,5 +1,5 @@
 # TurtleBot3
-<img src="https://raw.githubusercontent.com/ROBOTIS-GIT/emanual/master/assets/images/platform/turtlebot3/logo_turtlebot3.png" width="300">
+<img src="media/20251201_141944.jpg" width="450">
 
 - Active Branches: humble, jazzy, main(rolling)
 - Legacy Branches: *-devel, noetic
