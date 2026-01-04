@@ -31,13 +31,11 @@ def generate_launch_description():
         package='teleop_twist_joy',
         executable='teleop_node',
         name='teleop_twist_joy_node',
-        parameters=[{
-            'axis_linear.x': 1,
-            'axis_angular.yaw': 3,
-            'publish_stamped_twist': True,
-            'scale_linear.x': 0.5,
-            'scale_angular.yaw': 0.5,
-        }]
+        parameters=[PathJoinSubstitution([
+            FindPackageShare('turtlebot3_teleop'),
+            'config',
+            'joy_teleop.yaml'
+        ])]
     )
     
     return LaunchDescription([
