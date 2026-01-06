@@ -1,5 +1,5 @@
 # TurtleBot3
-<img src="media/20251201_141944.jpg" width="450">
+<img src="media/20251201_141944.jpg" width="650">
 
 - Active Branches: humble, jazzy, main(rolling)
 - Legacy Branches: *-devel, noetic
