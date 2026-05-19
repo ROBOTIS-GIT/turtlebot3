@@ -275,6 +275,13 @@ bool Odometry::calculate_odometry(const rclcpp::Duration & duration)
     if (last_theta_initialized_) {
       theta = imu_angle_;
       delta_theta = theta - last_theta;
+      // Normalize to [-pi, pi] to handle IMU angle wraparound at ±pi
+      constexpr double pi = 3.14159265358979323846;
+      if (delta_theta > pi) {
+        delta_theta -= 2.0 * pi;
+      } else if (delta_theta < -pi) {
+        delta_theta += 2.0 * pi;
+      }
     } else {
       theta = imu_angle_;
       last_theta = imu_angle_;
