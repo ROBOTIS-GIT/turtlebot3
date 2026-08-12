@@ -30,7 +30,7 @@ from launch_ros.actions import Node
 def generate_launch_description():
     TURTLEBOT3_MODEL = os.environ['TURTLEBOT3_MODEL']
 
-    namespace = LaunchConfiguration('namespace')
+    namespace = LaunchConfiguration('namespace', default='')
 
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
     urdf_file_name = 'turtlebot3_' + TURTLEBOT3_MODEL + '.urdf'
@@ -57,6 +57,10 @@ def generate_launch_description():
     # print (robot_desc) # Printing urdf information.
 
     return LaunchDescription([
+        DeclareLaunchArgument(
+            'namespace',
+            default_value='',
+            description='Namespace for nodes'),
         DeclareLaunchArgument(
             'use_sim_time',
             default_value='false',
