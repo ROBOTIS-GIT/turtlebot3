@@ -1,5 +1,5 @@
 # TurtleBot3
-<img src="media/Turtlebot.jpg" width="650">
+<img src="media/Turtlebot.jpg" width="850">
 
 This is my Turtlebot, using a Raspberry Pi 5 and with an added camera, also equipped with an OLED display that shows on boot.
 
