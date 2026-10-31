@@ -21,6 +21,7 @@ def generate_launch_description():
             'image_size': [640, 480],
             'pixel_format': 'YUYV',
             'camera_frame_id': 'camera_link',
+            'output_encoding': 'yuv422_yuy2'
         }],
         output='screen',
     )
