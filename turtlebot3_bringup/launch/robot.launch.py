@@ -61,8 +61,7 @@ def generate_launch_description():
 
     camera_viewer = IncludeLaunchDescription(
             PythonLaunchDescriptionSource(os.path.join(
-                get_package_share_directory('turtlebot3_bringup'),
-                'launch', 'camera.launch.py')),
+                bringup_dir, 'launch', 'camera.launch.py')),
     )
 
     return LaunchDescription([
