@@ -19,7 +19,9 @@ jobs:
         ros_distribution:
           - humble
           - jazzy
-          # - rolling
+          - kilted
+          - lyrical
+          - rolling
         include:
           # ROS 2 Humble Hawksbill
           - docker_image: ubuntu:jammy
@@ -29,10 +31,18 @@ jobs:
           - docker_image: ubuntu:noble
             ros_distribution: jazzy
             ros_version: 2
+          # ROS 2 Kilted
+          - docker_image: ubuntu:noble
+            ros_distribution: kilted
+            ros_version: 2
+          # ROS 2 Lyrical
+          - docker_image: ubuntu:resolute
+            ros_distribution: lyrical
+            ros_version: 2
           # ROS 2 Rolling Ridley
-          # - docker_image: ubuntu:noble
-          #   ros_distribution: rolling
-          #   ros_version: 2
+          - docker_image: ubuntu:resolute
+            ros_distribution: rolling
+            ros_version: 2
     container:
       image: ${{ matrix.docker_image }}
     steps:
@@ -48,6 +58,7 @@ jobs:
         uses: ros-tooling/setup-ros@v0.7
         with:
           required-ros-distributions: ${{ matrix.ros_distribution }}
+          use-ros2-testing: ${{ matrix.ros_distribution == 'rolling' }}
 
       - name: Check and Install ROS dependencies
         shell: bash
@@ -67,7 +78,7 @@ jobs:
           fi
 
       - name: Build and Test
-        uses: ros-tooling/action-ros-ci@v0.3
+        uses: ros-tooling/action-ros-ci@v0.4
         with:
           target-ros2-distro: ${{ matrix.ros_distribution }}
           vcs-repo-file-url: "https://raw.githubusercontent.com/ROBOTIS-GIT/turtlebot3/main/turtlebot3_ci.repos"
