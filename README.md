@@ -1,8 +1,5 @@
 # TurtleBot3
-<img src="https://raw.githubusercontent.com/ROBOTIS-GIT/emanual/master/assets/images/platform/turtlebot3/logo_turtlebot3.png" width="300">
-
-- Active Branches: humble, jazzy, main(rolling)
-- Legacy Branches: *-devel, noetic
+<img src="https://docs.robotis.com/assets/images/turtlebot3_with_logo-7e8cf0aff7c34312e0adcf61f298db01.webp" width="300">
 
 ## Open Source Projects Related to TurtleBot3
 - [turtlebot3](https://github.com/ROBOTIS-GIT/turtlebot3)
@@ -26,10 +23,10 @@
 ## Documentation, Videos, and Community
 
 ### Official Documentation
-- ⚙️ **[ROBOTIS DYNAMIXEL](https://dynamixel.com/)**
-- 📚 **[ROBOTIS e-Manual for Dynamixel SDK](http://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_sdk/overview/)**
-- 📚 **[ROBOTIS e-Manual for TurtleBot3](http://turtlebot3.robotis.com/)**
-- 📚 **[ROBOTIS e-Manual for OpenMANIPULATOR-X](https://emanual.robotis.com/docs/en/platform/openmanipulator_x/overview/)**
+- ⚙️ **[ROBOTIS DYNAMIXEL](https://www.robotis.com/en/)**
+- 📚 **[ROBOTIS e-Manual for Dynamixel SDK](https://docs.robotis.com/docs/software/dynamixel_sdk/)**
+- 📚 **[ROBOTIS e-Manual for TurtleBot3](https://docs.robotis.com/docs/systems/turtlebot3/overview/)**
+- 📚 **[ROBOTIS e-Manual for OpenMANIPULATOR-X](https://docs.robotis.com/docs/systems/omx/introduction/)**
 
 ### Learning Resources
 - 🎥 **[ROBOTIS YouTube Channel](https://www.youtube.com/@ROBOTISCHANNEL)**
@@ -38,5 +35,5 @@
 - 🎥 **[ROBOTIS OpenMANIPULATOR YouTube Playlist](https://www.youtube.com/playlist?list=PLRG6WP3c31_WpEsB6_Rdt3KhiopXQlUkb)**
 
 ### Community & Support
-- 💬 **[ROBOTIS Community Forum](https://forum.robotis.com/)**
+- 💬 **[ROBOTIS Community Forum](https://discord.com/invite/robotis)**
 - 💬 **[TurtleBot category from ROS Community](https://discourse.ros.org/c/turtlebot/)**

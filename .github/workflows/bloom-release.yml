@@ -1,0 +1,33 @@
+name: Release ROS packages
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Existing published GitHub Release tag (X.Y.Z)
+        required: true
+        type: string
+      distros:
+        description: Existing bloom tracks to release or retry
+        default: humble jazzy kilted
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  bloom-release:
+    uses: ROBOTIS-GIT/github_workflows/.github/workflows/bloom-release.yml@main
+    with:
+      repository: turtlebot3
+      release_repository: ros2-gbp/turtlebot3-release
+      version: ${{ inputs.version }}
+      distros: ${{ inputs.distros }}
+      git_user_name: ${{ vars.BLOOM_GIT_NAME }}
+      git_user_email: ${{ vars.BLOOM_GIT_EMAIL }}
+      signing_key_fingerprint: ${{ vars.BLOOM_GPG_FINGERPRINT }}
+    secrets:
+      BLOOM_GITHUB_TOKEN: ${{ secrets.BLOOM_GITHUB_TOKEN }}
+      BLOOM_GPG_PRIVATE_KEY: ${{ secrets.BLOOM_GPG_PRIVATE_KEY }}
+      BLOOM_GPG_PASSPHRASE: ${{ secrets.BLOOM_GPG_PASSPHRASE }}

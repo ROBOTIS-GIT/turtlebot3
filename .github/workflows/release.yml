@@ -1,0 +1,36 @@
+name: Release
+
+on:
+  pull_request:
+    branches: [jazzy]
+    types: [opened, synchronize, edited, reopened, ready_for_review, closed]
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    permissions:
+      contents: write
+    uses: ROBOTIS-GIT/github_workflows/.github/workflows/release.yml@main
+    with:
+      source_branch: main
+      target_branch: jazzy
+
+  bloom-release:
+    needs: release
+    if: needs.release.outputs.published == 'true'
+    uses: ROBOTIS-GIT/github_workflows/.github/workflows/bloom-release.yml@main
+    with:
+      repository: turtlebot3
+      release_repository: ros2-gbp/turtlebot3-release
+      version: ${{ needs.release.outputs.version }}
+      # lyrical and rolling need initial bloom track/rosdistro registration.
+      distros: humble jazzy kilted
+      git_user_name: ${{ vars.BLOOM_GIT_NAME }}
+      git_user_email: ${{ vars.BLOOM_GIT_EMAIL }}
+      signing_key_fingerprint: ${{ vars.BLOOM_GPG_FINGERPRINT }}
+    secrets:
+      BLOOM_GITHUB_TOKEN: ${{ secrets.BLOOM_GITHUB_TOKEN }}
+      BLOOM_GPG_PRIVATE_KEY: ${{ secrets.BLOOM_GPG_PRIVATE_KEY }}
+      BLOOM_GPG_PASSPHRASE: ${{ secrets.BLOOM_GPG_PASSPHRASE }}
