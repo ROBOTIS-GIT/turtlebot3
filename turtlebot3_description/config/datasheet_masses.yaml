@@ -1,0 +1,12 @@
+# Whole-robot weights from the TurtleBot3 e-Manual, "Hardware Specifications"
+# table, row "Weight (+ SBC + Battery + Sensors)". Fetched 2026-11-05.
+# https://emanual.robotis.com/docs/en/platform/turtlebot3/features/
+# The figures carry two significant digits; 5 % covers that rounding for the Burger.
+tolerance: 0.05
+robots:
+  burger:
+    urdf: urdf/turtlebot3_burger.urdf
+    datasheet_kg: 1.0
+  waffle_pi:
+    urdf: urdf/turtlebot3_waffle_pi.urdf
+    datasheet_kg: 1.8
