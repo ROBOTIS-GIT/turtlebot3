@@ -411,7 +411,7 @@ collision_monitor:
         theta_max: 1.0
     observation_sources: ["scan"]
     scan:
-      source_timeout: 0.2
+      source_timeout: 0.5
       type: "scan"
       topic: "/scan"
       enabled: true

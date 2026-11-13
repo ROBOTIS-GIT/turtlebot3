@@ -1,5 +1,7 @@
 # TurtleBot3
-<img src="https://raw.githubusercontent.com/ROBOTIS-GIT/emanual/master/assets/images/platform/turtlebot3/logo_turtlebot3.png" width="300">
+<img src="media/Turtlebot.jpg" width="850">
+
+This is my Turtlebot, using a Raspberry Pi 5 and with an added camera, also equipped with an OLED display that shows on boot.
 
 - Active Branches: humble, jazzy, main(rolling)
 - Legacy Branches: *-devel, noetic
